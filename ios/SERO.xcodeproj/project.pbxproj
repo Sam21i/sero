@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SEROTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SEROTests.m */; };
+		09E066DB788A4100860F6BF9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C9280B283774F2FA515AE78 /* Roboto-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6172F2D35A4C3AA820D92908 /* libPods-SERO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-SERO.a */; };
+		7B07634242624F31AE9BE2E4 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39167BCCCDC44EEAB6AADF9B /* Roboto-Bold.ttf */; };
 		7EF68E3733C33B6898317E18 /* libPods-SERO-SEROTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-SERO-SEROTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9A7206D54F0C4CBC917F3437 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA4A001C2490409CA099F2E3 /* RobotoCondensed-Bold.ttf */; };
+		A1673144FF0A4D05B03387EE /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BDAB73B1CAE4B8291888C57 /* Roboto-Medium.ttf */; };
+		CF4CA13A430F41838F337C40 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A781D0A35AF4322AE84446D /* RobotoCondensed-Regular.ttf */; };
+		D054CBE927BE54DB0087C161 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D054CBE827BE54DB0087C161 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +43,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SERO/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SERO/main.m; sourceTree = "<group>"; };
 		1D0AE47A65C8663E3B452821 /* Pods-SERO-SEROTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO-SEROTests.release.xcconfig"; path = "Target Support Files/Pods-SERO-SEROTests/Pods-SERO-SEROTests.release.xcconfig"; sourceTree = "<group>"; };
+		2C9280B283774F2FA515AE78 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/resources/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		39167BCCCDC44EEAB6AADF9B /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/resources/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		6423831EA8574132BED9D8CC /* libPods-SERO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SERO.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A781D0A35AF4322AE84446D /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Regular.ttf"; path = "../src/resources/fonts/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		6C97AB639B58BBB4B15BBE30 /* Pods-SERO-SEROTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO-SEROTests.debug.xcconfig"; path = "Target Support Files/Pods-SERO-SEROTests/Pods-SERO-SEROTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7BDAB73B1CAE4B8291888C57 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/resources/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SERO/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-SERO-SEROTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SERO-SEROTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-SERO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO.debug.xcconfig"; path = "Target Support Files/Pods-SERO/Pods-SERO.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-SERO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO.release.xcconfig"; path = "Target Support Files/Pods-SERO/Pods-SERO.release.xcconfig"; sourceTree = "<group>"; };
+		D054CBE827BE54DB0087C161 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = SERO/BootSplash.storyboard; sourceTree = "<group>"; };
+		EA4A001C2490409CA099F2E3 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Bold.ttf"; path = "../src/resources/fonts/RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -90,6 +102,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				D054CBE827BE54DB0087C161 /* BootSplash.storyboard */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -122,6 +135,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E233CBF5F47BEE60B243DCF8 /* Pods */,
+				C91B46DF5F8A4070AD41395C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -137,6 +151,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C91B46DF5F8A4070AD41395C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				39167BCCCDC44EEAB6AADF9B /* Roboto-Bold.ttf */,
+				7BDAB73B1CAE4B8291888C57 /* Roboto-Medium.ttf */,
+				2C9280B283774F2FA515AE78 /* Roboto-Regular.ttf */,
+				EA4A001C2490409CA099F2E3 /* RobotoCondensed-Bold.ttf */,
+				6A781D0A35AF4322AE84446D /* RobotoCondensed-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +171,6 @@
 				6C97AB639B58BBB4B15BBE30 /* Pods-SERO-SEROTests.debug.xcconfig */,
 				1D0AE47A65C8663E3B452821 /* Pods-SERO-SEROTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -245,6 +270,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				7B07634242624F31AE9BE2E4 /* Roboto-Bold.ttf in Resources */,
+				D054CBE927BE54DB0087C161 /* BootSplash.storyboard in Resources */,
+				A1673144FF0A4D05B03387EE /* Roboto-Medium.ttf in Resources */,
+				09E066DB788A4100860F6BF9 /* Roboto-Regular.ttf in Resources */,
+				9A7206D54F0C4CBC917F3437 /* RobotoCondensed-Bold.ttf in Resources */,
+				CF4CA13A430F41838F337C40 /* RobotoCondensed-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +514,7 @@
 			baseConfigurationReference = C0A881CF5CF3F2B244570E2A /* Pods-SERO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
@@ -509,6 +541,7 @@
 			baseConfigurationReference = D00AAFFCFCFDA5787532823F /* Pods-SERO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = SERO/Info.plist;
@@ -561,7 +594,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -585,7 +618,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -627,7 +659,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -644,7 +676,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SDKROOT)/usr/lib/swift\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;

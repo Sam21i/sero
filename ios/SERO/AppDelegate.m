@@ -4,6 +4,9 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+#import <React/RCTLinkingManager.h>
+#import "RNBootSplash.h"
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -47,6 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
   return YES;
 }
 
@@ -57,6 +61,13 @@ static void InitializeFlipper(UIApplication *application) {
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *, id> *) options {
+  if ([self.authorizationFlowManagerDelegate resumeExternalUserAgentFlowWithURL:url]) {
+    return YES;
+  }
+  return [RCTLinkingManager application:app openURL:url options:options];
 }
 
 @end
