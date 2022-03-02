@@ -32,10 +32,10 @@ export default class Main extends Component<PropsType, State> {
     return (
       <SafeAreaView style={{flex: 1}} edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/background-yellow.jpg')}
+          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
           resizeMode="cover"
           style={styles.backgroundImage}>
-          <View style={{flex: 1, flexDirection:'row'}}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
             <EmergencyContactContainer></EmergencyContactContainer>
             <EmergencyNumberContainer></EmergencyNumberContainer>
           </View>

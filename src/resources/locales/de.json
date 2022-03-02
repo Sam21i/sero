@@ -1,1 +1,10 @@
-{}
+{
+  "welcomePage": {
+    "welcomeMessage": "Willkommen!",
+    "start": "Starten"
+  },
+  "onBoarding": {
+    "next": "Weiter",
+    "midata": "MIDATA"
+  }
+}

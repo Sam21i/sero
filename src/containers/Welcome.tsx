@@ -1,57 +1,30 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  Button,
-  View,
-  Touchable,
-  TouchableWithoutFeedback,
-  ImageBackground,
-} from 'react-native';
+import {Text, Image, StyleSheet, View, ImageBackground} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {windowHeight, windowWidth} from '../styles/App.style';
-import Svg, {Path, SvgCss} from 'react-native-svg';
-import {getItem} from 'react-native-sensitive-info';
+import {
+  AppFonts,
+  TextSize,
+  scale,
+  verticalScale,
+  windowHeight,
+} from '../styles/App.style';
+import SpeechBubble from '../resources/images/common/speechBubble.svg';
+import Person from '../resources/images/common/person.svg';
+import LogoFull from '../resources/images/common/logo_full.svg';
+import AppButton from '../components/AppButton';
+import LocalesHelper from '../locales';
+import {AppStore} from '../store/reducers';
+import {connect} from 'react-redux';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
+  localesHelper: LocalesHelper;
 }
 
 interface State {}
 
-const content = {
-  key: 1,
-  title: 'Willkommen in der SERO-App',
-  image: require('../resources/images/icons/onBoarding/undraw.png'),
-  logo: require('../resources/images/seroLogo.png'),
-};
-
-function WavyHeader({
-  customStyles,
-  customHeight,
-  customTop,
-  customBgColor,
-  customWavePattern,
-}) {
-  return (
-    <View style={customStyles}>
-      <View style={{backgroundColor: customBgColor, height: customHeight}}>
-        <Svg
-          height="60%"
-          width="100%"
-          viewBox="0 0 1440 320"
-          style={{position: 'absolute', top: customTop}}>
-          <Path fill={customBgColor} d={customWavePattern} />
-        </Svg>
-      </View>
-    </View>
-  );
-}
-
-export default class Welcome extends Component<PropsType, State> {
+class Welcome extends Component<PropsType, State> {
   onPress = () => {
     this.props.navigation.navigate('mainOnBoarding');
   };
@@ -60,27 +33,69 @@ export default class Welcome extends Component<PropsType, State> {
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/background.png')}
+          source={require('../resources/images/backgrounds/mood_bg_orange.png')}
           resizeMode="cover"
           style={styles.backgroundImage}>
-          <View style={styles.topPart}>
-            <WavyHeader
-              customStyles={styles.svgCurve}
-              customHeight={windowHeight * 0.7}
-              customTop={windowHeight * 0.51}
-              customBgColor="#fff"
-              customWavePattern="M0,256L120,250.7C240,245,480,235,720,213.3C960,192,1200,160,1320,144L1440,128L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"
-            />
-            <Text style={styles.title}>{content.title}</Text>
-            <Image source={content.image} style={styles.image} />
-            <TouchableWithoutFeedback onPress={this.onPress}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>Starten</Text>
-              </View>
-            </TouchableWithoutFeedback>
+          <View style={styles.topView}>
+            <LogoFull width={scale(300)} height={'100%'}></LogoFull>
           </View>
-          <View style={styles.bottomPart}>
-            <Image source={content.logo} style={styles.logo} />
+          <View style={styles.bottomView}>
+            <Image
+              source={require('../resources/images/backgrounds/mood_bg_grey.png')}
+              style={styles.grey}
+              resizeMode="cover"
+            />
+            <View
+              style={{
+                position: 'absolute',
+                top: verticalScale(50),
+                alignSelf: 'center',
+              }}>
+              <SpeechBubble
+                width={scale(277.5)}
+                height={verticalScale(147.5)}></SpeechBubble>
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                top: verticalScale(90),
+                alignSelf: 'center',
+              }}>
+              <Text style={styles.text}>
+                {this.props.localesHelper.localeString(
+                  'welcomePage.welcomeMessage',
+                )}
+              </Text>
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                top: verticalScale(220),
+                alignSelf: 'center',
+                paddingLeft: scale(90),
+              }}>
+              <Person width={scale(80)} height={verticalScale(80)} />
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: windowHeight * 0.075,
+              }}>
+              <AppButton
+                label={'Starten'}
+                icon={
+                  '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+                }
+                position={'left'}
+                style={{
+                  backgroundColor: 'grey',
+                  width: scale(275),
+                  paddingVertical: verticalScale(10),
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('mainOnBoarding')
+                }></AppButton>
+            </View>
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -96,63 +111,37 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  layerOne: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  topPart: {
-    flex: 8,
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  bottomPart: {
-    flex: 2,
-    alignItems: 'center',
-    alignContent: 'center',
+  topView: {
+    flex: 0.26,
     justifyContent: 'center',
-    paddingBottom: windowHeight * 0.025,
+    alignItems: 'center',
   },
-  svgCurve: {
-    position: 'absolute',
-    width: windowWidth,
+  bottomView: {
+    flex: 0.74,
+    backgroundColor: 'white',
+    alignContent: 'center',
   },
-  title: {
-    textAlign: 'center',
-    fontSize: 32,
-    fontWeight: 'normal',
-    paddingHorizontal: windowWidth * 0.2,
-    marginTop: windowHeight * 0.1,
-  },
-  image: {
-    height: windowHeight * 0.3,
-    width: windowWidth * 0.8,
-    resizeMode: 'contain',
-    marginBottom: windowHeight * 0.05,
-    marginTop: windowHeight * 0.05,
+  grey: {
+    width: '100%',
+    height: '100%',
+    opacity: 0.5,
   },
   logo: {
-    width: windowWidth * 0.7,
-    resizeMode: 'contain',
-    marginBottom: windowHeight * 0.05,
-    marginTop: windowHeight * 0.05,
+    width: scale(290),
+    height: '100%',
   },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    elevation: 3,
-    backgroundColor: '#005561',
-    width: windowWidth * 0.5,
-    marginHorizontal: windowWidth * 0.2,
-    marginTop: windowHeight * 0.025,
-  },
-  buttonText: {
-    fontSize: 18,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
+  text: {
+    fontFamily: AppFonts.medium,
+    fontSize: scale(TextSize.veryBig),
+    color: 'rgb(203, 95, 22)',
   },
 });
+
+// Link store data to component
+function mapStateToProps(state: AppStore) {
+  return {
+    localesHelper: state.LocalesHelperStore,
+  };
+}
+
+export default connect(mapStateToProps, undefined)(Welcome);

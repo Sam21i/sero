@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {Text, Image, StyleSheet, Pressable} from 'react-native';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {View} from 'react-native';
@@ -7,14 +13,7 @@ import {STORAGE} from './App';
 import {StackNavigationProp} from '@react-navigation/stack';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
-import {
-  colors,
-  AppFonts,
-  windowHeight,
-  windowWidth,
-  scale,
-} from '../styles/App.style';
-import {TaskIntent} from '@i4mi/fhir_r4';
+import {AppFonts, scale, TextSize, verticalScale} from '../styles/App.style';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
@@ -25,6 +24,7 @@ import {AppStore} from '../store/reducers';
 import * as miDataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {connect} from 'react-redux';
+import Weiter from '../resources/images/common/weiter.svg';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -93,48 +93,83 @@ class OnBoarding extends Component<PropsType, State> {
   }
 
   _renderItem = ({item}) => {
-    let renderedItem;
-    if (item.isMidataScreen) {
-      renderedItem = (
-        <SafeAreaView style={styles.slide}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Image
-            source={item.image}
-            style={{
-              width: windowWidth * 0.7,
-              height: windowHeight * 0.1,
-              resizeMode: 'contain',
-              marginTop: windowHeight * 0.05,
-              marginBottom: windowHeight * 0.05,
-            }}
-          />
-          <Text style={styles.text}>{item.text}</Text>
-        </SafeAreaView>
-      );
-    } else {
-      renderedItem = (
-        <SafeAreaView style={styles.slide}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Image source={item.image} style={styles.image} />
-          <Text style={styles.text}>{item.text}</Text>
-        </SafeAreaView>
-      );
-    }
-    return renderedItem;
-  };
-
-  _renderNextButton = () => {
     return (
-      <View style={styles.button}>
-        <Text style={styles.buttonText}>Weiter</Text>
-      </View>
+      <SafeAreaView style={{flex: 1}} edges={['top']}>
+        <ImageBackground
+          source={item.background}
+          style={styles.backgroundImage}>
+          <View style={styles.topView}></View>
+          <View style={styles.bottomView}>
+            <View style={styles.content}>
+              <View style={styles.titleView}>
+                <Text style={[styles.title, {color: item.titleColor}]}>
+                  {item.title}
+                </Text>
+              </View>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          </View>
+          <View
+            style={[styles.slideMarking, {backgroundColor: item.themeColor}]}>
+            <Image
+              source={item.image}
+              resizeMode="contain"
+              style={{width: '100%', height: '100%'}}></Image>
+          </View>
+        </ImageBackground>
+      </SafeAreaView>
     );
   };
-  _renderDoneButton = () => {
+
+  _renderPagination = (activeIndex: number) => {
+    let button;
+    if (activeIndex < 4) {
+      button = (
+        <View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}>
+            <Text style={styles.buttonText}>
+              {this.props.localesHelper.localeString('onBoarding.next')}
+            </Text>
+            <Weiter width={scale(50)} height={scale(50)} />
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (activeIndex === 4) {
+      button = (
+        <View>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => this.registerOrLogin()}>
+            <Text style={styles.buttonText}>
+              {this.props.localesHelper.localeString('onBoarding.midata')}
+            </Text>
+            <Weiter width={scale(50)} height={scale(50)} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
     return (
-      <View style={styles.button}>
-        <Text style={styles.buttonText}>Weiter zu MIDATA</Text>
-      </View>
+      <SafeAreaView style={styles.paginationContainer}>
+        <View style={styles.paginationDots}>
+          {ON_BOARDING_ITEMS.length > 1 &&
+            ON_BOARDING_ITEMS.map((_, i) => (
+              <TouchableOpacity
+                key={i}
+                style={[
+                  styles.dot,
+                  i === activeIndex
+                    ? {backgroundColor: 'rgba(0, 0, 0, .2)'}
+                    : {backgroundColor: 'white'},
+                ]}
+                onPress={() => this.slider?.goToSlide(i, true)}
+              />
+            ))}
+        </View>
+        {button}
+      </SafeAreaView>
     );
   };
 
@@ -145,24 +180,7 @@ class OnBoarding extends Component<PropsType, State> {
           ref={(ref: AppIntroSlider) => (this.slider = ref)}
           renderItem={this._renderItem}
           data={ON_BOARDING_ITEMS}
-          renderDoneButton={this._renderDoneButton}
-          onDone={this.registerOrLogin.bind(this)}
-          renderNextButton={this._renderNextButton}
-          bottomButton={true}
-          dotStyle={{
-            backgroundColor: '#C4C4C4',
-            width: 15,
-            height: 15,
-            borderRadius: 100,
-            marginHorizontal: 6,
-          }}
-          activeDotStyle={{
-            backgroundColor: '#005561',
-            width: 15,
-            height: 15,
-            borderRadius: 100,
-            marginHorizontal: 6,
-          }}
+          renderPagination={this._renderPagination}
         />
       </>
     );
@@ -170,51 +188,89 @@ class OnBoarding extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  slide: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#EFEEED',
-    justifyContent: 'flex-start',
-    alignContent: 'center',
+  },
+  topView: {
+    flex: 0.26,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 10,
+  },
+  bottomView: {
+    flex: 0.74,
+    backgroundColor: 'rgb(255,255,255)',
+    opacity: 0.75,
+  },
+  content: {
+    position: 'absolute',
+    top: verticalScale(40),
+    paddingLeft: scale(50),
+    paddingRight: scale(30),
+    width: '100%',
+    height: verticalScale(300),
+  },
+  titleView: {
+    paddingRight: scale(40),
+    marginBottom: verticalScale(15),
   },
   title: {
-    textAlign: 'center',
-    fontSize: 26,
-    fontWeight: 'normal',
-    paddingHorizontal: windowWidth * 0.1,
-    marginTop: windowHeight * 0.1,
-  },
-  image: {
-    width: windowWidth * 0.7,
-    height: windowWidth * 0.7,
-    resizeMode: 'contain',
-    marginBottom: windowHeight * 0.05,
-    marginTop: windowHeight * 0.05,
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    elevation: 3,
-    backgroundColor: '#005561',
-    width: windowWidth * 0.5,
-    marginHorizontal: windowWidth * 0.2,
-  },
-  buttonText: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: '400',
-    letterSpacing: 0.25,
-    color: 'white',
+    fontFamily: AppFonts.bold,
+    fontSize: scale(TextSize.veryBig),
   },
   text: {
-    fontSize: 16,
-    fontWeight: '400',
-    textAlign: 'center',
-    paddingHorizontal: 50,
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.small),
+  },
+  button: {
+    position: 'absolute',
+    top: verticalScale(368),
+    left: -scale(10),
+    width: scale(300),
+    paddingVertical: 10,
+    paddingHorizontal: scale(10),
+    paddingLeft: scale(30),
+    borderBottomRightRadius: 50,
+    borderTopRightRadius: 50,
+    backgroundColor: 'rgb(136,131,117)',
+    flexDirection: 'row',
+  },
+  slideMarking: {
+    position: 'absolute',
+    width: scale(175),
+    height: verticalScale(150),
+    borderBottomLeftRadius: 100,
+    borderTopLeftRadius: 100,
+    right: scale(0),
+    top: verticalScale(50),
+    paddingVertical: verticalScale(30),
+    paddingRight: scale(50),
+    paddingLeft: scale(20),
+  },
+  buttonText: {
+    flex: 3,
+    fontSize: scale(TextSize.big),
+    fontFamily: AppFonts.medium,
+    color: 'white',
+    alignSelf: 'center',
+    paddingLeft: scale(30),
+  },
+  paginationContainer: {
+    position: 'absolute',
+    top: verticalScale(122.5),
+    left: scale(10),
+  },
+  paginationDots: {
+    height: verticalScale(16),
+    margin: scale(10),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dot: {
+    width: scale(15),
+    height: scale(15),
+    borderRadius: 10,
+    marginHorizontal: scale(7),
   },
 });
 
