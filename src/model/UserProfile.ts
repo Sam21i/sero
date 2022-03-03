@@ -1,21 +1,45 @@
-import { Patient, PatientAdministrativeGender, PatientCommunication, QuestionnaireResponse, Reference } from "@i4mi/fhir_r4";
+import { Bundle, Patient, PatientAdministrativeGender, PatientCommunication, Reference, RelatedPerson } from "@i4mi/fhir_r4";
+import EmergencyContact from "./EmergencyContact";
 
 export default class UserProfile {
     private patientResource: Patient = {id: ''};
-    private situationQuestionnaireResponse: QuestionnaireResponse | undefined;
+    private emergencyContacts: EmergencyContact[] = [];
 
-    constructor(userProfile?: Partial<UserProfile>) {
-        if (userProfile) {
-            this.updateProfile(userProfile);
+    constructor(_userProfile?: Partial<UserProfile>) {
+        if (_userProfile) {
+            this.updateProfile(_userProfile);
         }
     }
 
-    updateProfile(attributs: Partial<UserProfile>) {
-        Object.assign(this, attributs);
+    updateProfile(_attributes: Partial<UserProfile>) {
+        Object.assign(this, _attributes);
+    }
+
+    /**
+    * CAVE: Modifies store, do not call outside of reducer
+    **/
+    setEmergencyContacts(_fhirBundle: Bundle): void {
+        _fhirBundle.entry?.forEach(c => {
+            if (c.resource && c.resource.resourceType === 'RelatedPerson') {
+                this.emergencyContacts.push(new EmergencyContact(c.resource as RelatedPerson))
+            }
+        });
     }
 
     resetProfileData() {
         this.patientResource = {id: ''};
+    }
+
+    getFhirId(): string {
+        if (this.patientResource.id) {
+            return this.patientResource.id;
+        } else {
+            throw new Error('No FHIR resource id set.')
+        }
+    }
+
+    getEmergencyContacts(): EmergencyContact[] {
+        return this.emergencyContacts;
     }
 
     getGender(): PatientAdministrativeGender | undefined {
@@ -25,8 +49,8 @@ export default class UserProfile {
 
     getBirthYear(): string | undefined {
         return (this.patientResource.id === '' || !this.patientResource.birthDate)
-            ? undefined
-            : new Date(this.patientResource.birthDate).getFullYear().toString();
+        ? undefined
+        : new Date(this.patientResource.birthDate).getFullYear().toString();
     }
 
     getPreferredLanguageCode(): string | undefined {
@@ -40,43 +64,29 @@ export default class UserProfile {
     }
 
     getFullName(): string | undefined {
-            const name = this.patientResource.name;
-            if (name !== undefined && name.length > 0) {
-                const primaryName = name[0];
-                let fullName = '';
-                if (primaryName.given !== undefined && primaryName.given.length > 0) {
-                    fullName = primaryName.given[0] + ' ';
-                }
-                if (primaryName.family && primaryName.family.length > 0) {
-                    fullName += primaryName.family;
-                }
-                return fullName;
+        const name = this.patientResource.name;
+        if (name !== undefined && name.length > 0) {
+            const primaryName = name[0];
+            let fullName = '';
+            if (primaryName.given !== undefined && primaryName.given.length > 0) {
+                fullName = primaryName.given[0] + ' ';
             }
-            return undefined;
+            if (primaryName.family && primaryName.family.length > 0) {
+                fullName += primaryName.family;
+            }
+            return fullName;
         }
-
-    getFhirReference(): Reference | undefined {
-    if (this.patientResource.id !== '') {
-        return {
-            display: this.getFullName(),
-            reference: 'Patient/' + this.patientResource.id
-        };
-    } else {
         return undefined;
     }
-}
 
-    updateSituationQuestionnaireResponse(response: QuestionnaireResponse): void {
-        if (!this.situationQuestionnaireResponse ||
-                (this.situationQuestionnaireResponse?.authored &&
-                response.authored &&
-                this.situationQuestionnaireResponse.authored < response.authored)
-            ) {
-            this.situationQuestionnaireResponse = response;
+    getFhirReference(): Reference | undefined {
+        if (this.patientResource.id !== '') {
+            return {
+                display: this.getFullName(),
+                reference: 'Patient/' + this.patientResource.id
+            };
+        } else {
+            return undefined;
         }
-    }
-
-    getSituationQuestionnaireResponse(): QuestionnaireResponse | undefined {
-        return this.situationQuestionnaireResponse;
     }
 }

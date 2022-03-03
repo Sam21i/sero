@@ -1,28 +1,20 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import initials from 'initials';
-import React, {Component, VoidFunctionComponent} from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
   Image,
 } from 'react-native';
-import {SvgCss} from 'react-native-svg';
 import {
-  AppFonts,
   scale,
-  TextSize,
-  windowHeight,
-  windowWidth,
+  TextSize
 } from '../styles/App.style';
-import AppButton from './AppButton';
 
 interface EmergencyContactProps {
   size: any;
-  text: any;
-  imageSource: any;
+  contact: EmergencyContact;
   onPress?: () => void;
   textStyle?: any;
   style?: any;
