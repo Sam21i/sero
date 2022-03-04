@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "SERO_Start_Hintergrund_Mood.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "SERO_Start_Hintergrund_Mood@2x.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "SERO_Start_Hintergrund_Mood@3x.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
