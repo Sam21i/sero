@@ -24,5 +24,28 @@
   "welcome": {
     "welcomeMessage": "Willkommen!",
     "start": "Starten"
+  },
+  "main": {
+    "default": "Entdecke jetzt die SERO App - los geht's.",
+    "myEnvironmentTitle": "Mein Umfeld anrufen",
+    "emergencyContactTitle": "Notfall anrufen",
+    "greeting": "Hallo {{name}}",
+    "emergency": "Notfall",
+    "call": "anrufen"
+  },
+  "info": {
+    "title": "Informationen"
+  },
+  "settings": {
+    "title": "Einstellungen"
+  },
+  "prismS": {
+    "title": "Meine \nEinschätzung"
+  },
+  "securityplan": {
+    "title": "Mein \nSicherheitsplan"
+  },
+  "myEnvironment": {
+    "title": "Mein \nUmfeld"
   }
 }

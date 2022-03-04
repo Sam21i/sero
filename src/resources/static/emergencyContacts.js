@@ -1,9 +1,9 @@
 export const EMERGENCY_CONTACTS = [
   {
-    text: 'Manuela Mieter',
+    name: 'Manuela Mieter',
     image: require('../images/common/profilefoto.png'),
   },
   {
-    text: 'Hans Muster',
+    name: 'Hans Muster',
   },
 ];

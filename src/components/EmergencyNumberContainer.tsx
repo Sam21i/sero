@@ -1,37 +1,31 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import {SvgCss} from 'react-native-svg';
-import {
-  AppFonts,
-  scale,
-  TextSize,
-  windowHeight,
-  windowWidth,
-} from '../styles/App.style';
-import AppButton from './AppButton';
+import {StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import LocalesHelper from '../locales';
+import {AppStore} from '../store/reducers';
+import {AppFonts, scale, TextSize} from '../styles/App.style';
 import EmergencyNumberButton from './EmergencyNumberButton';
 
-interface EmergencyNumberContainerProps {}
+interface EmergencyNumberContainerProps {
+  localesHelper: LocalesHelper;
+}
 
-export default class EmergencyContact extends Component<EmergencyNumberContainerProps> {
+class EmergencyContact extends Component<EmergencyNumberContainerProps> {
   render() {
     return (
       <View style={styles.view}>
         <View style={styles.topTextView}>
-          <Text style={styles.topText}>Notfall</Text>
+          <Text style={styles.topText}>
+            {this.props.localesHelper.localeString('main.emergency')}
+          </Text>
         </View>
         <View style={styles.iconView}>
           <EmergencyNumberButton></EmergencyNumberButton>
         </View>
         <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>anrufen</Text>
+          <Text style={styles.bottomText}>
+            {this.props.localesHelper.localeString('main.call')}
+          </Text>
         </View>
       </View>
     );
@@ -41,7 +35,7 @@ export default class EmergencyContact extends Component<EmergencyNumberContainer
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    backgroundColor: '#rgba(255, 0, 0, 0.3)',
+    backgroundColor: 'rgba(203, 95, 11, 0.5)',
   },
   topTextView: {
     flex: 1,
@@ -73,3 +67,12 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+// Link store data to component:
+function mapStateToProps(state: AppStore) {
+  return {
+    localesHelper: state.LocalesHelperStore,
+  };
+}
+
+export default connect(mapStateToProps)(EmergencyContact);

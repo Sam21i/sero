@@ -1,28 +1,34 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import LocalesHelper from '../locales';
+import UserProfile from '../model/UserProfile';
+import {AppStore} from '../store/reducers';
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import {SvgCss} from 'react-native-svg';
-import {windowHeight, windowWidth} from '../styles/App.style';
-import AppButton from './AppButton';
+  AppFonts,
+  colors,
+  scale,
+  TextSize,
+  verticalScale,
+} from '../styles/App.style';
 
-interface MainNotificationProps {}
+interface MainNotificationProps {
+  localesHelper: LocalesHelper;
+  userProfile: UserProfile;
+}
 
-export default class MainNotification extends Component<MainNotificationProps> {
+class MainNotification extends Component<MainNotificationProps> {
   render() {
     return (
       <View style={styles.view}>
-        <Text style={styles.title}>Hallo Hans-Rudolf</Text>
-        <View style={styles.innerView}>
-          <Text style={styles.text}>
-            Gut gemacht, du hattest gestern einen tollen Spaziergang.
-          </Text>
-        </View>
+        <Text style={styles.title}>
+          {this.props.localesHelper.localeString('main.greeting', {
+            name: this.props.userProfile.getGivenName(),
+          })}
+        </Text>
+        <Text style={styles.text}>
+          {this.props.localesHelper.localeString('main.default')}
+        </Text>
       </View>
     );
   }
@@ -31,27 +37,28 @@ export default class MainNotification extends Component<MainNotificationProps> {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    marginVertical: windowHeight * 0.05,
-    justifyContent: 'space-evenly',
-    //backgroundColor: '#ff0000',
-    paddingLeft: windowWidth * 0.1,
-  },
-  innerView: {
-    flex: 1,
-    //backgroundColor: '#fff000',
-    paddingRight: windowWidth * 0.1,
-    paddingTop: windowHeight * 0.02,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    marginTop: verticalScale(40),
+    paddingLeft: scale(40),
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#C95F1E',
+    fontSize: scale(TextSize.big),
+    fontFamily: AppFonts.bold,
+    color: colors.primary,
+    marginBottom: scale(15),
   },
   text: {
-    fontSize: 20,
-    fontWeight: '400',
-    color: 'black',
+    fontSize: scale(TextSize.normal),
+    fontFamily: AppFonts.regular,
+    color: colors.black,
   },
 });
+
+// Link store data to component:
+function mapStateToProps(state: AppStore) {
+  return {
+    localesHelper: state.LocalesHelperStore,
+    userProfile: state.UserProfileStore,
+  };
+}
+
+export default connect(mapStateToProps)(MainNotification);
