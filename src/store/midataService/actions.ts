@@ -4,6 +4,7 @@ import { Resource, Bundle, Observation } from '@i4mi/fhir_r4';
 import { store } from '..';
 import { Guid } from "guid-typescript";
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export function authenticateUser(dispatch: Function, accessToken: string, accessTokenExpirationDate: string, refreshToken: string, server: string) {
@@ -55,6 +56,11 @@ export function synchronizeResource(dispatch: Function, resource: Resource) {
 }
 
 export function logoutUser(dispatch: Function) {
+    try {
+      AsyncStorage.clear();
+    } catch (e) {
+      console.log('could not clear AsyncStorage', e)
+    }
     dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
 }
 

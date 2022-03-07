@@ -35,14 +35,18 @@ class Main extends Component<PropsType, State> {
 
   loadEmergencyContacts(): void {
       if (this.props.midataService.isAuthenticated()) {
-          this.props.midataService.fetch('/fhir/RelatedPerson?active=true&patient=' + this.props.userProfile.getFhirId())
-        .then((result) => {
-            console.log('fetched emergency contacts', result)
-            this.props.setEmergencyContacts(result as Bundle);
-        })
-        .catch((e) => {
-            console.log('could not load related persons', e)
-        })
+          this.props.midataService.fetch('/fhir/Patient').then(p => {
+              console.log('patient', p)
+          })
+        // this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+        //   this.props.midataService.fetch('/fhir/RelatedPerson?active=true&patient=' + this.props.userProfile.getFhirId())
+        // .then((result) => {
+        //     console.log('fetched emergency contacts', result)
+        //     this.props.setEmergencyContacts(result as Bundle);
+        // })
+        // .catch((e) => {
+        //     console.log('could not load related persons', e)
+        // })
       }
   }
 
