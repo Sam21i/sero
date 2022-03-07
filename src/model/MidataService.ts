@@ -101,7 +101,19 @@ export default class MidataService {
             if ((result as Bundle).entry) {
                 ((result as Bundle).entry || []).forEach(c => {
                     if (c.resource && c.resource.resourceType === 'RelatedPerson') {
-                        contacts.push(new EmergencyContact(c.resource as RelatedPerson));
+                        const contact = new EmergencyContact(c.resource as RelatedPerson);
+                        const photo = (c.resource as RelatedPerson).photo?.find(p => p.title && p.title.indexOf('Profilbild') > -1);
+                        if (photo && photo.url) {
+                            console.log('concact has photo', photo)
+                            this.fetchImageWithToken(photo.url)
+                            .then(img => {
+                                console.log('fetched', img)
+                            })
+                            .catch(e => {
+                                console.log('Error fetching contact avatar from ' + photo.url, e);
+                            })
+                        }
+                        contacts.push(contact);
                     }
                 });
             }
@@ -123,13 +135,19 @@ export default class MidataService {
         return new Promise((resolve, reject) => {
             this.currentSession.getValidAccessToken()
             .then((accessToken) => {
-                const url = (_url.indexOf('?') > -1)
-                ? '&access_token=' + accessToken
-                : '?access_token=' + accessToken;
+                const url = _url + (
+                    (_url.indexOf('?') > -1)
+                        ? '&access_token=' + accessToken
+                        : '?access_token=' + accessToken
+                );
                 fetch(url)
                 .then((image) => {
-                    console.log('fetched image', typeof image, image);
-                    return resolve(image)
+                    image.blob()
+                    .then(blob => {
+                        console.log('fetched image', blob);
+                        console.log('bloburl: ' + URL.createObjectURL(blob) );
+                        return resolve(blob)
+                    });
                 })
                 .catch((e) => {
                     console.log('midataservice.fetchImageWithToken(): unable to fetch image from url ' + url, e);
