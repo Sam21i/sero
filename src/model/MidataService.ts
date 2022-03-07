@@ -16,6 +16,7 @@ export default class MidataService {
 
     readonly OBSERVATION_ENDPOINT = "/fhir/Observation";
     readonly PATIENT_ENDPOINT = "/fhir/Patient";
+    readonly RELATED_PERSON_ENDPOINT = '/fhir/RelatedPerson';
 
     constructor(miDataServiceStore?: MidataService) {
         if (miDataServiceStore) {
@@ -92,6 +93,55 @@ export default class MidataService {
        });
     }
 
+    public fetchEmergencyContactsForUser(_userID: string): Promise<EmergencyContact[]> {
+        return this.fetch(this.RELATED_PERSON_ENDPOINT + '?active=true&patient=' + _userID, 'GET')
+        .then((result) => {
+            console.log('fetched emergency contacts', result)
+            const contacts = new Array<EmergencyContact>();
+            if ((result as Bundle).entry) {
+                ((result as Bundle).entry || []).forEach(c => {
+                    if (c.resource && c.resource.resourceType === 'RelatedPerson') {
+                        contacts.push(new EmergencyContact(c.resource as RelatedPerson));
+                    }
+                });
+            }
+            return contacts;
+        })
+        .catch((e) => {
+            console.log('could not load related persons', e)
+            return Promise.reject();
+        });
+    }
+
+    /**
+    * Used to load an image (eg. an avatar) from MIDATA, that is only accessible with
+    * access token.
+    * @param _url   the url of the image, with or without additional parameters
+    * @return       a Promise with the image
+    **/
+    private fetchImageWithToken(_url: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.currentSession.getValidAccessToken()
+            .then((accessToken) => {
+                const url = (_url.indexOf('?') > -1)
+                ? '&access_token=' + accessToken
+                : '?access_token=' + accessToken;
+                fetch(url)
+                .then((image) => {
+                    console.log('fetched image', typeof image, image);
+                    return resolve(image)
+                })
+                .catch((e) => {
+                    console.log('midataservice.fetchImageWithToken(): unable to fetch image from url ' + url, e);
+                    return reject();
+                });
+            })
+            .catch((e) => {
+                console.log('midataservice.fetchImageWithToken(): unable to get valid access token', e);
+                return reject();
+            });
+        });
+    }
 
     private actualFetch(_url: string, _config: RequestInit): Promise<any> {
         return new Promise((resolve, reject) => {

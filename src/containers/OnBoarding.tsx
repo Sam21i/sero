@@ -25,12 +25,14 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {connect} from 'react-redux';
 import Weiter from '../resources/images/common/weiter.svg';
+import EmergencyContact from '../model/EmergencyContact';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   midataService: MidataService;
   updateUserProfile: (userProfile: Partial<UserProfile>) => void;
+  setEmergencyContacts: (e: EmergencyContact[]) => void;
   authenticateUser: (
     accessToken: string,
     accessTokenExpirationDate: string,
@@ -69,8 +71,16 @@ class OnBoarding extends Component<PropsType, State> {
             authResult.refreshToken,
             Config.host,
           );
-          this.props.midataService.getUserData().then(profileResource => {
-            this.props.updateUserProfile(profileResource);
+          this.props.midataService.getUserData().then(profile => {
+            this.props.updateUserProfile(profile);
+            this.props.midataService.fetchEmergencyContactsForUser(profile.getFhirId())
+            .then((contacts) => {
+                console.log('fetched emergency contacts', contacts)
+                this.props.setEmergencyContacts(contacts);
+            })
+            .catch((e) => {
+                console.log('could not load related persons', e)
+            });
           });
           return resolve();
         })
@@ -299,6 +309,7 @@ function mapDispatchToProps(dispatch: Function) {
         refreshToken,
         server,
       ),
+    setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts)
   };
 }
 

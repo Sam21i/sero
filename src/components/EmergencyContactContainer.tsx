@@ -22,7 +22,7 @@ import {
 } from '../styles/App.style';
 import AppButton from './AppButton';
 import {EMERGENCY_CONTACTS} from '../resources/static/emergencyContacts';
-import EmergencyContact from '././EmergencyContact';
+import EmergencyContactTile from './EmergencyContactTile';
 import PlusButton from './PlusButton';
 
 interface EmergencyContactContainerProps {}
@@ -32,10 +32,10 @@ export default class EmergencyContactContainer extends Component<EmergencyContac
 
   _renderEmergencyContacts = ({item}) => {
     return (
-      <EmergencyContact
+      <EmergencyContactTile
         imageSource={item.image}
         text={item.text}
-        size={scale(windowWidth * 0.2)}></EmergencyContact>
+        size={scale(windowWidth * 0.2)}></EmergencyContactTile>
     );
   };
 

@@ -2,8 +2,8 @@ import { Bundle, Patient, PatientAdministrativeGender, PatientCommunication, Ref
 import EmergencyContact from "./EmergencyContact";
 
 export default class UserProfile {
-    private patientResource: Patient = {id: ''};
-    private emergencyContacts: EmergencyContact[] = [];
+    patientResource: Patient = {id: ''};
+    emergencyContacts: EmergencyContact[] = [];
 
     constructor(_userProfile?: Partial<UserProfile>) {
         if (_userProfile) {
@@ -18,16 +18,13 @@ export default class UserProfile {
     /**
     * CAVE: Modifies store, do not call outside of reducer
     **/
-    setEmergencyContacts(_fhirBundle: Bundle): void {
-        _fhirBundle.entry?.forEach(c => {
-            if (c.resource && c.resource.resourceType === 'RelatedPerson') {
-                this.emergencyContacts.push(new EmergencyContact(c.resource as RelatedPerson))
-            }
-        });
+    setEmergencyContacts(_contacts: EmergencyContact[]): void {
+        this.emergencyContacts = _contacts;
     }
 
     resetProfileData() {
         this.patientResource = {id: ''};
+        this.emergencyContacts = [];
     }
 
     getFhirId(): string {

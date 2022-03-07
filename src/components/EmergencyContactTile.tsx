@@ -7,6 +7,7 @@ import {
   View,
   Image,
 } from 'react-native';
+import EmergencyContact from '../model/EmergencyContact';
 import {
   scale,
   TextSize
@@ -20,7 +21,7 @@ interface EmergencyContactProps {
   style?: any;
 }
 
-export default class EmergencyContact extends Component<EmergencyContactProps> {
+export default class EmergencyContactTile extends Component<EmergencyContactProps> {
   abbr = initials(this.props.text);
 
   render() {

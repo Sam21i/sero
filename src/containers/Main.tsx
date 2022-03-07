@@ -14,14 +14,14 @@ import MidataService from '../model/MidataService';
 import { AppStore } from '../store/reducers';
 import { connect } from 'react-redux';
 import * as userProfileActions from '../store/userProfile/actions';
-import { Bundle } from '@i4mi/fhir_r4';
 import UserProfile from '../model/UserProfile';
+import EmergencyContact from '../model/EmergencyContact';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
-  setEmergencyContacts: (b: Bundle) => void;
+  setEmergencyContacts: (e: EmergencyContact[]) => void;
 }
 
 interface State {}
@@ -35,18 +35,20 @@ class Main extends Component<PropsType, State> {
 
   loadEmergencyContacts(): void {
       if (this.props.midataService.isAuthenticated()) {
-          this.props.midataService.fetch('/fhir/Patient').then(p => {
-              console.log('patient', p)
-          })
-        // this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-        //   this.props.midataService.fetch('/fhir/RelatedPerson?active=true&patient=' + this.props.userProfile.getFhirId())
-        // .then((result) => {
-        //     console.log('fetched emergency contacts', result)
-        //     this.props.setEmergencyContacts(result as Bundle);
-        // })
-        // .catch((e) => {
-        //     console.log('could not load related persons', e)
-        // })
+        try {
+            this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+            .then((contacts) => {
+                console.log('fetched emergency contacts', contacts)
+                this.props.setEmergencyContacts(contacts);
+            })
+            .catch((e) => {
+                console.log('could not load related persons', e)
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+
       }
   }
 
@@ -92,7 +94,7 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
     return {
-        setEmergencyContacts: (bundle: Bundle) => userProfileActions.setEmergencyContacts(dispatch, bundle),
+        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
     };
 }
 
