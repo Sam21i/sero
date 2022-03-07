@@ -38,12 +38,11 @@ class Main extends Component<PropsType, State> {
         try {
             this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
             .then((contacts) => {
-                console.log('fetched emergency contacts', contacts)
                 this.props.setEmergencyContacts(contacts);
             })
             .catch((e) => {
                 console.log('could not load related persons', e)
-            })
+            });
         }
         catch(e) {
             console.log(e)
@@ -94,7 +93,7 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
     return {
-        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts)
     };
 }
 

@@ -1,6 +1,5 @@
 import { Reference, RelatedPerson } from "@i4mi/fhir_r4";
 
-const PHOTO_TITLE = 'Profilbild'
 
 export default class EmergencyContact {
     given : string[];
@@ -31,20 +30,13 @@ export default class EmergencyContact {
         } else {
             this.phone = '';
         }
-        const photo = _fhirResource.photo?.find(p => p.title === PHOTO_TITLE);
-        if (photo && photo.contentType && photo.data) {
-            this.image = {
-                contentType: photo.contentType,
-                data: photo.data,
-            }
-        }
     }
 
     getInitials(): string {
-    return (
-        this.given[0].substring(0,1) +
-        this.family.substring(0,1)
-    ).toUpperCase();
+        return (
+            this.given[0].substring(0,1) +
+            this.family.substring(0,1)
+        ).toUpperCase();
     }
 
     getNameString(): string {
