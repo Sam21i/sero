@@ -1,49 +1,45 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {
   FlatList,
-  Image,
-  SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  Alert,
+  View
 } from 'react-native';
-import {SvgCss} from 'react-native-svg';
 import {
-  appStyles,
   scale,
-  windowHeight,
   windowWidth,
-  AppFonts,
   TextSize,
 } from '../styles/App.style';
-import AppButton from './AppButton';
-import {EMERGENCY_CONTACTS} from '../resources/static/emergencyContacts';
 import EmergencyContactTile from './EmergencyContactTile';
 import PlusButton from './PlusButton';
+import EmergencyContact from '../model/EmergencyContact';
 
-interface EmergencyContactContainerProps {}
+interface EmergencyContactContainerProps {
+    emergencyContacts: EmergencyContact[];
+}
 
 export default class EmergencyContactContainer extends Component<EmergencyContactContainerProps> {
   flatListRef: any;
 
-  _renderEmergencyContacts = ({item}) => {
+  constructor(props: EmergencyContactContainerProps) {
+      super(props);
+      console.log('contact container constructor', this.props.emergencyContacts)
+  }
+
+  _renderEmergencyContacts({item}) {
+      console.log('render item', item)
     return (
       <EmergencyContactTile
-        imageSource={item.image}
-        text={item.text}
+        contact={item}
         size={scale(windowWidth * 0.2)}></EmergencyContactTile>
     );
   };
 
-  _renderItemSeparator = () => {
+  _renderItemSeparator() {
     return <View style={{width: scale(10)}}></View>;
   };
 
-  _renderListFooterComponent = () => {
+  _renderListFooterComponent() {
     return (
       <View
         style={{
@@ -72,7 +68,7 @@ export default class EmergencyContactContainer extends Component<EmergencyContac
             }}
             showsVerticalScrollIndicator={false}
             horizontal
-            data={EMERGENCY_CONTACTS}
+            data={this.props.emergencyContacts}
             renderItem={this._renderEmergencyContacts}
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={this._renderItemSeparator}

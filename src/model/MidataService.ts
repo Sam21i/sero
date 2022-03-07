@@ -110,7 +110,7 @@ export default class MidataService {
                                     .then(base64img => {
                                         contact.setImage({
                                             contentType: photo.contentType || '',
-                                            data:  base64img
+                                            data:  photo.contentType + ';base64,' + base64img
                                         });
                                     })
                                     .catch(e => {

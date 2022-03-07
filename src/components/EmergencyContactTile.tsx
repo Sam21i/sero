@@ -1,4 +1,3 @@
-import initials from 'initials';
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -22,7 +21,10 @@ interface EmergencyContactProps {
 }
 
 export default class EmergencyContactTile extends Component<EmergencyContactProps> {
-  abbr = initials(this.props.text);
+    constructor(props: EmergencyContactProps) {
+        super(props);
+        console.log('contact tile constructor', this.props.contact)
+    }
 
   render() {
     //Image Avatar Styling
@@ -53,18 +55,19 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     };
 
     let emergencyContactAvatar;
-    if (this.props.imageSource) {
+    const contact = this.props.contact;
+    if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <TouchableWithoutFeedback onPress={this.props.onPress}>
             <Image
               style={[image_avatar, styles.image]}
-              source={this.props.imageSource}
+              source={{uri: 'data:' + contact.image}}
             />
           </TouchableWithoutFeedback>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.text}
+              {contact.getNameString()}
             </Text>
           </View>
         </View>
@@ -73,7 +76,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       emergencyContactAvatar = (
         <View style={styles.view}>
           <View style={text_avatar}>
-            {!!this.props.text && (
+            {!!contact.getNameString() && (
               <Text
                 style={[
                   {
@@ -81,13 +84,13 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
                   },
                   this.props.textStyle,
                 ]}>
-                {this.abbr}
+                {contact.getInitials()}
               </Text>
             )}
           </View>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.text}
+              {contact.getNameString()}
             </Text>
           </View>
         </View>

@@ -1,17 +1,24 @@
 import { Reference, RelatedPerson } from "@i4mi/fhir_r4";
 
 export default class EmergencyContact {
-    given : string[];
-    family : string;
-    phone: string;
+    given: string[] = [];
+    family: string = '';
+    phone: string = '';
     image?: {
         contentType: string;
         data: string;
     };
-    fhirResource: RelatedPerson;
+    fhirResource: RelatedPerson = {id: '', patient: {id: ''}};
 
+    constructor(_data: Partial<EmergencyContact> | RelatedPerson) {
+        if ((_data as RelatedPerson).resourceType && (_data as RelatedPerson).resourceType === 'RelatedPerson') {
+            this.fillFromResource(_data as RelatedPerson);
+        } else {
+            Object.assign(this, _data);
+        }
+    }
 
-    constructor(_fhirResource: RelatedPerson){
+    fillFromResource(_fhirResource: RelatedPerson){
         this.fhirResource = _fhirResource;
         if (_fhirResource.name && _fhirResource.name.length > 0) {
             let usualNameIndex = _fhirResource.name.findIndex(n => n.use === 'usual');

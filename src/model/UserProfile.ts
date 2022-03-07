@@ -1,4 +1,4 @@
-import { Bundle, Patient, PatientAdministrativeGender, PatientCommunication, Reference, RelatedPerson } from "@i4mi/fhir_r4";
+import { Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 
 export default class UserProfile {
@@ -12,7 +12,12 @@ export default class UserProfile {
     }
 
     updateProfile(_attributes: Partial<UserProfile>) {
-        Object.assign(this, _attributes);
+        if (_attributes.patientResource) {
+            this.patientResource = _attributes.patientResource as Patient;
+        }
+        if (_attributes.emergencyContacts) {
+            this.emergencyContacts = _attributes.emergencyContacts.map(c => new EmergencyContact(c));
+        }
     }
 
     /**

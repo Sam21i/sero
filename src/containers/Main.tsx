@@ -59,7 +59,7 @@ class Main extends Component<PropsType, State> {
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={{flex: 1, flexDirection: 'row'}}>
-            <EmergencyContactContainer></EmergencyContactContainer>
+            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}></EmergencyContactContainer>
             <EmergencyNumberContainer></EmergencyNumberContainer>
           </View>
           <View style={{flex: 0.92}}>
