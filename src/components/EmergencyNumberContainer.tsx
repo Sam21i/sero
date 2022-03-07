@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import EmergencyNumberButton from './EmergencyNumberButton';
 
 interface EmergencyNumberContainerProps {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    color: 'white',
+    color: colors.white,
   },
   iconView: {
     flex: 1.5,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    color: 'white',
+    color: colors.white,
   },
 });
 

@@ -12,7 +12,7 @@ export default class EmergencyNumberButton extends Component<EmergencyNumberButt
     return (
       <TouchableWithoutFeedback onPress={this.props.onPress}>
         <View style={[styles.button]}>
-          <EmergencyContactIcon width={'100%'} height={'100%'} />
+          <EmergencyContactIcon width='100%' height='100%'/>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     width: scale(90),
+    height: verticalScale(75),
     paddingVertical: verticalScale(15),
     paddingLeft: scale(10),
     paddingRight: scale(20),

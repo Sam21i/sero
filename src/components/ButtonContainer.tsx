@@ -27,9 +27,8 @@ class ButtonContainer extends Component<ButtonContainerProps> {
             }
             position="right"
             color={colors.primary}
-            onPress={() =>
-              this.props.navigation.navigate('Securityplan')
-            }></AppButton>
+            onPress={() => this.props.navigation.navigate('Securityplan')}
+          />
           <AppButton
             style={{backgroundColor: colors.gold}}
             label={this.props.localesHelper.localeString('prismS.title')}
@@ -38,9 +37,8 @@ class ButtonContainer extends Component<ButtonContainerProps> {
             }
             position="right"
             color={colors.gold}
-            onPress={() =>
-              this.props.navigation.navigate('Securityplan')
-            }></AppButton>
+            onPress={() => this.props.navigation.navigate('Securityplan')}
+          />
         </View>
       </View>
     );

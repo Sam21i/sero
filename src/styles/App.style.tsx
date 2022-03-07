@@ -37,6 +37,7 @@ export const TextSize = {
   verySmall: 15,
   small: 18,
   normal: 20,
+  normalPlus: 22,
   big: 24,
   veryBig: 30,
 };

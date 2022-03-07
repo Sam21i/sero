@@ -16,7 +16,7 @@ import {EMERGENCY_CONTACTS} from '../resources/static/emergencyContacts';
 
 interface EmergencyContactContainerProps {
   localesHelper: LocalesHelper;
-  onPress?: () => void;
+  onPressPlusButton?: () => void;
 }
 
 class EmergencyContactContainer extends Component<EmergencyContactContainerProps> {
@@ -43,7 +43,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
           styles.listFooterComponent,
           {width: this.avatarSize, height: this.avatarSize},
         ]}>
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
+        <TouchableWithoutFeedback onPress={this.props.onPressPlusButton}>
           <PlusButton width={scale(30)} height={scale(30)} />
         </TouchableWithoutFeedback>
       </View>

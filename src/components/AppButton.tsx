@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 import {
   AppFonts,
+  colors,
   scale,
   TextSize,
   verticalScale,
@@ -30,7 +31,7 @@ export default class AppButton extends Component<CategoryButtonProps> {
             ]}>
             {this.props.icon != undefined ? (
               //in case of migration (exception)
-              <SvgCss xml={this.props.icon} style={styles.iconLeft} />
+              <SvgCss xml={this.props.icon} style={styles.icon} />
             ) : (
               <></>
             )}
@@ -63,7 +64,7 @@ export default class AppButton extends Component<CategoryButtonProps> {
             </Text>
             {this.props.icon != undefined ? (
               //in case of migration (exception)
-              <SvgCss xml={this.props.icon} style={styles.iconLeft} />
+              <SvgCss xml={this.props.icon} style={styles.icon} />
             ) : (
               <></>
             )}
@@ -95,17 +96,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     flex: 3,
-    fontSize: scale(TextSize.normal + 2),
+    fontSize: scale(TextSize.normalPlus),
     fontFamily: AppFonts.medium,
-    color: 'white',
+    color: colors.white,
     alignSelf: 'center',
   },
-  iconLeft: {
+  icon: {
     flex: 1,
     height: '100%',
-  },
-  iconRight: {
-    flex: 1,
-    width: '100%',
   },
 });
