@@ -1,6 +1,5 @@
 import { Reference, RelatedPerson } from "@i4mi/fhir_r4";
 
-
 export default class EmergencyContact {
     given : string[];
     family : string;
@@ -9,7 +8,7 @@ export default class EmergencyContact {
         contentType: string;
         data: string;
     };
-    fhirResource: RelatedPerson
+    fhirResource: RelatedPerson;
 
 
     constructor(_fhirResource: RelatedPerson){
@@ -37,6 +36,10 @@ export default class EmergencyContact {
             this.given[0].substring(0,1) +
             this.family.substring(0,1)
         ).toUpperCase();
+    }
+
+    setImage(_img: {contentType: string; data: string}): void {
+        this.image = _img;
     }
 
     getNameString(): string {

@@ -1,10 +1,11 @@
 import Config from 'react-native-config';
 import UserProfile from './UserProfile';
-import { Bundle, BundleEntry, Patient, RelatedPerson, Resource } from "@i4mi/fhir_r4";
+import { Bundle, Patient, RelatedPerson, Resource } from "@i4mi/fhir_r4";
 import UserSession from './UserSession';
 import { store } from '../store';
 import { logoutUser } from '../store/midataService/actions';
 import EmergencyContact from './EmergencyContact';
+import RNFetchBlob from 'rn-fetch-blob'
 
 export default class MidataService {
     currentSession: UserSession = new UserSession();
@@ -94,34 +95,42 @@ export default class MidataService {
     }
 
     public fetchEmergencyContactsForUser(_userID: string): Promise<EmergencyContact[]> {
-        return this.fetch(this.RELATED_PERSON_ENDPOINT + '?active=true&patient=' + _userID, 'GET')
-        .then((result) => {
-            console.log('fetched emergency contacts', result)
-            const contacts = new Array<EmergencyContact>();
-            if ((result as Bundle).entry) {
-                ((result as Bundle).entry || []).forEach(c => {
-                    if (c.resource && c.resource.resourceType === 'RelatedPerson') {
-                        const contact = new EmergencyContact(c.resource as RelatedPerson);
-                        const photo = (c.resource as RelatedPerson).photo?.find(p => p.title && p.title.indexOf('Profilbild') > -1);
-                        if (photo && photo.url) {
-                            console.log('concact has photo', photo)
-                            this.fetchImageWithToken(photo.url)
-                            .then(img => {
-                                console.log('fetched', img)
-                            })
-                            .catch(e => {
-                                console.log('Error fetching contact avatar from ' + photo.url, e);
-                            })
+        return new Promise((resolve, reject) => {
+            this.fetch(this.RELATED_PERSON_ENDPOINT + '?active=true&patient=' + _userID, 'GET')
+            .then((result) => {
+                const contacts = new Array<EmergencyContact>();
+                const waitForImagePromises = new Array<Promise<any>>();
+                if ((result as Bundle).entry) {
+                    ((result as Bundle).entry || []).forEach(c => {
+                        if (c.resource && c.resource.resourceType === 'RelatedPerson') {
+                            const contact = new EmergencyContact(c.resource as RelatedPerson);
+                            const photo = (c.resource as RelatedPerson).photo?.find(p => p.title && p.title.indexOf('Profilbild') > -1);
+                            if (photo && photo.url) {
+                                waitForImagePromises.push(this.fetchImageBase64WithToken(photo.url)
+                                    .then(base64img => {
+                                        contact.setImage({
+                                            contentType: photo.contentType || '',
+                                            data:  base64img
+                                        });
+                                    })
+                                    .catch(e => {
+                                        console.log('Error fetching contact avatar from ' + photo.url, e);
+                                    })
+                                );
+                            }
+                            contacts.push(contact);
                         }
-                        contacts.push(contact);
-                    }
+                    });
+                }
+                Promise.all(waitForImagePromises)
+                .finally(() => {
+                    resolve(contacts);
                 });
-            }
-            return contacts;
-        })
-        .catch((e) => {
-            console.log('could not load related persons', e)
-            return Promise.reject();
+            })
+            .catch((e) => {
+                console.log('could not load related persons', e)
+                return reject();
+            });
         });
     }
 
@@ -129,9 +138,9 @@ export default class MidataService {
     * Used to load an image (eg. an avatar) from MIDATA, that is only accessible with
     * access token.
     * @param _url   the url of the image, with or without additional parameters
-    * @return       a Promise with the image
+    * @return       a Promise with the image as base64 string
     **/
-    private fetchImageWithToken(_url: string): Promise<any> {
+    private fetchImageBase64WithToken(_url: string): Promise<string> {
         return new Promise((resolve, reject) => {
             this.currentSession.getValidAccessToken()
             .then((accessToken) => {
@@ -140,14 +149,9 @@ export default class MidataService {
                         ? '&access_token=' + accessToken
                         : '?access_token=' + accessToken
                 );
-                fetch(url)
+                RNFetchBlob.fetch('GET', url)
                 .then((image) => {
-                    image.blob()
-                    .then(blob => {
-                        console.log('fetched image', blob);
-                        console.log('bloburl: ' + URL.createObjectURL(blob) );
-                        return resolve(blob)
-                    });
+                    return resolve(image.base64())
                 })
                 .catch((e) => {
                     console.log('midataservice.fetchImageWithToken(): unable to fetch image from url ' + url, e);
