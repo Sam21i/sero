@@ -37,6 +37,7 @@ export const TextSize = {
   verySmall: 15,
   small: 18,
   normal: 20,
+  normalPlus: 22,
   big: 24,
   veryBig: 30,
 };
@@ -45,9 +46,15 @@ export const TextSize = {
 export const colors = {
   black: 'rgb(26, 25, 23)',
   white: 'rgb(255, 255, 255)',
+  grey: 'rgb(128,128,128)',
+
   success: 'rgb(0, 170, 230)',
   warning: 'rgb(120, 90, 150)',
   alert: 'rgb(185, 50, 100)',
+
+  primary: 'rgb(201, 95, 30)',
+  petrol: 'rgb(10, 95, 108)',
+  gold: 'rgb(205, 177, 65)',
 };
 
 // Layout

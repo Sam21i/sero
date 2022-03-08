@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// Link store data to component :
+// Link store data to component:
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,

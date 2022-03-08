@@ -1,27 +1,23 @@
-import {StackNavigationProp} from '@react-navigation/stack';
 import initials from 'initials';
-import React, {Component, VoidFunctionComponent} from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
   Image,
 } from 'react-native';
-import {SvgCss} from 'react-native-svg';
 import {
   AppFonts,
+  colors,
   scale,
   TextSize,
-  windowHeight,
-  windowWidth,
+  verticalScale,
 } from '../styles/App.style';
-import AppButton from './AppButton';
 
 interface EmergencyContactProps {
   size: any;
-  text: any;
+  name: any;
   imageSource: any;
   onPress?: () => void;
   textStyle?: any;
@@ -29,30 +25,29 @@ interface EmergencyContactProps {
 }
 
 export default class EmergencyContact extends Component<EmergencyContactProps> {
-  abbr = initials(this.props.text);
+  abbr = initials(this.props.name);
 
   render() {
     //Image Avatar Styling
     const image_avatar = {
-      width: this.props.size,
-      height: this.props.size,
-      borderRadius: this.props.size / 2,
+      width: scale(this.props.size),
+      height: scale(this.props.size),
+      borderRadius: scale(this.props.size / 2),
     };
 
     const textContainerStyle = {
-      borderRadius: this.props.size / 2,
-      color: 'white',
-      fontWeight: '400',
+      borderRadius: scale(this.props.size / 2),
+      color: colors.white,
       textAlign: 'center',
-      fontSize: this.props.size / 2.5,
+      fontSize: scale(this.props.size / 2.25),
     };
 
     //If source is undefined or not provided then default_text_avatar styles will be used to display default user avatar
     const text_avatar = {
-      width: this.props.size,
-      height: this.props.size,
-      borderRadius: this.props.size / 2,
-      backgroundColor: 'green',
+      width: scale(this.props.size),
+      height: scale(this.props.size),
+      borderRadius: scale(this.props.size / 2),
+      backgroundColor: colors.grey,
       textAlignVertical: 'center',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -60,18 +55,16 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
     };
 
     let emergencyContactAvatar;
+
     if (this.props.imageSource) {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <TouchableWithoutFeedback onPress={this.props.onPress}>
-            <Image
-              style={[image_avatar, styles.image]}
-              source={this.props.imageSource}
-            />
+            <Image style={image_avatar} source={this.props.imageSource} />
           </TouchableWithoutFeedback>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.text}
+              {this.props.name}
             </Text>
           </View>
         </View>
@@ -80,7 +73,7 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <View style={text_avatar}>
-            {!!this.props.text && (
+            {!!this.props.name && (
               <Text
                 style={[
                   {
@@ -94,7 +87,7 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
           </View>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.text}
+              {this.props.name}
             </Text>
           </View>
         </View>
@@ -108,14 +101,13 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
   },
-  image: {},
   textView: {
-    justifyContent: 'center',
-    marginTop: scale(5),
+    marginTop: verticalScale(2.5),
   },
   text: {
     textAlign: 'center',
-    color: 'white',
-    fontSize: scale(TextSize.verySmall -2),
+    color: colors.white,
+    fontFamily: AppFonts.medium,
+    fontSize: scale(TextSize.verySmall),
   },
 });
