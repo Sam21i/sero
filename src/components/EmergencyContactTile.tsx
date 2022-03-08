@@ -62,7 +62,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
           <TouchableWithoutFeedback onPress={this.props.onPress}>
             <Image
               style={[image_avatar, styles.image]}
-              source={{uri: 'data:' + contact.image}}
+              source={{uri: 'data:' + contact.image.data}}
             />
           </TouchableWithoutFeedback>
           <View style={[styles.textView, {width: this.props.size}]}>
