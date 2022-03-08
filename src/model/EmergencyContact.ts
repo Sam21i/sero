@@ -77,13 +77,15 @@ export default class EmergencyContact {
                         value: _data.phone
                     }
                 ],
-                photo: [
-                    {
-                        contentType: 'image/png',
-                        data: '',
-                        title: 'Profilbild'
-                    }
-                ],
+                photo: _data.image
+                        ? [
+                            {
+                                contentType: _data.image.contentType,
+                                data: _data.image.data.split('base64,')[1],
+                                title: 'Profilbild' + _data.image.contentType.split('/')[1]
+                            }
+                        ]
+                        : [],
                 active: true,
                 patient: _patientReference,
                 relationship: [
