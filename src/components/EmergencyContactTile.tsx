@@ -1,4 +1,3 @@
-import initials from 'initials';
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -7,25 +6,27 @@ import {
   View,
   Image,
 } from 'react-native';
+import EmergencyContact from '../model/EmergencyContact';
 import {
   AppFonts,
   colors,
   scale,
   TextSize,
-  verticalScale,
+  verticalScale
 } from '../styles/App.style';
 
 interface EmergencyContactProps {
-  size: any;
-  name: any;
-  imageSource: any;
+  size: number;
+  contact: EmergencyContact;
   onPress?: () => void;
   textStyle?: any;
   style?: any;
 }
 
-export default class EmergencyContact extends Component<EmergencyContactProps> {
-  abbr = initials(this.props.name);
+export default class EmergencyContactTile extends Component<EmergencyContactProps> {
+    constructor(props: EmergencyContactProps) {
+        super(props);
+    }
 
   render() {
     //Image Avatar Styling
@@ -55,16 +56,17 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
     };
 
     let emergencyContactAvatar;
+    const contact = this.props.contact;
 
-    if (this.props.imageSource) {
+    if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <TouchableWithoutFeedback onPress={this.props.onPress}>
-            <Image style={image_avatar} source={this.props.imageSource} />
+            <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
           </TouchableWithoutFeedback>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.name}
+              {contact.getNameString()}
             </Text>
           </View>
         </View>
@@ -73,7 +75,7 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <View style={text_avatar}>
-            {!!this.props.name && (
+            {!!contact.getNameString() && (
               <Text
                 style={[
                   {
@@ -81,13 +83,13 @@ export default class EmergencyContact extends Component<EmergencyContactProps> {
                   },
                   this.props.textStyle,
                 ]}>
-                {this.abbr}
+                {contact.getInitials()}
               </Text>
             )}
           </View>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {this.props.name}
+              {contact.getNameString()}
             </Text>
           </View>
         </View>

@@ -6,7 +6,7 @@ export const ADD_RESOURCE_TO_SYNCHRONIZE = 'miDataService/ADD_RESOURCE_TO_SYNCHR
 export const ALL_RESOURCES_SENT = 'miDataService/ALL_RESOURCES_SENT';
 
 export const UPDATE_USER_PROFILE = 'userProfile/UPDATE_USER_PROFILE';
-export const ADD_TO_USER_PROFILE = 'userProfile/ADD_TO_USER_PROFILE';
+export const SET_EMERGENCY_CONTACTS = 'userProfile/SET_EMERGENCY_CONTACTS';
 
 export const APPLICATION_STARTED = 'ServiceData/APPLICATION_STARTED';
 

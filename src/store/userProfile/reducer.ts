@@ -1,7 +1,8 @@
 import { createReducer } from '../helpers/reducerCreator';
 import { REHYDRATE } from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, SET_ASSISTED_ZIP, RESOURCE_SENT, UPDATE_USER_PROFILE } from '../definitions';
+import { LOGOUT_AUTHENTICATE_USER, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
+import { Bundle } from '@i4mi/fhir_r4';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -19,30 +20,15 @@ const UserProfileStore = createReducer(new UserProfile(), {
         newState.updateProfile(newValues);
         return newState;
     },
-    [RESOURCE_SENT](state: UserProfile, action) {
-        let newState = new UserProfile(state);
-        const resource = action.resource.resource;
-        if (resource.resourceType === 'QuestionnaireResponse' && resource.questionnaire === 'http://to.be.defined|0.1') { // TODO correct URL
-            newState.updateSituationQuestionnaireResponse(resource);
-        }
-        return newState;
-    },
-    [ADD_TO_USER_PROFILE](state: UserProfile, action) {
+    [SET_EMERGENCY_CONTACTS](state: UserProfile, action: {data: Bundle}) {
         let newState = new UserProfile(state);
         const resource = action.data;
-        if (resource.resourceType === 'QuestionnaireResponse' && resource.questionnaire === 'http://to.be.defined|0.1') { // TODO correct URL
-            newState.updateSituationQuestionnaireResponse(resource);
-        }
+        newState.setEmergencyContacts(action.data);
         return newState;
     },
     [LOGOUT_AUTHENTICATE_USER](state: UserProfile) {
         let newState = new UserProfile(state);
         newState.resetProfileData();
-        return newState;
-    },
-    [SET_ASSISTED_ZIP](state: UserProfile, action) {
-        let newState = new UserProfile(state);
-        newState.setAssistedZip(action.data);
         return newState;
     }
 });
