@@ -16,10 +16,10 @@ export const windowHeight = Dimensions.get('window').height;
 const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 667;
 
-export const scale = size => (windowWidth / guidelineBaseWidth) * size;
-export const verticalScale = size =>
+export const scale = (size: number) => (windowWidth / guidelineBaseWidth) * size;
+export const verticalScale = (size: number) =>
   (windowHeight / guidelineBaseHeight) * size;
-export const moderateScale = (size, factor = 0.5) =>
+export const moderateScale = (size: number, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 export const isSmallScreen = () => Dimensions.get('window').height < 570;
 
@@ -46,6 +46,7 @@ export const TextSize = {
 export const colors = {
   black: 'rgb(26, 25, 23)',
   white: 'rgb(255, 255, 255)',
+  lightGrey: 'rgb(235,235,235)',
   grey: 'rgb(128,128,128)',
 
   success: 'rgb(0, 170, 230)',

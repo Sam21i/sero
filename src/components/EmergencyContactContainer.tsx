@@ -28,7 +28,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
       super(props);
   }
 
-  _renderEmergencyContacts({item}) {
+  _renderEmergencyContacts({item}): JSX.Element {
     return (
       <EmergencyContactTile contact={item}
                             size={this.avatarSize}>

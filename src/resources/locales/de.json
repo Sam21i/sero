@@ -4,6 +4,7 @@
     "cancel": "Abbrechen",
     "invalidAnswer": "ungültige Antwort",
     "loading": "Daten laden",
+    "save": "Speichern",
     "login": "Anmelden",
     "register": "Registrieren",
     "loginPromptText": "Bitte registriere dich oder melde dich auf MIDATA an, um deine Daten zu speichern.",
@@ -11,6 +12,9 @@
     "logout": "Abmelden",
     "multipleChoice": "Mehrfachauswahl",
     "next": "Weiter",
+    "given": "Vorname",
+    "family": "Nachname",
+    "phone": "Telefon",
     "no": "Nein",
     "notifications": {
       "allow": "Benachrichtigungen erlauben",
@@ -34,7 +38,12 @@
     "call": "anrufen"
   },
   "contacts": {
-    "title": "Meine Kontakte anrufen"
+    "title": "Mein Umfeld anrufen",
+    "bubbleTitle": "Was möchtest du tun?",
+    "addContact": "Kontakt hinzufügen",
+    "editContact": "Kontakt bearbeiten",
+    "deleteContact": "Kontakt löschen",
+    "selectContact": "Kontakt auswählen"
   },
   "info": {
     "title": "Informationen"
