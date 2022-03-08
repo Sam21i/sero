@@ -1,4 +1,4 @@
-import { Reference, RelatedPerson } from "@i4mi/fhir_r4";
+import { ContactPointSystem, Reference, RelatedPerson } from '@i4mi/fhir_r4';
 
 export default class EmergencyContact {
     given: string[] = [];
@@ -59,5 +59,47 @@ export default class EmergencyContact {
 
     getPatientReference(): Reference {
         return this.fhirResource.patient;
+    }
+
+    createFhirResource(_data: Partial<EmergencyContact>, _patientReference: Reference): RelatedPerson {
+        if (_data.family && _data.given && _data.given.length > 0 && _data.phone) {
+            return  {
+                resourceType: 'RelatedPerson',
+                name: [
+                    {
+                        family: _data.family,
+                        given: _data.given
+                    }
+                ],
+                telecom: [
+                    {
+                        system: ContactPointSystem.PHONE,
+                        value: _data.phone
+                    }
+                ],
+                photo: [
+                    {
+                        contentType: 'image/png',
+                        data: '',
+                        title: 'Profilbild'
+                    }
+                ],
+                active: true,
+                patient: _patientReference,
+                relationship: [
+                    {
+                        coding: [
+                            {
+                                system: 'http://terminology.hl7.org/CodeSystem/v2-0131',
+                                code: 'C',
+                                display: 'Emergency Contact'
+                            }
+                        ]
+                    }
+                ]
+            }
+        } else {
+            throw new Error('Missing arguments. Please provide at least given name, family name and phone number for creating the FHIR resource.');
+        }
     }
 }
