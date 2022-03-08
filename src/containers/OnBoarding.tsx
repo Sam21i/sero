@@ -140,7 +140,7 @@ class OnBoarding extends Component<PropsType, State> {
             style={styles.button}
             onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}>
             <Text style={styles.buttonText}>
-              {this.props.localesHelper.localeString('onBoarding.next')}
+              {this.props.localesHelper.localeString('common.next')}
             </Text>
             <Weiter width={scale(50)} height={scale(50)} />
           </TouchableOpacity>
@@ -153,7 +153,7 @@ class OnBoarding extends Component<PropsType, State> {
             style={[styles.button]}
             onPress={() => this.registerOrLogin()}>
             <Text style={styles.buttonText}>
-              {this.props.localesHelper.localeString('onBoarding.midata')}
+              {this.props.localesHelper.localeString('common.midata')}
             </Text>
             <Weiter width={scale(50)} height={scale(50)} />
           </TouchableOpacity>
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// Link store data to component :
+// Link store data to component:
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,

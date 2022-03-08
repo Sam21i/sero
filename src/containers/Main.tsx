@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonContainer from '../components/ButtonContainer';
@@ -16,11 +12,13 @@ import { connect } from 'react-redux';
 import * as userProfileActions from '../store/userProfile/actions';
 import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
+import LocalesHelper from '../locales';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
+  localesHelper: LocalesHelper;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
 }
 
@@ -53,19 +51,24 @@ class Main extends Component<PropsType, State> {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1}} edges={['top']}>
+      <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
           resizeMode="cover"
           style={styles.backgroundImage}>
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}></EmergencyContactContainer>
+          <View style={styles.topView}>
+            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
+                                       localesHelper={this.props.localesHelper}
+                                       onPressPlusButton={() => {console.log('click')}}>
+            </EmergencyContactContainer>
             <EmergencyNumberContainer></EmergencyNumberContainer>
           </View>
-          <View style={{flex: 0.92}}>
+          <View style={styles.bottomView}>
             <MainNotification></MainNotification>
           </View>
-          <ButtonContainer navigation={this.props.navigation}></ButtonContainer>
+          <ButtonContainer
+            navigation={this.props.navigation}
+            localesHelper={this.props.localesHelper}></ButtonContainer>
         </ImageBackground>
       </SafeAreaView>
     );
@@ -75,11 +78,18 @@ class Main extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   backgroundImage: {
     flex: 1,
     justifyContent: 'center',
+  },
+  topView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  bottomView: {
+    flex: 0.92,
+    backgroundColor: 'rgba(255, 255, 255, 0.65)',
   },
 });
 

@@ -3,65 +3,66 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  View
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native';
-import {
-  scale,
-  windowWidth,
-  TextSize,
-} from '../styles/App.style';
-import EmergencyContactTile from './EmergencyContactTile';
-import PlusButton from './PlusButton';
+import {scale, TextSize, colors, AppFonts} from '../styles/App.style';
+import LocalesHelper from '../locales';
+import {AppStore} from '../store/reducers';
+import {connect} from 'react-redux';
+import PlusButton from '../resources/images/btn_plus.svg';
 import EmergencyContact from '../model/EmergencyContact';
+import EmergencyContactTile from './EmergencyContactTile';
 
 interface EmergencyContactContainerProps {
-    emergencyContacts: EmergencyContact[];
+  localesHelper: LocalesHelper;
+  onPressPlusButton?: () => void;
+  emergencyContacts: EmergencyContact[];
 }
 
-export default class EmergencyContactContainer extends Component<EmergencyContactContainerProps> {
+class EmergencyContactContainer extends Component<EmergencyContactContainerProps> {
   flatListRef: any;
+  avatarSize: number = scale(75);
 
   constructor(props: EmergencyContactContainerProps) {
       super(props);
-      console.log('contact container constructor', this.props.emergencyContacts)
   }
 
   _renderEmergencyContacts({item}) {
-      console.log('render item', item)
     return (
-      <EmergencyContactTile
-        contact={item}
-        size={scale(windowWidth * 0.2)}></EmergencyContactTile>
+      <EmergencyContactTile contact={item}
+                            size={this.avatarSize}>
+      </EmergencyContactTile>
     );
   };
 
   _renderItemSeparator() {
-    return <View style={{width: scale(10)}}></View>;
+    return <View style={styles.itemSeparator}></View>;
   };
 
   _renderListFooterComponent() {
     return (
       <View
-        style={{
-          flex: 1,
-          width: scale(windowWidth * 0.2),
-          alignContent: 'center',
-          alignItems: 'center',
-          paddingTop: scale(10),
-        }}>
-        <PlusButton />
+        style={[
+          styles.listFooterComponent,
+          {width: this.avatarSize, height: this.avatarSize},
+        ]}>
+        <TouchableWithoutFeedback onPress={this.props.onPressPlusButton}>
+          <PlusButton width={scale(30)} height={scale(30)} />
+        </TouchableWithoutFeedback>
       </View>
     );
   };
 
   render() {
     return (
-      <View style={styles.view}>
-        <View style={styles.top}>
-          <Text style={styles.title}>Meine Angehörigen anrufen</Text>
+      <View style={styles.container}>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>
+            {this.props.localesHelper.localeString('main.myEnvironmentTitle')}
+          </Text>
         </View>
-        <View style={styles.bottom}>
-          <View style={{marginHorizontal: scale(windowWidth * 0.015)}}></View>
+        <View style={styles.emergencyContactsView}>
           <FlatList
             ref={ref => {
               this.flatListRef = ref;
@@ -69,10 +70,10 @@ export default class EmergencyContactContainer extends Component<EmergencyContac
             showsVerticalScrollIndicator={false}
             horizontal
             data={this.props.emergencyContacts}
-            renderItem={this._renderEmergencyContacts}
+            renderItem={this._renderEmergencyContacts.bind(this)}
             showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={this._renderItemSeparator}
-            ListFooterComponent={this._renderListFooterComponent}
+            ItemSeparatorComponent={this._renderItemSeparator.bind(this)}
+            ListFooterComponent={this._renderListFooterComponent.bind(this)}
           />
         </View>
       </View>
@@ -81,26 +82,41 @@ export default class EmergencyContactContainer extends Component<EmergencyContac
 }
 
 const styles = StyleSheet.create({
-  view: {
+  container: {
     flex: 2.71,
     flexDirection: 'column',
-    backgroundColor: '#rgba(255, 0, 0, 0.2)',
+    backgroundColor: '#rgba(203, 95, 11, 0.25)',
   },
-  top: {
+  titleView: {
     flex: 1,
     width: '100%',
     justifyContent: 'center',
   },
-  bottom: {
+  emergencyContactsView: {
     flex: 2.5,
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    color: 'white',
+    color: colors.white,
+  },
+  itemSeparator: {
+    width: scale(10),
+  },
+  listFooterComponent: {
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
 });
+
+// Link store data to component:
+function mapStateToProps(state: AppStore) {
+  return {
+    localesHelper: state.LocalesHelperStore,
+  };
+}
+
+export default connect(mapStateToProps, undefined)(EmergencyContactContainer);

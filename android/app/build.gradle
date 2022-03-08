@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-
 import com.android.build.OutputFile
 
 /**
@@ -125,13 +124,25 @@ def enableHermes = project.ext.react.get("enableHermes", false);
  */
 def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
 
+project.ext.envConfigFiles = [
+        debug  : ".env.dev",
+        release  : ".env.prod",
+        devdebug  : ".env.dev",
+        devrelease  : ".env.prod",
+        proddebug: ".env.dev",
+        prodrelease: ".env.prod"
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "ch.bfh.i4mi.sero"
+        applicationId "com.sero"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
@@ -139,6 +150,7 @@ android {
         manifestPlaceholders = [
                 appAuthRedirectScheme: 'sero.app'
         ]
+        resValue "string", "build_config_package", "com.sero"
     }
 
     splits {
@@ -197,6 +209,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation "androidx.core:core-splashscreen:1.0.0-beta01" // bootsplash
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

@@ -65,6 +65,19 @@ export default class UserProfile {
         return language;
     }
 
+    getGivenName(): string | undefined {
+      const name = this.patientResource.name;
+      if (name !== undefined && name.length > 0) {
+        const primaryName = name[0];
+        let givenName = '';
+        if (primaryName.given !== undefined && primaryName.given.length > 0) {
+          givenName = primaryName.given[0];
+        }
+        return givenName;
+      }
+      return undefined;
+    }
+
     getFullName(): string | undefined {
         const name = this.patientResource.name;
         if (name !== undefined && name.length > 0) {

@@ -1,10 +1,51 @@
 {
-  "welcomePage": {
+  "common": {
+    "back": "Zurück",
+    "cancel": "Abbrechen",
+    "invalidAnswer": "ungültige Antwort",
+    "loading": "Daten laden",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "loginPromptText": "Bitte registriere dich oder melde dich auf MIDATA an, um deine Daten zu speichern.",
+    "loginPromptTitle": "Registrierung",
+    "logout": "Abmelden",
+    "multipleChoice": "Mehrfachauswahl",
+    "next": "Weiter",
+    "no": "Nein",
+    "notifications": {
+      "allow": "Benachrichtigungen erlauben",
+      "title": "Erinnerungen"
+    },
+    "ok": "OK",
+    "save": "Speichern",
+    "yes": "Ja",
+    "midata": "MIDATA"
+  },
+  "welcome": {
     "welcomeMessage": "Willkommen!",
     "start": "Starten"
   },
-  "onBoarding": {
-    "next": "Weiter",
-    "midata": "MIDATA"
+  "main": {
+    "default": "Entdecke jetzt die SERO App - los geht's.",
+    "myEnvironmentTitle": "Mein Umfeld anrufen",
+    "emergencyContactTitle": "Notfall anrufen",
+    "greeting": "Hallo {{name}}",
+    "emergency": "Notfall",
+    "call": "anrufen"
+  },
+  "info": {
+    "title": "Informationen"
+  },
+  "settings": {
+    "title": "Einstellungen"
+  },
+  "prismS": {
+    "title": "Meine \nEinschätzung"
+  },
+  "securityplan": {
+    "title": "Mein \nSicherheitsplan"
+  },
+  "myEnvironment": {
+    "title": "Mein \nUmfeld"
   }
 }

@@ -9,13 +9,13 @@ import {
   verticalScale,
   windowHeight,
 } from '../styles/App.style';
-import SpeechBubble from '../resources/images/common/speechBubble.svg';
-import Person from '../resources/images/common/person.svg';
-import LogoFull from '../resources/images/common/logo_full.svg';
 import AppButton from '../components/AppButton';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
+import SpeechBubble from '../resources/images/common/speechBubble.svg';
+import Person from '../resources/images/common/person.svg';
+import LogoFull from '../resources/images/common/logo_full.svg';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -63,7 +63,7 @@ class Welcome extends Component<PropsType, State> {
               }}>
               <Text style={styles.text}>
                 {this.props.localesHelper.localeString(
-                  'welcomePage.welcomeMessage',
+                  'welcome.welcomeMessage',
                 )}
               </Text>
             </View>
@@ -82,7 +82,7 @@ class Welcome extends Component<PropsType, State> {
                 bottom: windowHeight * 0.075,
               }}>
               <AppButton
-                label={'Starten'}
+                label={this.props.localesHelper.localeString('welcome.start')}
                 icon={
                   '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
                 }
