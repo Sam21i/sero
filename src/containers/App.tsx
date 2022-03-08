@@ -18,6 +18,7 @@ import {store, persistor} from '../store';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Securityplan from './Securityplan';
+import Contacts from './Contacts';
 
 interface PropsType {}
 
@@ -56,7 +57,15 @@ function MainStackScreen({route}: {route: any}) {
       <MainStack.Screen
         name="Home"
         component={Main}
-        options={{}}></MainStack.Screen>
+        options={{
+          gestureDirection: 'vertical'
+        }}></MainStack.Screen>
+      <MainStack.Screen
+        name="Contacts"
+        component={Contacts}
+        options={{
+          animationEnabled: false
+        }}></MainStack.Screen>
     </MainStack.Navigator>
   );
 }

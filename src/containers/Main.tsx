@@ -21,6 +21,10 @@ export default class Main extends Component<PropsType, State> {
     this.state = {};
   }
 
+  editContacts(): void {
+    this.props.navigation.navigate('Contacts');
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
@@ -29,7 +33,7 @@ export default class Main extends Component<PropsType, State> {
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <EmergencyContactContainer></EmergencyContactContainer>
+            <EmergencyContactContainer localesHelper={this.props.localesHelper} onPressPlusButton={() => { this.props.navigation.navigate('Contacts') }}></EmergencyContactContainer>
             <EmergencyNumberContainer></EmergencyNumberContainer>
           </View>
           <View style={styles.bottomView}>

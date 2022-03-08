@@ -33,6 +33,9 @@
     "emergency": "Notfall",
     "call": "anrufen"
   },
+  "contacts": {
+    "title": "Meine Kontakte anrufen"
+  },
   "info": {
     "title": "Informationen"
   },
