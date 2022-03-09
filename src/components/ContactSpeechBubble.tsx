@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -7,6 +7,7 @@ import {AppFonts, colors, scale, TextSize, } from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
+import { launchImageLibrary} from 'react-native-image-picker'
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   add = 'ADD',
@@ -14,6 +15,8 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
   edit = 'EDIT',
   menu = "MENU"
 };
+
+const MAX_IMAGE_SIZE: 600;
 
 const MENU_ACTIONS = [
   { name: 'addContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.add },
@@ -63,6 +66,29 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     this.setState({mode: _mode});
   }
 
+  pickImage() {
+    launchImageLibrary({
+      mediaType: 'photo',
+      maxWidth: MAX_IMAGE_SIZE,
+      maxHeight: MAX_IMAGE_SIZE,
+      includeBase64: true
+    })
+    .then(image => {
+      if (!image.didCancel && image.assets && image.assets.length > 0) {
+        this.setState({
+          new_image: {
+            contentType: image.assets[0].type || '',
+            data: image.assets[0].base64 || ''
+          }
+        });
+        console.log(this.state)
+      }
+    })
+    .catch(e => {
+      console.log('Error picking image', e);
+    });
+  }
+
   renderBubbleTitle(_translateString: string) {
     return (
       <View style={styles.titleBar}>
@@ -105,10 +131,14 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       <>
       { this.renderBubbleTitle('contacts.addContact') }
       <View style={styles.formWrapper}>
-        <View style={styles.cameraButton} >
-          <TouchableOpacity onPress={() => console.log('TODO: add image')}>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={this.pickImage.bind(this)}>
+          { this.state.new_image
+            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.contentType + ';base64,'+ this.state.new_image.data}} />
+            : <View style={styles.cameraButton} >
+              </View>
+          }
+
+        </TouchableOpacity>
         <View style={styles.formInputs}>
         {
           FORM_FIELDS.map(field => {

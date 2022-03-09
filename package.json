@@ -27,6 +27,7 @@
     "react-native-config": "^1.4.5",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-i18n": "^2.0.15",
+    "react-native-image-picker": "^4.7.3",
     "react-native-localize": "^2.1.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",
