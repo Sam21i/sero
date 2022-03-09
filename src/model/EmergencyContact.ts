@@ -68,9 +68,10 @@ export default class EmergencyContact {
   }
 
   isEqual(_contact: EmergencyContact): boolean {
-    return this.family === _contact.family &&
+    return this.fhirResource?.id === _contact.fhirResource?.id ||
+          (this.family === _contact.family &&
            this.given === _contact.given &&
-           this.phone === _contact.phone;
+           this.phone === _contact.phone);
   }
 
   createFhirResource(_patientReference: Reference, _data?: Partial<EmergencyContact>, ): RelatedPerson {
@@ -80,6 +81,7 @@ export default class EmergencyContact {
     const image = _data?.image || this.image;
     if (family && given && given.length > 0 && phone) {
       return  {
+        id: this.fhirResource.id,
         resourceType: 'RelatedPerson',
         name: [
           {

@@ -52,7 +52,6 @@ export function synchronizeResource(dispatch: Function, resource: Resource) {
         console.log('Could not upload ' + resource.id ? resource.id : '' + ', add to queue.', error);
         dispatch(new Action(ADD_RESOURCE_TO_SYNCHRONIZE, resource).getObjectAction());
     });
-
 }
 
 export function logoutUser(dispatch: Function) {

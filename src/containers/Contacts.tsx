@@ -6,7 +6,8 @@ import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import * as miDataServiceActions from '../store/midataService/actions';
+import * as midataServiceActions from '../store/midataService/actions';
+import * as userProfileActions from '../store/userProfile/actions';
 import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
 import { AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
 import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/ContactSpeechBubble';
@@ -20,6 +21,8 @@ interface PropsType {
   midataService: MidataService;
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
+  synchronizeResource: (r: Resource) => void;
+  removeContact: (c: EmergencyContact) => void;
 }
 
 interface State {
@@ -54,20 +57,23 @@ class Contacts extends Component<PropsType, State> {
         bubbleVisible: false,
         mode: CONTACT_SPEECH_BUBBLE_MODE.menu
       });
-      switch (_arg.mode) {
-        case (CONTACT_SPEECH_BUBBLE_MODE.add):
-          const patientReference = this.props.userProfile.getFhirReference();
-          if (patientReference) {
-            const fhirResource = _arg.data.createFhirResource(patientReference);
-            this.props.addResource(fhirResource);
-          }
-
-          break;
-        case (CONTACT_SPEECH_BUBBLE_MODE.edit):
-          console.warn('TODO: edit contact');
-          break;
+      const patientReference = this.props.userProfile.getFhirReference();
+      if (patientReference) {
+        const relatedPersonResource = _arg.data.createFhirResource(patientReference);
+        switch (_arg.mode) {
+          case CONTACT_SPEECH_BUBBLE_MODE.add:
+            this.props.addResource(relatedPersonResource);
+            break;
+          case CONTACT_SPEECH_BUBBLE_MODE.delete:
+            this.props.removeContact(_arg.data);
+            relatedPersonResource.active = false;
+            // no break, because we also have to synchronize the resource
+          case CONTACT_SPEECH_BUBBLE_MODE.edit:
+            this.props.synchronizeResource(relatedPersonResource);
+            break;
+        }
       }
-      this.props.navigation.pop()
+      this.props.navigation.pop();
     }
   }
 
@@ -130,7 +136,6 @@ class Contacts extends Component<PropsType, State> {
             { this.state.listVisible &&
               <FlatList data={contacts}
                         alwaysBounceVertical={false}
-                        style={styles.list}
                         renderItem={this.renderContactListItem.bind(this)}
                         showsHorizontalScrollIndicator={false}
               />
@@ -201,9 +206,6 @@ const styles = StyleSheet.create({
     flex: 3,
     backgroundColor: 'rgba(255, 255, 255, 0.65)',
   },
-  list: {
-    marginTop: scale(30)
-  },
   listItem: {
     marginVertical: scale(10),
     flexDirection: 'row',
@@ -252,7 +254,9 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    addResource: (r: Resource) => miDataServiceActions.addResource(dispatch, r)
+    addResource: (r: Resource) => midataServiceActions.addResource(dispatch, r),
+    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r),
+    removeContact: (c: EmergencyContact) => userProfileActions.removeEmergencyContact(dispatch, c)
   };
 }
 
