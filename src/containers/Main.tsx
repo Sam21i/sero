@@ -10,6 +10,7 @@ import MidataService from '../model/MidataService';
 import { AppStore } from '../store/reducers';
 import { connect } from 'react-redux';
 import * as userProfileActions from '../store/userProfile/actions';
+import * as midataServiceActions from '../store/midataService/actions';
 import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
@@ -19,6 +20,7 @@ interface PropsType {
   midataService: MidataService;
   userProfile: UserProfile;
   localesHelper: LocalesHelper;
+  uploadPendingResources: () => void;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
 }
 
@@ -29,6 +31,9 @@ class Main extends Component<PropsType, State> {
     super(props);
     this.loadEmergencyContacts();
     this.state = {};
+    if (this.props.midataService.isAuthenticated()) {
+      this.props.uploadPendingResources();
+    }
   }
 
   editContacts(): void {
@@ -106,7 +111,8 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
     return {
-        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts)
+        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+        uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
     };
 }
 

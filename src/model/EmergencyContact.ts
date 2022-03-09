@@ -1,4 +1,5 @@
 import { ContactPointSystem, Reference, RelatedPerson } from '@i4mi/fhir_r4';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class EmergencyContact {
   given: string[] = [];
@@ -81,7 +82,7 @@ export default class EmergencyContact {
     const image = _data?.image || this.image;
     if (family && given && given.length > 0 && phone) {
       return  {
-        id: this.fhirResource.id,
+        id: this.fhirResource.id || 'temp-' + uuidv4(),
         resourceType: 'RelatedPerson',
         name: [
           {

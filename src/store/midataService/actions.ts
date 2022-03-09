@@ -42,10 +42,18 @@ export function addResource(dispatch: Function, resource: Resource) {
 */
 export function synchronizeResource(dispatch: Function, resource: Resource) {
     dispatch(new Action(ADD_TO_USER_PROFILE, resource).getObjectAction());
+    if (resource.id?.indexOf('temp') === 0) {
+      // when resource has temp id, it has not been uploaded before it was edited and synced again
+      let uploadJobs = ((store.getState()) as any).MiDataServiceStore.pendingResources;
+      const index = uploadJobs.findIndex(job => job.resource.id === resource.id);
+      if (index > -1) {
+        dispatch(new Action(ADD_RESOURCE_TO_SYNCHRONIZE, resource).getObjectAction());
+      }
+    }
     uploadResource(dispatch, {
         resource: resource,
         isUploading: true,
-        mustBeSynchronized: true,
+        mustBeSynchronized: resource.id?.indexOf('temp') === -1, // don't have to sync resources with temp id
         timestamp: new Date()
     })
     .catch((error) => {

@@ -62,7 +62,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         data: undefined
       });
     }
-
     this.setState({mode: _mode});
   }
 
@@ -172,10 +171,20 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   }
 
   renderEditForm() {
+    const newContact = this.props.contact || new EmergencyContact({});
+    newContact.family = newContact?.family + '2';
     return (
       <>
       { this.renderBubbleTitle('contacts.editContact') }
       <Text>TODO: Edit Form ({ this.props.contact?.getNameString() })</Text>
+      <TouchableOpacity onPress={() => this.props.onClose({
+          mode: this.state.mode,
+          data: newContact
+        })}>
+        <View style={styles.formButton}>
+          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
+        </View>
+      </TouchableOpacity>
       </>
     );
   }
@@ -185,6 +194,14 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       <>
       { this.renderBubbleTitle('contacts.deleteContact') }
       <Text>TODO: Delete Form ({ this.props.contact?.getNameString() })</Text>
+      <TouchableOpacity onPress={() => this.props.onClose({
+          mode: this.state.mode,
+          data: this.props.contact
+        })}>
+        <View style={styles.formButton}>
+          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
+        </View>
+      </TouchableOpacity>
       </>
     );
   }
