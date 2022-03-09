@@ -47,6 +47,7 @@ export const colors = {
   black: 'rgb(26, 25, 23)',
   white: 'rgb(255, 255, 255)',
   lightGrey: 'rgb(235,235,235)',
+  veryLightGrey: 'rgb(200,200,200)',
   grey: 'rgb(128,128,128)',
 
   success: 'rgb(0, 170, 230)',
@@ -56,6 +57,7 @@ export const colors = {
   primary: 'rgb(201, 95, 30)',
   petrol: 'rgb(10, 95, 108)',
   gold: 'rgb(205, 177, 65)',
+  linen: 'rgb(250, 239, 231)'
 };
 
 // Layout

@@ -64,6 +64,14 @@ export default class EmergencyContact {
     return name + this.family;
   }
 
+  getGivenNameString(): string {
+    let name = '';
+    this.given.forEach(givenName => {
+      name += givenName + ' ';
+    });
+    return name;
+  }
+
   getPatientReference(): Reference {
     return this.fhirResource.patient;
   }

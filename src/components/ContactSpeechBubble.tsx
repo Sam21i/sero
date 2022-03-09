@@ -3,11 +3,12 @@ import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFe
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, } from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth, } from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
 import { launchImageLibrary} from 'react-native-image-picker'
+import DialogPerson from '../resources/images/common/person.svg';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   add = 'ADD',
@@ -94,7 +95,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <Text style={styles.titlebarText}>
           { this.props.localesHelper.localeString(_translateString) }
         </Text>
-        <CancelButton width={scale(30)} height={scale(30)} onPress={() => this.props.onClose({mode: this.state.mode})}/>
+        <CancelButton width={scale(35)} height={scale(35)} onPress={() => this.props.onClose({mode: this.state.mode})}/>
       </View>
     );
   }
@@ -133,7 +134,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <TouchableOpacity onPress={this.pickImage.bind(this)}>
           { this.state.new_image
             ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-            : <View style={styles.cameraButton} >
+            : <View style={styles.cameraButton}>
+              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
               </View>
           }
 
@@ -142,7 +144,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={styles.input}
+                              style={[styles.input]}
                               autoCorrect={false}
                               onChangeText={(t) => this.setState({['new_' + field]: t})}
                               value={this.state['new_' + field]}
@@ -176,7 +178,39 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     return (
       <>
       { this.renderBubbleTitle('contacts.editContact') }
-      <Text>TODO: Edit Form ({ this.props.contact?.getNameString() })</Text>
+      <View style={styles.formWrapper}>
+        <TouchableOpacity onPress={this.pickImage.bind(this)}>
+          { this.state.new_image?.data
+            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
+            : <Image style={styles.cameraButton} source={{uri: 'data:' + this.props.contact?.image?.data}} />
+          }
+        </TouchableOpacity>
+        <View style={styles.formInputs}>
+        {
+          FORM_FIELDS.map(field => {
+            if(field === 'given'){
+              return <TextInput key={'input.' + field}
+              style={[styles.input]}
+              autoCorrect={false}
+              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              value={this.state['new_' + field]}
+              placeholder={this.props.contact?.getGivenNameString()}
+              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+              />
+            } else {
+              return <TextInput key={'input.' + field}
+              style={[styles.input]}
+              autoCorrect={false}
+              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              value={this.state['new_' + field]}
+              placeholder={this.props.contact?.[field]}
+              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+              />
+            }
+          })
+        }
+        </View>
+      </View>
       <TouchableOpacity onPress={() => this.props.onClose({
           mode: this.state.mode,
           data: newContact
@@ -193,7 +227,42 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     return (
       <>
       { this.renderBubbleTitle('contacts.deleteContact') }
-      <Text>TODO: Delete Form ({ this.props.contact?.getNameString() })</Text>
+            <View style={styles.formWrapper}>
+        <TouchableOpacity onPress={this.pickImage.bind(this)}>
+          { this.state.new_image
+            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
+            : <View style={styles.cameraButton}>
+              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+              </View>
+          }
+
+        </TouchableOpacity>
+        <View style={styles.formInputs}>
+        {
+          FORM_FIELDS.map(field => {
+            if(field === 'given'){
+              return <TextInput key={'input.' + field}
+              style={[styles.input]}
+              autoCorrect={false}
+              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              value={this.state['new_' + field]}
+              placeholder={this.props.contact?.getGivenNameString()}
+              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+              />
+            } else {
+              return <TextInput key={'input.' + field}
+              style={[styles.input]}
+              autoCorrect={false}
+              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              value={this.state['new_' + field]}
+              placeholder={this.props.contact?.[field]}
+              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+              />
+            }
+          })
+        }
+        </View>
+      </View>
       <TouchableOpacity onPress={() => this.props.onClose({
           mode: this.state.mode,
           data: this.props.contact
@@ -219,10 +288,36 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     }
   }
 
+  renderArrowRight() {
+    return (
+      <View style={{position: "absolute", left:scale(125), bottom:0}}>
+        <View style={[styles.rightArrow, {
+          position:'absolute',
+          left: scale(-3),
+          borderRightWidth: scale(45),
+          borderRightColor: colors.primary,
+          borderBottomWidth: scale(50),
+          borderBottomColor: 'transparent',
+        }]}></View>
+        <View style={styles.rightArrow}></View>
+      </View>
+    )
+  }
+
+  renderDialogPerson() {
+    return(
+      <View style={{position:'absolute', justifyContent:'center', alignContent:'center', width:'100%', marginLeft:scale(57.5)}}>
+      <DialogPerson width={80} height={80} style={{position:'absolute', top: 315, alignSelf:'center'}}/>
+      </View>
+      )
+  }
+
   render() {
     return (
       <View style={styles.bubbleView}>
         { this.renderBubbleContent() }
+        { this.renderArrowRight() }
+        { this.renderDialogPerson() }
       </View>
     );
   }
@@ -234,28 +329,41 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderStyle: 'solid',
     borderWidth: 2,
-    borderRadius: 15,
-    width: '90%',
-    marginLeft: -15,
-    marginTop: -10,
-    padding: 20
+    borderRadius: 25,
+    width: scale(340),
+    height: 248,
+    marginLeft: scale(-20),
+    marginTop: verticalScale(-25),
+    padding: 20,
+  },
+  rightArrow: {
+    position: "absolute",
+    borderRightWidth: scale(40),
+    borderRightColor: colors.lightGrey,
+    borderLeftWidth: 0,
+    borderLeftColor: 'transparent',
+
+    borderTopWidth: 0,
+    borderTopColor: 'transparent',
+
+    borderBottomWidth: scale(45),
+    borderBottomColor: 'transparent',
   },
   titleBar: {
-    marginLeft: scale(10),
+    marginLeft: scale(20),
     flexDirection: 'row',
     justifyContent:'space-between'
   },
   titlebarText: {
     color: colors.primary,
-    fontSize: TextSize.normalPlus,
+    fontSize: TextSize.normal,
     fontFamily: AppFonts.bold
   },
   actionList: {
-    flexDirection: 'column',
     marginVertical: scale(10)
   },
   actionMenuPoint: {
-    marginLeft: scale(30),
+    marginLeft: scale(45),
     flexDirection: 'row',
     alignItems: 'flex-end'
   },
@@ -264,25 +372,26 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginRight: TextSize.normal,
     borderColor: colors.primary,
-    borderRadius: TextSize.normalPlus / 2,
-    height: TextSize.normalPlus,
-    width: TextSize.normalPlus
+    borderRadius: TextSize.big / 2,
+    height: TextSize.big,
+    width: TextSize.big
   },
   actionText: {
-    fontSize: TextSize.normal,
+    fontSize: TextSize.small,
     fontFamily: AppFonts.regular
   },
   actionTextWrapper: {
-    borderBottomWidth: 1,
-    marginTop: TextSize.normal / 2,
-    borderBottomColor: colors.grey,
+    borderBottomWidth: 2,
+    marginTop: TextSize.normal / 1,
+    borderBottomColor: colors.veryLightGrey,
     borderBottomStyle: 'solid',
-    marginRight: -20,
+    marginRight: scale(-20),
     flex: 1
   },
   formWrapper: {
     flexDirection: 'row',
-    marginVertical: scale(20)
+    marginTop: scale(10),
+    justifyContent:'flex-end',
   },
   formButton: {
     backgroundColor: colors.primary,
@@ -290,8 +399,8 @@ const styles = StyleSheet.create({
     height: 2 * TextSize.verySmall,
     borderTopLeftRadius: TextSize.verySmall,
     borderBottomLeftRadius: TextSize.verySmall,
-    marginTop: scale(20),
     marginRight: -20,
+    marginTop: 5,
   },
   formButtonText: {
     marginHorizontal: 2 * TextSize.verySmall,
@@ -301,20 +410,29 @@ const styles = StyleSheet.create({
     color: colors.white
   },
   formInputs: {
-    marginLeft: scale(20)
+    marginLeft: scale(20),
 
   },
   input: {
-    marginBottom: 2,
+    marginBottom: TextSize.small ,
     fontSize: TextSize.small,
-    fontFamily: AppFonts.regular
-  },
+    fontFamily: AppFonts.regular,
+    borderBottomColor: colors.veryLightGrey,
+    borderBottomWidth: 2,
+    borderColor: colors.veryLightGrey,
+    marginRight: scale(-20),
+    width: scale(220),
+
+    },
+
   cameraButton: {
-    height: scale(50),
-    width: scale(50),
+    height: scale(66),
+    width: scale(66),
     marginLeft: scale(20),
-    borderRadius: scale(25),
-    backgroundColor: colors.grey,
+    borderRadius: scale(33),
+    backgroundColor: colors.veryLightGrey,
+    justifyContent:'center',
+    padding:scale(12.5)
   }
 });
 

@@ -90,7 +90,7 @@ class Contacts extends Component<PropsType, State> {
     return (
       <TouchableWithoutFeedback onPress={() => this.onListItemPress(contact)}>
         <View style={styles.listItem}>
-          <Text style={styles.listItemText}>
+          <Text numberOfLines={1} style={styles.listItemText}>
             { contact.getNameString() }
           </Text>
           { contact.image
@@ -128,10 +128,12 @@ class Contacts extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             { this.state.bubbleVisible &&
+            <View>
               <ContactSpeechBubble mode={this.state.mode}
-                                   localesHelper={this.props.localesHelper}
-                                   contact={this.state.selectedContact}
-                                   onClose={this.onBubbleClose.bind(this)}/>
+              localesHelper={this.props.localesHelper}
+              contact={this.state.selectedContact}
+              onClose={this.onBubbleClose.bind(this)}/>
+            </View>
             }
             { this.state.listVisible &&
               <FlatList data={contacts}
@@ -161,7 +163,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    marginLeft: scale(50),
   },
   topViewText: {
     color: colors.white,
@@ -199,12 +202,12 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: 'rgba(203, 95, 11, 0.5)',
-    flex: 1,
+    flex: 0.4,
     flexDirection: 'row',
   },
   bottomView: {
-    flex: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)',
+    flex: 1,
+    backgroundColor: colors.linen,
   },
   listItem: {
     marginVertical: scale(10),
@@ -222,6 +225,7 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     fontSize: TextSize.small,
     color: colors.white,
+    maxWidth: scale(200),
   },
   listItemImage: {
     borderRadius: 2 * TextSize.small,
