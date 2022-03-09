@@ -108,7 +108,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           {
             MENU_ACTIONS.map(action => {
               return (
-                <TouchableWithoutFeedback onPress={() => this.selectMode(action.mode)}>
+                <TouchableWithoutFeedback onPress={() => this.selectMode(action.mode)} key={'menu.' + action.name}>
                   <View style={styles.actionMenuPoint} key={'action_' + action.name}>
                     <View style={styles.actionBubble}></View>
                     <View style={styles.actionTextWrapper}>

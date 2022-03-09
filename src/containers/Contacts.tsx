@@ -53,7 +53,6 @@ class Contacts extends Component<PropsType, State> {
         bubbleVisible: false
       });
       this.props.navigation.pop()
-
     }
   }
 
