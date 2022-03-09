@@ -36,6 +36,12 @@ export default class EmergencyContact {
     } else {
       this.phone = '';
     }
+    if (_fhirResource.photo && _fhirResource.photo[0] && _fhirResource.photo[0].data && _fhirResource.photo[0].contentType) {
+      this.image = {
+        contentType: _fhirResource.photo[0].contentType,
+        data: _fhirResource.photo[0].contentType + ';base64,' + _fhirResource.photo[0].data
+      }
+    }
   }
 
   getInitials(): string {
@@ -90,7 +96,7 @@ export default class EmergencyContact {
         photo: image
         ? [
           {
-            contentType:image.contentType,
+            contentType: image.contentType,
             data: image.data.split('base64,')[1],
             title: 'Profilbild.' + image.contentType.split('/')[1]
           }

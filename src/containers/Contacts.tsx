@@ -59,7 +59,6 @@ class Contacts extends Component<PropsType, State> {
           const patientReference = this.props.userProfile.getFhirReference();
           if (patientReference) {
             const fhirResource = _arg.data.createFhirResource(patientReference);
-            console.log(fhirResource)
             this.props.addResource(fhirResource);
           }
 

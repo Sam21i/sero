@@ -82,7 +82,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
             data: type + ';base64,'+ image.assets[0].base64 || ''
           }
         });
-        console.log(this.state)
       }
     })
     .catch(e => {
