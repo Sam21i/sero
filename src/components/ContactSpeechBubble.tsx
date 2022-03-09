@@ -114,6 +114,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
                               style={styles.input}
+                              autoCorrect={false}
                               onChangeText={(t) => this.setState({['new_' + field]: t})}
                               value={this.state['new_' + field]}
                               placeholder={this.props.localesHelper.localeString('common.' +field)}
