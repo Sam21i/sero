@@ -27,6 +27,22 @@ export default class UserProfile {
         this.emergencyContacts = _contacts;
     }
 
+    /**
+    * CAVE: Modifies store, do not call outside of reducer
+    **/
+    addEmergencyContact(_contact: EmergencyContact): void {
+      const index = this.emergencyContacts.findIndex(c => c.isEqual(_contact));
+      if (index === -1) {
+        this.emergencyContacts.push(_contact);
+      } else {
+        this.emergencyContacts[index] = _contact;
+        console.log('Contact is already in EmergencyContact, replace with new data.', _contact);
+      }
+    }
+
+    /**
+    * CAVE: Modifies store, do not call outside of reducer
+    **/
     resetProfileData() {
         this.patientResource = {id: ''};
         this.emergencyContacts = [];
@@ -43,6 +59,7 @@ export default class UserProfile {
     getEmergencyContacts(): EmergencyContact[] {
         return this.emergencyContacts;
     }
+
 
     getGender(): PatientAdministrativeGender | undefined {
         if (this.patientResource.id === '') return undefined;

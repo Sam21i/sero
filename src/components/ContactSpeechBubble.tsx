@@ -16,7 +16,7 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
   menu = "MENU"
 };
 
-const MAX_IMAGE_SIZE: 600;
+const MAX_IMAGE_SIZE = 500;
 
 const MENU_ACTIONS = [
   { name: 'addContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.add },
@@ -75,10 +75,11 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     })
     .then(image => {
       if (!image.didCancel && image.assets && image.assets.length > 0) {
+        const type = image.assets[0].type?.replace('jpg', 'jpeg');
         this.setState({
           new_image: {
-            contentType: image.assets[0].type || '',
-            data: image.assets[0].base64 || ''
+            contentType: type || '',
+            data: type + ';base64,'+ image.assets[0].base64 || ''
           }
         });
         console.log(this.state)
@@ -133,7 +134,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       <View style={styles.formWrapper}>
         <TouchableOpacity onPress={this.pickImage.bind(this)}>
           { this.state.new_image
-            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.contentType + ';base64,'+ this.state.new_image.data}} />
+            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
             : <View style={styles.cameraButton} >
               </View>
           }
@@ -155,7 +156,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         </View>
       </View>
       <TouchableOpacity onPress={() => this.props.onClose({
-          mode: this.props.mode,
+          mode: this.state.mode,
           data: new EmergencyContact({
             given: [this.state.new_given],
             family: this.state.new_family,
@@ -288,10 +289,6 @@ const styles = StyleSheet.create({
 
   },
   input: {
-
-    borderBottomColor: colors.lightGrey,
-    borderBottomWidth: 1,
-    borderBottomStyle: 'solid',
     marginBottom: 2,
     fontSize: TextSize.small,
     fontFamily: AppFonts.regular

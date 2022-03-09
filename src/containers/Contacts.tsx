@@ -6,17 +6,20 @@ import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
+import * as miDataServiceActions from '../store/midataService/actions';
 import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
 import { AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
 import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
+import { Resource } from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
+  addResource: (r: Resource) => void;
 }
 
 interface State {
@@ -40,7 +43,6 @@ class Contacts extends Component<PropsType, State> {
   }
 
   onBubbleClose(_arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}): void {
-    console.log('close button', _arg)
     if (_arg.data === undefined) {
       this.setState({
         bubbleVisible: false,
@@ -48,10 +50,24 @@ class Contacts extends Component<PropsType, State> {
         mode: _arg.mode
       });
     } else {
-      console.warn('TODO: handle bubble close with EmergencyContact in argument (save/delete)')
       this.setState({
-        bubbleVisible: false
+        bubbleVisible: false,
+        mode: CONTACT_SPEECH_BUBBLE_MODE.menu
       });
+      switch (_arg.mode) {
+        case (CONTACT_SPEECH_BUBBLE_MODE.add):
+          const patientReference = this.props.userProfile.getFhirReference();
+          if (patientReference) {
+            const fhirResource = _arg.data.createFhirResource(patientReference);
+            console.log(fhirResource)
+            this.props.addResource(fhirResource);
+          }
+
+          break;
+        case (CONTACT_SPEECH_BUBBLE_MODE.edit):
+          console.warn('TODO: edit contact');
+          break;
+      }
       this.props.navigation.pop()
     }
   }
@@ -78,7 +94,6 @@ class Contacts extends Component<PropsType, State> {
                 <Text style={styles.listItemInitialsText}>{contact.getInitials()}</Text>
               </View>
           }
-
         </View>
       </TouchableWithoutFeedback>
     )
@@ -119,9 +134,7 @@ class Contacts extends Component<PropsType, State> {
                         style={styles.list}
                         renderItem={this.renderContactListItem.bind(this)}
                         showsHorizontalScrollIndicator={false}
-              >
-              </FlatList>
-
+              />
             }
           </View>
         </ImageBackground>
@@ -240,7 +253,7 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-
+    addResource: (r: Resource) => miDataServiceActions.addResource(dispatch, r)
   };
 }
 
