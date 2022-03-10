@@ -8,10 +8,6 @@ export const ALL_RESOURCES_SENT = 'miDataService/ALL_RESOURCES_SENT';
 export const UPDATE_USER_PROFILE = 'userProfile/UPDATE_USER_PROFILE';
 export const SET_EMERGENCY_CONTACTS = 'userProfile/SET_EMERGENCY_CONTACTS';
 export const ADD_TO_USER_PROFILE = 'userProfile/ADD_TO_USER_PROFILE';
-export const REMOVE_EMERGENCY_CONTACT = 'userProfile/REMOVE_EMERGENCY_CONTACT';
-
-
-export const APPLICATION_STARTED = 'ServiceData/APPLICATION_STARTED';
 
 export const UPDATE_LOCALE_LANGUAGE = 'localesHelper/UPDATE_LOCALE_LANGUAGE';
 

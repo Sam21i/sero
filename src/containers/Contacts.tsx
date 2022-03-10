@@ -65,7 +65,6 @@ class Contacts extends Component<PropsType, State> {
             this.props.addResource(relatedPersonResource);
             break;
           case CONTACT_SPEECH_BUBBLE_MODE.delete:
-            this.props.removeContact(_arg.data);
             relatedPersonResource.active = false;
             // no break, because we also have to synchronize the resource
           case CONTACT_SPEECH_BUBBLE_MODE.edit:

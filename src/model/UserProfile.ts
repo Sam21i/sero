@@ -43,16 +43,6 @@ export default class UserProfile {
   /**
   * CAVE: Modifies store, do not call outside of reducer
   **/
-  removeEmergencyContact(_contact: EmergencyContact): void {
-    const index = this.emergencyContacts.findIndex(c => c.isEqual(_contact));
-    if (index > -1) {
-      this.emergencyContacts.splice(index,1);
-    }
-  }
-
-  /**
-  * CAVE: Modifies store, do not call outside of reducer
-  **/
   resetProfileData() {
     this.patientResource = {id: ''};
     this.emergencyContacts = [];
