@@ -36,7 +36,6 @@ export default class UserProfile {
       this.emergencyContacts.push(_contact);
     } else {
       this.emergencyContacts[index] = _contact;
-      console.log('Contact is already in EmergencyContact, replace with new data.', _contact);
     }
   }
 

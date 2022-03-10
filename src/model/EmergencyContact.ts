@@ -91,7 +91,7 @@ export default class EmergencyContact {
   isEqual(_contact: EmergencyContact): boolean {
     return this.fhirResource?.id === _contact.fhirResource?.id ||
           (this.family === _contact.family &&
-           this.given === _contact.given &&
+           this.given[0] === _contact.given[0] &&
            this.phone === _contact.phone);
   }
 
