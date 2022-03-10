@@ -96,7 +96,7 @@ export default class MidataService {
 
     public fetchEmergencyContactsForUser(_userID: string): Promise<EmergencyContact[]> {
         return new Promise((resolve, reject) => {
-            this.fetch(this.RELATED_PERSON_ENDPOINT + '?active=true&patient=' + _userID, 'GET')
+            this.fetch(this.RELATED_PERSON_ENDPOINT + '?patient=' + _userID, 'GET')
             .then((result) => {
                 const contacts = new Array<EmergencyContact>();
                 const waitForImagePromises = new Array<Promise<any>>();

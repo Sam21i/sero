@@ -36,17 +36,6 @@ export default class UserProfile {
       this.emergencyContacts.push(_contact);
     } else {
       this.emergencyContacts[index] = _contact;
-      console.log('Contact is already in EmergencyContact, replace with new data.', _contact);
-    }
-  }
-
-  /**
-  * CAVE: Modifies store, do not call outside of reducer
-  **/
-  removeEmergencyContact(_contact: EmergencyContact): void {
-    const index = this.emergencyContacts.findIndex(c => c.isEqual(_contact));
-    if (index > -1) {
-      this.emergencyContacts.splice(index,1);
     }
   }
 
