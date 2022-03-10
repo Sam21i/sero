@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {
+  Alert,
   FlatList,
+  Linking,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -28,9 +30,15 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
       super(props);
   }
 
+  callNumber(_number: string): void {
+      Linking.openURL('tel:' + _number.replace(/\s/g, ''));
+  }
+
+
   _renderEmergencyContacts({item}): JSX.Element {
     return (
       <EmergencyContactTile contact={item}
+                            onPress={() => this.callNumber(item.phone)}
                             size={this.avatarSize}>
       </EmergencyContactTile>
     );

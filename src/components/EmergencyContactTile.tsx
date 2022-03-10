@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
 import {
@@ -61,9 +61,9 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <TouchableWithoutFeedback onPress={this.props.onPress}>
+          <TouchableOpacity onPress={this.props.onPress}>
             <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
           <View style={[styles.textView, {width: this.props.size}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
               {contact.getNameString()}
@@ -74,24 +74,26 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     } else {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <View style={text_avatar}>
-            {!!contact.getNameString() && (
-              <Text
-                style={[
-                  {
-                    ...textContainerStyle,
-                  },
-                  this.props.textStyle,
-                ]}>
-                {contact.getInitials()}
+          <TouchableOpacity onPress={this.props.onPress}>
+            <View style={text_avatar}>
+              {!!contact.getNameString() && (
+                <Text
+                  style={[
+                    {
+                      ...textContainerStyle,
+                    },
+                    this.props.textStyle,
+                  ]}>
+                  {contact.getInitials()}
+                </Text>
+              )}
+            </View>
+            <View style={[styles.textView, {width: this.props.size}]}>
+              <Text style={styles.text} adjustsFontSizeToFit>
+                {contact.getNameString()}
               </Text>
-            )}
-          </View>
-          <View style={[styles.textView, {width: this.props.size}]}>
-            <Text style={styles.text} adjustsFontSizeToFit>
-              {contact.getNameString()}
-            </Text>
-          </View>
+            </View>
+            </TouchableOpacity>
         </View>
       );
     }
