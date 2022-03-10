@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
 import {
@@ -23,6 +23,8 @@ interface EmergencyContactProps {
   style?: any;
 }
 
+const HORIZONTAL_MARGIN = 10;
+
 export default class EmergencyContactTile extends Component<EmergencyContactProps> {
     constructor(props: EmergencyContactProps) {
         super(props);
@@ -33,6 +35,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     const image_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
+      marginHorizontal: HORIZONTAL_MARGIN,
       borderRadius: scale(this.props.size / 2),
     };
 
@@ -47,6 +50,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     const text_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
+      marginHorizontal: HORIZONTAL_MARGIN,
       borderRadius: scale(this.props.size / 2),
       backgroundColor: colors.grey,
       textAlignVertical: 'center',
@@ -61,12 +65,12 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <TouchableWithoutFeedback onPress={this.props.onPress}>
+          <TouchableOpacity onPress={this.props.onPress}>
             <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
-          </TouchableWithoutFeedback>
-          <View style={[styles.textView, {width: this.props.size}]}>
+          </TouchableOpacity>
+          <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
             <Text style={styles.text} adjustsFontSizeToFit>
-              {contact.getNameString()}
+             {contact.getNameString()}
             </Text>
           </View>
         </View>
@@ -74,24 +78,26 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     } else {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <View style={text_avatar}>
-            {!!contact.getNameString() && (
-              <Text
-                style={[
-                  {
-                    ...textContainerStyle,
-                  },
-                  this.props.textStyle,
-                ]}>
-                {contact.getInitials()}
+          <TouchableOpacity onPress={this.props.onPress}>
+            <View style={text_avatar}>
+              {!!contact.getNameString() && (
+                <Text
+                  style={[
+                    {
+                      ...textContainerStyle,
+                    },
+                    this.props.textStyle,
+                  ]}>
+                  {contact.getInitials()}
+                </Text>
+              )}
+            </View>
+            <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
+              <Text style={styles.text} adjustsFontSizeToFit={true}>
+                {contact.getNameString()}
               </Text>
-            )}
-          </View>
-          <View style={[styles.textView, {width: this.props.size}]}>
-            <Text style={styles.text} adjustsFontSizeToFit>
-              {contact.getNameString()}
-            </Text>
-          </View>
+            </View>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -101,9 +107,12 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
+    flex: 1
   },
   textView: {
+    alignSelf: 'center',
+    marginHorizontal: 0,
+    height: 2.5 * TextSize.verySmall,
     marginTop: verticalScale(2.5),
   },
   text: {

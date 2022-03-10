@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFe
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth, } from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';

@@ -1,4 +1,5 @@
-import {createStore, applyMiddleware, compose, Middleware} from 'redux';
+import 'react-native-get-random-values'
+import {createStore, applyMiddleware, compose} from 'redux';
 import logger from 'redux-logger';
 import {persistStore, persistReducer} from 'redux-persist';
 import reducers from './reducers';
