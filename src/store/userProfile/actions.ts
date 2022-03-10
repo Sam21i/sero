@@ -1,17 +1,22 @@
 import Action from '../helpers/Action';
-import {ADD_TO_USER_PROFILE, UPDATE_USER_PROFILE} from '../definitions';
+import {REMOVE_EMERGENCY_CONTACT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE} from '../definitions';
 import {UserProfileData} from './reducer';
-import {QuestionnaireResponse} from '@i4mi/fhir_r4';
+import EmergencyContact from '../../model/EmergencyContact';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
-  dispatch(new Action(UPDATE_USER_PROFILE, userProfileInfo).getObjectAction());
+  dispatch(
+      new Action(UPDATE_USER_PROFILE, userProfileInfo).getObjectAction()
+  );
 }
 
-export function addQuestionnaireResponseToUserProfileWithoutUploading(
-  dispatch,
-  questionnaireResponse: QuestionnaireResponse,
-) {
+export function setEmergencyContacts(dispatch, contacts: EmergencyContact[]) {
   dispatch(
-    new Action(ADD_TO_USER_PROFILE, questionnaireResponse).getObjectAction(),
+    new Action(SET_EMERGENCY_CONTACTS, contacts).getObjectAction()
+  );
+}
+
+export function removeEmergencyContact(dispatch, contact: EmergencyContact) {
+  dispatch(
+    new Action(REMOVE_EMERGENCY_CONTACT, contact).getObjectAction()
   );
 }

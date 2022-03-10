@@ -1,9 +1,11 @@
 import Config from 'react-native-config';
 import UserProfile from './UserProfile';
-import { Bundle, Patient, Resource } from "@i4mi/fhir_r4";
+import { Bundle, Patient, RelatedPerson, Resource } from "@i4mi/fhir_r4";
 import UserSession from './UserSession';
 import { store } from '../store';
 import { logoutUser } from '../store/midataService/actions';
+import EmergencyContact from './EmergencyContact';
+import RNFetchBlob from 'rn-fetch-blob'
 
 export default class MidataService {
     currentSession: UserSession = new UserSession();
@@ -15,6 +17,7 @@ export default class MidataService {
 
     readonly OBSERVATION_ENDPOINT = "/fhir/Observation";
     readonly PATIENT_ENDPOINT = "/fhir/Patient";
+    readonly RELATED_PERSON_ENDPOINT = '/fhir/RelatedPerson';
 
     constructor(miDataServiceStore?: MidataService) {
         if (miDataServiceStore) {
@@ -49,9 +52,6 @@ export default class MidataService {
             isUploading: boolean,
             mustBeSynchronized: boolean
         }>();
-
-        // TODO: implement
-        // deleteUserInfoFromAsyncStorage();
     }
 
    /**
@@ -80,17 +80,116 @@ export default class MidataService {
                })
                if (bundles[0].entry === undefined) {
                    reject('No user data returned');
-               }
-               const resource = bundles[0].entry[0].resource as Patient;
+               } else {
+                   const resource = bundles[0].entry[0].resource as Patient;
 
-               resolve (new UserProfile({
-                   patientResource: resource
-               }));
+                   resolve (new UserProfile({
+                       patientResource: resource
+                   }));
+               }
            }).catch((error) => {
                console.log('Error when getting user data', error);
                reject(error);
            });
        });
+    }
+
+    public fetchEmergencyContactsForUser(_userID: string): Promise<EmergencyContact[]> {
+        return new Promise((resolve, reject) => {
+            this.fetch(this.RELATED_PERSON_ENDPOINT + '?active=true&patient=' + _userID, 'GET')
+            .then((result) => {
+                const contacts = new Array<EmergencyContact>();
+                const waitForImagePromises = new Array<Promise<any>>();
+                if ((result as Bundle).entry) {
+                    ((result as Bundle).entry || []).forEach(c => {
+                        if (c.resource && c.resource.resourceType === 'RelatedPerson') {
+                            const contact = new EmergencyContact(c.resource as RelatedPerson);
+                            const photo = (c.resource as RelatedPerson).photo?.find(p => p.title && p.title.indexOf('Profilbild') > -1);
+                            if (photo && photo.url) {
+                                waitForImagePromises.push(this.fetchImageBase64WithToken(photo.url)
+                                    .then(base64img => {
+                                        contact.setImage({
+                                            contentType: photo.contentType || '',
+                                            data:  photo.contentType + ';base64,' + base64img
+                                        });
+                                    })
+                                    .catch(e => {
+                                        console.log('Error fetching contact avatar from ' + photo.url, e);
+                                    })
+                                );
+                            }
+                            contacts.push(contact);
+                        }
+                    });
+                }
+                Promise.all(waitForImagePromises)
+                .finally(() => {
+                    resolve(contacts);
+                });
+            })
+            .catch((e) => {
+                console.log('could not load related persons', e)
+                return reject();
+            });
+        });
+    }
+
+    /**
+    * Used to load an image (eg. an avatar) from MIDATA, that is only accessible with
+    * access token.
+    * @param _url   the url of the image, with or without additional parameters
+    * @return       a Promise with the image as base64 string
+    **/
+    private fetchImageBase64WithToken(_url: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.currentSession.getValidAccessToken()
+            .then((accessToken) => {
+                const url = _url + (
+                    (_url.indexOf('?') > -1)
+                        ? '&access_token=' + accessToken
+                        : '?access_token=' + accessToken
+                );
+                RNFetchBlob.fetch('GET', url)
+                .then((image) => {
+                    return resolve(image.base64())
+                })
+                .catch((e) => {
+                    console.log('midataservice.fetchImageWithToken(): unable to fetch image from url ' + url, e);
+                    return reject();
+                });
+            })
+            .catch((e) => {
+                console.log('midataservice.fetchImageWithToken(): unable to get valid access token', e);
+                return reject();
+            });
+        });
+    }
+
+    private actualFetch(_url: string, _config: RequestInit): Promise<any> {
+        return new Promise((resolve, reject) => {
+            fetch(_url, _config)
+            .then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    response.text()
+                    .then((responseText) => {
+                        return resolve(JSON.parse(responseText));
+                    })
+                    .catch((e) => {
+                        return reject('Unknow server response with status: ' + e.status);
+                    });
+                } else if (response.status === 401) {
+                    logoutUser(store.dispatch);
+                    return reject('Can\'t fetch: Server responds with "401 unauthorized".');
+                } else {
+                    return reject('Bad response with status: ' + response.status);
+                }
+            })
+            .catch((error) => {
+                console.log('Can\'t reach server', error);
+                return reject('Can\'t reach server.');
+            });
+        });
+
     }
 
    /**
@@ -109,50 +208,30 @@ export default class MidataService {
                 'Authorization': ''
             }
 
-            const actualFetch = async (_url: string, _config: RequestInit) => {
-                return fetch(_url, _config)
-                .then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        response.text()
-                        .then((responseText) => {
-                            resolve((JSON.parse(responseText) as Resource));
-                        })
-                        .catch((e) => {
-                            reject('Unknow server response with status: ' + e.status);
-                        });
-                    } else if (response.status === 401) {
-                        logoutUser(store.dispatch);
-                        reject('Can\'t fetch: Server responds with "401 unauthorized".');
-                    } else {
-                        reject('Bad response with status: ' + response.status);
-                    }
-                })
-                .catch((error) => {
-                    console.log('Can\'t reach server', error);
-                    reject('Can\'t reach server.');
-                });
-            }
-
             if (endpoint.indexOf(Config.open_endpoint) > -1) {
                 // no need for authorization when we talk to the open endpoint
-                return actualFetch(Config.host + endpoint, {
+                return this.actualFetch(Config.host + endpoint, {
                     method: method,
                     headers: headersContent,
                     body: body
+                }).then(r => {
+                    return resolve(r as Resource);
                 });
             } else {
                 // get valid token:
-                this.currentSession.getValidAccessToken().then((accessToken: string) => {
+                this.currentSession.getValidAccessToken().then((accessToken: string | undefined) => {
                     if (!accessToken) {
                         reject('Can\'t fetch when no user logged in first or token is no longuer valid.');
                     }
                     headersContent.Authorization = 'Bearer ' + accessToken;
 
-                    return actualFetch(Config.host + endpoint, {
+                    return this.actualFetch(Config.host + endpoint, {
                         method: method,
                         headers: headersContent,
                         body: body
                     });
+                }).then(r => {
+                    return resolve(r as Resource);
                 })
                 .catch((error) => {
                     console.warn('Can\'t fetch token.');

@@ -6,19 +6,56 @@ import ButtonContainer from '../components/ButtonContainer';
 import MainNotification from '../components/MainNotification';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
+import MidataService from '../model/MidataService';
+import { AppStore } from '../store/reducers';
+import { connect } from 'react-redux';
+import * as userProfileActions from '../store/userProfile/actions';
+import * as midataServiceActions from '../store/midataService/actions';
+import UserProfile from '../model/UserProfile';
+import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
+  midataService: MidataService;
+  userProfile: UserProfile;
   localesHelper: LocalesHelper;
+  uploadPendingResources: () => void;
+  setEmergencyContacts: (e: EmergencyContact[]) => void;
 }
 
 interface State {}
 
-export default class Main extends Component<PropsType, State> {
+class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
+    this.loadEmergencyContacts();
     this.state = {};
+    if (this.props.midataService.isAuthenticated()) {
+      this.props.uploadPendingResources();
+    }
+  }
+
+  editContacts(): void {
+    this.props.navigation.navigate('Contacts');
+  }
+
+  loadEmergencyContacts(): void {
+      if (this.props.midataService.isAuthenticated()) {
+        try {
+            this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+            .then((contacts) => {
+                this.props.setEmergencyContacts(contacts);
+            })
+            .catch((e) => {
+                console.log('could not load related persons', e)
+            });
+        }
+        catch(e) {
+            console.log(e)
+        }
+
+      }
   }
 
   render() {
@@ -29,8 +66,10 @@ export default class Main extends Component<PropsType, State> {
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <EmergencyContactContainer></EmergencyContactContainer>
-            <EmergencyNumberContainer></EmergencyNumberContainer>
+            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
+                                       localesHelper={this.props.localesHelper}
+                                       onPressPlusButton={this.editContacts.bind(this)} />
+            <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
             <MainNotification></MainNotification>
@@ -61,3 +100,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.65)',
   },
 });
+
+
+function mapStateToProps(state: AppStore) {
+    return {
+        midataService: state.MiDataServiceStore,
+        userProfile: state.UserProfileStore
+    };
+}
+
+function mapDispatchToProps(dispatch: Function) {
+    return {
+        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+        uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -284,6 +284,8 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
+  - react-native-image-picker (4.7.3):
+    - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
   - react-native-sensitive-info (5.5.8):
@@ -355,11 +357,13 @@ PODS:
     - React-jsi (= 0.67.3)
     - React-logger (= 0.67.3)
     - React-perflogger (= 0.67.3)
+  - rn-fetch-blob (0.12.0):
+    - React-Core
   - RNBootSplash (4.1.3):
     - React-Core
   - RNCAsyncStorage (1.16.1):
     - React-Core
-  - RNGestureHandler (2.3.0):
+  - RNGestureHandler (2.3.1):
     - React-Core
   - RNI18n (2.0.15):
     - React
@@ -418,6 +422,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-app-auth (from `../node_modules/react-native-app-auth`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
   - react-native-version-number (from `../node_modules/react-native-version-number`)
@@ -433,6 +438,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -499,6 +505,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-app-auth"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-sensitive-info:
@@ -529,6 +537,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
@@ -580,6 +590,7 @@ SPEC CHECKSUMS:
   React-logger: 1e10789cb84f99288479ba5f20822ce43ced6ffe
   react-native-app-auth: fd1eaa667c0bc014199456d14a6440cb74de814e
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
+  react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-sensitive-info: 400c6e3d27945e15c8cddb5b4b92233c85ee06f8
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
@@ -595,9 +606,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: d0361f15ea978958fab7ffb6960f475b5063d83f
   React-runtimeexecutor: af1946623656f9c5fd64ca6f36f3863516193446
   ReactCommon: 650e33cde4fb7d36781cd3143f5276da0abb2f96
+  rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNBootSplash: 4f34ccf1a0c2573cb4ba918ab7f69d51d610827f
   RNCAsyncStorage: b49b4e38a1548d03b74b30e558a1d18465b94be7
-  RNGestureHandler: 77d59828d40838c9fabb76a12d2d0a80c006906f
+  RNGestureHandler: 68f660f1080d3300936a67ce5c6879bd8f26ecc2
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNLocalize: 6571ea792a7dcb6d217c98c14d9147e9417cef62
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19

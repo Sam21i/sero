@@ -7,36 +7,40 @@ import {
   View,
 } from 'react-native';
 import {scale, TextSize, colors, AppFonts} from '../styles/App.style';
-import EmergencyContact from '././EmergencyContact';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import PlusButton from '../resources/images/btn_plus.svg';
-import {EMERGENCY_CONTACTS} from '../resources/static/emergencyContacts';
+import EmergencyContact from '../model/EmergencyContact';
+import EmergencyContactTile from './EmergencyContactTile';
 
 interface EmergencyContactContainerProps {
   localesHelper: LocalesHelper;
   onPressPlusButton?: () => void;
+  emergencyContacts: EmergencyContact[];
 }
 
 class EmergencyContactContainer extends Component<EmergencyContactContainerProps> {
   flatListRef: any;
   avatarSize: number = scale(75);
 
-  _renderEmergencyContacts = ({item}) => {
+  constructor(props: EmergencyContactContainerProps) {
+      super(props);
+  }
+
+  _renderEmergencyContacts({item}): JSX.Element {
     return (
-      <EmergencyContact
-        imageSource={item.image}
-        name={item.name}
-        size={this.avatarSize}></EmergencyContact>
+      <EmergencyContactTile contact={item}
+                            size={this.avatarSize}>
+      </EmergencyContactTile>
     );
   };
 
-  _renderItemSeparator = () => {
+  _renderItemSeparator() {
     return <View style={styles.itemSeparator}></View>;
   };
 
-  _renderListFooterComponent = () => {
+  _renderListFooterComponent() {
     return (
       <View
         style={[
@@ -65,11 +69,11 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
             }}
             showsVerticalScrollIndicator={false}
             horizontal
-            data={EMERGENCY_CONTACTS}
-            renderItem={this._renderEmergencyContacts}
+            data={this.props.emergencyContacts}
+            renderItem={this._renderEmergencyContacts.bind(this)}
             showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={this._renderItemSeparator}
-            ListFooterComponent={this._renderListFooterComponent}
+            ItemSeparatorComponent={this._renderItemSeparator.bind(this)}
+            ListFooterComponent={this._renderListFooterComponent.bind(this)}
           />
         </View>
       </View>

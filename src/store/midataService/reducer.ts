@@ -39,9 +39,19 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     },
     [ADD_RESOURCE_TO_SYNCHRONIZE](state: MidataService, action) {
         let newState = new MidataService(state);
-        const index = newState.pendingResources.findIndex(resource => resource.resource === action.data);
+        let index = newState.pendingResources.findIndex(resource => resource.resource.id === action.data.id);
         if (index === -1) { // only add, when exact same resource is not already in queue
-            newState.pendingResources.push({resource: action.data, isUploading: false, mustBeSynchronized: true});
+            newState.pendingResources.push({
+              resource: action.data,
+              isUploading: false,
+              mustBeSynchronized: action.data.id.indexOf('temp') === -1 // don't have to sync resources with temp id
+            });
+        } else { // when the resource with the same id is already in queue, we replace it with the newer version
+            newState.pendingResources[index] = {
+              resource: action.data,
+              isUploading: false,
+              mustBeSynchronized: action.data.id.indexOf('temp') === -1 // don't have to sync resources with temp id
+            };
         }
         return newState;
     },

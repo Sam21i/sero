@@ -4,6 +4,7 @@ import { Resource, Bundle, Observation } from '@i4mi/fhir_r4';
 import { store } from '..';
 import { Guid } from "guid-typescript";
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export function authenticateUser(dispatch: Function, accessToken: string, accessTokenExpirationDate: string, refreshToken: string, server: string) {
@@ -41,20 +42,32 @@ export function addResource(dispatch: Function, resource: Resource) {
 */
 export function synchronizeResource(dispatch: Function, resource: Resource) {
     dispatch(new Action(ADD_TO_USER_PROFILE, resource).getObjectAction());
+    if (resource.id?.indexOf('temp') === 0) {
+      // when resource has temp id, it has not been uploaded before it was edited and synced again
+      let uploadJobs = ((store.getState()) as any).MiDataServiceStore.pendingResources;
+      const index = uploadJobs.findIndex(job => job.resource.id === resource.id);
+      if (index > -1) {
+        dispatch(new Action(ADD_RESOURCE_TO_SYNCHRONIZE, resource).getObjectAction());
+      }
+    }
     uploadResource(dispatch, {
         resource: resource,
         isUploading: true,
-        mustBeSynchronized: true,
+        mustBeSynchronized: resource.id?.indexOf('temp') === -1, // don't have to sync resources with temp id
         timestamp: new Date()
     })
     .catch((error) => {
         console.log('Could not upload ' + resource.id ? resource.id : '' + ', add to queue.', error);
         dispatch(new Action(ADD_RESOURCE_TO_SYNCHRONIZE, resource).getObjectAction());
     });
-
 }
 
 export function logoutUser(dispatch: Function) {
+    try {
+      AsyncStorage.clear();
+    } catch (e) {
+      console.log('could not clear AsyncStorage', e)
+    }
     dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
 }
 
