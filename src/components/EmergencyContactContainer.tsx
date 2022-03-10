@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   itemSeparator: {
-    width: scale(10),
   },
   listFooterComponent: {
     alignContent: 'center',
