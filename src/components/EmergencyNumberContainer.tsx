@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Linking, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -11,6 +11,11 @@ interface EmergencyNumberContainerProps {
 }
 
 class EmergencyContact extends Component<EmergencyNumberContainerProps> {
+  callEmergency() {
+    console.warn('Emergency Number is still hardcoded');
+    Linking.openURL('tel:144');
+  }
+
   render() {
     return (
       <View style={styles.view}>
@@ -20,7 +25,7 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
           </Text>
         </View>
         <View style={styles.iconView}>
-          <EmergencyNumberButton></EmergencyNumberButton>
+          <EmergencyNumberButton onPress={() => this.callEmergency()}></EmergencyNumberButton>
         </View>
         <View style={styles.bottomTextView}>
           <Text style={styles.bottomText}>
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   },
   iconView: {
     flex: 1.5,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
   bottomTextView: {
