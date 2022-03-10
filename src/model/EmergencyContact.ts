@@ -52,6 +52,18 @@ export default class EmergencyContact {
     ).toUpperCase();
   }
 
+  setGivenName(_given: string): void {
+    this.given[0] = _given;
+  }
+
+  setFamilyName(_family: string): void {
+    this.family = _family;
+  }
+
+  setPhone(_phone: string): void {
+    this.phone = _phone;
+  }
+
   setImage(_img: {contentType: string; data: string}): void {
     this.image = _img;
   }

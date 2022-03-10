@@ -214,15 +214,16 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         }
         </View>
       </View>
-      <TouchableOpacity onPress={() => this.props.onClose({
-          mode: this.state.mode,
-          data: new EmergencyContact({
-            given: [this.state.new_given],
-            family: this.state.new_family,
-            phone: this.state.new_phone,
-            image: this.state.new_image
-          })
-        })}>
+      <TouchableOpacity onPress={() => {
+        const contact = this.props.contact;
+        if (contact) {
+          contact.setGivenName(this.state.new_given);
+          contact.setFamilyName(this.state.new_family);
+          contact.setPhone(this.state.new_phone);
+          if (this.state.new_image) contact.setImage(this.state.new_image);
+          this.props.onClose({mode: this.state.mode, data: contact})
+        }
+      }}>
         <View style={styles.formButton}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
@@ -235,38 +236,20 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     return (
       <>
       { this.renderBubbleTitle('contacts.deleteContact') }
-            <View style={styles.formWrapper}>
-        <TouchableOpacity onPress={this.pickImage.bind(this)}>
+        <View style={styles.formWrapper}>
           { this.state.new_image
             ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-            : <View style={styles.cameraButton}>
-              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+            : <View style={styles.listItemInitials}>
+                <Text style={styles.listItemInitialsText}>{this.props.contact?.getInitials() || ''}</Text>
               </View>
           }
-
-        </TouchableOpacity>
         <View style={styles.formInputs}>
         {
           FORM_FIELDS.map(field => {
-            if(field === 'given'){
               return <TextInput key={'input.' + field}
-              style={[styles.input]}
-              autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
-              value={this.state['new_' + field]}
-              placeholder={this.props.contact?.getGivenNameString()}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+              style={[styles.input]}value={this.state['new_' + field]}
+              editable={false}
               />
-            } else {
-              return <TextInput key={'input.' + field}
-              style={[styles.input]}
-              autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
-              value={this.state['new_' + field]}
-              placeholder={this.props.contact?.[field]}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-              />
-            }
           })
         }
         </View>
@@ -276,7 +259,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           data: this.props.contact
         })}>
         <View style={styles.formButton}>
-          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
+          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.delete') } </Text>
         </View>
       </TouchableOpacity>
       </>
@@ -430,9 +413,7 @@ const styles = StyleSheet.create({
     borderColor: colors.veryLightGrey,
     marginRight: scale(-20),
     width: scale(220),
-
     },
-
   cameraButton: {
     height: scale(66),
     width: scale(66),
@@ -441,6 +422,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.veryLightGrey,
     justifyContent:'center',
     padding:scale(12.5)
+  },
+  listItemInitials: {
+    borderRadius: 2 * TextSize.small,
+    height: 4 * TextSize.small,
+    width: 4 * TextSize.small,
+    backgroundColor: colors.petrol
+  },
+  listItemInitialsText: {
+    fontFamily: AppFonts.regular,
+    fontSize: 1.8 * TextSize.small,
+    alignSelf: 'center',
+    marginTop: 0.9 * TextSize.small,
+    color: colors.white,
   }
 });
 
