@@ -69,7 +69,7 @@ export default class EmergencyContact {
     this.given.forEach(givenName => {
       name += givenName + ' ';
     });
-    return name;
+    return name.substring(0, name.length-1);
   }
 
   getPatientReference(): Reference {

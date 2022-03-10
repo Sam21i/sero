@@ -49,9 +49,10 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   constructor(props: ContactSpeechBubbleProps) {
     super(props);
     this.state = {
-      new_given: '',
-      new_family: '',
-      new_phone: '',
+      new_given: props.contact ? props.contact.getGivenNameString() : '',
+      new_family: props.contact ? props.contact.family : '',
+      new_phone: props.contact ? props.contact.phone : '',
+      new_image: props.contact ? props.contact.image : undefined,
       mode:  this.props.mode
     };
   }
@@ -182,7 +183,9 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <TouchableOpacity onPress={this.pickImage.bind(this)}>
           { this.state.new_image?.data
             ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
-            : <Image style={styles.cameraButton} source={{uri: 'data:' + this.props.contact?.image?.data}} />
+            : <View style={styles.cameraButton}>
+                <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+              </View>
           }
         </TouchableOpacity>
         <View style={styles.formInputs}>
@@ -194,7 +197,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
               autoCorrect={false}
               onChangeText={(t) => this.setState({['new_' + field]: t})}
               value={this.state['new_' + field]}
-              placeholder={this.props.contact?.getGivenNameString()}
+              placeholder={this.state.new_given}
               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
               />
             } else {
@@ -213,7 +216,12 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       </View>
       <TouchableOpacity onPress={() => this.props.onClose({
           mode: this.state.mode,
-          data: newContact
+          data: new EmergencyContact({
+            given: [this.state.new_given],
+            family: this.state.new_family,
+            phone: this.state.new_phone,
+            image: this.state.new_image
+          })
         })}>
         <View style={styles.formButton}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
