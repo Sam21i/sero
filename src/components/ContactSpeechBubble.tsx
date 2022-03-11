@@ -18,6 +18,11 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
 };
 
 const MAX_IMAGE_SIZE = 500;
+const REGEX = {
+  given: /.*/, // TODO: correct regex (matches only single word names without special characters)
+  phone: /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b/,
+  family: /.*/ //TODO: correct regex (matches only single word names without special characters)
+}
 
 const MENU_ACTIONS = [
   { name: 'addContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.add },
@@ -42,7 +47,10 @@ interface ContactSpeechBubbleState {
   new_image?: {
     contentType: string;
     data: string;
-  }
+  },
+  given_valid: boolean;
+  family_valid: boolean;
+  phone_valid: boolean;
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -53,7 +61,10 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_family: props.contact ? props.contact.family : '',
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
-      mode:  this.props.mode
+      mode:  this.props.mode,
+      given_valid: false,
+      family_valid: false,
+      phone_valid: false
     };
   }
 
@@ -88,6 +99,19 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     .catch(e => {
       console.log('Error picking image', e);
     });
+  }
+
+  validateAndSetText(_field: 'phone' | 'family' | 'given', _text: string): boolean {
+    const valid = REGEX[_field].test(_text);
+    this.setState({
+      [_field + '_valid']: valid,
+      ['new_' + _field]: _text
+    });
+    return valid;
+  }
+
+  areAllValid(): boolean {
+    return this.state.phone_valid && this.state.family_valid && this.state.given_valid;
   }
 
   renderBubbleTitle(_translateString: string) {
@@ -145,9 +169,9 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={[styles.input]}
+                              style={[styles.input, this.state[field + '_valid'] ? {} : {color: 'red'}]}
                               autoCorrect={false}
-                              onChangeText={(t) => this.setState({['new_' + field]: t})}
+                              onChangeText={(text) => this.validateAndSetText(field, text)}
                               value={this.state['new_' + field]}
                               placeholder={this.props.localesHelper.localeString('common.' +field)}
                               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
@@ -156,15 +180,24 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         }
         </View>
       </View>
-      <TouchableOpacity onPress={() => this.props.onClose({
-          mode: this.state.mode,
-          data: new EmergencyContact({
-            given: [this.state.new_given],
-            family: this.state.new_family,
-            phone: this.state.new_phone,
-            image: this.state.new_image
-          })
-        })}>
+      <TouchableOpacity
+        style={{opacity: this.areAllValid() ? 1 : 0.3}}
+        activeOpacity={this.areAllValid() ? 0.2 : 0.3}
+        onPress={
+        () => {
+          if (this.areAllValid()) {
+            this.props.onClose({
+              mode: this.state.mode,
+              data: new EmergencyContact({
+                given: [this.state.new_given],
+                family: this.state.new_family,
+                phone: this.state.new_phone,
+                image: this.state.new_image
+              })
+            });
+          }
+        }
+      }>
         <View style={styles.formButton}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
