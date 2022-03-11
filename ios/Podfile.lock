@@ -288,6 +288,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.7.3):
     - React-Core
+  - react-native-orientation-locker (1.4.0):
+    - React-Core
   - react-native-safe-area-context (3.4.1):
     - React-Core
   - react-native-sensitive-info (5.5.8):
@@ -426,6 +428,7 @@ DEPENDENCIES:
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
   - react-native-version-number (from `../node_modules/react-native-version-number`)
@@ -512,6 +515,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-orientation-locker:
+    :path: "../node_modules/react-native-orientation-locker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-sensitive-info:
@@ -597,6 +602,7 @@ SPEC CHECKSUMS:
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
+  react-native-orientation-locker: 2da91e5391971dace445495821c899c111dcad7a
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-sensitive-info: 400c6e3d27945e15c8cddb5b4b92233c85ee06f8
   react-native-version-number: b415bbec6a13f2df62bf978e85bc0d699462f37f
