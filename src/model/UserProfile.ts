@@ -1,5 +1,6 @@
 import { Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
+import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
@@ -56,7 +57,10 @@ export default class UserProfile {
   }
 
   getEmergencyContacts(): EmergencyContact[] {
-    return this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active);
+    const activeContacts = this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active)
+    return activeContacts.length > 0
+      ? activeContacts
+      : DEFAULT_CONTACTS.map(dc => new EmergencyContact(dc));
   }
 
   getGender(): PatientAdministrativeGender | undefined {
