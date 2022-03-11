@@ -19,12 +19,14 @@ interface MainNotificationProps {
 
 class MainNotification extends Component<MainNotificationProps> {
   render() {
+    const userName = this.props.userProfile.getGivenName();
     return (
       <View style={styles.view}>
         <Text style={styles.title}>
-          {this.props.localesHelper.localeString('main.greeting', {
-            name: this.props.userProfile.getGivenName(),
-          })}
+          { userName
+            ? this.props.localesHelper.localeString('main.greeting', { name: userName,})
+            : ' '
+          }
         </Text>
         <Text style={styles.text}>
           {this.props.localesHelper.localeString('main.default')}
