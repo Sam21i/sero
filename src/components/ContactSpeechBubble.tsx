@@ -169,7 +169,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={[styles.input, this.state[field + '_valid'] ? {} : {color: 'red'}]}
+                              style={[styles.input, this.state[field + '_valid'] ? {} : {color: colors.alert}]}
                               autoCorrect={false}
                               onChangeText={(text) => this.validateAndSetText(field, text)}
                               value={this.state['new_' + field]}
