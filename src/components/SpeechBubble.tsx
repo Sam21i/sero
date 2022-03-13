@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -42,7 +42,7 @@ class SpeechBubble extends Component<SpeechBubbleProps> {
         }}>
         <View style={{
           position:'absolute',
-          left: scale(-3),
+          left: Platform.OS === 'ios' ? scale(-3) : scale(-2.5),
           borderRightWidth: this.props.stylingOptions?.arrow?.size + 5 || scale(45),
           borderRightColor: colors.primary,
           borderBottomWidth: this.props.stylingOptions?.arrow?.size + 5 || scale(50),
@@ -50,6 +50,7 @@ class SpeechBubble extends Component<SpeechBubbleProps> {
         }}></View>
         <View style={{
           position: "absolute",
+          top: Platform.OS === 'ios' ? 0 : -0.2,
           borderRightWidth: this.props.stylingOptions?.arrow?.size || scale(40),
           borderRightColor: colors.lightGrey,
           borderLeftWidth: 0,
