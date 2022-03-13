@@ -33,14 +33,14 @@
   },
   "main": {
     "default": "Entdecke jetzt die SERO App - los geht's.",
-    "myEnvironmentTitle": "Mein Umfeld anrufen",
+    "myEnvironmentTitle": "Dein Umfeld anrufen",
     "emergencyContactTitle": "Notfall anrufen",
     "greeting": "Hallo {{name}}",
     "emergency": "Notfall",
     "call": "anrufen"
   },
   "contacts": {
-    "title": "Mein \nUmfeld anrufen",
+    "title": "Dein \nUmfeld anrufen",
     "bubbleTitle": "Was möchtest du tun?",
     "addContact": "Kontakt hinzufügen",
     "editContact": "Kontakt bearbeiten",
@@ -54,12 +54,12 @@
     "title": "Einstellungen"
   },
   "prismS": {
-    "title": "Meine \nEinschätzung"
+    "title": "Deine \nEinschätzung"
   },
   "securityplan": {
-    "title": "Mein \nSicherheitsplan"
+    "title": "Dein \nSicherheitsplan"
   },
   "myEnvironment": {
-    "title": "Mein \nUmfeld"
+    "title": "Dein \nUmfeld"
   }
 }
