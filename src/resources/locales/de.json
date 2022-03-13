@@ -27,7 +27,8 @@
     "midata": "MIDATA"
   },
   "welcome": {
-    "welcomeMessage": "Willkommen!",
+    "title": "Willkommen.",
+    "greetingText": "Schön, dass du da bist!",
     "start": "Starten"
   },
   "main": {

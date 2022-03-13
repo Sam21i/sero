@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +14,7 @@ import {STORAGE} from './App';
 import {StackNavigationProp} from '@react-navigation/stack';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
-import {AppFonts, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
@@ -24,8 +25,8 @@ import {AppStore} from '../store/reducers';
 import * as miDataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {connect} from 'react-redux';
-import Weiter from '../resources/images/common/weiter.svg';
 import EmergencyContact from '../model/EmergencyContact';
+import AppButton from '../components/AppButton';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -116,7 +117,9 @@ class OnBoarding extends Component<PropsType, State> {
                   {item.title}
                 </Text>
               </View>
+              <ScrollView bounces={false} showsVerticalScrollIndicator={true} persistentScrollbar={true}>
               <Text style={styles.text}>{item.text}</Text>
+              </ScrollView>
             </View>
           </View>
           <View
@@ -135,29 +138,43 @@ class OnBoarding extends Component<PropsType, State> {
     let button;
     if (activeIndex < 4) {
       button = (
-        <View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}>
-            <Text style={styles.buttonText}>
-              {this.props.localesHelper.localeString('common.next')}
-            </Text>
-            <Weiter width={scale(50)} height={scale(50)} />
-          </TouchableOpacity>
-        </View>
+        <AppButton
+        label={this.props.localesHelper.localeString('common.next')}
+        icon={
+          '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+        }
+        position={'left'}
+        color={colors.grey}
+        style={{
+          position: 'absolute',
+          width: scale(300),
+          height: 70,
+          top: verticalScale(425),
+          left: scale(-10),
+          paddingVertical: 10,
+        }}
+        onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}
+        ></AppButton>
       );
     } else if (activeIndex === 4) {
       button = (
-        <View>
-          <TouchableOpacity
-            style={[styles.button]}
-            onPress={() => this.registerOrLogin()}>
-            <Text style={styles.buttonText}>
-              {this.props.localesHelper.localeString('common.midata')}
-            </Text>
-            <Weiter width={scale(50)} height={scale(50)} />
-          </TouchableOpacity>
-        </View>
+        <AppButton
+        label={this.props.localesHelper.localeString('common.next')}
+        icon={
+          '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+        }
+        position={'left'}
+        color={colors.grey}
+        style={{
+          position: 'absolute',
+          width: scale(300),
+          height: 70,
+          top: verticalScale(425),
+          left: scale(-10),
+          paddingVertical: 10,
+        }}
+        onPress={() => this.registerOrLogin()}
+        ></AppButton>
       );
     }
 
@@ -208,8 +225,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 0.74,
-    backgroundColor: 'rgb(255,255,255)',
-    opacity: 0.75,
+    backgroundColor: 'rgba(255,255,255,0.75)',
   },
   content: {
     position: 'absolute',
@@ -230,19 +246,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.small),
-  },
-  button: {
-    position: 'absolute',
-    top: verticalScale(368),
-    left: -scale(10),
-    width: scale(300),
-    paddingVertical: 10,
-    paddingHorizontal: scale(10),
-    paddingLeft: scale(30),
-    borderBottomRightRadius: 50,
-    borderTopRightRadius: 50,
-    backgroundColor: 'rgb(136,131,117)',
-    flexDirection: 'row',
+    color: colors.black
   },
   slideMarking: {
     position: 'absolute',
@@ -255,14 +259,6 @@ const styles = StyleSheet.create({
     paddingVertical: verticalScale(30),
     paddingRight: scale(50),
     paddingLeft: scale(20),
-  },
-  buttonText: {
-    flex: 3,
-    fontSize: scale(TextSize.big),
-    fontFamily: AppFonts.medium,
-    color: 'white',
-    alignSelf: 'center',
-    paddingLeft: scale(30),
   },
   paginationContainer: {
     position: 'absolute',

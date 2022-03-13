@@ -7,25 +7,21 @@ import {
   TextSize,
   scale,
   verticalScale,
-  windowHeight,
   colors,
 } from '../styles/App.style';
 import AppButton from '../components/AppButton';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import SpeechBubble from '../resources/images/common/speechBubble.svg';
-import Person from '../resources/images/common/person.svg';
 import LogoFull from '../resources/images/common/logo_full.svg';
+import SpeechBubble from '../components/SpeechBubble';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
 }
 
-interface State {}
-
-class Welcome extends Component<PropsType, State> {
+class Welcome extends Component<PropsType> {
   onPress = () => {
     this.props.navigation.navigate('mainOnBoarding');
   };
@@ -49,38 +45,7 @@ class Welcome extends Component<PropsType, State> {
             <View
               style={{
                 position: 'absolute',
-                top: verticalScale(50),
-                alignSelf: 'center',
-              }}>
-              <SpeechBubble
-                width={scale(277.5)}
-                height={verticalScale(147.5)}></SpeechBubble>
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                top: verticalScale(90),
-                alignSelf: 'center',
-              }}>
-              <Text style={styles.text}>
-                {this.props.localesHelper.localeString(
-                  'welcome.welcomeMessage',
-                )}
-              </Text>
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                top: verticalScale(220),
-                alignSelf: 'center',
-                paddingLeft: scale(90),
-              }}>
-              <Person width={scale(80)} height={verticalScale(80)} />
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                bottom: windowHeight * 0.075,
+                bottom: verticalScale(50),
               }}>
               <AppButton
                 label={this.props.localesHelper.localeString('welcome.start')}
@@ -90,7 +55,6 @@ class Welcome extends Component<PropsType, State> {
                 position={'left'}
                 color={colors.grey}
                 style={{
-                  backgroundColor: 'grey',
                   width: scale(300),
                   paddingVertical: 10,
                   height: 70,
@@ -99,6 +63,37 @@ class Welcome extends Component<PropsType, State> {
                   this.props.navigation.navigate('mainOnBoarding')
                 }></AppButton>
             </View>
+
+          <SpeechBubble
+            bubbleContent={
+              <View style={styles.content}>
+                <Text style={styles.title}>{this.props.localesHelper.localeString('welcome.title')}</Text>
+                <Text style={styles.text}>{this.props.localesHelper.localeString('welcome.greetingText')}</Text>
+              </View>
+            }
+            stylingOptions={{
+              general: {
+                position:{
+                  top: verticalScale(50),
+                },
+                width: scale(337.5),
+              },
+              arrow:{
+                position: {
+                  left: scale(150),
+                  bottom: 0
+                },
+                size: scale(30)
+              },
+              icon:{
+                position:{
+                  left: scale(200)
+                }
+              }
+
+            }}
+            localesHelper={this.props.localesHelper}
+            ></SpeechBubble>
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -123,6 +118,7 @@ const styles = StyleSheet.create({
     flex: 0.74,
     backgroundColor: 'white',
     alignContent: 'center',
+
   },
   grey: {
     width: '100%',
@@ -133,10 +129,18 @@ const styles = StyleSheet.create({
     width: scale(290),
     height: '100%',
   },
+  content: {
+    padding: scale(20),
+  },
+  title: {
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.big),
+    color: colors.primary,
+  },
   text: {
-    fontFamily: AppFonts.medium,
-    fontSize: scale(TextSize.veryBig),
-    color: 'rgb(203, 95, 22)',
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.big),
+    color: colors.primary,
   },
 });
 
@@ -148,3 +152,4 @@ function mapStateToProps(state: AppStore) {
 }
 
 export default connect(mapStateToProps, undefined)(Welcome);
+
