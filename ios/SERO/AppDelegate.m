@@ -7,6 +7,8 @@
 #import <React/RCTLinkingManager.h>
 #import "RNBootSplash.h"
 
+#import "Orientation.h"
+
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -68,6 +70,10 @@ static void InitializeFlipper(UIApplication *application) {
     return YES;
   }
   return [RCTLinkingManager application:app openURL:url options:options];
+}
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
 }
 
 @end

@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Platform} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth, } from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
 import { launchImageLibrary} from 'react-native-image-picker'
-import DialogPerson from '../resources/images/common/person.svg';
+import PersonIcon from '../resources/images/common/person.svg';
+import SpeechBubble from './SpeechBubble';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   add = 'ADD',
@@ -208,14 +209,16 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
 
   renderEditForm() {
     const newContact = this.props.contact || new EmergencyContact({});
-    newContact.family = newContact?.family + '2';
     return (
       <>
       { this.renderBubbleTitle('contacts.editContact') }
       <View style={styles.formWrapper}>
         <TouchableOpacity onPress={this.pickImage.bind(this)}>
           { this.state.new_image?.data
-            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
+            ? <View style={{alignItems: 'center'}}>
+              <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
+              <CameraButton width={scale(20)} height={scale(20)} style={{position: 'absolute', bottom: 0, right: scale(-2)}}/>
+            </View>
             : <View style={styles.cameraButton}>
                 <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
               </View>
@@ -312,79 +315,55 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     }
   }
 
-  renderArrowRight() {
-    return (
-      <View style={{position: "absolute", left:scale(125), bottom:0}}>
-        <View style={[styles.rightArrow, {
-          position:'absolute',
-          left: scale(-3),
-          borderRightWidth: scale(45),
-          borderRightColor: colors.primary,
-          borderBottomWidth: scale(50),
-          borderBottomColor: 'transparent',
-        }]}></View>
-        <View style={styles.rightArrow}></View>
-      </View>
-    )
-  }
-
-  renderDialogPerson() {
+  renderIcon() {
     return(
       <View style={{position:'absolute', justifyContent:'center', alignContent:'center', width:'100%', marginLeft:scale(57.5)}}>
-      <DialogPerson width={80} height={80} style={{position:'absolute', top: 315, alignSelf:'center'}}/>
+      <PersonIcon width={80} height={80} style={{position:'absolute', top: 315, alignSelf:'center'}}/>
       </View>
       )
   }
 
   render() {
     return (
-      <View style={styles.bubbleView}>
-        { this.renderBubbleContent() }
-        { this.renderArrowRight() }
-        { this.renderDialogPerson() }
-      </View>
+      <SpeechBubble
+      bubbleContent={this.renderBubbleContent()}
+      stylingOptions={{
+        general: {
+          position:{
+            top: -25,
+            left: -25,
+          },
+          width: scale(337.5),
+        },
+        arrow:{
+          position: {
+            left: verticalScale(140),
+            bottom: 0
+          },
+          size: 30
+        },
+      }}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  bubbleView: {
-    backgroundColor: colors.lightGrey,
-    borderColor: colors.primary,
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderRadius: 25,
-    width: scale(340),
-    height: 248,
-    marginLeft: scale(-20),
-    marginTop: verticalScale(-25),
-    padding: 20,
-  },
-  rightArrow: {
-    position: "absolute",
-    borderRightWidth: scale(40),
-    borderRightColor: colors.lightGrey,
-    borderLeftWidth: 0,
-    borderLeftColor: 'transparent',
-
-    borderTopWidth: 0,
-    borderTopColor: 'transparent',
-
-    borderBottomWidth: scale(45),
-    borderBottomColor: 'transparent',
-  },
   titleBar: {
-    marginLeft: scale(20),
+    paddingVertical: scale(10),
+    paddingLeft: scale(40),
+    paddingRight: scale(5),
     flexDirection: 'row',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    alignItems: 'center'
   },
   titlebarText: {
     color: colors.primary,
-    fontSize: TextSize.normal,
+    fontSize: scale(TextSize.normal),
     fontFamily: AppFonts.bold
   },
   actionList: {
-    marginVertical: scale(10)
+    marginBottom: scale(30),
   },
   actionMenuPoint: {
     marginLeft: scale(45),
@@ -394,58 +373,60 @@ const styles = StyleSheet.create({
   actionBubble: {
     backgroundColor: colors.white,
     borderWidth: 2,
-    marginRight: TextSize.normal,
+    marginRight: scale(TextSize.normal),
     borderColor: colors.primary,
-    borderRadius: TextSize.big / 2,
-    height: TextSize.big,
-    width: TextSize.big
+    borderRadius: scale(TextSize.big) / 2,
+    height: scale(TextSize.big),
+    width: scale(TextSize.big)
   },
   actionText: {
-    fontSize: TextSize.small,
+    fontSize: scale(TextSize.small),
     fontFamily: AppFonts.regular
   },
   actionTextWrapper: {
     borderBottomWidth: 2,
-    marginTop: TextSize.normal / 1,
+    marginTop: scale(TextSize.normal) / 1,
     borderBottomColor: colors.veryLightGrey,
     borderBottomStyle: 'solid',
-    marginRight: scale(-20),
+    marginRight: Platform.OS ==='ios' ? scale(-10) : scale(-8.5),
     flex: 1
   },
   formWrapper: {
-    flexDirection: 'row',
     marginTop: scale(10),
+    flexDirection: 'row',
     justifyContent:'flex-end',
   },
   formButton: {
     backgroundColor: colors.primary,
     alignSelf: 'flex-end',
-    height: 2 * TextSize.verySmall,
-    borderTopLeftRadius: TextSize.verySmall,
-    borderBottomLeftRadius: TextSize.verySmall,
-    marginRight: -20,
-    marginTop: 5,
+    height: 2 * scale(TextSize.verySmall),
+    borderTopLeftRadius: scale(TextSize.verySmall),
+    borderBottomLeftRadius: scale(TextSize.verySmall),
+    marginRight: scale(-10),
+    marginTop: scale(TextSize.verySmall),
+    marginBottom: scale(TextSize.verySmall),
+    justifyContent:'center',
+    alignItems:'center'
   },
   formButtonText: {
-    marginHorizontal: 2 * TextSize.verySmall,
-    marginTop: 0.4 * TextSize.verySmall,
-    fontSize: TextSize.verySmall,
+    paddingHorizontal: scale(TextSize.verySmall),
+    fontSize: scale(TextSize.verySmall),
     fontFamily: AppFonts.regular,
-    color: colors.white
+    color: colors.white,
   },
   formInputs: {
     marginLeft: scale(20),
-
   },
   input: {
-    marginBottom: TextSize.small ,
-    fontSize: TextSize.small,
+    marginBottom: scale(TextSize.small),
+    fontSize: scale(TextSize.small),
     fontFamily: AppFonts.regular,
     borderBottomColor: colors.veryLightGrey,
     borderBottomWidth: 2,
     borderColor: colors.veryLightGrey,
-    marginRight: scale(-20),
-    width: scale(220),
+    marginRight: Platform.OS ==='ios' ? scale(-10) : scale(-9),
+    width: scale(200),
+    paddingVertical: 0,
     },
   cameraButton: {
     height: scale(66),
@@ -453,20 +434,20 @@ const styles = StyleSheet.create({
     marginLeft: scale(20),
     borderRadius: scale(33),
     backgroundColor: colors.veryLightGrey,
-    justifyContent:'center',
-    padding:scale(12.5)
+    justifyContent: 'center',
+    padding: scale(12.5)
   },
   listItemInitials: {
-    borderRadius: 2 * TextSize.small,
-    height: 4 * TextSize.small,
-    width: 4 * TextSize.small,
+    borderRadius: 2 * scale(TextSize.small),
+    height: 4 * scale(TextSize.small),
+    width: 4 * scale(TextSize.small),
     backgroundColor: colors.petrol
   },
   listItemInitialsText: {
     fontFamily: AppFonts.regular,
-    fontSize: 1.8 * TextSize.small,
+    fontSize: 1.8 * scale(TextSize.small),
     alignSelf: 'center',
-    marginTop: 0.9 * TextSize.small,
+    marginTop: 0.9 * scale(TextSize.small),
     color: colors.white,
   }
 });
