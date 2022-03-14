@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {
-  Alert,
   FlatList,
   Linking,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {scale, TextSize, colors, AppFonts} from '../styles/App.style';
@@ -55,9 +54,9 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
           styles.listFooterComponent,
           {width: this.avatarSize, height: this.avatarSize},
         ]}>
-        <TouchableWithoutFeedback onPress={this.props.onPressPlusButton}>
+        <TouchableOpacity onPress={this.props.onPressPlusButton}>
           <PlusButton width={scale(30)} height={scale(30)} />
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     );
   };

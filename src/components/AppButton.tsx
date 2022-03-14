@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 import {
   AppFonts,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     width: scale(300),
     paddingVertical: verticalScale(15),
-    paddingLeft: scale(5),
+    paddingLeft: Platform.OS === 'ios' ? scale(5): 0,
     borderBottomLeftRadius: 50,
     borderTopLeftRadius: 50,
     flexDirection: 'row',
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     width: scale(300),
     paddingVertical: verticalScale(15),
-    paddingRight: scale(5),
+    paddingRight: Platform.OS === 'ios' ? scale(5): 0,
     borderBottomRightRadius: 50,
     borderTopRightRadius: 50,
     flexDirection: 'row',
