@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo } from 'react-native';
+import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo, Platform } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -8,7 +8,7 @@ import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
-import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import { AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
 import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
@@ -124,8 +124,8 @@ class Contacts extends Component<PropsType, State> {
                 }
               </Text>
             </View>
-            <View style={styles.button}>
-                <EmergencyContactIcon/>
+            <View style={styles.emergencyButton}>
+              <EmergencyNumberButton/>
             </View>
           </View>
           <View style={styles.bottomView}>
@@ -173,16 +173,10 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.big),
   },
-  button: {
-    alignSelf: 'center',
-    width: scale(90),
-    height: verticalScale(75),
-    paddingVertical: verticalScale(15),
-    paddingLeft: scale(10),
-    paddingRight: scale(20),
-    backgroundColor: colors.petrol,
-    borderBottomLeftRadius: 100,
-    borderTopLeftRadius: 100,
+  emergencyButton: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    backgroundColor: 'red'
   },
   bottomTextView: {
     flex: 1,
