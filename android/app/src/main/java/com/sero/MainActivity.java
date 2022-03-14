@@ -4,6 +4,9 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate; // <- add this necessary import (bootsplash)
 import com.zoontek.rnbootsplash.RNBootSplash; // <- add this necessary import (bootsplash)
 
+import android.content.Intent;  // necessary for device orientation lock
+import android.content.res.Configuration; // necessary for device orientation lock
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -13,6 +16,14 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "SERO";
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    Intent intent = new Intent("onConfigurationChanged");
+    intent.putExtra("newConfig", newConfig);
+    this.sendBroadcast(intent);
   }
 
 

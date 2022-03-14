@@ -19,6 +19,8 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Securityplan from './Securityplan';
 import Contacts from './Contacts';
+import Assessment from './Assessment';
+import Orientation from 'react-native-orientation-locker';
 
 interface PropsType {}
 
@@ -66,6 +68,12 @@ function MainStackScreen({route}: {route: any}) {
         options={{
           animationEnabled: false
         }}></MainStack.Screen>
+        <MainStack.Screen
+          name="Assessment"
+          component={Assessment}
+          options={{
+            animationEnabled: false
+          }}></MainStack.Screen>
     </MainStack.Navigator>
   );
 }
@@ -112,6 +120,10 @@ export default class App extends Component<PropsType, State> {
       showRealApp: false,
     };
     this.checkContentToDisplay();
+  }
+
+  componentDidMount() {
+    Orientation.lockToPortrait();
   }
 
   async checkContentToDisplay() {

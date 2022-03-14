@@ -30,6 +30,7 @@
     "react-native-i18n": "^2.0.15",
     "react-native-image-picker": "^4.7.3",
     "react-native-localize": "^2.1.9",
+    "react-native-orientation-locker": "^1.4.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",
     "react-native-sensitive-info": "^5.5.8",
