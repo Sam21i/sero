@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
   emergencyButton: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    backgroundColor: 'red'
   },
   bottomTextView: {
     flex: 1,
