@@ -183,6 +183,12 @@ export default class App extends Component<PropsType, State> {
                 <Tab.Screen
                   name="InfoScreen"
                   component={InfoStackScreen}
+                  listeners={{
+                    tabPress: e => {
+                      console.log('suppress info tab screen')
+                      e.preventDefault();
+                    },
+                  }}
                   options={{
                     tabBarIcon: ({focused, color, size}) =>
                       generateTabIcon(

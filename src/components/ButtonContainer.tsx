@@ -27,7 +27,7 @@ class ButtonContainer extends Component<ButtonContainerProps> {
             }
             position="right"
             color={colors.primary}
-            onPress={() => this.props.navigation.navigate('Securityplan')}
+            onPress={() => {}} //this.props.navigation.navigate('Securityplan')}
           />
           <AppButton
             style={{backgroundColor: colors.gold}}
@@ -37,7 +37,7 @@ class ButtonContainer extends Component<ButtonContainerProps> {
             }
             position="right"
             color={colors.gold}
-            onPress={() => this.props.navigation.navigate('Assessment')}
+            onPress={() => {}} // this.props.navigation.navigate('Assessment')}
           />
         </View>
       </View>
