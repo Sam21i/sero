@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {Platform, View} from 'react-native';
 import {connect} from 'react-redux';
-import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {colors, scale} from '../styles/App.style';
 import DialogPerson from '../resources/images/common/person.svg';
 
 interface SpeechBubbleProps {
-    localesHelper: LocalesHelper;
     bubbleContent: any;
     stylingOptions?: {
         general?: {
@@ -31,7 +29,7 @@ interface SpeechBubbleProps {
     };
 };
 
-class SpeechBubble extends Component<SpeechBubbleProps> {
+export default class SpeechBubble extends Component<SpeechBubbleProps> {
 
   renderArrow() {
     return (
@@ -55,10 +53,10 @@ class SpeechBubble extends Component<SpeechBubbleProps> {
           borderRightColor: colors.lightGrey,
           borderLeftWidth: 0,
           borderLeftColor: 'transparent',
-      
+
           borderTopWidth: 0,
           borderTopColor: 'transparent',
-      
+
           borderBottomWidth: this.props.stylingOptions?.arrow?.size || scale(45),
           borderBottomColor: 'transparent',
         }}></View>
@@ -111,13 +109,4 @@ class SpeechBubble extends Component<SpeechBubbleProps> {
     );
   }
 }
-
-// Link store data to component:
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore,
-  };
-}
-
-export default connect(mapStateToProps, undefined)(SpeechBubble);
 
