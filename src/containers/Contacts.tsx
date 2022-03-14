@@ -52,6 +52,9 @@ class Contacts extends Component<PropsType, State> {
         listVisible: (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.delete || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.edit),
         mode: _arg.mode
       });
+      if (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.add || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.menu){
+        this.props.navigation.pop();
+        }
     } else {
       this.setState({
         bubbleVisible: false,
@@ -169,12 +172,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.big),
-  },
-  topText: {
-    textAlign: 'center',
-    fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.small),
-    color: colors.white,
   },
   button: {
     alignSelf: 'center',
