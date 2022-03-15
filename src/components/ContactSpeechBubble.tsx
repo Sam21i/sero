@@ -19,9 +19,10 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
 };
 
 const MAX_IMAGE_SIZE = 500;
+
 const REGEX = {
   given: /.*/, // TODO: correct regex (matches only single word names without special characters)
-  phone: /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b/,
+  phone: /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b|\b(143|144|117|118|1414|145|112)\b/, // temporarily added 143|144|117|118|1414|145|112 emergency numbers to phone regex
   family: /.*/ //TODO: correct regex (matches only single word names without special characters)
 }
 
@@ -170,7 +171,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={[styles.input, this.state[field + '_valid'] ? {} : {color: colors.alert}]}
+                              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
                               autoCorrect={false}
                               onChangeText={(text) => this.validateAndSetText(field, text)}
                               value={this.state['new_' + field]}
@@ -182,8 +183,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         </View>
       </View>
       <TouchableOpacity
-        style={{opacity: this.areAllValid() ? 1 : 0.3}}
-        activeOpacity={this.areAllValid() ? 0.2 : 0.3}
+      disabled={!this.areAllValid()}
         onPress={
         () => {
           if (this.areAllValid()) {
@@ -199,7 +199,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           }
         }
       }>
-        <View style={styles.formButton}>
+        <View style={[styles.formButton, !this.areAllValid() ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
       </TouchableOpacity>
@@ -208,7 +208,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   }
 
   renderEditForm() {
-    const newContact = this.props.contact || new EmergencyContact({});
     return (
       <>
       { this.renderBubbleTitle('contacts.editContact') }
@@ -229,18 +228,18 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           FORM_FIELDS.map(field => {
             if(field === 'given'){
               return <TextInput key={'input.' + field}
-              style={[styles.input]}
+              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
               autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              onChangeText={(text) => this.validateAndSetText(field, text)}
               value={this.state['new_' + field]}
               placeholder={this.state.new_given}
               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
               />
             } else {
               return <TextInput key={'input.' + field}
-              style={[styles.input]}
+              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
               autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
+              onChangeText={(text) => this.validateAndSetText(field, text)}
               value={this.state['new_' + field]}
               placeholder={this.props.contact?.[field]}
               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
@@ -250,14 +249,21 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         }
         </View>
       </View>
-      <TouchableOpacity onPress={() => {
-        const contact = this.props.contact;
-        if (contact) {
-          contact.setGivenName(this.state.new_given);
-          contact.setFamilyName(this.state.new_family);
-          contact.setPhone(this.state.new_phone);
-          if (this.state.new_image) contact.setImage(this.state.new_image);
-          this.props.onClose({mode: this.state.mode, data: contact})
+      <TouchableOpacity
+      onPress={() => {
+        if(this.areAllValid()){
+          const contact = this.props.contact;
+          if (contact) {
+            contact.setGivenName(this.state.new_given);
+            contact.setFamilyName(this.state.new_family);
+            contact.setPhone(this.state.new_phone);
+            if (this.state.new_image) contact.setImage(this.state.new_image);
+            this.props.onClose({mode: this.state.mode, data: contact})
+          }
+        } else {
+          FORM_FIELDS.forEach((field) => {
+            this.validateAndSetText(field, this.state['new_' + field]);
+          })
         }
       }}>
         <View style={styles.formButton}>
