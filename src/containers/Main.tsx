@@ -76,7 +76,7 @@ class Main extends Component<PropsType, State> {
           <View style={styles.topView}>
             <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
                                        localesHelper={this.props.localesHelper}
-                                       onPressPlusButton={this.editContacts.bind(this)} />
+                                       onPressOptionsButton={this.editContacts.bind(this)} />
             <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
