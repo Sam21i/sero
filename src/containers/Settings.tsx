@@ -28,7 +28,7 @@ class Settings extends Component<PropsType, State> {
         {  this.props.midataService.isAuthenticated() &&
             <Button title="logout" onPress={() => {
               this.props.logoutUser();
-              RNRestart.Restart()
+              RNRestart.Restart();
             }}></Button>
         }
       </SafeAreaView>
