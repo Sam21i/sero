@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BackHandler, ImageBackground, StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonContainer from '../components/ButtonContainer';
@@ -35,14 +35,6 @@ class Main extends Component<PropsType, State> {
       this.props.uploadPendingResources();
     }
   }
-
-  componentDidMount() {
-   BackHandler.addEventListener('hardwareBackPress', () => {
-        console.log('backbutton pressed')
-
-       return true;
-   });
- }
 
   editContacts(): void {
     this.props.navigation.navigate('Contacts');
