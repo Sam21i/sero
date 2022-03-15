@@ -21,9 +21,9 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
 const MAX_IMAGE_SIZE = 500;
 
 const REGEX = {
-  given: /.*/, // TODO: correct regex (matches only single word names without special characters)
+  given: /^[a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
   phone: /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b|\b(143|144|117|118|1414|145|112)\b/, // temporarily added 143|144|117|118|1414|145|112 emergency numbers to phone regex
-  family: /.*/ //TODO: correct regex (matches only single word names without special characters)
+  family: /^[a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
 }
 
 const MENU_ACTIONS = [
@@ -53,6 +53,7 @@ interface ContactSpeechBubbleState {
   given_valid: boolean;
   family_valid: boolean;
   phone_valid: boolean;
+  enable_button: boolean;
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -64,9 +65,10 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
       mode:  this.props.mode,
-      given_valid: false,
-      family_valid: false,
-      phone_valid: false
+      given_valid: true,
+      family_valid: true,
+      phone_valid: true,
+      enable_button: true
     };
   }
 
@@ -103,17 +105,22 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     });
   }
 
-  validateAndSetText(_field: 'phone' | 'family' | 'given', _text: string): boolean {
-    const valid = REGEX[_field].test(_text);
-    this.setState({
-      [_field + '_valid']: valid,
-      ['new_' + _field]: _text
+  validateInput(): boolean {
+    let allValid = true;
+    let updateState = {
+      phone_valid: false,
+      family_valid: false,
+      given_valid: false,
+      enable_button: false
+    };
+    ['phone', 'family', 'given'].forEach(input => {
+      const inputValid = REGEX[input].test(this.state['new_' + input]);
+      allValid = allValid && inputValid;
+      updateState[input + '_valid'] = inputValid;
     });
-    return valid;
-  }
-
-  areAllValid(): boolean {
-    return this.state.phone_valid && this.state.family_valid && this.state.given_valid;
+    updateState.enable_button = allValid;
+    this.setState(updateState);
+    return allValid;
   }
 
   renderBubbleTitle(_translateString: string) {
@@ -171,9 +178,13 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
+                              style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
                               autoCorrect={false}
-                              onChangeText={(text) => this.validateAndSetText(field, text)}
+                              onChangeText={(text) => this.setState({
+                                              ['new_' + field]: text,
+                                              [field + '_valid']: true,
+                                              enable_button: true
+                                            })}
                               value={this.state['new_' + field]}
                               placeholder={this.props.localesHelper.localeString('common.' +field)}
                               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
@@ -183,10 +194,10 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         </View>
       </View>
       <TouchableOpacity
-      disabled={!this.areAllValid()}
+        disabled={!this.state.enable_button}
         onPress={
         () => {
-          if (this.areAllValid()) {
+          if (this.validateInput()) {
             this.props.onClose({
               mode: this.state.mode,
               data: new EmergencyContact({
@@ -199,7 +210,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           }
         }
       }>
-        <View style={[styles.formButton, !this.areAllValid() ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
+        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
       </TouchableOpacity>
@@ -226,47 +237,38 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <View style={styles.formInputs}>
         {
           FORM_FIELDS.map(field => {
-            if(field === 'given'){
-              return <TextInput key={'input.' + field}
-              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
-              autoCorrect={false}
-              onChangeText={(text) => this.validateAndSetText(field, text)}
-              value={this.state['new_' + field]}
-              placeholder={this.state.new_given}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+            return (
+                <TextInput key={'input.' + field}
+                           style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
+                           autoCorrect={false}
+                           onChangeText={(text) => this.setState({
+                                           ['new_' + field]: text,
+                                           [field + '_valid']: true,
+                                           enable_button: true
+                                         })}
+                           value={this.state['new_' + field]}
+                           keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
               />
-            } else {
-              return <TextInput key={'input.' + field}
-              style={[styles.input, this.state[field + '_valid'] ? {} : {}]}
-              autoCorrect={false}
-              onChangeText={(text) => this.validateAndSetText(field, text)}
-              value={this.state['new_' + field]}
-              placeholder={this.props.contact?.[field]}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-              />
-            }
+            );
           })
         }
         </View>
       </View>
       <TouchableOpacity
-      onPress={() => {
-        if(this.areAllValid()){
-          const contact = this.props.contact;
-          if (contact) {
-            contact.setGivenName(this.state.new_given);
-            contact.setFamilyName(this.state.new_family);
-            contact.setPhone(this.state.new_phone);
-            if (this.state.new_image) contact.setImage(this.state.new_image);
-            this.props.onClose({mode: this.state.mode, data: contact})
+        disabled={!this.state.enable_button}
+        onPress={() => {
+          if(this.validateInput()){
+            const contact = this.props.contact;
+            if (contact) {
+              contact.setGivenName(this.state.new_given);
+              contact.setFamilyName(this.state.new_family);
+              contact.setPhone(this.state.new_phone);
+              if (this.state.new_image) contact.setImage(this.state.new_image);
+              this.props.onClose({mode: this.state.mode, data: contact})
+            }
           }
-        } else {
-          FORM_FIELDS.forEach((field) => {
-            this.validateAndSetText(field, this.state['new_' + field]);
-          })
-        }
-      }}>
-        <View style={styles.formButton}>
+        }}>
+        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
       </TouchableOpacity>
