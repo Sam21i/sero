@@ -142,7 +142,17 @@ export default class App extends Component<PropsType, State> {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <SafeAreaProvider>
-            <NavigationContainer>
+            <NavigationContainer onStateChange={(state) => {
+              const mainScreenHistoryIndex = state?.history?.findIndex(historyEntry => historyEntry.key.indexOf('MainScreen') > -1) || -1;
+              if (mainScreenHistoryIndex > 0) {
+                if (state?.history && (state.history[mainScreenHistoryIndex - 1].key as string).indexOf('OnBoarding') > -1) {
+                  // we just navigated from OnBoarding to MainScreen
+                  // now we clear everything in the history before the MainScreen
+                  // (I feel like there must be an easier way of doing this, but I couldn't find it)
+                  state?.history?.splice(0, mainScreenHistoryIndex);
+                }
+              }
+            }}>
               <StatusBar barStyle="dark-content" />
               <Tab.Navigator
                 screenOptions={({route}) => ({
