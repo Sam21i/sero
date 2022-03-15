@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {colors, scale, verticalScale} from '../styles/App.style';
 import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
 
-interface EmergencyNumberButtonProps {
-  onPress?: () => void;
-}
+export default class EmergencyNumberButton extends Component {
+  callEmergency() {
+    console.warn('Emergency Number is still hardcoded');
+    Linking.openURL('tel:144');
+  }
 
-export default class EmergencyNumberButton extends Component<EmergencyNumberButtonProps> {
   render() {
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
+      <TouchableOpacity onPress={() => {this.callEmergency()}}>
         <View style={[styles.button]}>
           <EmergencyContactIcon width='100%' height='100%'/>
         </View>

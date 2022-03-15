@@ -11,10 +11,7 @@ interface EmergencyNumberContainerProps {
 }
 
 class EmergencyContact extends Component<EmergencyNumberContainerProps> {
-  callEmergency() {
-    console.warn('Emergency Number is still hardcoded');
-    Linking.openURL('tel:144');
-  }
+
 
   render() {
     return (
@@ -25,7 +22,7 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
           </Text>
         </View>
         <View style={styles.iconView}>
-          <EmergencyNumberButton onPress={() => this.callEmergency()}></EmergencyNumberButton>
+          <EmergencyNumberButton/>
         </View>
         <View style={styles.bottomTextView}>
           <Text style={styles.bottomText}>
