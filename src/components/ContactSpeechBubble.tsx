@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFe
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth, } from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
@@ -19,6 +19,12 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
 };
 
 const MAX_IMAGE_SIZE = 500;
+
+const REGEX = {
+  given: /^[^ ][a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
+  phone: /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b|\b(143|144|117|118|1414|145|112)\b/, // temporarily added 143|144|117|118|1414|145|112 emergency numbers to phone regex
+  family: /^[^ ][a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+}
 
 const MENU_ACTIONS = [
   { name: 'addContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.add },
@@ -43,7 +49,11 @@ interface ContactSpeechBubbleState {
   new_image?: {
     contentType: string;
     data: string;
-  }
+  },
+  given_valid: boolean;
+  family_valid: boolean;
+  phone_valid: boolean;
+  enable_button: boolean;
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -54,7 +64,11 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_family: props.contact ? props.contact.family : '',
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
-      mode:  this.props.mode
+      mode:  this.props.mode,
+      given_valid: true,
+      family_valid: true,
+      phone_valid: true,
+      enable_button: true
     };
   }
 
@@ -89,6 +103,24 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     .catch(e => {
       console.log('Error picking image', e);
     });
+  }
+
+  validateInput(): boolean {
+    let allValid = true;
+    let updateState = {
+      phone_valid: false,
+      family_valid: false,
+      given_valid: false,
+      enable_button: false
+    };
+    ['phone', 'family', 'given'].forEach(input => {
+      const inputValid = REGEX[input].test(this.state['new_' + input]);
+      allValid = allValid && inputValid;
+      updateState[input + '_valid'] = inputValid;
+    });
+    updateState.enable_button = allValid;
+    this.setState(updateState);
+    return allValid;
   }
 
   renderBubbleTitle(_translateString: string) {
@@ -146,9 +178,13 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         {
           FORM_FIELDS.map(field => {
             return <TextInput key={'input.' + field}
-                              style={[styles.input]}
+                              style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
                               autoCorrect={false}
-                              onChangeText={(t) => this.setState({['new_' + field]: t})}
+                              onChangeText={(text) => this.setState({
+                                              ['new_' + field]: text,
+                                              [field + '_valid']: true,
+                                              enable_button: true
+                                            })}
                               value={this.state['new_' + field]}
                               placeholder={this.props.localesHelper.localeString('common.' +field)}
                               keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
@@ -157,16 +193,24 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         }
         </View>
       </View>
-      <TouchableOpacity onPress={() => this.props.onClose({
-          mode: this.state.mode,
-          data: new EmergencyContact({
-            given: [this.state.new_given],
-            family: this.state.new_family,
-            phone: this.state.new_phone,
-            image: this.state.new_image
-          })
-        })}>
-        <View style={styles.formButton}>
+      <TouchableOpacity
+        disabled={!this.state.enable_button}
+        onPress={
+        () => {
+          if (this.validateInput()) {
+            this.props.onClose({
+              mode: this.state.mode,
+              data: new EmergencyContact({
+                given: [this.state.new_given],
+                family: this.state.new_family,
+                phone: this.state.new_phone,
+                image: this.state.new_image
+              })
+            });
+          }
+        }
+      }>
+        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
       </TouchableOpacity>
@@ -175,7 +219,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   }
 
   renderEditForm() {
-    const newContact = this.props.contact || new EmergencyContact({});
     return (
       <>
       { this.renderBubbleTitle('contacts.editContact') }
@@ -194,40 +237,38 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <View style={styles.formInputs}>
         {
           FORM_FIELDS.map(field => {
-            if(field === 'given'){
-              return <TextInput key={'input.' + field}
-              style={[styles.input]}
-              autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
-              value={this.state['new_' + field]}
-              placeholder={this.state.new_given}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+            return (
+                <TextInput key={'input.' + field}
+                           style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
+                           autoCorrect={false}
+                           onChangeText={(text) => this.setState({
+                                           ['new_' + field]: text,
+                                           [field + '_valid']: true,
+                                           enable_button: true
+                                         })}
+                           value={this.state['new_' + field]}
+                           keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
               />
-            } else {
-              return <TextInput key={'input.' + field}
-              style={[styles.input]}
-              autoCorrect={false}
-              onChangeText={(t) => this.setState({['new_' + field]: t})}
-              value={this.state['new_' + field]}
-              placeholder={this.props.contact?.[field]}
-              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-              />
-            }
+            );
           })
         }
         </View>
       </View>
-      <TouchableOpacity onPress={() => {
-        const contact = this.props.contact;
-        if (contact) {
-          contact.setGivenName(this.state.new_given);
-          contact.setFamilyName(this.state.new_family);
-          contact.setPhone(this.state.new_phone);
-          if (this.state.new_image) contact.setImage(this.state.new_image);
-          this.props.onClose({mode: this.state.mode, data: contact})
-        }
-      }}>
-        <View style={styles.formButton}>
+      <TouchableOpacity
+        disabled={!this.state.enable_button}
+        onPress={() => {
+          if(this.validateInput()){
+            const contact = this.props.contact;
+            if (contact) {
+              contact.setGivenName(this.state.new_given);
+              contact.setFamilyName(this.state.new_family);
+              contact.setPhone(this.state.new_phone);
+              if (this.state.new_image) contact.setImage(this.state.new_image);
+              this.props.onClose({mode: this.state.mode, data: contact})
+            }
+          }
+        }}>
+        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
           <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
         </View>
       </TouchableOpacity>

@@ -51,7 +51,7 @@ export const colors = {
   grey: 'rgb(128,128,128)',
 
   success: 'rgb(0, 170, 230)',
-  warning: 'rgb(120, 90, 150)',
+  warning: 'rgb(191, 58, 46)',
   alert: 'rgb(185, 50, 100)',
 
   primary: 'rgb(201, 95, 30)',
