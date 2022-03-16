@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import ButtonContainer from '../components/ButtonContainer';
@@ -14,6 +14,7 @@ import * as midataServiceActions from '../store/midataService/actions';
 import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
+import { scale, verticalScale } from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topView: {
-    flex: 1,
+    height: verticalScale(165) + (Platform.OS === 'android' ? 28 : 0),
     flexDirection: 'row',
   },
   bottomView: {
