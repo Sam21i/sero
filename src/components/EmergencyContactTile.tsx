@@ -69,7 +69,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
           <TouchableOpacity onPress={this.props.onPress}>
             <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
           </TouchableOpacity>
-          <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
+          <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
             <Text style={styles.text} numberOfLines={2}>
              {contact.getNameString()}
             </Text>
@@ -93,7 +93,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
                 </Text>
               )}
             </View>
-            <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
+            <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
               <Text style={styles.text} numberOfLines={2} >
                 {contact.getNameString()}
               </Text>
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   textView: {
     alignSelf: 'center',
     marginHorizontal: 0,
-    height: verticalScale(2.5 * (isSmallScreen() ? TextSize.verySmall : TextSize.small)),
     marginTop: verticalScale(2.5),
   },
   text: {

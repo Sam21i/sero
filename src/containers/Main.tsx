@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topView: {
-    height: verticalScale(165) + (Platform.OS === 'android' ? 28 : 0),
+    height: verticalScale(165) + (Platform.OS === 'android' ? (80 - verticalScale(54)) : 0),
     flexDirection: 'row',
   },
   bottomView: {
