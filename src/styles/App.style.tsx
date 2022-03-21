@@ -64,4 +64,11 @@ export const colors = {
 export const appLayout = {};
 
 // Styles
-export const appStyles = StyleSheet.create({});
+export const appStyles = StyleSheet.create({
+  buttonContainer: {
+    flex: 1.58,
+    backgroundColor: 'rgba(255, 255, 255, 0.65)',
+    justifyContent: 'space-evenly',
+    paddingBottom: verticalScale(60),
+  }
+});
