@@ -88,6 +88,13 @@ export default class EmergencyContact {
     return this.fhirResource.patient;
   }
 
+  getUniqueColor(): string {
+    let stringUniqueHash = [...this.getNameString()].reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    return `hsl(${stringUniqueHash % 360}, 40%, 45%)`;
+  }
+
   isEqual(_contact: EmergencyContact): boolean {
     return this.fhirResource?.id === _contact.fhirResource?.id ||
           (this.family === _contact.family &&

@@ -46,22 +46,21 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       fontSize: scale(this.props.size / 2.25),
     };
 
+    let emergencyContactAvatar;
+    const contact = this.props.contact;
+
     //If source is undefined or not provided then default_text_avatar styles will be used to display default user avatar
     const text_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
       marginHorizontal: HORIZONTAL_MARGIN,
       borderRadius: scale(this.props.size / 2),
-      backgroundColor: colors.grey,
+      backgroundColor: contact.getUniqueColor(),
       textAlignVertical: 'center',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
     };
-
-    let emergencyContactAvatar;
-    const contact = this.props.contact;
-
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
