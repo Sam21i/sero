@@ -4,12 +4,13 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
 import {
   AppFonts,
   colors,
+  isSmallScreen,
   scale,
   TextSize,
   verticalScale
@@ -46,30 +47,29 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       fontSize: scale(this.props.size / 2.25),
     };
 
+    let emergencyContactAvatar;
+    const contact = this.props.contact;
+
     //If source is undefined or not provided then default_text_avatar styles will be used to display default user avatar
     const text_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
       marginHorizontal: HORIZONTAL_MARGIN,
       borderRadius: scale(this.props.size / 2),
-      backgroundColor: colors.grey,
+      backgroundColor: contact.getUniqueColor(),
       textAlignVertical: 'center',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
     };
-
-    let emergencyContactAvatar;
-    const contact = this.props.contact;
-
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <TouchableOpacity onPress={this.props.onPress}>
             <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
           </TouchableOpacity>
-          <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
-            <Text style={styles.text} adjustsFontSizeToFit>
+          <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
+            <Text style={styles.text} numberOfLines={2}>
              {contact.getNameString()}
             </Text>
           </View>
@@ -92,8 +92,8 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
                 </Text>
               )}
             </View>
-            <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
-              <Text style={styles.text} adjustsFontSizeToFit={true}>
+            <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
+              <Text style={styles.text} numberOfLines={2} >
                 {contact.getNameString()}
               </Text>
             </View>
@@ -112,13 +112,12 @@ const styles = StyleSheet.create({
   textView: {
     alignSelf: 'center',
     marginHorizontal: 0,
-    height: 2.5 * TextSize.verySmall,
     marginTop: verticalScale(2.5),
   },
   text: {
     textAlign: 'center',
     color: colors.white,
     fontFamily: AppFonts.medium,
-    fontSize: scale(TextSize.verySmall),
+    fontSize: isSmallScreen() ? TextSize.verySmall : TextSize.small,
   },
 });

@@ -11,7 +11,7 @@ export const windowHeight = Dimensions.get('window').height;
 //   https://medium.com/soluto-engineering/size-matters-5aeeb462900a
 //   https://stackoverflow.com/questions/33628677/react-native-responsive-font-size
 //
-// approches guideline sizes are based on iPhone 6, 7, 8 screen size (375 x 667 points, 750 x 1334 pixels)
+// app guideline sizes are based on iPhone 6, 7, 8 screen size (375 x 667 points, 750 x 1334 pixels)
 //   https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
 const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 667;
@@ -21,7 +21,7 @@ export const verticalScale = (size: number) =>
   (windowHeight / guidelineBaseHeight) * size;
 export const moderateScale = (size: number, factor = 0.5) =>
   size + (scale(size) - size) * factor;
-export const isSmallScreen = () => Dimensions.get('window').height < 570;
+export const isSmallScreen = () => windowHeight <= guidelineBaseHeight;
 
 // Fonts
 export const AppFonts = {
