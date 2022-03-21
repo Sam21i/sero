@@ -4,12 +4,13 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
 import {
   AppFonts,
   colors,
+  isSmallScreen,
   scale,
   TextSize,
   verticalScale
@@ -68,8 +69,8 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
           <TouchableOpacity onPress={this.props.onPress}>
             <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
           </TouchableOpacity>
-          <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
-            <Text style={styles.text} adjustsFontSizeToFit>
+          <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
+            <Text style={styles.text} numberOfLines={2}>
              {contact.getNameString()}
             </Text>
           </View>
@@ -92,8 +93,8 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
                 </Text>
               )}
             </View>
-            <View style={[styles.textView, {width: this.props.size + 2 * HORIZONTAL_MARGIN}]}>
-              <Text style={styles.text} adjustsFontSizeToFit={true}>
+            <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
+              <Text style={styles.text} numberOfLines={2} >
                 {contact.getNameString()}
               </Text>
             </View>
@@ -112,13 +113,12 @@ const styles = StyleSheet.create({
   textView: {
     alignSelf: 'center',
     marginHorizontal: 0,
-    height: 2.5 * TextSize.verySmall,
     marginTop: verticalScale(2.5),
   },
   text: {
     textAlign: 'center',
     color: colors.white,
     fontFamily: AppFonts.medium,
-    fontSize: scale(TextSize.verySmall),
+    fontSize: isSmallScreen() ? TextSize.verySmall : TextSize.small,
   },
 });
