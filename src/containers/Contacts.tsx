@@ -97,7 +97,7 @@ class Contacts extends Component<PropsType, State> {
           </Text>
           { contact.image
             ? <Image style={styles.listItemImage} source={{uri: 'data:' + contact.image.data}} />
-            : <View style={styles.listItemInitials}>
+            : <View style={[styles.listItemInitials, {backgroundColor: contact.getUniqueColor()}]}>
                 <Text style={styles.listItemInitialsText}>{contact.getInitials()}</Text>
               </View>
           }
@@ -204,34 +204,33 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     marginRight: scale(60),
     backgroundColor: colors.grey,
-    height: 4 * TextSize.small,
-    borderTopRightRadius: 2 * TextSize.small,
-    borderBottomRightRadius: 2 * TextSize.small
+    height: 4 * scale(TextSize.small),
+    borderTopRightRadius: 2 * scale(TextSize.small),
+    borderBottomRightRadius: 2 * scale(TextSize.small)
   },
   listItemText: {
-    marginTop: 1.4 * TextSize.small,
-    marginLeft: 2 * TextSize.small,
+    marginTop: 1.4 * scale(TextSize.small),
+    marginLeft: 2 * scale(TextSize.small),
     fontFamily: AppFonts.regular,
-    fontSize: TextSize.small,
+    fontSize: scale(TextSize.small),
     color: colors.white,
     maxWidth: scale(200),
   },
   listItemImage: {
-    borderRadius: 2 * TextSize.small,
-    height: 4 * TextSize.small,
-    width: 4 * TextSize.small
+    borderRadius: 2 * scale(TextSize.small),
+    height: 4 * scale(TextSize.small),
+    width: 4 * scale(TextSize.small)
   },
   listItemInitials: {
-    borderRadius: 2 * TextSize.small,
-    height: 4 * TextSize.small,
-    width: 4 * TextSize.small,
-    backgroundColor: colors.petrol
+    borderRadius: 2 * scale(TextSize.small),
+    height: 4 * scale(TextSize.small),
+    width: 4 * scale(TextSize.small),
   },
   listItemInitialsText: {
     fontFamily: AppFonts.regular,
-    fontSize: 1.8 * TextSize.small,
+    fontSize: 1.8 * scale(TextSize.small),
     alignSelf: 'center',
-    marginTop: 0.9 * TextSize.small,
+    marginTop: 0.9 * scale(TextSize.small),
     color: colors.white,
   }
 });
