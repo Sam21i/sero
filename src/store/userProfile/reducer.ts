@@ -1,8 +1,9 @@
 import { createReducer } from '../helpers/reducerCreator';
 import { REHYDRATE } from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
+import { ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
+import { Resource } from '@i4mi/fhir_r4';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -34,7 +35,25 @@ const UserProfileStore = createReducer(new UserProfile(), {
     let newState = new UserProfile(state);
     newState.addEmergencyContact(new EmergencyContact(action.data));
     return newState;
-  }
+  },
+  [RESOURCE_SENT](
+    state: UserProfile,
+    action: {
+      type: string,
+      resource: {
+        resource: Resource,
+        isUploading: boolean,
+        mustBeSynchronized: boolean,
+        timestamp: Date
+      }
+    }) {
+      if (action.resource.resource.resourceType === 'RelatedPerson') {
+        // the resource id is already updated by reference, but needs to be persisted in store
+        return new UserProfile(state);
+      } else {
+        return state;
+      }
+  },
 });
 
 export default UserProfileStore;
