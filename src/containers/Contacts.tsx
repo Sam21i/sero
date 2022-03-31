@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo, Platform } from 'react-native';
+import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import { AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.style';
+import { AppFonts, colors, scale, TextSize } from '../styles/App.style';
 import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
@@ -131,7 +131,8 @@ class Contacts extends Component<PropsType, State> {
           <View style={styles.bottomView}>
             { this.state.bubbleVisible &&
             <View>
-              <ContactSpeechBubble mode={this.state.mode}
+              <ContactSpeechBubble
+              mode={this.state.mode}
               localesHelper={this.props.localesHelper}
               contact={this.state.selectedContact}
               onClose={this.onBubbleClose.bind(this)}/>
@@ -147,7 +148,6 @@ class Contacts extends Component<PropsType, State> {
           </View>
         </ImageBackground>
       </SafeAreaView>
-
 
     );
   }
@@ -176,18 +176,6 @@ const styles = StyleSheet.create({
   emergencyButton: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-  },
-  bottomTextView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bottomText: {
-    textAlign: 'center',
-    fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.small),
-    color: colors.white,
   },
   topView: {
     backgroundColor: 'rgba(203, 95, 11, 0.5)',
@@ -225,17 +213,17 @@ const styles = StyleSheet.create({
     borderRadius: 2 * scale(TextSize.small),
     height: 4 * scale(TextSize.small),
     width: 4 * scale(TextSize.small),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listItemInitialsText: {
     fontFamily: AppFonts.regular,
     fontSize: 1.8 * scale(TextSize.small),
-    alignSelf: 'center',
-    marginTop: 0.9 * scale(TextSize.small),
     color: colors.white,
   }
 });
 
-// Link store data to component :
+// Link store data to component:
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,

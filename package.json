@@ -16,9 +16,11 @@
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/stack": "^6.1.1",
+    "formik": "^2.2.9",
     "intl": "^1.2.5",
     "lodash.memoize": "^4.1.2",
     "moment": "^2.29.1",
+    "native-base": "^3.3.10",
     "react": "17.0.2",
     "react-native": "^0.67.2",
     "react-native-app-auth": "^6.4.3",
@@ -44,7 +46,8 @@
     "redux-persist": "^6.0.0",
     "redux-persist-sensitive-storage": "^1.0.0",
     "rn-fetch-blob": "^0.12.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
