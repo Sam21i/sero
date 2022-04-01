@@ -100,6 +100,31 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     });
   }
 
+  onSubmit(values: any):void {
+    if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add){
+      this.props.onClose({
+        mode: this.state.mode,
+        data: new EmergencyContact({
+          given: [values.given],
+          family: values.family,
+          phone: values.phone,
+          image: this.state.new_image
+        })
+      });
+    } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit){
+          const contact = this.props.contact;
+          if (contact) {
+            contact.setGivenName(values.given);
+            contact.setFamilyName(values.family);
+            contact.setPhone(values.phone);
+            if (this.state.new_image) contact.setImage(this.state.new_image);
+            this.props.onClose({mode: this.state.mode, data: contact})
+          }
+    } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete){
+      this.props.onClose({mode: this.state.mode, data: this.props.contact})
+    }
+  }
+
   renderBubbleTitle(_translateString: string) {
     return (
       <View style={styles.titleBar}>
@@ -147,30 +172,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           family: this.state.new_family,
           phone: this.state.new_phone
         }}
-        onSubmit={values => {
-          if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add){
-            this.props.onClose({
-              mode: this.state.mode,
-              data: new EmergencyContact({
-                given: [values.given],
-                family: values.family,
-                phone: values.phone,
-                image: this.state.new_image
-              })
-            });
-          } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit){
-                const contact = this.props.contact;
-                if (contact) {
-                  contact.setGivenName(values.given);
-                  contact.setFamilyName(values.family);
-                  contact.setPhone(values.phone);
-                  if (this.state.new_image) contact.setImage(this.state.new_image);
-                  this.props.onClose({mode: this.state.mode, data: contact})
-                }
-          } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete){
-            this.props.onClose({mode: this.state.mode, data: this.props.contact})
-          }
-        }}
+        onSubmit={this.onSubmit.bind(this)}
         validationSchema={yup.object().shape({
           given: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid')).required(this.props.localesHelper.localeString('contacts.err.given.required')),
           family: yup.string().matches(REGEX.family, this.props.localesHelper.localeString('contacts.err.family.invalid')).required(this.props.localesHelper.localeString('contacts.err.family.required')),
@@ -178,52 +180,57 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         })}
        >
         {({ values, handleChange, handleBlur, errors, touched, handleSubmit }) => (
-                      <NativeBaseProvider>
+          <NativeBaseProvider>
             <View style={styles.formWrapper}>
               <TouchableOpacity disabled={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete} onPress={this.pickImage.bind(this)}>
                 {this.renderProfilePictureButton()}
               </TouchableOpacity>
-        <VStack width={'70%'}>
-          <View style={styles.formInputs}>
-          {
-            FORM_FIELDS.map(field => {
-              return <FormControl isInvalid={field in errors}>
-                            <Input
-                            isReadOnly={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete }
-                            key={'input.' + field}
-                            borderColor={colors.veryLightGrey}
-                            _focus={errors[field] ? {borderColor:colors.warning} : {borderColor:colors.primary}}
-                            variant='underlined'
-                            size="xl"
-                            onBlur={handleBlur(field)}
-                            placeholder={this.props.localesHelper.localeString('common.' +field)}
-                            onChangeText={handleChange(field)}
-                            value={values[field]}
-                            keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-                            autoCorrect={false}
-                            _invalid={errors[field] && touched[field] ? {borderColor:colors.warning}: {borderColor:colors.veryLightGrey}}
-                            />
-                            { errors[field] && touched[field] &&
-                            <FormControl.ErrorMessage
+              <VStack width={'70%'}>
+                <View style={styles.formInputs}>
+                {
+                  FORM_FIELDS.map(field => {
+                    return (
+                      <FormControl isInvalid={field in errors} key={'input-' + field}>
+                        <Input
+                          isReadOnly={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete }
+                          key={'input.' + field}
+                          borderColor={colors.veryLightGrey}
+                          _focus={errors[field] ? {borderColor:colors.warning} : {borderColor:colors.primary}}
+                          variant='underlined'
+                          size="xl"
+                          onBlur={handleBlur(field)}
+                          placeholder={this.props.localesHelper.localeString('common.' +field)}
+                          onChangeText={handleChange(field)}
+                          value={values[field]}
+                          keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+                          autoCorrect={false}
+                          _invalid={errors[field] && touched[field] ? {borderColor:colors.warning}: {borderColor:colors.veryLightGrey}}
+                        />
+                        { errors[field] && touched[field] &&
+                          <FormControl.ErrorMessage
                             fontFamily={AppFonts.bold}
                             fontSize={TextSize.verySmall}>
                             {errors[field]}
-                            </FormControl.ErrorMessage>}
-          </FormControl>
-            })
-          }
-          </View>
-      <TouchableOpacity
-        onPress={handleSubmit}
-        >
-        <View style={styles.formButton}>
-          <Text style={styles.formButtonText}>
-            { this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit ? this.props.localesHelper.localeString('common.save') : this.props.localesHelper.localeString('common.delete') } </Text>
-        </View>
-      </TouchableOpacity>
-        </VStack>
+                          </FormControl.ErrorMessage>
+                        }
+                      </FormControl>
+                    );
+                  })
+                }
+                </View>
+                <TouchableOpacity onPress={handleSubmit}>
+                  <View style={styles.formButton}>
+                    <Text style={styles.formButtonText}>
+                      { this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit
+                        ? this.props.localesHelper.localeString('common.save')
+                        : this.props.localesHelper.localeString('common.delete')
+                      }
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </VStack>
             </View>
-        </NativeBaseProvider>
+          </NativeBaseProvider>
         )}
       </Formik>
     </>
@@ -365,6 +372,7 @@ const styles = StyleSheet.create({
   },
   formInputs: {
     marginLeft: scale(20),
+    marginRight: scale(-10)
   },
   cameraButton: {
     height: scale(66),
