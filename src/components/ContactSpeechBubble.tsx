@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Platform} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Platform } from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -7,15 +7,18 @@ import {AppFonts, colors, scale, TextSize, verticalScale } from '../styles/App.s
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
-import { launchImageLibrary} from 'react-native-image-picker'
+import { launchImageLibrary} from 'react-native-image-picker';
 import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
+import {Formik} from 'formik';
+import * as yup from 'yup';
+import {VStack, FormControl, Input, NativeBaseProvider } from 'native-base';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   add = 'ADD',
   delete = 'DELETE',
   edit = 'EDIT',
-  menu = "MENU"
+  menu = 'MENU'
 };
 
 const MAX_IMAGE_SIZE = 500;
@@ -50,10 +53,6 @@ interface ContactSpeechBubbleState {
     contentType: string;
     data: string;
   },
-  given_valid: boolean;
-  family_valid: boolean;
-  phone_valid: boolean;
-  enable_button: boolean;
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -65,10 +64,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
       mode:  this.props.mode,
-      given_valid: true,
-      family_valid: true,
-      phone_valid: true,
-      enable_button: true
     };
   }
 
@@ -105,22 +100,29 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     });
   }
 
-  validateInput(): boolean {
-    let allValid = true;
-    let updateState = {
-      phone_valid: false,
-      family_valid: false,
-      given_valid: false,
-      enable_button: false
-    };
-    ['phone', 'family', 'given'].forEach(input => {
-      const inputValid = REGEX[input].test(this.state['new_' + input]);
-      allValid = allValid && inputValid;
-      updateState[input + '_valid'] = inputValid;
-    });
-    updateState.enable_button = allValid;
-    this.setState(updateState);
-    return allValid;
+  onSubmit(values: any):void {
+    if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add){
+      this.props.onClose({
+        mode: this.state.mode,
+        data: new EmergencyContact({
+          given: [values.given],
+          family: values.family,
+          phone: values.phone,
+          image: this.state.new_image
+        })
+      });
+    } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit){
+          const contact = this.props.contact;
+          if (contact) {
+            contact.setGivenName(values.given);
+            contact.setFamilyName(values.family);
+            contact.setPhone(values.phone);
+            if (this.state.new_image) contact.setImage(this.state.new_image);
+            this.props.onClose({mode: this.state.mode, data: contact})
+          }
+    } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete){
+      this.props.onClose({mode: this.state.mode, data: this.props.contact})
+    }
   }
 
   renderBubbleTitle(_translateString: string) {
@@ -160,167 +162,113 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     );
   }
 
-  renderAddForm() {
-    return (
+  renderForm(){
+    return(
       <>
-      { this.renderBubbleTitle('contacts.addContact') }
-      <View style={styles.formWrapper}>
-        <TouchableOpacity onPress={this.pickImage.bind(this)}>
-          { this.state.new_image
-            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-            : <View style={styles.cameraButton}>
-              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
-              </View>
-          }
-
-        </TouchableOpacity>
-        <View style={styles.formInputs}>
-        {
-          FORM_FIELDS.map(field => {
-            return <TextInput key={'input.' + field}
-                              style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
-                              autoCorrect={false}
-                              onChangeText={(text) => this.setState({
-                                              ['new_' + field]: text,
-                                              [field + '_valid']: true,
-                                              enable_button: true
-                                            })}
-                              value={this.state['new_' + field]}
-                              placeholder={this.props.localesHelper.localeString('common.' +field)}
-                              keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-            />
-          })
-        }
-        </View>
-      </View>
-      <TouchableOpacity
-        disabled={!this.state.enable_button}
-        onPress={
-        () => {
-          if (this.validateInput()) {
-            this.props.onClose({
-              mode: this.state.mode,
-              data: new EmergencyContact({
-                given: [this.state.new_given],
-                family: this.state.new_family,
-                phone: this.state.new_phone,
-                image: this.state.new_image
-              })
-            });
-          }
-        }
-      }>
-        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
-          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
-        </View>
-      </TouchableOpacity>
-      </>
-    );
-  }
-
-  renderEditForm() {
-    return (
-      <>
-      { this.renderBubbleTitle('contacts.editContact') }
-      <View style={styles.formWrapper}>
-        <TouchableOpacity onPress={this.pickImage.bind(this)}>
-          { this.state.new_image?.data
-            ? <View style={{alignItems: 'center'}}>
-              <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
-              <CameraButton width={scale(20)} height={scale(20)} style={{position: 'absolute', bottom: 0, right: scale(-2)}}/>
+      { this.renderBubbleTitle('contacts.' + this.state.mode.toLowerCase() + 'Contact') }
+      <Formik
+        initialValues={{
+          given: this.state.new_given,
+          family: this.state.new_family,
+          phone: this.state.new_phone
+        }}
+        onSubmit={this.onSubmit.bind(this)}
+        validationSchema={yup.object().shape({
+          given: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid')).required(this.props.localesHelper.localeString('contacts.err.given.required')),
+          family: yup.string().matches(REGEX.family, this.props.localesHelper.localeString('contacts.err.family.invalid')).required(this.props.localesHelper.localeString('contacts.err.family.required')),
+          phone: yup.string().matches(REGEX.phone, this.props.localesHelper.localeString('contacts.err.phone.invalid')).required(this.props.localesHelper.localeString('contacts.err.phone.required'))
+        })}
+       >
+        {({ values, handleChange, handleBlur, errors, touched, handleSubmit }) => (
+          <NativeBaseProvider>
+            <View style={styles.formWrapper}>
+              <TouchableOpacity disabled={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete} onPress={this.pickImage.bind(this)}>
+                {this.renderProfilePictureButton()}
+              </TouchableOpacity>
+              <VStack width={'70%'}>
+                <View style={styles.formInputs}>
+                {
+                  FORM_FIELDS.map(field => {
+                    return (
+                      <FormControl isInvalid={field in errors} key={'input-' + field}>
+                        <Input
+                          isReadOnly={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete }
+                          key={'input.' + field}
+                          borderColor={colors.veryLightGrey}
+                          _focus={errors[field] ? {borderColor:colors.warning} : {borderColor:colors.primary}}
+                          variant='underlined'
+                          size="xl"
+                          onBlur={handleBlur(field)}
+                          placeholder={this.props.localesHelper.localeString('common.' +field)}
+                          onChangeText={handleChange(field)}
+                          value={values[field]}
+                          keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
+                          autoCorrect={false}
+                          _invalid={errors[field] && touched[field] ? {borderColor:colors.warning}: {borderColor:colors.veryLightGrey}}
+                        />
+                        { errors[field] && touched[field] &&
+                          <FormControl.ErrorMessage
+                            fontFamily={AppFonts.bold}
+                            fontSize={TextSize.verySmall}>
+                            {errors[field]}
+                          </FormControl.ErrorMessage>
+                        }
+                      </FormControl>
+                    );
+                  })
+                }
+                </View>
+                <TouchableOpacity onPress={handleSubmit}>
+                  <View style={styles.formButton}>
+                    <Text style={styles.formButtonText}>
+                      { this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit
+                        ? this.props.localesHelper.localeString('common.save')
+                        : this.props.localesHelper.localeString('common.delete')
+                      }
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </VStack>
             </View>
-            : <View style={styles.cameraButton}>
-                <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
-              </View>
-          }
-        </TouchableOpacity>
-        <View style={styles.formInputs}>
-        {
-          FORM_FIELDS.map(field => {
-            return (
-                <TextInput key={'input.' + field}
-                           style={[styles.input, this.state[field + '_valid'] ? {} : {backgroundColor: colors.warning, color: colors.white}]}
-                           autoCorrect={false}
-                           onChangeText={(text) => this.setState({
-                                           ['new_' + field]: text,
-                                           [field + '_valid']: true,
-                                           enable_button: true
-                                         })}
-                           value={this.state['new_' + field]}
-                           keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
-              />
-            );
-          })
-        }
-        </View>
-      </View>
-      <TouchableOpacity
-        disabled={!this.state.enable_button}
-        onPress={() => {
-          if(this.validateInput()){
-            const contact = this.props.contact;
-            if (contact) {
-              contact.setGivenName(this.state.new_given);
-              contact.setFamilyName(this.state.new_family);
-              contact.setPhone(this.state.new_phone);
-              if (this.state.new_image) contact.setImage(this.state.new_image);
-              this.props.onClose({mode: this.state.mode, data: contact})
-            }
-          }
-        }}>
-        <View style={[styles.formButton, !this.state.enable_button ? {backgroundColor: colors.grey} : {backgroundColor: colors.primary} ]}>
-          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.save') } </Text>
-        </View>
-      </TouchableOpacity>
-      </>
+          </NativeBaseProvider>
+        )}
+      </Formik>
+    </>
     );
   }
 
-  renderDeleteForm() {
-    return (
-      <>
-      { this.renderBubbleTitle('contacts.deleteContact') }
-        <View style={styles.formWrapper}>
-          { this.state.new_image
-            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-            : <View style={styles.listItemInitials}>
-                <Text style={styles.listItemInitialsText}>{this.props.contact?.getInitials() || ''}</Text>
-              </View>
-          }
-        <View style={styles.formInputs}>
-        {
-          FORM_FIELDS.map(field => {
-              return <TextInput key={'input.' + field}
-              style={[styles.input]}value={this.state['new_' + field]}
-              editable={false}
-              />
-          })
+  renderProfilePictureButton(){
+    switch(this.state.mode){
+      case CONTACT_SPEECH_BUBBLE_MODE.add:
+        { return this.state.new_image
+          ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
+          : <View style={styles.cameraButton}>
+            <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+            </View>
         }
-        </View>
-      </View>
-      <TouchableOpacity onPress={() => this.props.onClose({
-          mode: this.state.mode,
-          data: this.props.contact
-        })}>
-        <View style={styles.formButton}>
-          <Text style={styles.formButtonText}> { this.props.localesHelper.localeString('common.delete') } </Text>
-        </View>
-      </TouchableOpacity>
-      </>
-    );
-  }
+
+      case CONTACT_SPEECH_BUBBLE_MODE.edit:
+        { return this.state.new_image?.data
+          ? <View style={{alignItems: 'center'}}>
+            <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
+            <CameraButton width={scale(20)} height={scale(20)} style={{position: 'absolute', bottom: 0, right: scale(-2)}}/>
+          </View>
+          : <View style={styles.cameraButton}>
+              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+            </View>
+        }
+      case CONTACT_SPEECH_BUBBLE_MODE.delete:
+        { return this.state.new_image
+          ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
+          : <View style={styles.listItemInitials}>
+              <Text style={styles.listItemInitialsText}>{this.props.contact?.getInitials() || ''}</Text>
+            </View>
+        }
+      }
+    }
 
   renderBubbleContent() {
-    switch (this.state.mode) {
-      case CONTACT_SPEECH_BUBBLE_MODE.menu:
-        return this.renderMenu();
-      case CONTACT_SPEECH_BUBBLE_MODE.add:
-        return this.renderAddForm();
-      case CONTACT_SPEECH_BUBBLE_MODE.edit:
-        return this.renderEditForm();
-      case CONTACT_SPEECH_BUBBLE_MODE.delete:
-        return this.renderDeleteForm();
-    }
+    return this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.menu ? this.renderMenu() : this.renderForm();
   }
 
   renderIcon() {
@@ -424,18 +372,8 @@ const styles = StyleSheet.create({
   },
   formInputs: {
     marginLeft: scale(20),
+    marginRight: scale(-10)
   },
-  input: {
-    marginBottom: scale(TextSize.small),
-    fontSize: scale(TextSize.small),
-    fontFamily: AppFonts.regular,
-    borderBottomColor: colors.veryLightGrey,
-    borderBottomWidth: 2,
-    borderColor: colors.veryLightGrey,
-    marginRight: Platform.OS ==='ios' ? scale(-10) : scale(-9),
-    width: scale(200),
-    paddingVertical: 0,
-    },
   cameraButton: {
     height: scale(66),
     width: scale(66),

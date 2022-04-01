@@ -22,9 +22,9 @@
       "title": "Erinnerungen"
     },
     "ok": "OK",
-    "save": "Speichern",
     "yes": "Ja",
-    "midata": "MIDATA"
+    "midata": "MIDATA",
+    "archive": "Archiv"
   },
   "welcome": {
     "title": "Willkommen.",
@@ -45,7 +45,21 @@
     "addContact": "Kontakt hinzufügen",
     "editContact": "Kontakt bearbeiten",
     "deleteContact": "Kontakt löschen",
-    "selectContact": "Kontakt auswählen"
+    "selectContact": "Kontakt auswählen",
+    "err": {
+      "given": {
+        "invalid": "Der Vorname darf keine Ziffern enthalten.",
+        "required": "Bitte füge einen Vornamen ein."
+      },
+      "family": {
+        "invalid": "Der Nachname darf keine Ziffern enthalten.",
+        "required": "Bitte füge einen Nachnamen ein."
+      },   
+      "phone": {
+        "invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
+        "required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
+      }
+    }
   },
   "info": {
     "title": "Informationen"
@@ -57,7 +71,8 @@
     "title": "Deine \nEinschätzung"
   },
   "securityplan": {
-    "title": "Dein \nSicherheitsplan"
+    "title": "Dein \nSicherheitsplan",
+    "current": "Aktueller Sicherheitsplan"
   },
   "myEnvironment": {
     "title": "Dein \nUmfeld"
