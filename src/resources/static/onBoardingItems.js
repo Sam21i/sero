@@ -1,7 +1,7 @@
 export const ON_BOARDING_ITEMS = [
   {
     key: 1,
-    title: 'Notfallkontakte anrufen',
+    title: 'Notfallkontakt anrufen',
     text: 'Hier rufst du direkt die Notfallnummer 144 an.',
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_emergencyContact.png'),
@@ -10,7 +10,7 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 2,
-    title: 'Dein Umfeld anrufen',
+    title: 'Meine Kontakte anrufen',
     text: 'Hier rufst du die Kontakte aus deinem Umfeld an, die für dich da sind.',
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_myEnvironment.png'),
@@ -19,7 +19,7 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 3,
-    title: 'Deine Einschätzung',
+    title: 'Meine Einschätzung',
     text: 'Du lernst ein Werkzeug anzuwenden, das dir dabei hilft zu verstehen, wie es dir im Moment geht.',
     background: require('../images/backgrounds/mood_bg_yellow.png'),
     image: require('../images/icons/icon_assessment.png'),
@@ -28,8 +28,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 4,
-    title: 'Dein Sicherheitsplan',
-    text: 'Erstelle deinen persönlichen Sicherheitsplan, um ihn in einer Krisensituation jederzeit aufzurufen.',
+    title: 'Mein Sicherheitsplan',
+    text: 'Erstelle einen persönlichen Sicherheitsplan, um ihn in einer Krisensituation jederzeit aufzurufen.',
     background: require('../images/backgrounds/mood_bg_lightOrange.png'),
     image: require('../images/icons/icon_securityPlan.png'),
     themeColor: 'rgb(201, 95, 30)',
