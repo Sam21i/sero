@@ -288,7 +288,7 @@ PODS:
     - React-Core
   - react-native-image-picker (4.7.3):
     - React-Core
-  - react-native-orientation-locker (1.4.0):
+  - react-native-orientation-locker (1.5.0):
     - React-Core
   - react-native-restart (0.0.24):
     - React-Core
@@ -365,11 +365,11 @@ PODS:
     - React-perflogger (= 0.67.4)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNBootSplash (4.1.3):
+  - RNBootSplash (4.1.4):
     - React-Core
-  - RNCAsyncStorage (1.17.2):
+  - RNCAsyncStorage (1.17.3):
     - React-Core
-  - RNGestureHandler (2.3.2):
+  - RNGestureHandler (2.4.0):
     - React-Core
   - RNI18n (2.0.15):
     - React
@@ -607,7 +607,7 @@ SPEC CHECKSUMS:
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
-  react-native-orientation-locker: 2da91e5391971dace445495821c899c111dcad7a
+  react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-sensitive-info: 400c6e3d27945e15c8cddb5b4b92233c85ee06f8
@@ -625,9 +625,9 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9d3c82ddf7ffdad9fbe6a81c6d6f8c06385464d
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNBootSplash: 4f34ccf1a0c2573cb4ba918ab7f69d51d610827f
-  RNCAsyncStorage: 303e413908008375ebec268aed419e4b23f61527
-  RNGestureHandler: 6e757e487a4834e7280e98e9bac66d2d9c575e9c
+  RNBootSplash: de2c568373a9c79a66e9918b8929eb6c9a35246f
+  RNCAsyncStorage: 005c0e2f09575360f142d0d1f1f15e4ec575b1af
+  RNGestureHandler: 50e6ffee79932d14ea747d4ea4cc99aac0f24e86
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNLocalize: cbcb55d0e19c78086ea4eea20e03fe8000bbbced
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
