@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo } from 'react-native';
+import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo, Platform, PermissionsAndroid } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -14,6 +14,10 @@ import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/C
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
 import { Resource } from '@i4mi/fhir_r4';
+import RNContacts from 'react-native-contacts';
+import RNFS from 'react-native-fs';
+import { Input, NativeBaseProvider } from 'native-base';
+import filter from 'lodash.filter';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -30,6 +34,9 @@ interface State {
   listVisible: boolean;
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   selectedContact?: EmergencyContact;
+  addressBookContactsAll?: any;
+  addressBookContactsFiltered?: any;
+  query: string;
 }
 
 class Contacts extends Component<PropsType, State> {
@@ -37,19 +44,69 @@ class Contacts extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
-
     this.state = {
       bubbleVisible: true,
       listVisible: false,
-      mode: CONTACT_SPEECH_BUBBLE_MODE.menu
-    };
+      mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+      query: '',
+    }
+    if(Platform.OS === 'ios'){
+      RNContacts.checkPermission().then((permission)=>{
+        if (permission === 'authorized') {
+          this.getAllAddressBookContacts();
+        }
+      }).catch((e)=> {console.log(e)})
+    } else if(Platform.OS === 'android') {
+      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((result) => {
+        if(result){
+          this.getAllAddressBookContacts();
+        }
+      }).catch((e)=> {console.log(e)})
+    }
   }
 
+  getAllAddressBookContacts(): void {
+    RNContacts.getAll().then(result => {
+      let abContacts = new Array<EmergencyContact>();
+      result.forEach(contact => {
+        if(Platform.OS ==='ios'){
+          if(contact.hasThumbnail){
+            RNFS.readFile(contact.thumbnailPath, 'base64').then(result => {
+              abContacts.push(new EmergencyContact({
+                given: new Array(contact.givenName),
+                family: contact.familyName,
+                phone: contact.phoneNumbers[0].number,
+                image: {
+                  contentType: 'image/png',
+                  data: 'image/jpeg;base64,' + result
+                }
+              }))
+            })
+          } else {
+            abContacts.push(new EmergencyContact({
+              given: new Array(contact.givenName),
+              family: contact.familyName,
+              phone: contact.phoneNumbers[0].number,
+            }))
+          }
+        } else if(Platform.OS ==='android'){
+          abContacts.push(new EmergencyContact({
+            given: new Array(contact.givenName),
+            family: contact.familyName,
+            phone: contact.phoneNumbers[0].number,
+          }))
+        }
+      })
+      console.log(abContacts)
+      this.setState({addressBookContactsAll:abContacts, addressBookContactsFiltered:abContacts})
+    })
+  }
+  
   onBubbleClose(_arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}): void {
     if (_arg.data === undefined) {
       this.setState({
         bubbleVisible: false,
-        listVisible: (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.delete || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.edit),
+        listVisible: (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.import || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.delete || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.edit),
         mode: _arg.mode
       });
       if (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.add || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.menu){
@@ -64,6 +121,9 @@ class Contacts extends Component<PropsType, State> {
       if (patientReference) {
         const relatedPersonResource = _arg.data.createFhirResource(patientReference);
         switch (_arg.mode) {
+          case CONTACT_SPEECH_BUBBLE_MODE.import:
+            this.props.addResource(relatedPersonResource);
+            break;
           case CONTACT_SPEECH_BUBBLE_MODE.add:
             this.props.addResource(relatedPersonResource);
             break;
@@ -106,8 +166,56 @@ class Contacts extends Component<PropsType, State> {
     )
   }
 
+  renderHeader(){
+    return(
+      <NativeBaseProvider>
+              <View
+      style={{
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+      <Input
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={this.handleSearch}
+        placeholder={this.props.localesHelper.localeString('common.search') + '...'}
+        style={{
+          borderColor: colors.grey,
+          backgroundColor: colors.white,
+        }}
+        textStyle={{ color: colors.black }}
+        _focus={{borderColor: colors.primary}}
+        clearButtonMode='always'
+        isFullWidth={true}
+        size="xl"
+        placeholderTextColor={colors.black}
+        backgroundColor={colors.white}
+      />
+    </View>
+      </NativeBaseProvider>
+    )
+  }
+
+  handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase()
+    const addressBookContactsFiltered = filter(this.state.addressBookContactsAll, contact => {
+      return this.contains(contact, formattedQuery)
+    })
+    this.setState({ addressBookContactsFiltered, query: text })
+  }
+
+  contains = ({ given, family, phone }, query) => {
+    const fullName = given[0] + ' ' + family;
+    if (fullName.toLowerCase().includes(query) || phone.includes(query) || phone.includes(query) || phone.replace(/[^a-zA-Z0-9]/g,'').includes(query)) {
+      return true
+    }
+    return false
+  }
+
   render() {
-    const contacts = this.props.userProfile.getEmergencyContacts();
+    const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) ? this.props.userProfile.getEmergencyContacts() : this.state.addressBookContactsFiltered;
+    console.log(contacts)
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
@@ -135,15 +243,19 @@ class Contacts extends Component<PropsType, State> {
               mode={this.state.mode}
               localesHelper={this.props.localesHelper}
               contact={this.state.selectedContact}
-              onClose={this.onBubbleClose.bind(this)}/>
+              onClose={this.onBubbleClose.bind(this)} />
             </View>
             }
             { this.state.listVisible &&
-              <FlatList data={contacts}
-                        alwaysBounceVertical={false}
-                        renderItem={this.renderContactListItem.bind(this)}
-                        showsHorizontalScrollIndicator={false}
+            <View>
+              <FlatList
+              ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
+              data={contacts.sort((a, b) => a.given[0].localeCompare(b.given[0]))}
+              alwaysBounceVertical={false}
+              renderItem={this.renderContactListItem.bind(this)}
+              showsHorizontalScrollIndicator={false}
               />
+              </View>
             }
           </View>
         </ImageBackground>

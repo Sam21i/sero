@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import {ImageBackground, PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import MainNotification from '../components/MainNotification';
@@ -15,6 +15,7 @@ import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import { appStyles, colors, verticalScale } from '../styles/App.style';
+import RNContacts from 'react-native-contacts';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -38,7 +39,19 @@ class Main extends Component<PropsType, State> {
   }
 
   editContacts(): void {
-    this.props.navigation.navigate('Contacts');
+    if(Platform.OS === 'ios'){
+      RNContacts.requestPermission().then((permission)=>{
+        if (permission) {
+          this.props.navigation.navigate('Contacts');
+        }
+      }).catch((e)=> {console.log(e)})
+    } else if(Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((result) => {
+        if(result){
+          this.props.navigation.navigate('Contacts');
+        }
+      }).catch((e)=> {console.log(e)})
+    }
   }
 
   loadEmergencyContacts(): void {
@@ -55,7 +68,6 @@ class Main extends Component<PropsType, State> {
         catch(e) {
             console.log(e)
         }
-
       }
   }
 

@@ -24,7 +24,8 @@
     "ok": "OK",
     "yes": "Ja",
     "midata": "MIDATA",
-    "archive": "Archiv"
+    "archive": "Archiv",
+    "search": "Suchen"
   },
   "welcome": {
     "title": "Willkommen.",
@@ -42,6 +43,7 @@
   "contacts": {
     "title": "Dein \nUmfeld anrufen",
     "bubbleTitle": "Was möchtest du tun?",
+    "importContact": "Kontakt importieren",
     "addContact": "Kontakt hinzufügen",
     "editContact": "Kontakt bearbeiten",
     "deleteContact": "Kontakt löschen",
