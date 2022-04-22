@@ -1,0 +1,260 @@
+{
+    "resourceType": "CarePlan",
+    "status": "active",
+    "id": "sicherheitsplan",
+    "contained": [
+        {
+            "resourceType": "CarePlan",
+            "id": "modul1",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine Motivation zu leben",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "https://midata.coop/sero/CODESYSTEM/TBD",
+                            "code": "securityplan/motivation"
+                        }
+                    ]
+                }
+            ],
+            "description": "Was gibt mir Kraft? Was hält mich am Leben? Was möchte ich noch erleben?",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Fische füttern"
+                    }
+                }
+            ]
+        },
+        {
+            "resourceType": "CarePlan",
+            "id": "modul2",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine Frühwarnzeichen",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "http://midata.coop/seroCODESYSTEMTBD",
+                            "code": "securityplan/warningSigns"
+                        }
+                    ]
+                }
+            ],
+            "description": "Welche Gedanken, Gefühle oder Verhaltensweisen treten bei mir vor einer suizidalen Krise auf?",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Krokodile küssen"
+                    }
+                }
+            ]
+        },
+        {
+            "resourceType": "CarePlan",
+            "id": "modul3",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine Bewältigungsstrategien",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "code": "securityplan/copingStrategies"
+                        }
+                    ]
+                }
+            ],
+            "description": "Was tue ich selbst, wenn Suizidgedanken stärker werden? Was hilft mir in solchen Augenblicken?",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Schafe streicheln"
+                    }
+                }
+            ]
+        },
+        {
+            "resourceType": "CarePlan",
+            "id": "modul4",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine Ablenkungsstrategien",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "code": "securityplan/distractionStrategies"
+                        }
+                    ]
+                }
+            ],
+            "description": "Welche Aktivität tut mir gut? An welchen Orten und Plätzen oder mit welchen Menschen komme ich auf andere Gedanken?",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Hunde hüten"
+                    }
+                }
+            ]
+        },
+        {
+            "resourceType": "CarePlan",
+            "id": "modul5",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine Glaubenssätze",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "code": "securityplan/personalBeliefs"
+                        }
+                    ]
+                }
+            ],
+            "description": "Was sind meine Glaubenssätze? TEXT TBD",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Wale wählen"
+                    }
+                }
+            ]
+        },
+        {
+            "resourceType": "CarePlan",
+            "id": "modul6",
+            "status": "active",
+            "intent": "plan",
+            "title": "Meine professionellen Helfer- und Notfallnummern",
+            "category": [
+                {
+                    "coding": [
+                        {
+                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "code": "securityplan/professionalContacts"
+                        }
+                    ]
+                }
+            ],
+            "description": "Welche Fachpersonen oder Organisationen unterstützen mich im Notfall?",
+            "subject": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "author": {
+                "reference": "Patient/$patientID",
+                "type": "Patient"
+            },
+            "activity": [
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Beratung LUPS (0900 85 65 65)"
+                    }
+                },
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Die Dargebotene Hand (143)"
+                    }
+                },
+                {
+                    "detail": {
+                        "status": "unknown",
+                        "description": "Polizei (117)"
+                    }
+                }
+            ]
+        }
+    ],
+    "intent": "plan",
+    "title": "Sicherheitsplan",
+    "created": "2022-04-22T10:32:10.000Z",
+    "subject": {
+        "reference": "Patient/$patientID",
+        "type": "Patient"
+    },
+    "author": {
+        "reference": "Patient/$patientID",
+        "type": "Patient"
+    },
+    "basedOn": [
+        {
+            "reference": "#modul1",
+            "type": "CarePlan"
+        },
+        {
+            "reference": "#modul2",
+            "type": "CarePlan"
+        },
+        {
+            "reference": "#modul4",
+            "type": "CarePlan"
+        },
+        {
+            "reference": "#modul3",
+            "type": "CarePlan"
+        },
+        {
+            "reference": "#modul5",
+            "type": "CarePlan"
+        },
+        {
+            "reference": "#modul6",
+            "type": "CarePlan"
+        }
+    ]
+}
