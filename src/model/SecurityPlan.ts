@@ -37,10 +37,23 @@ export default class SecurityPlanModel {
     created: ''
   }
 
-  constructor(_data: Partial<SecurityPlanModel> | CarePlan) {
+  constructor(_data: Partial<SecurityPlanModel> | CarePlan | SecurityPlan) {
     if ((_data as CarePlan).resourceType && (_data as CarePlan).resourceType === 'CarePlan') {
       this.setFhirResource(_data as CarePlan);
-    } else {
+    } else if ((_data as SecurityPlan).modules) { // is SecurityPlan
+      const plan = _data as SecurityPlan;
+      this.fhirResource = {
+        status: CarePlanStatus.ACTIVE,
+        title: plan.title,
+        description: plan.description,
+        subject: {},
+        intent: CarePlanIntent.PLAN,
+        contained: [],
+        basedOn: [],
+        created: plan.creationDate?.toISOString()
+      }
+      this.setModulesOnFhir(plan.modules);
+    } else { // is Partial<SecurityPlanModel>
       Object.assign(this, _data);
     }
   }
@@ -70,35 +83,42 @@ export default class SecurityPlanModel {
   }
 
   /**
+   * Sets the CarePlan FHIR resource status to SUSPENDED
+   */
+  setStatusToArchived(): void {
+    this.fhirResource.status = CarePlanStatus.SUSPENDED;
+  }
+
+  /**
    * Updates the security plan modules and their order, given by the order parameter (lowest first)
    * @param _modules  the new modules to replace the current modules in a given order.
    * @throws          an Error if:
    *                  - we do not have the same amount of modules as before
    *                  - two or more modules have the same order number
    */
-     setModulesWithOrder(_modules: SecurityPlanModule[]): void {
-      // check validity before we do anything
-      if (_modules.length !== this.fhirResource.contained?.length) {
-        throw new Error(
-          'Error in updateModulesWithOrder(): Wrong number of modules (expected: ' + this.fhirResource.contained?.length + ', got: ' + _modules.length + (').')
-        );
-      }
-      for (let i = 0; i < _modules.length; i++) {
-        for (let j = i+1; j < _modules.length; j++) {
-          if (_modules[i].order === _modules[j].order) {
-            throw new Error(
-              'Error in updateModulesWithOrder(): Modules must have different order numbers (' + i + '. and ' + j + '. both have ' + _modules[i].order + ').'
-            );
-          }
+  setModulesWithOrder(_modules: SecurityPlanModule[]): void {
+    // check validity before we do anything
+    if (_modules.length !== this.fhirResource.contained?.length) {
+      throw new Error(
+        'Error in updateModulesWithOrder(): Wrong number of modules (expected: ' + this.fhirResource.contained?.length + ', got: ' + _modules.length + (').')
+      );
+    }
+    for (let i = 0; i < _modules.length; i++) {
+      for (let j = i+1; j < _modules.length; j++) {
+        if (_modules[i].order === _modules[j].order) {
+          throw new Error(
+            'Error in updateModulesWithOrder(): Modules must have different order numbers (' + i + '. and ' + j + '. both have ' + _modules[i].order + ').'
+          );
         }
       }
-  
-      // sort array by order number
-      _modules.sort((a,b) => a.order - b.order);
-  
-      // overwrite fhirResource
-      this.setModulesOnFhir(_modules);
     }
+
+    // sort array by order number
+    _modules.sort((a,b) => a.order - b.order);
+
+    // overwrite fhirResource
+    this.setModulesOnFhir(_modules);
+  }
 
   /**
    * Gets the whole security plan, with description, title and the modules in the ordered way.

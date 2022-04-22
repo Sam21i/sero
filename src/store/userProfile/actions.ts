@@ -1,7 +1,9 @@
 import Action from '../helpers/Action';
-import {REMOVE_EMERGENCY_CONTACT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE} from '../definitions';
+import {ADD_SECURITY_PLAN, DELETE_SECURITY_PLAN, REMOVE_EMERGENCY_CONTACT, REPLACE_SECURITY_PLAN, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE} from '../definitions';
 import {UserProfileData} from './reducer';
 import EmergencyContact from '../../model/EmergencyContact';
+import SecurityPlanModel from '../../model/SecurityPlan';
+import { CarePlan } from '@i4mi/fhir_r4';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
   dispatch(
@@ -18,5 +20,23 @@ export function setEmergencyContacts(dispatch, contacts: EmergencyContact[]) {
 export function removeEmergencyContact(dispatch, contact: EmergencyContact) {
   dispatch(
     new Action(REMOVE_EMERGENCY_CONTACT, contact).getObjectAction()
+  );
+}
+
+export function setSecurityPlan(dispatch, plan: CarePlan) {
+  dispatch(
+    new Action(ADD_SECURITY_PLAN, plan).getObjectAction()
+  );
+}
+
+export function deleteSecurityPlan(dispatch) {
+  dispatch(
+    new Action(DELETE_SECURITY_PLAN).getObjectAction()
+  );
+}
+
+export function replaceSecurityPlan(dispatch, plan: SecurityPlanModel) {
+  dispatch(
+    new Action(REPLACE_SECURITY_PLAN, plan).getObjectAction()
   );
 }

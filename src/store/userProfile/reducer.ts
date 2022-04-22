@@ -1,9 +1,10 @@
 import { createReducer } from '../helpers/reducerCreator';
 import { REHYDRATE } from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
+import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, DELETE_SECURITY_PLAN, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
-import { Resource } from '@i4mi/fhir_r4';
+import { CarePlan, Resource } from '@i4mi/fhir_r4';
+import { SecurityPlan } from '../../model/SecurityPlan';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -36,6 +37,21 @@ const UserProfileStore = createReducer(new UserProfile(), {
     newState.addEmergencyContact(new EmergencyContact(action.data));
     return newState;
   },
+  [ADD_SECURITY_PLAN](state: UserProfile, action: {data: CarePlan}) {
+    let newState = new UserProfile(state);
+    newState.setSecurityPlan(action.data)
+    return newState;
+  },
+  [DELETE_SECURITY_PLAN](state: UserProfile) {
+    let newState = new UserProfile(state);
+    newState.deleteCurrentSecurityPlan();
+    return newState;
+  },
+  [REPLACE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlan}) {
+    let newState = new UserProfile(state);
+    newState.replaceCurrentSecurityPlan(action.data)
+    return newState;
+  },
   [RESOURCE_SENT](
     state: UserProfile,
     action: {
@@ -47,7 +63,7 @@ const UserProfileStore = createReducer(new UserProfile(), {
         timestamp: Date
       }
     }) {
-      if (action.resource.resource.resourceType === 'RelatedPerson') {
+      if (action.resource.resource.resourceType === 'RelatedPerson' || action.resource.resource.resourceType === 'CarePlan') {
         // the resource id is already updated by reference, but needs to be persisted in store
         return new UserProfile(state);
       } else {
