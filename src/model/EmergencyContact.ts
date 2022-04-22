@@ -107,7 +107,7 @@ export default class EmergencyContact {
     const given = _data?.given || this.given;
     const phone = _data?.phone || this.phone;
     const image = _data?.image || this.image;
-    if (family && given && given.length > 0 && phone) {
+    if (phone && !(!family && !given)) {
       return  {
         id: this.fhirResource.id || 'temp-' + uuidv4(),
         resourceType: 'RelatedPerson',
