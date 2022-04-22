@@ -1,7 +1,7 @@
 import { CarePlan, CarePlanIntent, CarePlanStatus, Reference } from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
 
-const CODE_SYSTEM = 'https://midata.coop/sero/CODESYSTEM/TBD';
+const CODE_SYSTEM = 'http://midata.coop/sero/CODESYSTEMTBD';
 
 export enum SECURITY_PLAN_MODULE_TYPE {
   MOTIVATION = 'securityplan/motivation',

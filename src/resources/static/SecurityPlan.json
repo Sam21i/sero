@@ -13,7 +13,7 @@
                 {
                     "coding": [
                         {
-                            "system": "https://midata.coop/sero/CODESYSTEM/TBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/motivation"
                         }
                     ]
@@ -47,7 +47,7 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/seroCODESYSTEMTBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/warningSigns"
                         }
                     ]
@@ -81,7 +81,7 @@
                 {
                     "coding": [
                         {
-                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/copingStrategies"
                         }
                     ]
@@ -115,7 +115,7 @@
                 {
                     "coding": [
                         {
-                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/distractionStrategies"
                         }
                     ]
@@ -149,7 +149,7 @@
                 {
                     "coding": [
                         {
-                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/personalBeliefs"
                         }
                     ]
@@ -183,7 +183,7 @@
                 {
                     "coding": [
                         {
-                            "system": "https://midata.coop/seroCODESYSTEMTBD",
+                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
                             "code": "securityplan/professionalContacts"
                         }
                     ]
