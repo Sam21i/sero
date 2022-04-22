@@ -78,7 +78,7 @@ class Contacts extends Component<PropsType, State> {
                 phone: contact.phoneNumbers[0].number,
                 image: {
                   contentType: 'image/png',
-                  data: 'image/jpeg;base64,' + result
+                  data: 'image/png;base64,' + result
                 }
               }))
             })
