@@ -33,7 +33,6 @@ interface PropsType {
   localesHelper: LocalesHelper;
   midataService: MidataService;
   updateUserProfile: (userProfile: Partial<UserProfile>) => void;
-  setEmergencyContacts: (e: EmergencyContact[]) => void;
   authenticateUser: (
     accessToken: string,
     accessTokenExpirationDate: string,
@@ -74,14 +73,6 @@ class OnBoarding extends Component<PropsType, State> {
           );
           this.props.midataService.getUserData().then(profile => {
             this.props.updateUserProfile(profile);
-            this.props.midataService.fetchEmergencyContactsForUser(profile.getFhirId())
-            .then((contacts) => {
-                console.log('fetched emergency contacts', contacts)
-                this.props.setEmergencyContacts(contacts);
-            })
-            .catch((e) => {
-                console.log('could not load related persons', e)
-            });
           });
           return resolve();
         })
@@ -305,7 +296,6 @@ function mapDispatchToProps(dispatch: Function) {
         refreshToken,
         server,
       ),
-    setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts)
   };
 }
 

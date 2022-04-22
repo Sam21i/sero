@@ -57,10 +57,9 @@ export default class UserProfile {
   }
 
   getEmergencyContacts(): EmergencyContact[] {
-    const activeContacts = this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active)
-    return activeContacts.length > 0
-      ? activeContacts
-      : DEFAULT_CONTACTS.map(dc => new EmergencyContact(dc));
+    const allContacts = DEFAULT_CONTACTS.map(dc => new EmergencyContact(dc)).concat(this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active));
+    return allContacts;
+
   }
 
   getGender(): PatientAdministrativeGender | undefined {
