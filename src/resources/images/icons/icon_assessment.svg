@@ -1,1 +1,16 @@
-<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 146.7 146.7"><defs><style>.cls-1,.cls-6,.cls-7{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{clip-path:url(#clip-path-2);}.cls-4{opacity:1;}.cls-5{clip-path:url(#clip-path-3);}.cls-6,.cls-7{stroke:#fff;stroke-linejoin:round;}.cls-6{stroke-width:3.5px;}.cls-7{stroke-width:4px;}</style><clipPath id="clip-path" transform="translate(-1.65 -1.65)"><rect class="cls-1" x="-32.02" y="-32.02" width="214.05" height="214.05"/></clipPath><clipPath id="clip-path-2" transform="translate(-1.65 -1.65)"><circle class="cls-1" cx="75" cy="75" r="107.02"/></clipPath><clipPath id="clip-path-3" transform="translate(-1.65 -1.65)"><rect class="cls-1" x="-23.46" y="-17.75" width="196.92" height="168.38"/></clipPath></defs><g class="cls-2"><g class="cls-3"><g class="cls-4"><g class="cls-5"><path class="cls-6" d="M112,113.83V99.18c0-14.11-10.59-22.07-24.53-24.9L75,85.68,62.54,74.31C48.6,77.19,38,85.16,38,99.18v14.65M75,24.74a20.57,20.57,0,1,0,20.54,20.6v0A20.57,20.57,0,0,0,75,24.74ZM56.25,113.83V102.67m37.07,11.16V102.67" transform="translate(-1.65 -1.65)"/><path class="cls-7" d="M112,113.83V99.18c0-14.11-10.59-22.07-24.53-24.9L75,85.68,62.54,74.31C48.6,77.19,38,85.16,38,99.18v14.65M75,24.74a20.57,20.57,0,1,0,20.54,20.6v0A20.57,20.57,0,0,0,75,24.74ZM56.25,113.83V102.67m37.07,11.16V102.67" transform="translate(-1.65 -1.65)"/><circle class="cls-7" cx="73.35" cy="73.35" r="71.35"/></g></g></g></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;}
+</style>
+<g>
+	<path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7"
+		/>
+	<circle class="st1" cx="107.9" cy="88.9" r="17.7"/>
+	<rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/>
+</g>
+</svg>
