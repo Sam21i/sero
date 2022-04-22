@@ -1,13 +1,13 @@
 import { Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
-import SecurityPlan from "./SecurityPlan";
+import SecurityPlanModel from "./SecurityPlan";
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
   emergencyContacts: EmergencyContact[] = [];
-  securityPlanHistory: SecurityPlan[] = [];
-  currentSecurityPlan: SecurityPlan = new SecurityPlan({});
+  securityPlanHistory: SecurityPlanModel[] = [];
+  currentSecurityPlan: SecurityPlanModel = new SecurityPlanModel({});
 
   constructor(_userProfile?: Partial<UserProfile>) {
     if (_userProfile) {
@@ -23,10 +23,10 @@ export default class UserProfile {
       this.emergencyContacts = _attributes.emergencyContacts.map(c => new EmergencyContact(c));
     }
     if (_attributes.securityPlanHistory) {
-      this.securityPlanHistory = _attributes.securityPlanHistory.map(sp => new SecurityPlan(sp));
+      this.securityPlanHistory = _attributes.securityPlanHistory.map(sp => new SecurityPlanModel(sp));
     }
     if (_attributes.currentSecurityPlan) {
-      this.currentSecurityPlan = new SecurityPlan(_attributes.currentSecurityPlan);
+      this.currentSecurityPlan = new SecurityPlanModel(_attributes.currentSecurityPlan);
     }
   }
 
