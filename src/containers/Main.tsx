@@ -21,19 +21,21 @@ interface PropsType {
   midataService: MidataService;
   userProfile: UserProfile;
   localesHelper: LocalesHelper;
-  emergencyContactsLoading: boolean;
   uploadPendingResources: () => void;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
 }
 
-interface State {}
+interface State {
+  emergencyContactsLoaded: boolean;
+}
 
 class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    this.props.emergencyContactsLoading = true;
     this.loadEmergencyContacts();
-    this.state = {};
+    this.state = {
+      emergencyContactsLoaded: false
+    };
     if (this.props.midataService.isAuthenticated()) {
       this.props.uploadPendingResources();
     }
@@ -49,7 +51,9 @@ class Main extends Component<PropsType, State> {
             this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
             .then((contacts) => {
                 this.props.setEmergencyContacts(contacts);
-                this.props.emergencyContactsLoading = false;
+                this.setState({
+                  emergencyContactsLoaded: true
+                })
             })
             .catch((e) => {
                 console.log('could not load related persons', e)
@@ -70,12 +74,12 @@ class Main extends Component<PropsType, State> {
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            {!this.props.emergencyContactsLoading &&
+            {this.state.emergencyContactsLoaded &&
             <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
             localesHelper={this.props.localesHelper}
             onPressOptionsButton={this.editContacts.bind(this)} />
             }
-            {this.props.emergencyContactsLoading &&
+            {!this.state.emergencyContactsLoaded &&
             <ActivityIndicator size="large" color={colors.primary} />
             }
             <EmergencyNumberContainer />
