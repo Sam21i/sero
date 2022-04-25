@@ -167,9 +167,22 @@ export default class UserProfile {
     return this.currentSecurityPlan;
   }
 
+  /**
+   * Gets the FHIR resource of the current Security Plan 
+   * @returns  A CarePlan FHIR resource representing the current security plan
+   * @throws   An error if no Patient resource has been set yet to the user profile.
+   */
   getSecurityPlanAsFhir(): CarePlan {
     const reference = this.getFhirReference();
     if (!reference) throw new Error('Error in getSecurityPlanasFhir(): UserProfile has no Patient resource set.');
     return this.currentSecurityPlan.getFhirResource(reference);
+  }
+
+  /**
+   * Returns the history of security plans.
+   * @returns The history of SecurityPlans as an array.
+   */
+  getSecurityPlanHistory(): SecurityPlan[] {
+    return this.securityPlanHistory.map(sp => sp.getSecurityPlan())
   }
 }

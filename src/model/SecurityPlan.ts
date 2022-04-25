@@ -86,7 +86,7 @@ export default class SecurityPlanModel {
    * Sets the CarePlan FHIR resource status to SUSPENDED
    */
   setStatusToArchived(): void {
-    this.fhirResource.status = CarePlanStatus.SUSPENDED;
+    this.fhirResource.status = CarePlanStatus.REVOKED;
   }
 
   /**
