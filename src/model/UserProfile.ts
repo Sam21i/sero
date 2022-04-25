@@ -2,7 +2,6 @@ import { CarePlan, CarePlanStatus, Patient, PatientAdministrativeGender, Patient
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
 import SecurityPlanModel, { SecurityPlan } from "./SecurityPlan";
-import Securityplan from "../containers/Securityplan";
 
 
 export default class UserProfile {

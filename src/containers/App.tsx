@@ -17,7 +17,7 @@ import Welcome from './Welcome';
 import {store, persistor} from '../store';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import Securityplan from './Securityplan';
+import SecurityplanContainer from './Securityplan';
 import Contacts from './Contacts';
 import Assessment from './Assessment';
 import Orientation from 'react-native-orientation-locker';
@@ -220,7 +220,7 @@ export default class App extends Component<PropsType, State> {
                       ),
                   }}
                 />
-                <Tab.Screen name="Securityplan" component={Securityplan} />
+                <Tab.Screen name="Securityplan" component={SecurityplanContainer} />
               </Tab.Navigator>
             </NavigationContainer>
           </SafeAreaProvider>
