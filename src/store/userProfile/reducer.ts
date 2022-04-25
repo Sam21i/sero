@@ -1,7 +1,7 @@
 import { createReducer } from '../helpers/reducerCreator';
 import { REHYDRATE } from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, DELETE_SECURITY_PLAN, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
+import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, DELETE_SECURITY_PLAN, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
 import { CarePlan, Resource } from '@i4mi/fhir_r4';
 import { SecurityPlan } from '../../model/SecurityPlan';
@@ -50,6 +50,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
   [REPLACE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlan}) {
     let newState = new UserProfile(state);
     newState.replaceCurrentSecurityPlan(action.data)
+    return newState;
+  },
+  [SET_SECURITY_PLAN_HISTORY](state: UserProfile, action: {data: CarePlan[]}) {
+    let newState = new UserProfile(state);
+    newState.setSecurityPlanHistory(action.data);
     return newState;
   },
   [RESOURCE_SENT](

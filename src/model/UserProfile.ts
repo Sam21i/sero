@@ -1,7 +1,8 @@
-import { CarePlan, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
+import { CarePlan, CarePlanStatus, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
 import SecurityPlanModel, { SecurityPlan } from "./SecurityPlan";
+import Securityplan from "../containers/Securityplan";
 
 
 export default class UserProfile {
@@ -56,6 +57,8 @@ export default class UserProfile {
   resetProfileData() {
     this.patientResource = {id: ''};
     this.emergencyContacts = [];
+    this.securityPlanHistory = [];
+    this.currentSecurityPlan = new SecurityPlanModel({});
   }
 
   getFhirId(): string {
@@ -142,6 +145,21 @@ export default class UserProfile {
     this.currentSecurityPlan = new SecurityPlanModel(_fhirResource);
   }
 
+    /**
+   * Sets the history of the security plans.
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _fhirResources an Array of CarePlan resources representing the Security Plan history
+   * @throws               an Error if the array contains an active security plan
+   */
+  setSecurityPlanHistory(_fhirResources: CarePlan[]): void {
+    this.securityPlanHistory = _fhirResources.map(r => {
+      if (r.status === CarePlanStatus.ACTIVE) {
+        throw new Error('Can not put active Security Plan to history.');
+      }
+      return new SecurityPlanModel(r)
+    });
+  }
+
   /**
    * Replaces and archives the current security plan. 
    * DO NOT USE OUTSIDE THE REDUCER
@@ -163,8 +181,13 @@ export default class UserProfile {
     this.currentSecurityPlan = new SecurityPlanModel({});
   }
 
-  getCurrentSecurityPlan(): SecurityPlanModel {
-    return this.currentSecurityPlan;
+  /**
+   * Gets the current Security Plan 
+   * @returns A representation of the current security plan, 
+   *          that is thought for read access only.
+   */
+  getCurrentSecurityPlan(): SecurityPlan {
+    return this.currentSecurityPlan.getSecurityPlan();
   }
 
   /**

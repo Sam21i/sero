@@ -1,5 +1,6 @@
 import Action from '../helpers/Action';
-import {ADD_SECURITY_PLAN, DELETE_SECURITY_PLAN, REMOVE_EMERGENCY_CONTACT, REPLACE_SECURITY_PLAN, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE} from '../definitions';
+import { ADD_SECURITY_PLAN, DELETE_SECURITY_PLAN, REMOVE_EMERGENCY_CONTACT, REPLACE_SECURITY_PLAN, 
+  SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE} from '../definitions';
 import {UserProfileData} from './reducer';
 import EmergencyContact from '../../model/EmergencyContact';
 import SecurityPlanModel from '../../model/SecurityPlan';
@@ -38,5 +39,11 @@ export function deleteSecurityPlan(dispatch) {
 export function replaceSecurityPlan(dispatch, plan: SecurityPlanModel) {
   dispatch(
     new Action(REPLACE_SECURITY_PLAN, plan).getObjectAction()
+  );
+}
+
+export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {
+  dispatch(
+    new Action(SET_SECURITY_PLAN_HISTORY, plan).getObjectAction()
   );
 }

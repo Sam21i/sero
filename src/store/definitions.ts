@@ -12,6 +12,7 @@ export const ADD_TO_USER_PROFILE = 'userProfile/ADD_TO_USER_PROFILE';
 export const ADD_SECURITY_PLAN = 'userProfile/ADD_SECURITY_PLAN';
 export const DELETE_SECURITY_PLAN = 'userProfile/DELETE_SECURITY_PLAN';
 export const REPLACE_SECURITY_PLAN = 'userProfile/REPLACE_SECURITY_PLAN';
+export const SET_SECURITY_PLAN_HISTORY = 'userProfile/SET_SECURITY_PLAN_HISTORY';
 
 export const UPDATE_LOCALE_LANGUAGE = 'localesHelper/UPDATE_LOCALE_LANGUAGE';
 
