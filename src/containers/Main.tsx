@@ -32,10 +32,10 @@ interface State {
 class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    this.loadEmergencyContacts();
     this.state = {
       emergencyContactsLoaded: false
     };
+    this.loadEmergencyContacts();
     if (this.props.midataService.isAuthenticated()) {
       this.props.uploadPendingResources();
     }
@@ -53,7 +53,7 @@ class Main extends Component<PropsType, State> {
                 this.props.setEmergencyContacts(contacts);
                 this.setState({
                   emergencyContactsLoaded: true
-                })
+                });
             })
             .catch((e) => {
                 console.log('could not load related persons', e)
@@ -75,9 +75,10 @@ class Main extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             {this.state.emergencyContactsLoaded &&
-            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
-            localesHelper={this.props.localesHelper}
-            onPressOptionsButton={this.editContacts.bind(this)} />
+            <EmergencyContactContainer 
+              emergencyContacts={this.props.userProfile.getEmergencyContacts()}
+              localesHelper={this.props.localesHelper}
+              onPressOptionsButton={this.editContacts.bind(this)} />
             }
             {!this.state.emergencyContactsLoaded &&
             <ActivityIndicator size="large" color={colors.primary} />
