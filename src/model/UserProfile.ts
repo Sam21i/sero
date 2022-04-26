@@ -1,7 +1,7 @@
 import { CarePlan, CarePlanStatus, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
-import SecurityPlanModel, { SecurityPlan } from "./SecurityPlan";
+import SecurityPlanModel from "./SecurityPlan";
 
 
 export default class UserProfile {
@@ -164,12 +164,12 @@ export default class UserProfile {
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _plan   the new Security Plan as SecurityPlan object
    */
-  replaceCurrentSecurityPlan(_plan: SecurityPlan): void {
+  replaceCurrentSecurityPlan(_plan: SecurityPlanModel): void {
     const oldSecurityPlan = this.currentSecurityPlan;
     oldSecurityPlan.setStatusToArchived();
     this.securityPlanHistory.push(oldSecurityPlan);
 
-    this.currentSecurityPlan = new SecurityPlanModel(_plan);
+    this.currentSecurityPlan = _plan;
   }
 
   /**
@@ -185,8 +185,8 @@ export default class UserProfile {
    * @returns A representation of the current security plan, 
    *          that is thought for read access only.
    */
-  getCurrentSecurityPlan(): SecurityPlan {
-    return this.currentSecurityPlan.getSecurityPlan();
+  getCurrentSecurityPlan(): SecurityPlanModel {
+    return this.currentSecurityPlan;
   }
 
   /**
@@ -204,7 +204,7 @@ export default class UserProfile {
    * Returns the history of security plans.
    * @returns The history of SecurityPlans as an array.
    */
-  getSecurityPlanHistory(): SecurityPlan[] {
-    return this.securityPlanHistory.map(sp => sp.getSecurityPlan())
+  getSecurityPlanHistory(): SecurityPlanModel[] {
+    return this.securityPlanHistory;
   }
 }

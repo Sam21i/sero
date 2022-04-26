@@ -20,13 +20,6 @@ export interface SecurityPlanModule {
   entries: string[];
 }
 
-export interface SecurityPlan {
-  title: string;
-  description: string;
-  creationDate?: Date;
-  modules: SecurityPlanModule[];
-}
-
 export default class SecurityPlanModel {
   fhirResource: CarePlan = {
     status: CarePlanStatus.ACTIVE,
@@ -37,22 +30,9 @@ export default class SecurityPlanModel {
     created: ''
   }
 
-  constructor(_data: Partial<SecurityPlanModel> | CarePlan | SecurityPlan) {
+  constructor(_data: Partial<SecurityPlanModel> | CarePlan) {
     if ((_data as CarePlan).resourceType && (_data as CarePlan).resourceType === 'CarePlan') {
       this.setFhirResource(_data as CarePlan);
-    } else if ((_data as SecurityPlan).modules) { // is SecurityPlan
-      const plan = _data as SecurityPlan;
-      this.fhirResource = {
-        status: CarePlanStatus.ACTIVE,
-        title: plan.title,
-        description: plan.description,
-        subject: {},
-        intent: CarePlanIntent.PLAN,
-        contained: [],
-        basedOn: [],
-        created: plan.creationDate?.toISOString()
-      }
-      this.setModulesOnFhir(plan.modules);
     } else { // is Partial<SecurityPlanModel>
       Object.assign(this, _data);
     }
@@ -118,28 +98,34 @@ export default class SecurityPlanModel {
 
     // overwrite fhirResource
     this.setModulesOnFhir(_modules);
+    console.log(this.fhirResource)
   }
 
   /**
-   * Gets the whole security plan, with description, title and the modules in the ordered way.
-   * @returns 
+   * Get the title of the security plan.
+   * @returns   the title of the security plan or an empty string if 
+   *            title is not defined.
    */
-  getSecurityPlan(): SecurityPlan {
-    return {
-      title: this.fhirResource.title || '',
-      description: this.fhirResource.description || '',
-      creationDate: this.fhirResource.created ? new Date(this.fhirResource.created) : undefined,
-      modules: this.fhirResource.contained?.map((mod, index) => { 
-        const carePlan = mod as CarePlan;
-        return {
-          type: fhirpath.evaluate(carePlan, 'CarePlan.category.coding.code')[0],
-          order: index,
-          title: carePlan.title || '',
-          description: carePlan.description || '',
-          entries: carePlan.activity?.map(activity => activity.detail?.description || '') || []
+  getTitle(): string {
+    return this.fhirResource.title || '';
+  }
+
+  /**
+   * Get the security plans modules as SecurityPlanModule array.
+   * @returns   an Array of SecurityPlanModule in sorted order
+   */
+  getSecurityPlanModules(): SecurityPlanModule[] {
+    if (this.fhirResource.contained) {
+      const modules = new Array<SecurityPlanModule>();
+      this.fhirResource.contained.forEach((containedResource, index) => {
+        if (containedResource.resourceType === 'CarePlan') {
+          modules.push(this.mapCarePlanToSecurityPlanModule(containedResource as CarePlan, index));
         }
-      }) || []
-    } || [];
+      });
+      return modules;
+    } else {
+      return [];
+    }
   }
 
   /**
@@ -155,13 +141,7 @@ export default class SecurityPlanModel {
     });
     if (index && index > -1 && this.fhirResource.contained) {
       const module = this.fhirResource.contained[index] as CarePlan;
-      return {
-        type: _moduleType,
-        order: index,
-        title: module.title || '',
-        description: module.description || '',
-        entries: module.activity?.map(activity => activity.detail?.description || '') || []
-      };
+      return this.mapCarePlanToSecurityPlanModule(module, index);
     } else {
       throw new Error(
         'No securityplan module of type ' + _moduleType + ' available. Make sure to load SecurityPlan before trying to get modules.'
@@ -228,11 +208,23 @@ export default class SecurityPlanModel {
         description: module.description,
         activity: module.entries.map(entry => {
           return {
-            status: 'unknown',
-            description: entry
+            detail: {
+              status: 'unknown',
+              description: entry
+            }
           };
         })
       }
     });
   }
+
+  private mapCarePlanToSecurityPlanModule(_sp: CarePlan, index: number): SecurityPlanModule {
+    return {
+      type: fhirpath.evaluate(_sp, 'CarePlan.category.coding.code')[0],
+      order: index,
+      title: _sp.title || '',
+      description: _sp.description || '',
+      entries: _sp.activity?.map(activity => activity.detail?.description || '') || []
+    }
+  };
 }

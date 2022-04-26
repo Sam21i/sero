@@ -17,7 +17,7 @@ import Welcome from './Welcome';
 import {store, persistor} from '../store';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import SecurityplanContainer from './Securityplan';
+import SecurityplanContainer from './SecurityplanContainer';
 import Contacts from './Contacts';
 import Assessment from './Assessment';
 import Orientation from 'react-native-orientation-locker';

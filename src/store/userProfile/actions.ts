@@ -1,7 +1,7 @@
 import Action from '../helpers/Action';
 import { ADD_SECURITY_PLAN, DELETE_SECURITY_PLAN, REMOVE_EMERGENCY_CONTACT, REPLACE_SECURITY_PLAN, 
   SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE} from '../definitions';
-import {UserProfileData} from './reducer';
+import { UserProfileData } from './reducer';
 import EmergencyContact from '../../model/EmergencyContact';
 import SecurityPlanModel from '../../model/SecurityPlan';
 import { CarePlan } from '@i4mi/fhir_r4';
