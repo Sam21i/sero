@@ -165,7 +165,9 @@ export default class UserProfile {
    * @param _plan   the new Security Plan as SecurityPlan object
    */
   replaceCurrentSecurityPlan(_plan: SecurityPlanModel): void {
-    const oldSecurityPlan = this.currentSecurityPlan;
+    const oldSecurityPlan = new SecurityPlanModel(
+      this.currentSecurityPlan.getFhirResource(this.getFhirReference() || {})
+    );
     oldSecurityPlan.setStatusToArchived();
     this.securityPlanHistory.push(oldSecurityPlan);
 
@@ -177,7 +179,7 @@ export default class UserProfile {
    * DO NOT USE OUTSIDE THE REDUCER
    */
   deleteCurrentSecurityPlan(): void {
-    this.currentSecurityPlan = new SecurityPlanModel({});
+    this.replaceCurrentSecurityPlan(new SecurityPlanModel({}));
   }
 
   /**

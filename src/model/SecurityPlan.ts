@@ -47,6 +47,17 @@ export default class SecurityPlanModel {
   }
 
   /**
+   * Checks if a given FHIR Careplan has the same FHIR ID as the Security Plan.
+   * @param _fhirResource a CarePlan resource to compare
+   * @returns             true if both the given _fhirResource and 
+   *                      the security plans FHIR resource have the same ID
+   *                      false if t
+   */
+  hasEqualFhirId(_fhirResource: CarePlan): boolean {
+    return this.fhirResource.id === _fhirResource.id;
+  }
+
+  /**
    * Sets the title attribute of the SecurityPlan.
    * @param _title  the new title as string
    */
