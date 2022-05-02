@@ -1,10 +1,14 @@
-import { Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
+import { CarePlan, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
+import SecurityPlanModel, { SecurityPlan } from "./SecurityPlan";
+
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
   emergencyContacts: EmergencyContact[] = [];
+  securityPlanHistory: SecurityPlanModel[] = [];
+  currentSecurityPlan: SecurityPlanModel = new SecurityPlanModel({});
 
   constructor(_userProfile?: Partial<UserProfile>) {
     if (_userProfile) {
@@ -18,6 +22,12 @@ export default class UserProfile {
     }
     if (_attributes.emergencyContacts) {
       this.emergencyContacts = _attributes.emergencyContacts.map(c => new EmergencyContact(c));
+    }
+    if (_attributes.securityPlanHistory) {
+      this.securityPlanHistory = _attributes.securityPlanHistory.map(sp => new SecurityPlanModel(sp));
+    }
+    if (_attributes.currentSecurityPlan) {
+      this.currentSecurityPlan = new SecurityPlanModel(_attributes.currentSecurityPlan);
     }
   }
 
@@ -59,7 +69,6 @@ export default class UserProfile {
   getEmergencyContacts(): EmergencyContact[] {
     const allContacts = DEFAULT_CONTACTS.map(dc => new EmergencyContact(dc)).concat(this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active));
     return allContacts;
-
   }
 
   getGender(): PatientAdministrativeGender | undefined {
@@ -121,5 +130,59 @@ export default class UserProfile {
     } else {
       return undefined;
     }
+  }
+
+  /**
+   * Sets a new current security plan. If you want to archive the current security plan, 
+   * use the replaceCurrentSecurityPlan() method
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _fhirResource a CarePlan FHIR resource than complies to the SecurityPlan IG
+   */
+  setSecurityPlan(_fhirResource: CarePlan): void {
+    this.currentSecurityPlan = new SecurityPlanModel(_fhirResource);
+  }
+
+  /**
+   * Replaces and archives the current security plan. 
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _plan   the new Security Plan as SecurityPlan object
+   */
+  replaceCurrentSecurityPlan(_plan: SecurityPlan): void {
+    const oldSecurityPlan = this.currentSecurityPlan;
+    oldSecurityPlan.setStatusToArchived();
+    this.securityPlanHistory.push(oldSecurityPlan);
+
+    this.currentSecurityPlan = new SecurityPlanModel(_plan);
+  }
+
+  /**
+   * Deletes the current security plan and does NOT archive it.
+   * DO NOT USE OUTSIDE THE REDUCER
+   */
+  deleteCurrentSecurityPlan(): void {
+    this.currentSecurityPlan = new SecurityPlanModel({});
+  }
+
+  getCurrentSecurityPlan(): SecurityPlanModel {
+    return this.currentSecurityPlan;
+  }
+
+  /**
+   * Gets the FHIR resource of the current Security Plan 
+   * @returns  A CarePlan FHIR resource representing the current security plan
+   * @throws   An error if no Patient resource has been set yet to the user profile.
+   */
+  getSecurityPlanAsFhir(): CarePlan {
+    const reference = this.getFhirReference();
+    if (!reference) throw new Error('Error in getSecurityPlanasFhir(): UserProfile has no Patient resource set.');
+    return this.currentSecurityPlan.getFhirResource(reference);
+  }
+
+  /**
+   * Returns the history of security plans.
+   * @returns The history of SecurityPlans as an array.
+   */
+  getSecurityPlanHistory(): SecurityPlan[] {
+    return this.securityPlanHistory.map(sp => sp.getSecurityPlan())
   }
 }
