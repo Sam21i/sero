@@ -288,7 +288,7 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.7.2):
     - React-Core
-  - react-native-image-picker (4.7.3):
+  - react-native-image-picker (4.8.1):
     - React-Core
   - react-native-orientation-locker (1.5.0):
     - React-Core
@@ -367,7 +367,7 @@ PODS:
     - React-perflogger (= 0.67.4)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNBootSplash (4.1.4):
+  - RNBootSplash (4.1.5):
     - React-Core
   - RNCAsyncStorage (1.17.3):
     - React-Core
@@ -617,7 +617,7 @@ SPEC CHECKSUMS:
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-contacts: 1bff4c47816d611f26b06fa8b3eaf2db4d1b2c86
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
-  react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
+  react-native-image-picker: 5640333245b448b0e64172576ea27760f4134099
   react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
@@ -636,7 +636,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9d3c82ddf7ffdad9fbe6a81c6d6f8c06385464d
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNBootSplash: de2c568373a9c79a66e9918b8929eb6c9a35246f
+  RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
   RNCAsyncStorage: 005c0e2f09575360f142d0d1f1f15e4ec575b1af
   RNFS: fc610f78fdf8bfc89a9e5cc2f898519f4dba1002
   RNGestureHandler: 4f4986408310a43f1606c391f38f76e0d6e790d5

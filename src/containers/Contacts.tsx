@@ -69,27 +69,19 @@ class Contacts extends Component<PropsType, State> {
     RNContacts.getAll().then(result => {
       let abContacts = new Array<EmergencyContact>();
       result.forEach(contact => {
-        if(Platform.OS ==='ios'){
-          if(contact.hasThumbnail){
-            RNFS.readFile(contact.thumbnailPath, 'base64').then(result => {
-              abContacts.push(new EmergencyContact({
-                given: new Array(contact.givenName),
-                family: contact.familyName,
-                phone: contact.phoneNumbers[0].number,
-                image: {
-                  contentType: 'image/png',
-                  data: 'image/png;base64,' + result
-                }
-              }))
-            })
-          } else {
+        if(contact.hasThumbnail){
+          RNFS.readFile(contact.thumbnailPath, 'base64').then(result => {
             abContacts.push(new EmergencyContact({
               given: new Array(contact.givenName),
               family: contact.familyName,
               phone: contact.phoneNumbers[0].number,
+              image: {
+                contentType: 'image/png',
+                data: 'image/png;base64,' + result
+              }
             }))
-          }
-        } else if(Platform.OS ==='android'){
+          })
+        } else {
           abContacts.push(new EmergencyContact({
             given: new Array(contact.givenName),
             family: contact.familyName,
@@ -97,7 +89,6 @@ class Contacts extends Component<PropsType, State> {
           }))
         }
       })
-      console.log(abContacts)
       this.setState({addressBookContactsAll:abContacts, addressBookContactsFiltered:abContacts})
     })
   }
@@ -215,7 +206,6 @@ class Contacts extends Component<PropsType, State> {
 
   render() {
     const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) ? this.props.userProfile.getEmergencyContacts() : this.state.addressBookContactsFiltered;
-    console.log(contacts)
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
