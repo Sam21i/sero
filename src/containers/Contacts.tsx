@@ -17,7 +17,6 @@ import { Resource } from '@i4mi/fhir_r4';
 import RNContacts from 'react-native-contacts';
 import RNFS from 'react-native-fs';
 import { Input, NativeBaseProvider } from 'native-base';
-import filter from 'lodash.filter';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -188,20 +187,20 @@ class Contacts extends Component<PropsType, State> {
     )
   }
 
-  handleSearch = (text) => {
+  handleSearch = (text:string) => {
     const formattedQuery = text.toLowerCase()
-    const addressBookContactsFiltered = filter(this.state.addressBookContactsAll, contact => {
-      return this.contains(contact, formattedQuery)
-    })
+    const addressBookContactsFiltered = this.state.addressBookContactsAll.filter(
+      (contact: { given: string, family: string, phone: string }) => this.contains(contact, formattedQuery)
+    );
     this.setState({ addressBookContactsFiltered, query: text })
   }
 
-  contains = ({ given, family, phone }, query) => {
-    const fullName = given[0] + ' ' + family;
-    if (fullName.toLowerCase().includes(query) || phone.includes(query) || phone.includes(query) || phone.replace(/[^a-zA-Z0-9]/g,'').includes(query)) {
-      return true
-    }
-    return false
+  contains = (contact: { given: string, family: string, phone: string }, query: string) => {
+    const fullName = contact.given[0] + ' ' + contact.family;
+    return fullName.toLowerCase().includes(query) || 
+      contact.phone.includes(query) || 
+      contact.phone.includes(query) || 
+      contact.phone.replace(/[^a-zA-Z0-9]/g,'').includes(query);
   }
 
   render() {
