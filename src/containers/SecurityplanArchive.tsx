@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   topViewTextTitle: {
     color: colors.white,
     fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.big)
+    fontSize: scale(TextSize.normal)
   },
   topViewTextDescr: {
     color: colors.black,
