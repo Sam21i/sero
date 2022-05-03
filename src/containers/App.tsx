@@ -30,6 +30,7 @@ interface State {
 
 export enum STORAGE {
   SHOULD_DISPLAY_INTRO = '@displayIntro',
+  ASKED_FOR_CONTACT_PERMISSION = '@contactPermission'
 }
 
 const OnBoardingStack = createStackNavigator();

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Platform, PermissionsAndroid } from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Platform } from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -13,7 +13,6 @@ import SpeechBubble from './SpeechBubble';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import {VStack, FormControl, Input, NativeBaseProvider } from 'native-base';
-import RNContacts from 'react-native-contacts';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   import = 'IMPORT',
@@ -44,6 +43,8 @@ interface ContactSpeechBubbleProps {
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   onClose: (arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}) => void;
   localesHelper: LocalesHelper;
+  onModeSelect?: (mode: CONTACT_SPEECH_BUBBLE_MODE) => void;
+  showImport?: boolean;
   contact?: EmergencyContact;
 };
 
@@ -55,8 +56,7 @@ interface ContactSpeechBubbleState {
   new_image?: {
     contentType: string;
     data: string;
-  },
-  permission: boolean;
+  }
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -67,26 +67,18 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_family: props.contact ? props.contact.family : '',
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
-      mode: this.props.mode,
-      permission: false
+      mode: this.props.mode
     };
-    if(Platform.OS === 'ios'){
-      RNContacts.checkPermission().then((result)=>{
-        (result === 'authorized') ? this.setState({permission:true}) : this.setState({permission:false})
-      }).catch((e)=> {
-        console.log(e);
-      })
-    } else if(Platform.OS === 'android'){
-      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((result)=> {
-        (result) ? this.setState({permission:true}) : this.setState({permission:false})
-      }).catch((e)=> {
-        console.log(e);
-      })
-    }
   }
 
   selectMode(_mode: CONTACT_SPEECH_BUBBLE_MODE): void {
-    if ((_mode === CONTACT_SPEECH_BUBBLE_MODE.import || _mode === CONTACT_SPEECH_BUBBLE_MODE.edit || _mode === CONTACT_SPEECH_BUBBLE_MODE.delete) && this.props.contact === undefined) {
+    this.props.onModeSelect && this.props.onModeSelect(_mode);
+    if (
+      (_mode === CONTACT_SPEECH_BUBBLE_MODE.import || 
+      _mode === CONTACT_SPEECH_BUBBLE_MODE.edit || 
+      _mode === CONTACT_SPEECH_BUBBLE_MODE.delete) 
+      && this.props.contact === undefined
+    ) {
       this.props.onClose({
         mode: _mode,
         data: undefined
@@ -167,13 +159,14 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   }
 
   renderMenu() {
+    console.log('render menu', this.props.showImport)
     return (
       <>
         { this.renderBubbleTitle('contacts.bubbleTitle') }
         <View style={styles.actionList}>
           {
             MENU_ACTIONS.map(action => {
-              if(!(!this.state.permission && action.name === 'importContact')){
+              if(!(!this.props.showImport && action.name === 'importContact')){
                 return (
                   <TouchableWithoutFeedback onPress={() => this.selectMode(action.mode)} key={'menu.' + action.name}>
                     <View style={styles.actionMenuPoint} key={'action_' + action.name}>

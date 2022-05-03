@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo, Platform, PermissionsAndroid } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -16,6 +17,7 @@ import UserProfile from '../model/UserProfile';
 import { Resource } from '@i4mi/fhir_r4';
 import RNContacts from 'react-native-contacts';
 import RNFS from 'react-native-fs';
+import {STORAGE} from './App';
 import { Input, NativeBaseProvider } from 'native-base';
 
 interface PropsType {
@@ -33,9 +35,9 @@ interface State {
   listVisible: boolean;
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   selectedContact?: EmergencyContact;
-  addressBookContactsAll?: any;
-  addressBookContactsFiltered?: any;
+  addressBookContacts: any[];
   query: string;
+  showImportButton: boolean;
 }
 
 class Contacts extends Component<PropsType, State> {
@@ -48,23 +50,38 @@ class Contacts extends Component<PropsType, State> {
       listVisible: false,
       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
       query: '',
+      addressBookContacts: [],
+      showImportButton: true
     }
-    if(Platform.OS === 'ios'){
-      RNContacts.checkPermission().then((permission)=>{
-        if (permission === 'authorized') {
-          this.getAllAddressBookContacts();
+
+    AsyncStorage.getItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION)
+    .then((asked) => {
+      if (asked === 'true') {
+        if (Platform.OS === 'ios') {
+          RNContacts.checkPermission()
+          .then((permission) => {
+            this.setState({
+              showImportButton: permission === 'authorized'
+            });
+          });
         }
-      }).catch((e)=> {console.log(e)})
-    } else if(Platform.OS === 'android') {
-      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((result) => {
-        if(result){
-          this.getAllAddressBookContacts();
+        if (Platform.OS === 'android') {
+          PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+          .then((permission) => {
+            this.setState({
+              showImportButton: permission
+            });
+          });
         }
-      }).catch((e)=> {console.log(e)})
-    }
+
+      }
+    });
   }
 
   getAllAddressBookContacts(): void {
+    this.setState({
+      showImportButton: true
+    });
     RNContacts.getAll().then(result => {
       let abContacts = new Array<EmergencyContact>();
       result.forEach(contact => {
@@ -88,7 +105,9 @@ class Contacts extends Component<PropsType, State> {
           }))
         }
       })
-      this.setState({addressBookContactsAll:abContacts, addressBookContactsFiltered:abContacts})
+      this.setState({
+        addressBookContacts: abContacts
+      })
     })
   }
   
@@ -135,6 +154,68 @@ class Contacts extends Component<PropsType, State> {
       bubbleVisible: true,
       selectedContact: _contact
     })
+  }
+
+  onSpeechBubbleModeChange(_mode: CONTACT_SPEECH_BUBBLE_MODE): void {
+    if (_mode === CONTACT_SPEECH_BUBBLE_MODE.import) {
+      if (Platform.OS === 'ios'){
+        RNContacts.checkPermission()
+        .then((permission) => {
+          if (permission === 'authorized') {
+            this.getAllAddressBookContacts();
+          } else if (permission === 'denied') {
+            this.setState({
+              mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+              showImportButton: false
+            });
+          } else {
+            RNContacts.requestPermission()
+            .then((newPermission) => {
+              AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
+              if (newPermission === 'authorized') {
+                this.getAllAddressBookContacts();
+              } else {
+                this.setState({
+                  mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                  showImportButton: false,
+                  bubbleVisible: true
+                });
+              }
+            });
+          }
+        })
+        .catch((e)=> {
+          console.log('Error with permission', e);
+        });
+      } else if(Platform.OS === 'android') {
+        PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+        .then((permission) => {
+          if (permission){
+            this.getAllAddressBookContacts();
+          } else {
+            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+            .then((asked) => {
+              AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
+              if (asked === 'granted') { // is 'granted' or 'denied'
+                this.getAllAddressBookContacts();
+              } else {
+                this.setState({
+                  mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                  showImportButton: false,
+                  bubbleVisible: true
+                });
+              }
+            })
+            .catch((e)=> {
+              console.log(e)
+            });
+          }
+        })
+        .catch((e)=> {
+          console.log(e);
+        });
+      }
+    }
   }
 
   renderContactListItem(_item: ListRenderItemInfo<EmergencyContact>) {
@@ -187,12 +268,10 @@ class Contacts extends Component<PropsType, State> {
     )
   }
 
-  handleSearch = (text:string) => {
-    const formattedQuery = text.toLowerCase()
-    const addressBookContactsFiltered = this.state.addressBookContactsAll.filter(
-      (contact: { given: string, family: string, phone: string }) => this.contains(contact, formattedQuery)
+  handleSearch = (text: string) => {
+    this.setState(
+      { query: text }
     );
-    this.setState({ addressBookContactsFiltered, query: text })
   }
 
   contains = (contact: { given: string, family: string, phone: string }, query: string) => {
@@ -204,7 +283,11 @@ class Contacts extends Component<PropsType, State> {
   }
 
   render() {
-    const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) ? this.props.userProfile.getEmergencyContacts() : this.state.addressBookContactsFiltered;
+    const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) 
+      ? this.props.userProfile.getEmergencyContacts() 
+      : this.state.addressBookContacts.filter(
+        (contact: { given: string, family: string, phone: string }) => this.contains(contact, this.state.query.toLowerCase())
+      );
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
@@ -229,20 +312,23 @@ class Contacts extends Component<PropsType, State> {
             { this.state.bubbleVisible &&
             <View>
               <ContactSpeechBubble
-              mode={this.state.mode}
-              localesHelper={this.props.localesHelper}
-              contact={this.state.selectedContact}
-              onClose={this.onBubbleClose.bind(this)} />
+                mode={this.state.mode}
+                localesHelper={this.props.localesHelper}
+                contact={this.state.selectedContact}
+                onClose={this.onBubbleClose.bind(this)}
+                showImport={this.state.showImportButton}
+                onModeSelect={this.onSpeechBubbleModeChange.bind(this)}
+              />
             </View>
             }
             { this.state.listVisible &&
             <View>
               <FlatList
-              ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
-              data={contacts.sort((a, b) => a.given[0].localeCompare(b.given[0]))}
-              alwaysBounceVertical={false}
-              renderItem={this.renderContactListItem.bind(this)}
-              showsHorizontalScrollIndicator={false}
+                ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
+                data={contacts.sort((a, b) => a.given[0].localeCompare(b.given[0]))}
+                alwaysBounceVertical={false}
+                renderItem={this.renderContactListItem.bind(this)}
+                showsHorizontalScrollIndicator={false}
               />
               </View>
             }

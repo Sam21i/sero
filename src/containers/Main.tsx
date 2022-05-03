@@ -39,19 +39,7 @@ class Main extends Component<PropsType, State> {
   }
 
   editContacts(): void {
-    if(Platform.OS === 'ios'){
-      RNContacts.requestPermission().then((permission)=>{
-        if (permission) {
-          this.props.navigation.navigate('Contacts');
-        }
-      }).catch((e)=> {console.log(e)})
-    } else if(Platform.OS === 'android') {
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((result) => {
-        if(result){
-          this.props.navigation.navigate('Contacts');
-        }
-      }).catch((e)=> {console.log(e)})
-    }
+    this.props.navigation.navigate('Contacts');
   }
 
   loadEmergencyContacts(): void {
