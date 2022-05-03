@@ -1,7 +1,7 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
@@ -11,7 +11,7 @@ import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
-import {AppFonts, appStyles, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -76,7 +76,7 @@ class SecurityplanMain extends Component<PropsType, State> {
                 '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
               }
               position="right"
-              color={colors.gold}
+              color={colors.manhattan}
               onPress={() => {
                 this.props.navigation.navigate('SecurityplanArchive');
               }}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: 'rgba(203, 95, 11, 0.5)',
-    flex: 1,
+    height: verticalScale(165) + (Platform.OS === 'android' ? (80 - verticalScale(54)) : 0),
     flexDirection: 'row'
   },
   bottomView: {

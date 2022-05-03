@@ -17,10 +17,8 @@ const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 667;
 
 export const scale = (size: number) => (windowWidth / guidelineBaseWidth) * size;
-export const verticalScale = (size: number) =>
-  (windowHeight / guidelineBaseHeight) * size;
-export const moderateScale = (size: number, factor = 0.5) =>
-  size + (scale(size) - size) * factor;
+export const verticalScale = (size: number) => (windowHeight / guidelineBaseHeight) * size;
+export const moderateScale = (size: number, factor = 0.5) => size + (scale(size) - size) * factor;
 export const isSmallScreen = () => windowHeight <= guidelineBaseHeight;
 
 // Fonts
@@ -29,7 +27,7 @@ export const AppFonts = {
   medium: 'Roboto-Medium',
   regular: 'Roboto-Regular',
   condensedBold: 'RobotoCondensed-Bold',
-  condensedRegular: 'RobotoCondensed-Regular',
+  condensedRegular: 'RobotoCondensed-Regular'
 };
 
 // Text sizes
@@ -39,7 +37,7 @@ export const TextSize = {
   normal: 20,
   normalPlus: 22,
   big: 24,
-  veryBig: 30,
+  veryBig: 30
 };
 
 // Colors
@@ -57,7 +55,9 @@ export const colors = {
   primary: 'rgb(201, 95, 30)',
   petrol: 'rgb(10, 95, 108)',
   gold: 'rgb(205, 177, 65)',
-  linen: 'rgb(250, 239, 231)'
+  linen: 'rgb(250, 239, 231)',
+  manhattan: 'rgb(248, 189, 155)',
+  tumbleweed: 'rgb(223, 159, 113)'
 };
 
 // Layout
@@ -69,6 +69,6 @@ export const appStyles = StyleSheet.create({
     flex: 1.58,
     backgroundColor: 'rgba(255, 255, 255, 0.65)',
     justifyContent: 'space-evenly',
-    paddingBottom: verticalScale(60),
+    paddingBottom: verticalScale(60)
   }
 });

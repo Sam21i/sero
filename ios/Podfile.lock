@@ -284,9 +284,9 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
-  - react-native-get-random-values (1.7.2):
+  - react-native-get-random-values (1.8.0):
     - React-Core
-  - react-native-image-picker (4.8.1):
+  - react-native-image-picker (4.8.2):
     - React-Core
   - react-native-orientation-locker (1.5.0):
     - React-Core
@@ -605,8 +605,8 @@ SPEC CHECKSUMS:
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
   react-native-app-auth: fd1eaa667c0bc014199456d14a6440cb74de814e
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
-  react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
-  react-native-image-picker: 5640333245b448b0e64172576ea27760f4134099
+  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
+  react-native-image-picker: 1ccfc97709f680a7167ccb758c32466b466c96e2
   react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
