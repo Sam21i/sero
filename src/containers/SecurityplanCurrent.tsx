@@ -8,7 +8,9 @@ import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
+import { SecurityPlanModule } from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
+import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
@@ -23,6 +25,8 @@ interface PropsType {
 
 interface State {
   bubbleVisible: boolean;
+  modules: SecurityPlanModule[];
+  isEditMode: boolean;
 }
 
 class SecurityplanCurrent extends Component<PropsType, State> {
@@ -30,7 +34,9 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      bubbleVisible: false
+      bubbleVisible: false,
+      isEditMode: false,
+      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules()
     };
   }
 
@@ -65,8 +71,11 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                 style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginTop: 70, marginBottom: 50}}
               />
 
-              <View style={{backgroundColor: colors.white, height: 300, width: '100%'}}>
-                <Text>Place your Securityplan here</Text>
+              <View style={{ height: 300, width: '100%'}}>
+                <SecurityPlanModuleComponent 
+                  editable={this.state.isEditMode} 
+                  module={this.state.modules[0]}
+                />
               </View>
 
               <AppButton
