@@ -1,10 +1,4 @@
-import {
-  CarePlan,
-  CarePlanIntent,
-  CarePlanStatus,
-  Resource,
-  Reference,
-} from '@i4mi/fhir_r4';
+import {CarePlan, CarePlanIntent, CarePlanStatus, Resource, Reference} from '@i4mi/fhir_r4';
 import React, {Component} from 'react';
 import {View, Text, Button} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -15,15 +9,13 @@ import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
+import UserProfile from '../model/UserProfile';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
+  userProfile: UserProfile;
   synchronizeResource: (r: Resource) => void;
-  replaceSecurityPlan: (
-    newPlan: SecurityPlanModel,
-    oldPlan: SecurityPlanModel,
-    u: Reference,
-  ) => void;
+  replaceSecurityPlan: (newPlan: SecurityPlanModel, oldPlan: SecurityPlanModel, u: Reference) => void;
 }
 
 interface State {
@@ -47,21 +39,20 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/motivation',
-            },
-          ],
-        },
+              code: 'securityplan/motivation'
+            }
+          ]
+        }
       ],
-      description:
-        'Was gibt mir Kraft? Was hält mich am Leben? Was möchte ich noch erleben?',
+      description: 'Was gibt mir Kraft? Was hält mich am Leben? Was möchte ich noch erleben?',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Fische füttern',
-          },
-        },
-      ],
+            description: 'Fische füttern'
+          }
+        }
+      ]
     },
     {
       resourceType: 'CarePlan',
@@ -74,21 +65,20 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/warningSigns',
-            },
-          ],
-        },
+              code: 'securityplan/warningSigns'
+            }
+          ]
+        }
       ],
-      description:
-        'Welche Gedanken, Gefühle oder Verhaltensweisen treten bei mir vor einer suizidalen Krise auf?',
+      description: 'Welche Gedanken, Gefühle oder Verhaltensweisen treten bei mir vor einer suizidalen Krise auf?',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Krokodile küssen',
-          },
-        },
-      ],
+            description: 'Krokodile küssen'
+          }
+        }
+      ]
     },
     {
       resourceType: 'CarePlan',
@@ -101,21 +91,20 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/copingStrategies',
-            },
-          ],
-        },
+              code: 'securityplan/copingStrategies'
+            }
+          ]
+        }
       ],
-      description:
-        'Was tue ich selbst, wenn Suizidgedanken stärker werden? Was hilft mir in solchen Augenblicken?',
+      description: 'Was tue ich selbst, wenn Suizidgedanken stärker werden? Was hilft mir in solchen Augenblicken?',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Schafe streicheln',
-          },
-        },
-      ],
+            description: 'Schafe streicheln'
+          }
+        }
+      ]
     },
     {
       resourceType: 'CarePlan',
@@ -128,21 +117,20 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/distractionStrategies',
-            },
-          ],
-        },
+              code: 'securityplan/distractionStrategies'
+            }
+          ]
+        }
       ],
-      description:
-        'Welche Aktivität tut mir gut? An welchen Orten und Plätzen oder mit welchen Menschen komme ich auf andere Gedanken?',
+      description: 'Welche Aktivität tut mir gut? An welchen Orten und Plätzen oder mit welchen Menschen komme ich auf andere Gedanken?',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Hunde hüten',
-          },
-        },
-      ],
+            description: 'Hunde hüten'
+          }
+        }
+      ]
     },
     {
       resourceType: 'CarePlan',
@@ -155,20 +143,20 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/personalBeliefs',
-            },
-          ],
-        },
+              code: 'securityplan/personalBeliefs'
+            }
+          ]
+        }
       ],
       description: 'Was sind meine Glaubenssätze? TEXT TBD',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Wale wählen',
-          },
-        },
-      ],
+            description: 'Wale wählen'
+          }
+        }
+      ]
     },
     {
       resourceType: 'CarePlan',
@@ -181,34 +169,33 @@ const TEST_PLAN: CarePlan = {
           coding: [
             {
               system: 'http://midata.coop/sero/CODESYSTEMTBD',
-              code: 'securityplan/professionalContacts',
-            },
-          ],
-        },
+              code: 'securityplan/professionalContacts'
+            }
+          ]
+        }
       ],
-      description:
-        'Welche Fachpersonen oder Organisationen unterstützen mich im Notfall?',
+      description: 'Welche Fachpersonen oder Organisationen unterstützen mich im Notfall?',
       activity: [
         {
           detail: {
             status: 'unknown',
-            description: 'Beratung LUPS (0900 85 65 65)',
-          },
+            description: 'Beratung LUPS (0900 85 65 65)'
+          }
         },
         {
           detail: {
             status: 'unknown',
-            description: 'Die Dargebotene Hand (143)',
-          },
+            description: 'Die Dargebotene Hand (143)'
+          }
         },
         {
           detail: {
             status: 'unknown',
-            description: 'Polizei (117)',
-          },
-        },
-      ],
-    },
+            description: 'Polizei (117)'
+          }
+        }
+      ]
+    }
   ] as CarePlan[],
   intent: CarePlanIntent.PLAN,
   title: 'Neuer Sicherheitsplan (27.4.)',
@@ -218,29 +205,29 @@ const TEST_PLAN: CarePlan = {
   basedOn: [
     {
       reference: '#modul1',
-      type: 'CarePlan',
+      type: 'CarePlan'
     },
     {
       reference: '#modul2',
-      type: 'CarePlan',
+      type: 'CarePlan'
     },
     {
       reference: '#modul4',
-      type: 'CarePlan',
+      type: 'CarePlan'
     },
     {
       reference: '#modul3',
-      type: 'CarePlan',
+      type: 'CarePlan'
     },
     {
       reference: '#modul5',
-      type: 'CarePlan',
+      type: 'CarePlan'
     },
     {
       reference: '#modul6',
-      type: 'CarePlan',
-    },
-  ],
+      type: 'CarePlan'
+    }
+  ]
 };
 
 class SecurityplanCurrent extends Component<PropsType, State> {
@@ -248,7 +235,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      securityPlan: this.props.userProfile.getCurrentSecurityPlan(),
+      securityPlan: this.props.userProfile.getCurrentSecurityPlan()
     };
   }
 
@@ -273,11 +260,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   archivePlan() {
     const userReference = this.props.userProfile.getFhirReference();
     if (userReference) {
-      this.props.replaceSecurityPlan(
-        new SecurityPlanModel(TEST_PLAN),
-        this.state.securityPlan,
-        userReference,
-      );
+      this.props.replaceSecurityPlan(new SecurityPlanModel(TEST_PLAN), this.state.securityPlan, userReference);
     }
   }
 
@@ -293,7 +276,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               }}></Button>
             <Text>Just for testing, can be trashed</Text>
             <Text>{this.state.securityPlan.getTitle()}</Text>
-            {this.state.securityPlan.getSecurityPlanModules().map(module => {
+            {this.state.securityPlan.getSecurityPlanModules().map((module) => {
               return (
                 <View key={module.type}>
                   <Text>Modul: {module.title}</Text>
@@ -320,23 +303,15 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 
 function mapStateToProps(state: AppStore) {
   return {
-    userProfile: state.UserProfileStore,
+    userProfile: state.UserProfileStore
   };
 }
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    replaceSecurityPlan: (
-      n: SecurityPlanModel,
-      o: SecurityPlanModel,
-      u: Reference,
-    ) => userProfileActions.replaceSecurityPlan(dispatch, n, o, u),
-    synchronizeResource: (r: Resource) =>
-      midataServiceActions.synchronizeResource(dispatch, r),
+    replaceSecurityPlan: (n: SecurityPlanModel, o: SecurityPlanModel, u: Reference) => userProfileActions.replaceSecurityPlan(dispatch, n, o, u),
+    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r)
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SecurityplanCurrent);
+export default connect(mapStateToProps, mapDispatchToProps)(SecurityplanCurrent);

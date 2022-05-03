@@ -114,17 +114,26 @@ function SecurityplanStackScreen({route}: {route: any}) {
       <SecurityplanStack.Screen
         name="SecurityplanContainer"
         component={SecurityplanContainer}
-        options={{headerShown: false, animationEnabled: false}}></SecurityplanStack.Screen>
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}></SecurityplanStack.Screen>
 
       <SecurityplanStack.Screen
         name="SecurityplanCurrent"
         component={SecurityplanCurrent}
-        options={{headerShown: false, animationEnabled: false}}></SecurityplanStack.Screen>
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}></SecurityplanStack.Screen>
 
       <SecurityplanStack.Screen
         name="SecurityplanArchive"
         component={SecurityplanArchive}
-        options={{headerShown: false, animationEnabled: false}}></SecurityplanStack.Screen>
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}></SecurityplanStack.Screen>
     </SecurityplanStack.Navigator>
   );
 }
@@ -152,7 +161,7 @@ export default class App extends Component<PropsType, State> {
   }
 
   async checkContentToDisplay() {
-    await AsyncStorage.getItem(STORAGE.SHOULD_DISPLAY_INTRO).then(value => {
+    await AsyncStorage.getItem(STORAGE.SHOULD_DISPLAY_INTRO).then((value) => {
       if (value !== null) {
         this.setState({
           showRealApp: true
@@ -168,18 +177,10 @@ export default class App extends Component<PropsType, State> {
         <PersistGate persistor={persistor}>
           <SafeAreaProvider>
             <NavigationContainer
-              onStateChange={state => {
-                const mainScreenHistoryIndex =
-                  state?.history?.findIndex(
-                    historyEntry => historyEntry.key.indexOf('MainScreen') > -1
-                  ) || -1;
+              onStateChange={(state) => {
+                const mainScreenHistoryIndex = state?.history?.findIndex((historyEntry) => historyEntry.key.indexOf('MainScreen') > -1) || -1;
                 if (mainScreenHistoryIndex > 0) {
-                  if (
-                    state?.history &&
-                    (
-                      state.history[mainScreenHistoryIndex - 1].key as string
-                    ).indexOf('OnBoarding') > -1
-                  ) {
+                  if (state?.history && (state.history[mainScreenHistoryIndex - 1].key as string).indexOf('OnBoarding') > -1) {
                     // we just navigated from OnBoarding to MainScreen
                     // now we clear everything in the history before the MainScreen
                     // (I feel like there must be an easier way of doing this, but I couldn't find it)
@@ -195,9 +196,7 @@ export default class App extends Component<PropsType, State> {
                   tabBarStyle: {backgroundColor: '#EBEAE8'},
                   tabBarActiveTintColor: '#C95F1E',
                   tabBarInactiveTintColor: '#808080',
-                  tabBarButton: ['OnBoarding', 'Securityplan'].includes(
-                    route.name
-                  )
+                  tabBarButton: ['OnBoarding', 'Securityplan'].includes(route.name)
                     ? () => {
                         return null;
                       }
@@ -228,7 +227,7 @@ export default class App extends Component<PropsType, State> {
                   name="InfoScreen"
                   component={InfoStackScreen}
                   listeners={{
-                    tabPress: e => {
+                    tabPress: (e) => {
                       console.log('suppress info tab screen');
                       e.preventDefault();
                     }
