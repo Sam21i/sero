@@ -17,7 +17,7 @@ import Welcome from './Welcome';
 import {store, persistor} from '../store';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import SecurityplanContainer from './SecurityplanContainer';
+import SecurityplanMain from './SecurityplanMain';
 import Contacts from './Contacts';
 import Assessment from './Assessment';
 import Orientation from 'react-native-orientation-locker';
@@ -112,8 +112,8 @@ function SecurityplanStackScreen({route}: {route: any}) {
   return (
     <SecurityplanStack.Navigator>
       <SecurityplanStack.Screen
-        name="SecurityplanContainer"
-        component={SecurityplanContainer}
+        name="SecurityplanMain"
+        component={SecurityplanMain}
         options={{
           headerShown: false,
           animationEnabled: false

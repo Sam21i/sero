@@ -27,7 +27,7 @@ interface State {
   listVisible: boolean;
 }
 
-class Securityplan extends Component<PropsType, State> {
+class SecurityplanMain extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
 
@@ -145,4 +145,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(Securityplan);
+export default connect(mapStateToProps, undefined)(SecurityplanMain);
