@@ -40,6 +40,10 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     };
   }
 
+  editModule(m: SecurityPlanModule): void {
+    console.log('TODO edit module', m);
+  }
+
   render() {
     return (
       <SafeAreaView
@@ -75,7 +79,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                 { /* this is probably better done with a list of some kind */
                   this.state.modules.map(module =>  <SecurityPlanModuleComponent 
                                                       key={module.type}
-                                                      editable={this.state.isEditMode} 
+                                                      editable={this.state.isEditMode}
+                                                      onEdit={this.editModule.bind(this)}
                                                       module={module}
                                                     />)
                 }

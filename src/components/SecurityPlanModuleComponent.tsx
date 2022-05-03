@@ -6,6 +6,7 @@ import MotivationIcon from '../resources/images/icons/securityplan/motivation.sv
 import BeliefsIcon from '../resources/images/icons/securityplan/personalBeliefs.svg';
 import ContactsIcon from '../resources/images/icons/securityplan/professionalContacts.svg';
 import WarningIcon from '../resources/images/icons/securityplan/warningSigns.svg';
+import EditPencil from '../resources/images/icons/securityplan/pencil.svg';
 import { SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityPlan';
 import {
   AppFonts,
@@ -13,11 +14,12 @@ import {
   scale,
   windowWidth,
 } from '../styles/App.style';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface SecurityPlanModuleComponentProps {
   module: SecurityPlanModule,
-  editable: boolean
+  editable: boolean,
+  onEdit?: (m: SecurityPlanModule) => void
 }
 
 interface SecurityPlanModuleState {
@@ -60,8 +62,10 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
           { this.props.module.entries.map((entry, index) => {
             const label = entry.split('(')[0];
             const phone = entry.split('(')[1].split(')')[0];
-            return  <TouchableWithoutFeedback onPress={() => this.callNumber(phone)}>
-                      <View style={styles.contactEntry} key={entry.substring(0,10) + index}>
+            return  <TouchableWithoutFeedback 
+                      onPress={() => this.callNumber(phone)}
+                      key={entry.substring(0,10) + index}>
+                      <View style={styles.contactEntry} >
                         <Text style={styles.phoneLabel}>{label}</Text>
                         <Text style={styles.phoneNumber}>{phone}</Text>
                       </View>
@@ -94,7 +98,18 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
     return (
       <View style={styles.componentWrapper}>
         <View style={styles.iconContainer}>
-           { this.renderIcon(this.props.module.type) }
+          { this.renderIcon(this.props.module.type) }
+          {
+            this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS &&
+            <TouchableOpacity 
+              onPress={() => this.props.onEdit ? this.props.onEdit(this.props.module) : {}}
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10 }}>
+              <EditPencil style={styles.editIcon} width={scale(40)} height={scale(20)} />
+            </TouchableOpacity>
+            
+          }
+            
+          
         </View>
         { this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS
           ? this.renderContactModuleContent()
@@ -136,7 +151,7 @@ const styles = StyleSheet.create({
   },
   contactEntry: {
     flexDirection: 'row',
-    marginBottom: scale(2),
+    marginBottom: scale(4),
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: colors.grey
@@ -158,5 +173,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: scale(10),
     marginRight: scale(10)
+  },
+  editIcon: {
+    alignSelf: 'flex-end',
+    marginTop: scale(-10),
+    marginRight: scale(-8)
   }
 });
