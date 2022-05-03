@@ -150,55 +150,6 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
     marginRight: Platform.OS === 'ios' ? scale(-10) : scale(-8.5),
     flex: 1
-  },
-  formWrapper: {
-    marginTop: scale(10),
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
-  formButton: {
-    backgroundColor: colors.primary,
-    alignSelf: 'flex-end',
-    height: 2 * scale(TextSize.verySmall),
-    borderTopLeftRadius: scale(TextSize.verySmall),
-    borderBottomLeftRadius: scale(TextSize.verySmall),
-    marginRight: scale(-10),
-    marginTop: scale(TextSize.verySmall),
-    marginBottom: scale(TextSize.verySmall),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  formButtonText: {
-    paddingHorizontal: scale(TextSize.verySmall),
-    fontSize: scale(TextSize.verySmall),
-    fontFamily: AppFonts.regular,
-    color: colors.white
-  },
-  formInputs: {
-    marginLeft: scale(20),
-    marginRight: scale(-10)
-  },
-  cameraButton: {
-    height: scale(66),
-    width: scale(66),
-    marginLeft: scale(20),
-    borderRadius: scale(33),
-    backgroundColor: colors.veryLightGrey,
-    justifyContent: 'center',
-    padding: scale(12.5)
-  },
-  listItemInitials: {
-    borderRadius: 2 * scale(TextSize.small),
-    height: 4 * scale(TextSize.small),
-    width: 4 * scale(TextSize.small),
-    backgroundColor: colors.petrol
-  },
-  listItemInitialsText: {
-    fontFamily: AppFonts.regular,
-    fontSize: 1.8 * scale(TextSize.small),
-    alignSelf: 'center',
-    marginTop: 0.9 * scale(TextSize.small),
-    color: colors.white
   }
 });
 
