@@ -74,8 +74,9 @@
   "securityplan": {
     "title": "Dein \nSicherheitsplan",
     "current": "Aktueller Sicherheitsplan",
+    "former": "Früherer Sicherheitsplan",
     "bubbleTitle": "Was möchtest du tun?",
-    "editSecurityplan": "Sicherheistplan bearbeiten",
+    "editSecurityplan": "Sicherheitsplan bearbeiten",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen"
   },
   "myEnvironment": {
