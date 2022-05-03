@@ -72,10 +72,14 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               />
 
               <View style={{ height: 300, width: '100%'}}>
-                <SecurityPlanModuleComponent 
-                  editable={this.state.isEditMode} 
-                  module={this.state.modules[0]}
-                />
+                {
+                  this.state.modules.map(module =>  <SecurityPlanModuleComponent 
+                                                      key={module.type}
+                                                      editable={this.state.isEditMode} 
+                                                      module={module}
+                                                    />)
+                }
+                
               </View>
 
               <AppButton

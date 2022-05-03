@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import Icon from '../resources/images/common/camera.svg';
+import CopingIcon from '../resources/images/icons/securityplan/copingStrategies.svg';
+import DistractionIcon from '../resources/images/icons/securityplan/distractionStrategies.svg';
+import MotivationIcon from '../resources/images/icons/securityplan/motivation.svg';
+import BeliefsIcon from '../resources/images/icons/securityplan/personalBeliefs.svg';
+import ContactsIcon from '../resources/images/icons/securityplan/professionalContacts.svg';
+import WarningIcon from '../resources/images/icons/securityplan/warningSigns.svg';
 import { SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityPlan';
 import {
   AppFonts,
@@ -31,15 +36,53 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
   }
 
   renderNormalModuleContent() {
-
+    return (
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}> { this.props.module.title } </Text>
+        <View>
+          { this.props.module.entries.map((entry, index) => {
+            return  <View style={styles.entry} key={entry.substring(0,10) + index}>
+                      <Text style={styles.bullet}>–</Text>
+                      <Text style={styles.content}>{entry}</Text>
+                    </View> 
+          })}
+        </View>
+      </View>
+    );
   }
 
   renderContactModuleContent() {
+    return (
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}> { this.props.module.title } </Text>
+        <View>
+          { this.props.module.entries.map((entry, index) => {
+            return  <View style={styles.entry} key={entry.substring(0,10) + index}>
+                      <Text style={styles.bullet}>–</Text>
+                      <Text style={styles.content}>{entry}</Text>
+                    </View> 
+          })}
+        </View>
+      </View>
+    );
 
   }
 
   renderIcon(type: SECURITY_PLAN_MODULE_TYPE) {
-    return <Icon style={styles.icon} width={scale(50)} height={scale(50)}></Icon>
+    switch(type) {
+      case SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES:
+        return <CopingIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+      case SECURITY_PLAN_MODULE_TYPE.DISTRACTION_STRATIES:
+        return <DistractionIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+      case SECURITY_PLAN_MODULE_TYPE.MOTIVATION:
+        return <MotivationIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+      case SECURITY_PLAN_MODULE_TYPE.PERSONAL_BELIEFS:
+        return <BeliefsIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+      case SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS:
+        return <ContactsIcon Icon style={styles.icon} width={scale(40)} height={scale(40)} />
+      case SECURITY_PLAN_MODULE_TYPE.WARNING_SIGNS:
+        return <WarningIcon Icon style={styles.icon} width={scale(40)} height={scale(40)} />
+    }
   }
 
   render() {
@@ -48,18 +91,10 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
         <View style={styles.iconContainer}>
            { this.renderIcon(this.props.module.type) }
         </View>
-        <View style={styles.contentContainer}>
-          <Text style={styles.title}> { this.props.module.title } </Text>
-          <View>
-            { this.props.module.entries.map((entry, index) => {
-              return  <View style={styles.entry} key={entry.substring(0,10) + index}>
-                        <Text style={styles.bullet}>–</Text>
-                        <Text style={styles.content}>{entry}</Text>
-                      </View> 
-            })}
-          </View>
-
-        </View>
+        { this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS
+          ? this.renderContactModuleContent()
+          : this.renderNormalModuleContent()
+        }
       </View>
     );
   }
@@ -68,7 +103,7 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
 const styles = StyleSheet.create({
   componentWrapper: {
     flexDirection: 'row',
-    marginBottom: scale(10)
+    marginBottom: scale(20)
   },
   contentContainer: {
     flexDirection: 'column',
@@ -90,18 +125,18 @@ const styles = StyleSheet.create({
     marginRight: scale(15),
     fontFamily: AppFonts.regular,
     flexWrap: 'wrap',
-    width: windowWidth - scale(120)
+    width: windowWidth - scale(110)
   },
   iconContainer: {
-    backgroundColor: colors.petrol,
-    height: scale(80),
-    width: scale(90),
-    borderBottomRightRadius: scale(40),
-    borderTopRightRadius: scale(40)
+    backgroundColor: colors.primary,
+    height: scale(60),
+    width: scale(80),
+    borderBottomRightRadius: scale(30),
+    borderTopRightRadius: scale(30)
   },
   icon: {
     alignSelf: 'flex-end',
-    marginTop: scale(15),
-    marginRight: scale(15)
+    marginTop: scale(10),
+    marginRight: scale(10)
   }
 });
