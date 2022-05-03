@@ -159,7 +159,6 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   }
 
   renderMenu() {
-    console.log('render menu', this.props.showImport)
     return (
       <>
         { this.renderBubbleTitle('contacts.bubbleTitle') }
