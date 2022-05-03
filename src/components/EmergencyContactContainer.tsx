@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-  ActivityIndicator,
   FlatList,
   Linking,
   StyleSheet,

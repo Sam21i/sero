@@ -71,8 +71,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                 style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginTop: 70, marginBottom: 50}}
               />
 
-              <View style={{ height: 300, width: '100%'}}>
-                {
+              <View style={{ width: '100%'}}>
+                { /* this is probably better done with a list of some kind */
                   this.state.modules.map(module =>  <SecurityPlanModuleComponent 
                                                       key={module.type}
                                                       editable={this.state.isEditMode} 

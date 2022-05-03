@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {SvgCss} from 'react-native-svg';
+import {Linking, StyleSheet, Text, View} from 'react-native';
 import CopingIcon from '../resources/images/icons/securityplan/copingStrategies.svg';
 import DistractionIcon from '../resources/images/icons/securityplan/distractionStrategies.svg';
 import MotivationIcon from '../resources/images/icons/securityplan/motivation.svg';
@@ -12,11 +11,9 @@ import {
   AppFonts,
   colors,
   scale,
-  TextSize,
-  verticalScale,
-  windowHeight,
   windowWidth,
 } from '../styles/App.style';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface SecurityPlanModuleComponentProps {
   module: SecurityPlanModule,
@@ -31,14 +28,18 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
     this.state = {
-  
     }
+  }
+
+  callNumber(_number: string): void {
+    const phone = 'tel:' + _number.replace(/\s/g, '');
+    Linking.openURL(phone);
   }
 
   renderNormalModuleContent() {
     return (
       <View style={styles.contentContainer}>
-        <Text style={styles.title}> { this.props.module.title } </Text>
+        <Text style={styles.title}>{ this.props.module.title }</Text>
         <View>
           { this.props.module.entries.map((entry, index) => {
             return  <View style={styles.entry} key={entry.substring(0,10) + index}>
@@ -54,13 +55,17 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
   renderContactModuleContent() {
     return (
       <View style={styles.contentContainer}>
-        <Text style={styles.title}> { this.props.module.title } </Text>
+        <Text style={styles.title}>{ this.props.module.title }</Text>
         <View>
           { this.props.module.entries.map((entry, index) => {
-            return  <View style={styles.entry} key={entry.substring(0,10) + index}>
-                      <Text style={styles.bullet}>–</Text>
-                      <Text style={styles.content}>{entry}</Text>
-                    </View> 
+            const label = entry.split('(')[0];
+            const phone = entry.split('(')[1].split(')')[0];
+            return  <TouchableWithoutFeedback onPress={() => this.callNumber(phone)}>
+                      <View style={styles.contactEntry} key={entry.substring(0,10) + index}>
+                        <Text style={styles.phoneLabel}>{label}</Text>
+                        <Text style={styles.phoneNumber}>{phone}</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
           })}
         </View>
       </View>
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'column',
     marginLeft: scale(10),
-    marginTop: scale(5)
+    marginTop: scale(3)
   },
   entry: {
     flexDirection: 'row'
@@ -118,7 +123,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.tumbleweed,
-    fontFamily: AppFonts.bold
+    fontFamily: AppFonts.bold,
+    marginBottom: scale(2),
+    width: windowWidth - scale(110)
   },
   content: {
     marginLeft: scale(5),
@@ -126,6 +133,19 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     flexWrap: 'wrap',
     width: windowWidth - scale(110)
+  },
+  contactEntry: {
+    flexDirection: 'row',
+    marginBottom: scale(2),
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grey
+  },
+  phoneLabel: {
+    alignSelf: 'flex-start'
+  },
+  phoneNumber: {
+    alignSelf: 'flex-end'
   },
   iconContainer: {
     backgroundColor: colors.primary,
