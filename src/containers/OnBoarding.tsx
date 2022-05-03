@@ -25,7 +25,6 @@ import {AppStore} from '../store/reducers';
 import * as miDataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {connect} from 'react-redux';
-import EmergencyContact from '../model/EmergencyContact';
 import AppButton from '../components/AppButton';
 
 interface PropsType {
@@ -105,11 +104,11 @@ class OnBoarding extends Component<PropsType, State> {
             <View style={styles.content}>
               <View style={styles.titleView}>
                 <Text style={[styles.title, {color: item.titleColor}]}>
-                  {item.title}
+                  {this.props.localesHelper.localeString(item.title)}
                 </Text>
               </View>
               <ScrollView bounces={false} showsVerticalScrollIndicator={true} persistentScrollbar={true}>
-              <Text style={styles.text}>{item.text}</Text>
+                <Text style={styles.text}>{this.props.localesHelper.localeString(item.text)}</Text>
               </ScrollView>
             </View>
           </View>

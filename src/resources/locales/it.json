@@ -1,4 +1,80 @@
 {
-    "common": ""
-  }
-  
+	"common": {
+		"archive": "Archivio",
+		"back": "Indietro",
+		"cancel": "Annullare",
+		"delete": "Eliminare",
+		"family": "Cognome",
+		"given": "Nome",
+		"next": "Avanti",
+		"ok": "OK",
+		"phone": "Telefono",
+		"save": "Salva"
+	},
+	"contacts": {
+		"addContact": "Aggiunga un contatto",
+		"bubbleTitle": "Cosa vuoi fare?",
+		"deleteContact": "Cancella un contatto",
+		"editContact": "Modifica di un contatto",
+		"err": {
+			"family": {
+				"invalid": "Il cognome deve essere composto da lettere.",
+				"required": "Si prega di inserire un cognome."
+			},
+			"given": {
+				"invalid": "Il nome deve essere composto da lettere.",
+				"required": "Si prega di inserire un nome."
+			},
+			"phone": {
+				"invalid": "Nessun numero di telefono fisso o mobile svizzero valido.",
+				"required": "Si prega di inserire un numero di telefono fisso o mobile."
+			}
+		},
+		"selectContact": "Seleziona contatto",
+		"title": "Mia cerchia"
+	},
+	"main": {
+		"call": "chiamare",
+		"default": "Scoprite l'applicazione SERO!\nEcco qui...",
+		"emergency": "Emergenza",
+		"greeting": "Ciao {{name}}",
+		"myEnvironmentTitle": "Chiama la mia cerchia"
+	},
+	"onboarding": {
+		"assessment": {
+			"text": "Impari a usare uno strumento che ti aiuta a capire come stai andando al momento.",
+			"title": "La mia valutazione"
+		},
+		"contacts": {
+			"text": "Qui si chiama i contatti della tua cerchia che sono lì per te.",
+			"title": "Chiama i miei contatti"
+		},
+		"emergency": {
+			"text": "Qui si chiama direttamente il numero di emergenza 144.",
+			"title": "Chiama il contatto d'emergenza"
+		},
+		"midata": {
+			"text": "Registrati o accedi per salvare i tuoi dati. Questo vi permetterà di utilizzare tutte le funzioni dell'app SERO.\n\nI tuoi dati sono memorizzati in modo sicuro sulla piattaforma dati di MIDATA e solo tu hai accesso ad essi.",
+			"title": "Registrazione con MIDATA"
+		},
+		"securityplan": {
+			"text": "Crea un piano di sicurezza personale in modo da poterlo consultare in qualsiasi momento in caso di crisi.",
+			"title": "Il mio piano di sicurezza"
+		}
+	},
+	"prismS": {
+		"title": "La mia\nvalutazione"
+	},
+	"securityplan": {
+		"current": "Piano di sicurezza attuale",
+		"title": "Il mio piano di\nsicurezza"
+	},
+	"settings": {
+		"title": "Configurazioni"
+	},
+	"welcome": {
+		"greetingText": "Per fortuna sei qui!",
+		"start": "Lanciare",
+		"title": "Benvenuto."
+	}
+}
