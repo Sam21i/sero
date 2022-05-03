@@ -1,6 +1,6 @@
 import Config from 'react-native-config';
 import UserProfile from './UserProfile';
-import { Bundle, Patient, RelatedPerson, Resource } from "@i4mi/fhir_r4";
+import { Bundle, CarePlan, CarePlanStatus, Patient, RelatedPerson, Resource } from "@i4mi/fhir_r4";
 import UserSession from './UserSession';
 import { store } from '../store';
 import { logoutUser } from '../store/midataService/actions';
@@ -18,6 +18,7 @@ export default class MidataService {
     readonly OBSERVATION_ENDPOINT = "/fhir/Observation";
     readonly PATIENT_ENDPOINT = "/fhir/Patient";
     readonly RELATED_PERSON_ENDPOINT = '/fhir/RelatedPerson';
+    readonly CARE_PLAN_ENDPOINT = '/fhir/CarePlan';
 
     constructor(miDataServiceStore?: MidataService) {
         if (miDataServiceStore) {
@@ -135,6 +136,25 @@ export default class MidataService {
     }
 
     /**
+     * Loads security plan(s) from MIDATA
+     * @param _history?    boolean indicating if the archived plans should be loaded (defaults to false)
+     * @returns            an Array of the found CarePlan resources 
+     */
+    public fetchSecurityPlans(_history?: boolean): Promise<CarePlan[]> {
+        return new Promise((resolve, reject) => {
+            this.fetch(this.CARE_PLAN_ENDPOINT + '?status=' + (_history ? CarePlanStatus.REVOKED : CarePlanStatus.ACTIVE), 'GET')
+            .then((result) => {
+                const carePlans = (result as Bundle).entry?.map(entry => entry.resource as CarePlan) || [] as CarePlan[];
+                return resolve(carePlans);
+            })
+            .catch((e) => {
+                console.log('Error in midataService.fetchSecurityPlans()', e)
+                return reject('Could not load SecurityPlans.');
+            });
+        });
+    }
+
+    /**
     * Used to load an image (eg. an avatar) from MIDATA, that is only accessible with
     * access token.
     * @param _url   the url of the image, with or without additional parameters
@@ -234,7 +254,7 @@ export default class MidataService {
                     return resolve(r as Resource);
                 })
                 .catch((error) => {
-                    console.warn('Can\'t fetch token.');
+                    console.warn('Error fetching from url ' + Config.host + endpoint);
                     reject(error);
                 });
             }

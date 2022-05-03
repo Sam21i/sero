@@ -15,6 +15,7 @@ import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import { appStyles, colors, verticalScale } from '../styles/App.style';
+import { CarePlan } from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -23,6 +24,8 @@ interface PropsType {
   localesHelper: LocalesHelper;
   uploadPendingResources: () => void;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
+  setSecurityPlan: (plan: CarePlan) => void;
+  setSecurityPlanHistory: (plans: CarePlan[]) => void;
 }
 
 interface State {
@@ -35,8 +38,9 @@ class Main extends Component<PropsType, State> {
     this.state = {
       emergencyContactsLoaded: false
     };
-    this.loadEmergencyContacts();
     if (this.props.midataService.isAuthenticated()) {
+      this.loadEmergencyContacts();
+      this.loadSecurityPlans();
       this.props.uploadPendingResources();
     }
   }
@@ -46,24 +50,46 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-      if (this.props.midataService.isAuthenticated()) {
-        try {
-            this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-            .then((contacts) => {
-                this.props.setEmergencyContacts(contacts);
-                this.setState({
-                  emergencyContactsLoaded: true
-                });
-            })
-            .catch((e) => {
-                console.log('could not load related persons', e)
-            });
-        }
-        catch(e) {
-            console.log(e)
-        }
+    try {
+      this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+      .then((contacts) => {
+        this.props.setEmergencyContacts(contacts);
+        this.setState({
+          emergencyContactsLoaded: true
+        });
+      })
+      .catch((e) => {
+        console.log('could not load related persons', e)
+      });
+    }
+    catch(e) {
+        console.log(e)
+    }
+  }
 
-      }
+  loadSecurityPlans(): void {
+    if (this.props.midataService.isAuthenticated()) {
+      // fetch current security plan
+      this.props.midataService.fetchSecurityPlans()
+      .then((plans) => {
+        if (plans.length > 0) {
+          this.props.setSecurityPlan(plans[0]);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      // fetch security plan history
+      this.props.midataService.fetchSecurityPlans(true)
+      .then((plans) => {
+        if (plans.length > 0) {
+          this.props.setSecurityPlanHistory(plans);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
   }
 
   render() {
@@ -144,6 +170,8 @@ function mapStateToProps(state: AppStore) {
 function mapDispatchToProps(dispatch: Function) {
     return {
         setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+        setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
+        setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
         uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
     };
 }

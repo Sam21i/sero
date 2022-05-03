@@ -1,10 +1,11 @@
 import { createReducer } from '../helpers/reducerCreator';
 import { REHYDRATE } from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, DELETE_SECURITY_PLAN, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE } from '../definitions';
+import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
-import { CarePlan, Resource } from '@i4mi/fhir_r4';
-import { SecurityPlan } from '../../model/SecurityPlan';
+import { CarePlan, CarePlanStatus, RelatedPerson, Resource } from '@i4mi/fhir_r4';
+import SecurityPlanModel from '../../model/SecurityPlan';
+import { act } from 'react-test-renderer';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -32,22 +33,27 @@ const UserProfileStore = createReducer(new UserProfile(), {
     newState.resetProfileData();
     return newState;
   },
-  [ADD_TO_USER_PROFILE](state: UserProfile, action: {data: EmergencyContact}) {
-    let newState = new UserProfile(state);
-    newState.addEmergencyContact(new EmergencyContact(action.data));
-    return newState;
+  [ADD_TO_USER_PROFILE](state: UserProfile, action: {data: Resource}) {
+    if (action.data.resourceType === 'RelatedPerson') {
+      let newState = new UserProfile(state);
+      newState.addEmergencyContact(new EmergencyContact(action.data as RelatedPerson));
+      return newState;
+    } else {
+      return state;
+    }
+
   },
   [ADD_SECURITY_PLAN](state: UserProfile, action: {data: CarePlan}) {
     let newState = new UserProfile(state);
     newState.setSecurityPlan(action.data)
     return newState;
   },
-  [DELETE_SECURITY_PLAN](state: UserProfile) {
+  [SET_SECURITY_PLAN_HISTORY](state: UserProfile, action: {data: CarePlan[]}) {
     let newState = new UserProfile(state);
-    newState.deleteCurrentSecurityPlan();
+    newState.setSecurityPlanHistory(action.data);
     return newState;
-  },
-  [REPLACE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlan}) {
+  },  
+  [REPLACE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlanModel}) {
     let newState = new UserProfile(state);
     newState.replaceCurrentSecurityPlan(action.data)
     return newState;
@@ -63,9 +69,22 @@ const UserProfileStore = createReducer(new UserProfile(), {
         timestamp: Date
       }
     }) {
-      if (action.resource.resource.resourceType === 'RelatedPerson' || action.resource.resource.resourceType === 'CarePlan') {
+      if (action.resource.resource.resourceType === 'RelatedPerson') {
         // the resource id is already updated by reference, but needs to be persisted in store
         return new UserProfile(state);
+      } else  if (action.resource.resource.resourceType === 'CarePlan') {
+        const carePlan = action.resource.resource as CarePlan;
+        let newState = new UserProfile(state);
+        if (!action.resource.mustBeSynchronized) { 
+          if (newState.getCurrentSecurityPlan().hasEqualFhirId(carePlan)) { // new security plan replacing old one
+            //newState.replaceCurrentSecurityPlan(new SecurityPlanModel(carePlan));
+          }
+        } else if (carePlan.status === CarePlanStatus.REVOKED && newState.currentSecurityPlan.hasEqualFhirId(carePlan)) {
+          newState.deleteCurrentSecurityPlan();
+        } else {
+          // the resource id is already updated by reference, but needs to be persisted in store
+        }
+        return newState;
       } else {
         return state;
       }

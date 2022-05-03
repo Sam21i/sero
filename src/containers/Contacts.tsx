@@ -7,7 +7,6 @@ import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
-import * as userProfileActions from '../store/userProfile/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import { AppFonts, colors, scale, TextSize } from '../styles/App.style';
 import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/ContactSpeechBubble';
@@ -22,7 +21,6 @@ interface PropsType {
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
   synchronizeResource: (r: Resource) => void;
-  removeContact: (c: EmergencyContact) => void;
 }
 
 interface State {
@@ -235,8 +233,7 @@ function mapStateToProps(state: AppStore) {
 function mapDispatchToProps(dispatch: Function) {
   return {
     addResource: (r: Resource) => midataServiceActions.addResource(dispatch, r),
-    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r),
-    removeContact: (c: EmergencyContact) => userProfileActions.removeEmergencyContact(dispatch, c)
+    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r)
   };
 }
 

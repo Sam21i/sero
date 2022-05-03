@@ -1,7 +1,7 @@
-import { CarePlan, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
+import { CarePlan, CarePlanStatus, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
 import EmergencyContact from "./EmergencyContact";
 import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
-import SecurityPlanModel, { SecurityPlan } from "./SecurityPlan";
+import SecurityPlanModel from "./SecurityPlan";
 
 
 export default class UserProfile {
@@ -56,6 +56,8 @@ export default class UserProfile {
   resetProfileData() {
     this.patientResource = {id: ''};
     this.emergencyContacts = [];
+    this.securityPlanHistory = [];
+    this.currentSecurityPlan = new SecurityPlanModel({});
   }
 
   getFhirId(): string {
@@ -142,17 +144,34 @@ export default class UserProfile {
     this.currentSecurityPlan = new SecurityPlanModel(_fhirResource);
   }
 
+    /**
+   * Sets the history of the security plans.
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _fhirResources an Array of CarePlan resources representing the Security Plan history
+   * @throws               an Error if the array contains an active security plan
+   */
+  setSecurityPlanHistory(_fhirResources: CarePlan[]): void {
+    this.securityPlanHistory = _fhirResources.map(r => {
+      if (r.status === CarePlanStatus.ACTIVE) {
+        throw new Error('Can not put active Security Plan to history.');
+      }
+      return new SecurityPlanModel(r)
+    });
+  }
+
   /**
    * Replaces and archives the current security plan. 
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _plan   the new Security Plan as SecurityPlan object
    */
-  replaceCurrentSecurityPlan(_plan: SecurityPlan): void {
-    const oldSecurityPlan = this.currentSecurityPlan;
+  replaceCurrentSecurityPlan(_plan: SecurityPlanModel): void {
+    const oldSecurityPlan = new SecurityPlanModel(
+      this.currentSecurityPlan.getFhirResource(this.getFhirReference() || {})
+    );
     oldSecurityPlan.setStatusToArchived();
     this.securityPlanHistory.push(oldSecurityPlan);
 
-    this.currentSecurityPlan = new SecurityPlanModel(_plan);
+    this.currentSecurityPlan = _plan;
   }
 
   /**
@@ -160,9 +179,14 @@ export default class UserProfile {
    * DO NOT USE OUTSIDE THE REDUCER
    */
   deleteCurrentSecurityPlan(): void {
-    this.currentSecurityPlan = new SecurityPlanModel({});
+    this.replaceCurrentSecurityPlan(new SecurityPlanModel({}));
   }
 
+  /**
+   * Gets the current Security Plan 
+   * @returns A representation of the current security plan, 
+   *          that is thought for read access only.
+   */
   getCurrentSecurityPlan(): SecurityPlanModel {
     return this.currentSecurityPlan;
   }
@@ -182,7 +206,7 @@ export default class UserProfile {
    * Returns the history of security plans.
    * @returns The history of SecurityPlans as an array.
    */
-  getSecurityPlanHistory(): SecurityPlan[] {
-    return this.securityPlanHistory.map(sp => sp.getSecurityPlan())
+  getSecurityPlanHistory(): SecurityPlanModel[] {
+    return this.securityPlanHistory;
   }
 }

@@ -73,6 +73,7 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     [LOGOUT_AUTHENTICATE_USER](state: MidataService) {
         let newState = new MidataService(state);
         newState.logoutUser();
+        newState.pendingResources = [];
         return newState;
     }
 });
