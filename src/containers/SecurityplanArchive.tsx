@@ -91,11 +91,20 @@ class SecurityplanArchive extends Component<PropsType, State> {
           source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
           resizeMode="cover"
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
-            <View style={styles.topTextView}>
-              <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
+          {this.state.selectedSecurityplan ? (
+            <View style={styles.topView}>
+              <View style={styles.topTextView}>
+                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('securityplan.former')}</Text>
+                <Text style={styles.topViewTextDescr}>{moment(this.state.selectedSecurityplan.fhirResource.created).format('dd, Do MMMM YYYY, h:mm')}</Text>
+              </View>
             </View>
-          </View>
+          ) : (
+            <View style={styles.topView}>
+              <View style={styles.topTextView}>
+                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
+              </View>
+            </View>
+          )}
           <View style={styles.bottomView}>
             <ScrollView>
               <View style={{height: 70, width: '100%'}}></View>
@@ -138,6 +147,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.big)
+  },
+  topViewTextDescr: {
+    color: colors.black,
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.verySmall)
   },
   container: {
     flex: 1
