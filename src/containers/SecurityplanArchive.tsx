@@ -57,7 +57,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
                 {this.props.localesHelper.localeString('securityplan.former')}
               </Text>
               <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 style={styles.listItemSubtitleText}>
                 {moment(item.fhirResource.created).format('dd, Do MMMM YYYY') || ''}
               </Text>
