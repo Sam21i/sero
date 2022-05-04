@@ -5,7 +5,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
+import reducers, {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
@@ -38,6 +38,7 @@ interface State {
   addressBookContacts: any[];
   query: string;
   showImportButton: boolean;
+  loadingContacts: boolean;
 }
 
 class Contacts extends Component<PropsType, State> {
@@ -51,7 +52,8 @@ class Contacts extends Component<PropsType, State> {
       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
       query: '',
       addressBookContacts: [],
-      showImportButton: true
+      showImportButton: true,
+      loadingContacts: false
     }
 
     AsyncStorage.getItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION)
@@ -73,42 +75,72 @@ class Contacts extends Component<PropsType, State> {
             });
           });
         }
-
       }
     });
   }
 
   getAllAddressBookContacts(): void {
     this.setState({
-      showImportButton: true
+      showImportButton: true,
+      loadingContacts: true
     });
     RNContacts.getAll().then(result => {
       let abContacts = new Array<EmergencyContact>();
+      const waitForContactsWithImages = new Array<Promise<any>>();
       result.forEach(contact => {
-        if(contact.hasThumbnail){
-          RNFS.readFile(contact.thumbnailPath, 'base64').then(result => {
-            abContacts.push(new EmergencyContact({
-              given: new Array(contact.givenName),
-              family: contact.familyName,
-              phone: contact.phoneNumbers[0].number,
-              image: {
-                contentType: 'image/png',
-                data: 'image/png;base64,' + result
-              }
-            }))
-          })
-        } else {
-          abContacts.push(new EmergencyContact({
-            given: new Array(contact.givenName),
-            family: contact.familyName,
-            phone: contact.phoneNumbers[0].number,
-          }))
+        let given = contact.givenName || '';
+        let family = contact.familyName || '';
+        const phone = contact.phoneNumbers && contact.phoneNumbers[0] && contact.phoneNumbers[0].number
+          ? contact.phoneNumbers[0]?.number
+          : '';
+        if (contact.company) {
+          if (family === '') {
+            family = contact.company;
+          } else if (given === '') {
+            given = contact.company;
+          }
         }
-      })
-      this.setState({
-        addressBookContacts: abContacts
-      })
-    })
+        // no need for importing empty contacts
+        if (given.length > 0 || family.length > 0) {
+          if (contact.hasThumbnail){
+            waitForContactsWithImages.push(
+              RNFS.readFile(contact.thumbnailPath, 'base64')
+              .then(result => {
+                const emergencyContact = new EmergencyContact({
+                  given: [given],
+                  family: family,
+                  phone: phone,
+                  image: {
+                    contentType: 'image/png',
+                    data: 'image/png;base64,' + result
+                  }
+                });
+                abContacts.push(emergencyContact);
+                return;
+              })
+              .catch(e => {
+                console.log('error reading contact', e, contact)
+              })
+            );
+          } else {
+            abContacts.push(new EmergencyContact({
+              given: [given],
+              family: family,
+              phone: phone
+            }));
+          }
+        } else {
+          console.log('Emitted contact because it has no useful info', contact);
+        }
+      });
+      Promise.all(waitForContactsWithImages)
+      .finally(() => {
+        this.setState({
+          addressBookContacts: abContacts,
+          loadingContacts: false
+        });
+      });
+    });
   }
   
   onBubbleClose(_arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}): void {
@@ -274,7 +306,7 @@ class Contacts extends Component<PropsType, State> {
     );
   }
 
-  contains = (contact: { given: string, family: string, phone: string }, query: string) => {
+  contains = (contact: EmergencyContact, query: string) => {
     const fullName = contact.given[0] + ' ' + contact.family;
     return fullName.toLowerCase().includes(query) || 
       contact.phone.includes(query) || 
@@ -286,7 +318,7 @@ class Contacts extends Component<PropsType, State> {
     const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) 
       ? this.props.userProfile.getEmergencyContacts() 
       : this.state.addressBookContacts.filter(
-        (contact: { given: string, family: string, phone: string }) => this.contains(contact, this.state.query.toLowerCase())
+        (contact: EmergencyContact) => this.contains(contact, this.state.query.toLowerCase())
       );
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
@@ -321,15 +353,27 @@ class Contacts extends Component<PropsType, State> {
               />
             </View>
             }
-            { this.state.listVisible &&
-            <View>
-              <FlatList
-                ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
-                data={contacts.sort((a, b) => a.given[0].localeCompare(b.given[0]))}
-                alwaysBounceVertical={false}
-                renderItem={this.renderContactListItem.bind(this)}
-                showsHorizontalScrollIndicator={false}
-              />
+            { this.state.listVisible && 
+              <View>
+                { this.state.loadingContacts
+                ? <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
+                : <FlatList
+                    ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
+                    data={contacts.sort((a, b) => {
+                      // don't show Company Entries at the top
+                      if (a.given[0] === '') {
+                        return 1;
+                      }
+                      if (b.given[0] === '') {
+                        return -1;
+                      }
+                      return a.getNameString().localeCompare(b.getNameString())
+                    })}
+                    alwaysBounceVertical={false}
+                    renderItem={this.renderContactListItem.bind(this)}
+                    showsHorizontalScrollIndicator={false}
+                  />
+              }
               </View>
             }
           </View>
@@ -407,6 +451,13 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     fontSize: 1.8 * scale(TextSize.small),
     color: colors.white,
+  },
+  loading: {
+    fontFamily: AppFonts.regular,
+    fontSize: TextSize.small,
+    width: '100%',
+    textAlign: 'center',
+    marginTop: scale(10)
   }
 });
 
