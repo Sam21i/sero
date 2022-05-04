@@ -72,7 +72,7 @@
 	"securityplan": {
 		"bubbleTitle": "What do you like to do?",
 		"current": "Current safety plan",
-		"editHint": "You can rearrange the sections by dragging them to another place in the list.",
+		"editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
 		"editSecurityplan": "Edit safety plan",
 		"former": "Previous safety plan",
 		"newSecurityplan": "Create new safety plan",
