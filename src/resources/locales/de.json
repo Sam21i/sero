@@ -77,7 +77,8 @@
     "former": "Früherer Sicherheitsplan",
     "bubbleTitle": "Was möchtest du tun?",
     "editSecurityplan": "Sicherheitsplan bearbeiten",
-    "newSecurityplan": "Neuen Sicherheitsplan erstellen"
+    "newSecurityplan": "Neuen Sicherheitsplan erstellen",
+    "editHint": "Du kannst die Module neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst. \nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten."
   },
   "myEnvironment": {
     "title": "Dein \nUmfeld"

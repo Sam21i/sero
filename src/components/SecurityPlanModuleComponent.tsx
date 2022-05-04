@@ -15,10 +15,13 @@ import {
   windowWidth,
 } from '../styles/App.style';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.'])
 
 interface SecurityPlanModuleComponentProps {
   module: SecurityPlanModule,
   editable: boolean,
+  isBeingDragged: boolean,
   onEdit?: (m: SecurityPlanModule) => void
 }
 
@@ -96,9 +99,19 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
 
   render() {
     return (
-      <View style={styles.componentWrapper}>
+      <View style={[styles.componentWrapper, this.props.isBeingDragged ? styles.dragged : {}]}>
         <View style={styles.iconContainer}>
-          { this.renderIcon(this.props.module.type) }
+          {
+            this.props.editable &&
+            <View style={{flexDirection: 'column', position: 'absolute', paddingTop: 4}}>
+              <View style={styles.editingGripPoint}/>
+              <View style={styles.editingGripPoint}/>
+              <View style={styles.editingGripPoint}/>
+            </View>
+          }
+          { 
+            this.renderIcon(this.props.module.type) 
+          }
           {
             this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS &&
             <TouchableOpacity 
@@ -132,6 +145,10 @@ const styles = StyleSheet.create({
   },
   entry: {
     flexDirection: 'row'
+  },
+  dragged: {
+    opacity: 0.75,
+    transform: [{ scale: 0.95 }]
   },
   bullet: {
     fontFamily: AppFonts.regular
@@ -178,5 +195,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: scale(-10),
     marginRight: scale(-8)
-  }
+  },
+  editingGripPoint: { 
+    marginTop: 10,
+    marginLeft: 8,
+    backgroundColor: colors.black, 
+    opacity: 0.3, 
+    height: 4, 
+    width: 10, 
+    borderRadius: 2}
 });
