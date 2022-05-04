@@ -34,6 +34,9 @@
 		"selectContact": "Select contact",
 		"title": "My community"
 	},
+	"info": {
+		"later": "Note: information about the SERO app will be included in a later version."
+	},
 	"main": {
 		"call": "call",
 		"default": "Discover the SERO app now!\nGet started...",
@@ -75,6 +78,8 @@
 		"title": "My safety\nplan"
 	},
 	"settings": {
+		"later": "Note: the settings will be built into a later version.",
+		"logout": "Log out",
 		"title": "Settings"
 	},
 	"welcome": {

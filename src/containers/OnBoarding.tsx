@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,
-    midataService: state.MiDataServiceStore,
+    midataService: state.MiDataServiceStore
   };
 }
 

@@ -34,6 +34,9 @@
 		"selectContact": "Kontakt auswählen",
 		"title": "Mein Umfeld"
 	},
+	"info": {
+		"later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
+	},
 	"main": {
 		"call": "anrufen",
 		"default": "Entdecke jetzt die SERO App!\nLos geht's...",
@@ -75,6 +78,8 @@
 		"title": "Mein\nSicherheitsplan"
 	},
 	"settings": {
+		"later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",
+		"logout": "Abmelden",
 		"title": "Einstellungen"
 	},
 	"welcome": {

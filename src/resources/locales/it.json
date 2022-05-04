@@ -34,6 +34,9 @@
 		"selectContact": "Seleziona contatto",
 		"title": "Mia cerchia"
 	},
+	"info": {
+		"later": "Nota: le informazioni sull'app SERO saranno incluse in una versione successiva."
+	},
 	"main": {
 		"call": "chiamare",
 		"default": "Scoprite l'applicazione SERO!\nEcco qui...",
@@ -75,6 +78,8 @@
 		"title": "Il mio piano di\nsicurezza"
 	},
 	"settings": {
+		"later": "Nota: le impostazioni saranno incorporate in una versione successiva.",
+		"logout": "Disconnetti",
 		"title": "Configurazioni"
 	},
 	"welcome": {
