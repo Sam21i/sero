@@ -7,16 +7,15 @@ import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
 import LocalesHelper from '../locales';
-import SecurityPlanModel, { SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityPlan';
-import * as midataServiceActions from '../store/midataService/actions';
-import * as userProfileActions from '../store/userProfile/actions';
-import { SecurityPlanModule } from '../model/SecurityPlan';
+import SecurityPlanModel, {SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
+import MidataService from '../model/MidataService';
+import {SecurityPlanModule} from '../model/SecurityPlan';
 import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
-import { Reference, Resource } from '@i4mi/fhir_r4';
+import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -32,7 +31,9 @@ interface State {
   modules: SecurityPlanModule[];
   isEditMode: boolean;
   moduleOrder: string[];
-  draggedModule: SECURITY_PLAN_MODULE_TYPE | undefined
+  modalVisible: boolean;
+  draggedModule: SECURITY_PLAN_MODULE_TYPE | undefined;
+  currentEditModule: SecurityPlanModule;
 }
 
 class SecurityplanCurrent extends Component<PropsType, State> {
@@ -48,7 +49,9 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       isEditMode: false,
       modules: modules,
       draggedModule: undefined,
-      moduleOrder: modules.map(module => module.order.toString())
+      moduleOrder: modules.map((module) => module.order.toString()),
+      modalVisible: false,
+      currentEditModule: undefined
     };
   }
 
@@ -77,6 +80,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   editModule(m: SecurityPlanModule): void {
     // open modal here
     console.log('TODO edit module', m);
+    this.setState({modalVisible: true});
+    this.setState({currentEditModule: m});
   }
 
   onEditedModule(editedModule: SecurityPlanModule): void {
@@ -96,7 +101,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       draggedModule: draggedModule.type
     });
   }
-  
+
   onDropModule(key: number, order: string[]) {
     this.setState({
       draggedModule: undefined,
@@ -203,13 +208,14 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             </View>
           </View>
           <View style={styles.bottomView}>
-            { this.state.bubbleVisible 
-            ? <SecurityplanSpeechBubble
+            {this.state.bubbleVisible ? (
+              <SecurityplanSpeechBubble
                 navigation={this.props.navigation}
                 localesHelper={this.props.localesHelper}
-                onClose={this.onBubbleClose.bind(this)} 
+                onClose={this.onBubbleClose.bind(this)}
               />
-            : <View>
+            ) : (
+              <View>
                 <SortableList
                   onActivateRow={this.onDragModule.bind(this)}
                   onReleaseRow={this.onDropModule.bind(this)}
@@ -217,22 +223,32 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   data={this.state.modules}
                   renderHeader={this.renderListHeader.bind(this)}
                   renderFooter={this.renderListFooter.bind(this)}
-                  renderRow={(row: {data: SecurityPlanModule, key: string}) => {
-                    return <SecurityPlanModuleComponent 
-                      key={row.key}
-                      editable={this.state.isEditMode}
-                      isBeingDragged={row.data.type === this.state.draggedModule}
-                      onEdit={this.editModule.bind(this)}
-                      module={row.data}
-                    />}
-                  }
+                  renderRow={(row: {data: SecurityPlanModule; key: string}) => {
+                    return (
+                      <SecurityPlanModuleComponent
+                        key={row.key}
+                        editable={this.state.isEditMode}
+                        isBeingDragged={row.data.type === this.state.draggedModule}
+                        onEdit={this.editModule.bind(this)}
+                        module={row.data}
+                      />
+                    );
+                  }}
                 />
               </View>
-            }
+            )}
           </View>
           <View style={styles.emergencyButton}>
             <EmergencyNumberButton />
           </View>
+          {this.state.modalVisible && (
+            <SecurityPlanEditModal
+              localesHelper={this.props.localesHelper}
+              module={this.state.currentEditModule}
+              onClose={() => {
+                this.setState({modalVisible: false});
+              }}></SecurityPlanEditModal>
+          )}
         </ImageBackground>
       </SafeAreaView>
     );
@@ -271,16 +287,16 @@ const styles = StyleSheet.create({
     margin: scale(20)
   },
   optionsButton: {
-    height: scale(50), 
-    width: scale(200), 
-    paddingVertical: scale(10), 
-    marginTop: scale(20), 
+    height: scale(50),
+    width: scale(200),
+    paddingVertical: scale(10),
+    marginTop: scale(20),
     marginBottom: scale(10)
   },
   backButton: {
-    height: scale(50), 
-    width: scale(200), 
-    paddingVertical: scale(10), 
+    height: scale(50),
+    width: scale(200),
+    paddingVertical: scale(10),
     marginVertical: 0,
     marginBottom: 20
   },
