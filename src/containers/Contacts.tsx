@@ -94,8 +94,10 @@ class Contacts extends Component<PropsType, State> {
           ? contact.phoneNumbers[0].number
           : '';
         if (contact.company) {
-          if(given === '' && family === ''){
+          if (given === '') {
             given = contact.company;
+          } else if (family === '' && given !== contact.company) {
+            family = contact.company;
           }
         }
         // no need for importing empty contacts
