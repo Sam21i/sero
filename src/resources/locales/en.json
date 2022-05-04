@@ -8,6 +8,7 @@
 		"given": "First name",
 		"next": "Next",
 		"ok": "OK",
+		"options": "Options",
 		"phone": "Telephone",
 		"save": "Save"
 	},
@@ -66,7 +67,11 @@
 		"title": "My\nassessment"
 	},
 	"securityplan": {
+		"bubbleTitle": "What do you like to do?",
 		"current": "Current safety plan",
+		"editSecurityplan": "Edit safety plan",
+		"former": "Previous safety plan",
+		"newSecurityplan": "Create new safety plan",
 		"title": "My safety\nplan"
 	},
 	"settings": {

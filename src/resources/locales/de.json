@@ -8,6 +8,7 @@
 		"given": "Vorname",
 		"next": "Weiter",
 		"ok": "OK",
+		"options": "Optionen",
 		"phone": "Telefon",
 		"save": "Speichern"
 	},
@@ -66,7 +67,11 @@
 		"title": "Meine\nEinschätzung"
 	},
 	"securityplan": {
+		"bubbleTitle": "Was möchtest du tun?",
 		"current": "Aktueller Sicherheitsplan",
+		"editSecurityplan": "Sicherheitsplan bearbeiten",
+		"former": "Früherer Sicherheitsplan",
+		"newSecurityplan": "Neuen Sicherheitsplan erstellen",
 		"title": "Mein\nSicherheitsplan"
 	},
 	"settings": {
