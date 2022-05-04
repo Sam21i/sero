@@ -11,12 +11,13 @@ import SecurityPlanModel, { SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityP
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import { SecurityPlanModule } from '../model/SecurityPlan';
+import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityplan.json';
 import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
-import { Reference, Resource } from '@i4mi/fhir_r4';
+import { CarePlan, Reference, Resource } from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -28,9 +29,11 @@ interface PropsType {
 
 interface State {
   currentSecurityplan: SecurityPlanModel;
+  replacedSecurityplan: SecurityPlanModel | undefined;
   bubbleVisible: boolean;
   modules: SecurityPlanModule[];
   isEditMode: boolean;
+  isReplaceMode: boolean;
   moduleOrder: string[];
   draggedModule: SECURITY_PLAN_MODULE_TYPE | undefined
 }
@@ -44,8 +47,10 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 
     this.state = {
       currentSecurityplan: plan,
+      replacedSecurityplan: undefined,
       bubbleVisible: false,
       isEditMode: false,
+      isReplaceMode: false,
       modules: modules,
       draggedModule: undefined,
       moduleOrder: modules.map(module => module.order.toString())
@@ -56,10 +61,13 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     const newState = {
       bubbleVisible: false,
       isEditMode: this.state.isEditMode,
+      isReplaceMode: this.state.isReplaceMode,
       previousOrder: this.state.moduleOrder.slice() // use slice for copying values but not reference
     }
     switch(mode) {
       case SECURITYPLAN_SPEECH_BUBBLE_MODE.new:
+        newState.isReplaceMode = true;
+        newState.isEditMode = true;
         this.newSecurityPlan();
         break;
       case SECURITYPLAN_SPEECH_BUBBLE_MODE.edit:
@@ -70,8 +78,16 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   newSecurityPlan(): void {
-    // archive current security plan and create new one
-    console.warn('TODO implement');
+    const previousPlan = this.state.currentSecurityplan;
+    const carePlanFhir = EMPTY_SECURITY_PLAN as CarePlan;
+    carePlanFhir.created = new Date().toISOString();
+    const newPlan = new SecurityPlanModel(carePlanFhir);
+
+    this.setState({
+      currentSecurityplan: newPlan,
+      replacedSecurityplan: previousPlan,
+      modules: newPlan.getSecurityPlanModules()
+    });
   }
 
   editModule(m: SecurityPlanModule): void {
@@ -105,28 +121,51 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   save() {
-    // get handy references ready
-    const userReference = this.props.userProfile.getFhirReference();
-    // sync order of modules in table and model
-    this.state.moduleOrder.forEach((orderEntry, index) => {
-      this.state.modules[parseInt(orderEntry)].order = index;
-    });
-    this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
-    // then send to midata
-    if (userReference) {
-      this.props.synchronizeResource(this.state.currentSecurityplan.getFhirResource(userReference));
+    if (this.state.isEditMode) {
+      // get handy references ready
+      const userReference = this.props.userProfile.getFhirReference();
+      // sync order of modules in table and model
+      this.state.moduleOrder.forEach((orderEntry, index) => {
+        this.state.modules[parseInt(orderEntry)].order = index;
+      });
+      this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
+      // then send to midata
+      if (userReference) {
+        this.props.synchronizeResource(this.state.currentSecurityplan.getFhirResource(userReference));
+      }
     }
+    if (this.state.isReplaceMode) {
+      const userReference = this.props.userProfile.getFhirReference();
+      if (userReference && this.state.replacedSecurityplan) {
+        this.props.replaceSecurityPlan(
+          this.state.currentSecurityplan, 
+          this.state.replacedSecurityplan, 
+          userReference
+        );
+      }
+    }
+    
     this.setState({
       isEditMode: false,
+      isReplaceMode: false,
       modules: this.state.currentSecurityplan.getSecurityPlanModules()
     });
   }
 
   reset() { 
-    this.setState({
+    const newState = {
       isEditMode: false,
+      isReplaceMode: false,
+      currentSecurityPlan: this.state.currentSecurityplan,
+      replacedSecurityPlan: this.state.replacedSecurityplan,
       modules: this.state.currentSecurityplan.getSecurityPlanModules()
-    });
+    }
+    if (this.state.isReplaceMode && this.state.replacedSecurityplan) {
+      newState.currentSecurityPlan = this.state.replacedSecurityplan;
+      newState.modules = this.state.replacedSecurityplan.getSecurityPlanModules();
+      newState.replacedSecurityPlan = undefined;
+    }
+    this.setState(newState);
   }
 
   renderListHeader() {
@@ -153,7 +192,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   renderListFooter() {
-    return this.state.isEditMode 
+    return this.state.isEditMode
       ? (
         <View style={{flexDirection: 'column'}}>
           {[
