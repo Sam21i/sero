@@ -23,19 +23,18 @@ const MENU_ACTIONS = [
 interface SecurityplanBubbleProps {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
-  onClose: (arg: {mode: SECURITYPLAN_SPEECH_BUBBLE_MODE}) => void;
-  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu;
+  onClose: (mode: SECURITYPLAN_SPEECH_BUBBLE_MODE) => void;
 }
 
 interface ContactSpeechBubbleState {
-  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu;
+  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE;
 }
 
 class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpeechBubbleState> {
   constructor(props: SecurityplanBubbleProps) {
     super(props);
     this.state = {
-      mode: this.props.mode
+      mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu
     };
   }
 
@@ -46,7 +45,7 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
         <CancelButton
           width={scale(35)}
           height={scale(35)}
-          onPress={() => this.props.onClose({mode: this.state.mode})}
+          onPress={() => this.props.onClose(this.state.mode)}
         />
       </View>
     );
@@ -60,7 +59,7 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
           {MENU_ACTIONS.map((action) => {
             return (
               <TouchableWithoutFeedback
-                onPress={() => {}}
+              onPress={() => this.props.onClose(action.mode)}
                 key={'menu.' + action.name}>
                 <View
                   style={styles.actionMenuPoint}
