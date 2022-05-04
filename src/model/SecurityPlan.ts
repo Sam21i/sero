@@ -81,6 +81,20 @@ export default class SecurityPlanModel {
   }
 
   /**
+   * Gets a date string of the security plans creation date
+   * @param locale 
+   * @returns locale representation of the date
+   */
+  getLocaleDate(locale: string): string {
+    if (this.fhirResource.created) {
+      return new Intl.DateTimeFormat('de-CH', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(this.fhirResource.created));
+    } else {
+      return '??.??.???? um ??:??';
+    }
+    
+  }
+
+  /**
    * Updates the security plan modules and their order, given by the order parameter (lowest first)
    * @param _modules  the new modules to replace the current modules in a given order.
    * @throws          an Error if:

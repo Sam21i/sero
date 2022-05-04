@@ -37,8 +37,10 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
   }
 
   callNumber(_number: string): void {
-    const phone = 'tel:' + _number.replace(/\s/g, '');
-    Linking.openURL(phone);
+    if (!this.props.isBeingDragged) {
+      const phone = 'tel:' + _number.replace(/\s/g, '');
+      Linking.openURL(phone);
+    }
   }
 
   renderNormalModuleContent() {
@@ -197,11 +199,11 @@ const styles = StyleSheet.create({
     marginRight: scale(-8)
   },
   editingGripPoint: { 
-    marginTop: 10,
-    marginLeft: 8,
+    marginTop: scale(10),
+    marginLeft: scale(8),
     backgroundColor: colors.black, 
     opacity: 0.3, 
-    height: 4, 
-    width: 10, 
-    borderRadius: 2}
+    height: scale(4), 
+    width: scale(10), 
+    borderRadius: scale(2)}
 });

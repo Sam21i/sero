@@ -1,7 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import moment from 'moment';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
@@ -9,18 +8,22 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
 import LocalesHelper from '../locales';
 import SecurityPlanModel, { SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityPlan';
-import MidataService from '../model/MidataService';
+import * as midataServiceActions from '../store/midataService/actions';
+import * as userProfileActions from '../store/userProfile/actions';
 import { SecurityPlanModule } from '../model/SecurityPlan';
 import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import { Reference, Resource } from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   userProfile: UserProfile;
+  synchronizeResource: (r: Resource) => void;
+  replaceSecurityPlan: (newPlan: SecurityPlanModel, oldPlan: SecurityPlanModel, u: Reference) => void;
 }
 
 interface State {
@@ -28,7 +31,7 @@ interface State {
   bubbleVisible: boolean;
   modules: SecurityPlanModule[];
   isEditMode: boolean;
-  moduleOrder: string[],
+  moduleOrder: string[];
   draggedModule: SECURITY_PLAN_MODULE_TYPE | undefined
 }
 
@@ -36,10 +39,11 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
 
-    const modules = this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules();
+    const plan = this.props.userProfile.getCurrentSecurityPlan()
+    const modules = plan.getSecurityPlanModules();
 
     this.state = {
-      currentSecurityplan: this.props.userProfile.getCurrentSecurityPlan(),
+      currentSecurityplan: plan,
       bubbleVisible: false,
       isEditMode: false,
       modules: modules,
@@ -51,7 +55,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   onBubbleClose(mode: SECURITYPLAN_SPEECH_BUBBLE_MODE): void {
     const newState = {
       bubbleVisible: false,
-      isEditMode: this.state.isEditMode
+      isEditMode: this.state.isEditMode,
+      previousOrder: this.state.moduleOrder.slice() // use slice for copying values but not reference
     }
     switch(mode) {
       case SECURITYPLAN_SPEECH_BUBBLE_MODE.new:
@@ -70,7 +75,19 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   editModule(m: SecurityPlanModule): void {
+    // open modal here
     console.log('TODO edit module', m);
+  }
+
+  onEditedModule(editedModule: SecurityPlanModule): void {
+    const index = this.state.modules.findIndex(m => m.type === editedModule.type);
+    if (index > -1) {
+      this.state.modules[index] = editedModule;
+      // make sure state gets updated
+      this.setState({
+        modules: this.state.modules
+      });
+    }
   }
 
   onDragModule(key: number) {
@@ -85,15 +102,31 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       draggedModule: undefined,
       moduleOrder: order
     });
-    console.log('dropped', key, order)
   }
 
   save() {
-    console.warn('todo: save')
+    // get handy references ready
+    const userReference = this.props.userProfile.getFhirReference();
+    // sync order of modules in table and model
+    this.state.moduleOrder.forEach((orderEntry, index) => {
+      this.state.modules[parseInt(orderEntry)].order = index;
+    });
+    this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
+    // then send to midata
+    if (userReference) {
+      this.props.synchronizeResource(this.state.currentSecurityplan.getFhirResource(userReference));
+    }
+    this.setState({
+      isEditMode: false,
+      modules: this.state.currentSecurityplan.getSecurityPlanModules()
+    });
   }
 
-  reset() {
-    console.warn('todo: reset')
+  reset() { 
+    this.setState({
+      isEditMode: false,
+      modules: this.state.currentSecurityplan.getSecurityPlanModules()
+    });
   }
 
   renderListHeader() {
@@ -111,15 +144,11 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           }}
           style={styles.optionsButton}
         />
-        <Text style={styles.editHint}>
-          {
-            this.state.isEditMode
-              ? this.props.localesHelper.localeString('securityplan.editHint')
-              : ' '
-          }
-        </Text>
+        { this.state.isEditMode
+          ? <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text>
+          : <View style={styles.editHint} />
+        }
       </View>
-      
     )
   }
 
@@ -141,8 +170,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               style={styles.backButton}
             />
           )}
-          
-
         </View>)
       : (
         <AppButton
@@ -172,7 +199,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           <View style={styles.topView}>
             <View style={styles.topTextView}>
               <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('securityplan.current')}</Text>
-              <Text style={styles.topViewTextDescr}>{moment(this.state.currentSecurityplan.fhirResource.created).format('dd, Do MMMM YYYY, h:mm')}</Text>
+              <Text style={styles.topViewTextDescr}>{ this.state.currentSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')} </Text>
             </View>
           </View>
           <View style={styles.bottomView}>
@@ -281,4 +308,13 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(SecurityplanCurrent);
+function mapDispatchToProps(dispatch: Function) {
+  return {
+    replaceSecurityPlan: (n: SecurityPlanModel, o: SecurityPlanModel, u: Reference) => 
+      userProfileActions.replaceSecurityPlan(dispatch, n, o, u),
+    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r)
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SecurityplanCurrent);
