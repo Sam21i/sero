@@ -9,7 +9,10 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
 import LocalesHelper from '../locales';
 import SecurityPlanModel from '../model/SecurityPlan';
+import MidataService from '../model/MidataService';
+import { SecurityPlanModule } from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
+import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
@@ -22,7 +25,8 @@ interface PropsType {
 interface State {
   currentSecurityplan: SecurityPlanModel;
   bubbleVisible: boolean;
-  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE;
+  modules: SecurityPlanModule[];
+  isEditMode: boolean;
 }
 
 class SecurityplanCurrent extends Component<PropsType, State> {
@@ -32,12 +36,34 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     this.state = {
       currentSecurityplan: this.props.userProfile.getCurrentSecurityPlan(),
       bubbleVisible: false,
-      mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu
+      isEditMode: false,
+      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules()
     };
   }
 
-  onBubbleClose(_arg: {mode: SECURITYPLAN_SPEECH_BUBBLE_MODE}): void {
-    this.props.navigation.goBack();
+  onBubbleClose(mode: SECURITYPLAN_SPEECH_BUBBLE_MODE): void {
+    const newState = {
+      bubbleVisible: false,
+      isEditMode: this.state.isEditMode
+    }
+    switch(mode) {
+      case SECURITYPLAN_SPEECH_BUBBLE_MODE.new:
+        this.newSecurityPlan();
+        break;
+      case SECURITYPLAN_SPEECH_BUBBLE_MODE.edit:
+        newState.isEditMode = true;
+      default: // nothing to do here, just close the bubble
+    }
+    this.setState(newState);
+  }
+
+  newSecurityPlan(): void {
+    // archive current security plan and create new one
+    console.warn('TODO implement');
+  }
+
+  editModule(m: SecurityPlanModule): void {
+    console.log('TODO edit module', m);
   }
 
   render() {
@@ -71,9 +97,17 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginTop: 70, marginBottom: 50}}
                 />
 
-                <View style={{backgroundColor: colors.white, height: 300, width: '100%'}}>
-                  <Text>Place your Securityplan here</Text>
-                </View>
+              <View style={{ width: '100%'}}>
+                { /* this is probably better done with a list of some kind */
+                  this.state.modules.map(module =>  <SecurityPlanModuleComponent 
+                                                      key={module.type}
+                                                      editable={this.state.isEditMode}
+                                                      onEdit={this.editModule.bind(this)}
+                                                      module={module}
+                                                    />)
+                }
+                
+              </View>
 
                 <AppButton
                   label={this.props.localesHelper.localeString('common.back')}
@@ -92,9 +126,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               <SecurityplanSpeechBubble
                 navigation={this.props.navigation}
                 localesHelper={this.props.localesHelper}
-                onClose={() => {
-                  this.setState({bubbleVisible: false});
-                }}></SecurityplanSpeechBubble>
+                onClose={this.onBubbleClose.bind(this)} 
+              />
             )}
           </View>
           <View style={styles.emergencyButton}>
