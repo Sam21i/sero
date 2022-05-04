@@ -91,12 +91,10 @@ class Contacts extends Component<PropsType, State> {
         let given = contact.givenName || '';
         let family = contact.familyName || '';
         const phone = contact.phoneNumbers && contact.phoneNumbers[0] && contact.phoneNumbers[0].number
-          ? contact.phoneNumbers[0]?.number
+          ? contact.phoneNumbers[0].number
           : '';
         if (contact.company) {
-          if (family === '') {
-            family = contact.company;
-          } else if (given === '') {
+          if(given === '' && family === ''){
             given = contact.company;
           }
         }
