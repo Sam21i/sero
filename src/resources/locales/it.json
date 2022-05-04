@@ -72,6 +72,7 @@
 	"securityplan": {
 		"bubbleTitle": "Cosa vuoi fare?",
 		"current": "Piano di sicurezza attuale",
+		"editHint": "Puoi riorganizzare le sezioni trascinandole in un altro posto della lista.",
 		"editSecurityplan": "Modifica il piano di sicurezza",
 		"former": "Piano di sicurezza precedente",
 		"newSecurityplan": "Creare un nuovo piano di sicurezza",
