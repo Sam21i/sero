@@ -2,6 +2,16 @@
     "resourceType": "CarePlan",
     "status": "active",
     "id": "sicherheitsplan",
+    "category": [
+        {
+            "coding": [
+                {
+                    "system": "http://midata.coop/sero/securityplan",
+                    "code": "master"
+                }
+            ]
+        }
+    ],
     "contained": [
         {
             "resourceType": "CarePlan",
@@ -13,8 +23,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/motivation"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "motivation"
                         }
                     ]
                 }
@@ -32,8 +42,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/warningSigns"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "warningSigns"
                         }
                     ]
                 }
@@ -51,8 +61,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/copingStrategies"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "copingStrategies"
                         }
                     ]
                 }
@@ -70,8 +80,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/distractionStrategies"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "distractionStrategies"
                         }
                     ]
                 }
@@ -89,8 +99,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/personalBeliefs"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "personalBeliefs"
                         }
                     ]
                 }
@@ -108,8 +118,8 @@
                 {
                     "coding": [
                         {
-                            "system": "http://midata.coop/sero/CODESYSTEMTBD",
-                            "code": "securityplan/professionalContacts"
+                            "system": "http://midata.coop/sero/securityplan",
+                            "code": "professionalContacts"
                         }
                     ]
                 }

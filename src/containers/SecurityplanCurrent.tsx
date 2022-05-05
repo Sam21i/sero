@@ -11,7 +11,6 @@ import SecurityPlanModel, { SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityP
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import { SecurityPlanModule } from '../model/SecurityPlan';
-import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityplan.json';
 import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
@@ -79,9 +78,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 
   newSecurityPlan(): void {
     const previousPlan = this.state.currentSecurityplan;
-    const carePlanFhir = EMPTY_SECURITY_PLAN as CarePlan;
-    carePlanFhir.created = new Date().toISOString();
-    const newPlan = new SecurityPlanModel(carePlanFhir);
+    const newPlan = new SecurityPlanModel({});
 
     this.setState({
       currentSecurityplan: newPlan,
