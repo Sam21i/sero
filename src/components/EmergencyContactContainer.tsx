@@ -11,7 +11,8 @@ import {scale, TextSize, colors, AppFonts} from '../styles/App.style';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import OptionsButton from '../resources/images/btn_options.svg';
+import OptionsIcon from '../resources/images/icon_options.svg';
+
 import EmergencyContact from '../model/EmergencyContact';
 import EmergencyContactTile from './EmergencyContactTile';
 
@@ -55,21 +56,21 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
           {width: this.avatarSize, height: this.avatarSize},
         ]}>
         <TouchableOpacity onPress={this.props.onPressOptionsButton}>
-          <OptionsButton width={scale(30)} height={scale(30)} />
+          {this.props.emergencyContacts.length > 0 && <OptionsIcon width={scale(30)} height={scale(30)} />}
         </TouchableOpacity>
       </View>
     );
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.titleView}>
-          <Text style={styles.title}>
-            {this.props.localesHelper.localeString('main.myEnvironmentTitle')}
-          </Text>
-        </View>
-        <View style={styles.emergencyContactsView}>
+    return(
+        <View style={styles.container}>
+          <View style={styles.titleView}>
+            <Text style={styles.title}>
+              {this.props.localesHelper.localeString('main.myEnvironmentTitle')}
+            </Text>
+          </View>
+          <View style={styles.emergencyContactsView}>
           <FlatList
             ref={ref => {
               this.flatListRef = ref;
@@ -81,12 +82,14 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={this._renderItemSeparator.bind(this)}
             ListFooterComponent={this._renderListFooterComponent.bind(this)}
+            onContentSizeChange={() => this.flatListRef.scrollToEnd()}
+            inverted
           />
+          </View>
         </View>
-      </View>
-    );
-  }
-}
+        );
+      }
+    }
 
 const styles = StyleSheet.create({
   container: {
@@ -98,6 +101,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'center',
+  },
+  loadingView:{
+    flex: 2.5,
+    justifyContent: "space-around",
   },
   emergencyContactsView: {
     flex: 2.5,

@@ -25,7 +25,8 @@
     "yes": "Ja",
     "midata": "MIDATA",
     "archive": "Archiv",
-    "search": "Suchen"
+    "search": "Suchen",
+    "options": "Optionen"
   },
   "welcome": {
     "title": "Willkommen.",
@@ -50,13 +51,13 @@
     "selectContact": "Kontakt auswählen",
     "err": {
       "given": {
-        "invalid": "Der Vorname darf keine Ziffern enthalten.",
+        "invalid": "Der Vorname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Vornamen ein."
       },
       "family": {
-        "invalid": "Der Nachname darf keine Ziffern enthalten.",
+        "invalid": "Der Nachname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Nachnamen ein."
-      },   
+      },
       "phone": {
         "invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
         "required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
@@ -74,7 +75,10 @@
   },
   "securityplan": {
     "title": "Dein \nSicherheitsplan",
-    "current": "Aktueller Sicherheitsplan"
+    "current": "Aktueller Sicherheitsplan",
+    "bubbleTitle": "Was möchtest du tun?",
+    "editSecurityplan": "Sicherheistplan bearbeiten",
+    "newSecurityplan": "Neuen Sicherheitsplan erstellen"
   },
   "myEnvironment": {
     "title": "Dein \nUmfeld"

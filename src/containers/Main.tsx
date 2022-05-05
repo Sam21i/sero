@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, PermissionsAndroid, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import MainNotification from '../components/MainNotification';
@@ -15,7 +15,7 @@ import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import { appStyles, colors, verticalScale } from '../styles/App.style';
-import RNContacts from 'react-native-contacts';
+import { CarePlan } from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -24,16 +24,23 @@ interface PropsType {
   localesHelper: LocalesHelper;
   uploadPendingResources: () => void;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
+  setSecurityPlan: (plan: CarePlan) => void;
+  setSecurityPlanHistory: (plans: CarePlan[]) => void;
 }
 
-interface State {}
+interface State {
+  emergencyContactsLoaded: boolean;
+}
 
 class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    this.loadEmergencyContacts();
-    this.state = {};
+    this.state = {
+      emergencyContactsLoaded: false
+    };
     if (this.props.midataService.isAuthenticated()) {
+      this.loadEmergencyContacts();
+      this.loadSecurityPlans();
       this.props.uploadPendingResources();
     }
   }
@@ -43,20 +50,46 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-      if (this.props.midataService.isAuthenticated()) {
-        try {
-            this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-            .then((contacts) => {
-                this.props.setEmergencyContacts(contacts);
-            })
-            .catch((e) => {
-                console.log('could not load related persons', e)
-            });
+    try {
+      this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+      .then((contacts) => {
+        this.props.setEmergencyContacts(contacts);
+        this.setState({
+          emergencyContactsLoaded: true
+        });
+      })
+      .catch((e) => {
+        console.log('could not load related persons', e)
+      });
+    }
+    catch(e) {
+        console.log(e)
+    }
+  }
+
+  loadSecurityPlans(): void {
+    if (this.props.midataService.isAuthenticated()) {
+      // fetch current security plan
+      this.props.midataService.fetchSecurityPlans()
+      .then((plans) => {
+        if (plans.length > 0) {
+          this.props.setSecurityPlan(plans[0]);
         }
-        catch(e) {
-            console.log(e)
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      // fetch security plan history
+      this.props.midataService.fetchSecurityPlans(true)
+      .then((plans) => {
+        if (plans.length > 0) {
+          this.props.setSecurityPlanHistory(plans);
         }
-      }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    }
   }
 
   render() {
@@ -67,9 +100,15 @@ class Main extends Component<PropsType, State> {
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <EmergencyContactContainer emergencyContacts={this.props.userProfile.getEmergencyContacts()}
-                                       localesHelper={this.props.localesHelper}
-                                       onPressOptionsButton={this.editContacts.bind(this)} />
+            {this.state.emergencyContactsLoaded &&
+            <EmergencyContactContainer 
+              emergencyContacts={this.props.userProfile.getEmergencyContacts()}
+              localesHelper={this.props.localesHelper}
+              onPressOptionsButton={this.editContacts.bind(this)} />
+            }
+            {!this.state.emergencyContactsLoaded &&
+            <ActivityIndicator size="large" color={colors.primary} />
+            }
             <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
@@ -88,7 +127,7 @@ class Main extends Component<PropsType, State> {
             <AppButton
               label={this.props.localesHelper.localeString('prismS.title')}
               icon={
-                '<?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:none;stroke:#FFFFFF;stroke-width:3.5;stroke-linejoin:round;} .st1{fill:none;stroke:#FFFFFF;stroke-width:4;stroke-linejoin:round;} </style> <g> <g> <g> <g> <g> <g> <g> <path class="st0" d="M110.3,112.2V97.5c0-14.1-10.6-22.1-24.5-24.9L73.3,84L60.9,72.7c-13.9,2.9-24.5,10.9-24.5,24.9v14.7 M73.3,23.1c-11.4,0-20.6,9.2-20.6,20.5c0,11.4,9.2,20.6,20.5,20.6c11.4,0,20.6-9.2,20.6-20.5l0,0 C93.9,32.3,84.7,23.1,73.3,23.1C73.4,23.1,73.4,23.1,73.3,23.1z M54.6,112.2V101 M91.7,112.2V101"/> <path class="st1" d="M110.3,112.2V97.5c0-14.1-10.6-22.1-24.5-24.9L73.3,84L60.9,72.7c-13.9,2.9-24.5,10.9-24.5,24.9v14.7 M73.3,23.1c-11.4,0-20.6,9.2-20.6,20.5c0,11.4,9.2,20.6,20.5,20.6c11.4,0,20.6-9.2,20.6-20.5l0,0 C93.9,32.3,84.7,23.1,73.3,23.1C73.4,23.1,73.4,23.1,73.3,23.1z M54.6,112.2V101 M91.7,112.2V101"/> <circle class="st1" cx="73.3" cy="73.3" r="71.3"/> </g></g></g></g></g></g></g></svg>'
+                '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;} .st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;} </style> <g> <path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7" /> <circle class="st1" cx="107.9" cy="88.9" r="17.7"/> <rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/> </g> </svg>'
               }
               position="right"
               color={colors.gold}
@@ -131,6 +170,8 @@ function mapStateToProps(state: AppStore) {
 function mapDispatchToProps(dispatch: Function) {
     return {
         setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+        setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
+        setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
         uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
     };
 }

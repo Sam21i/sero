@@ -197,12 +197,26 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           phone: this.state.new_phone
         }}
         onSubmit={this.onSubmit.bind(this)}
-        validationSchema={yup.object().shape({
-          given: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid')).required(this.props.localesHelper.localeString('contacts.err.given.required')),
-          family: yup.string().matches(REGEX.family, this.props.localesHelper.localeString('contacts.err.family.invalid')).required(this.props.localesHelper.localeString('contacts.err.family.required')),
-          phone: yup.string().matches(REGEX.phone, this.props.localesHelper.localeString('contacts.err.phone.invalid')).required(this.props.localesHelper.localeString('contacts.err.phone.required'))
-        })}
-       >
+        validationSchema={
+          yup.object().shape({
+            given: yup.string()
+            .when('family',{
+              is: (family) => !family || family.length === 0,
+              then: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid'))
+              .required(this.props.localesHelper.localeString('contacts.err.given.required')),
+              otherwise: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid'))
+            }),                                                                  
+            family: yup.string()
+            .when('given', {
+              is: (given) => !given || given.length === 0,
+              then: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.family.invalid'))
+              .required(this.props.localesHelper.localeString('contacts.err.family.required')),
+              otherwise: yup.string().matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.family.invalid'))
+            }),
+            phone: yup.string().matches(REGEX.phone, this.props.localesHelper.localeString('contacts.err.phone.invalid')).required(this.props.localesHelper.localeString('contacts.err.phone.required'))
+          }, ['family', 'given'])
+        }
+      >
         {({ values, handleChange, handleBlur, errors, touched, handleSubmit }) => (
           <NativeBaseProvider>
             <View style={styles.formWrapper}>

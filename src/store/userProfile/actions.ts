@@ -1,7 +1,11 @@
 import Action from '../helpers/Action';
-import {REMOVE_EMERGENCY_CONTACT, SET_EMERGENCY_CONTACTS, UPDATE_USER_PROFILE} from '../definitions';
-import {UserProfileData} from './reducer';
+import { ADD_SECURITY_PLAN, REMOVE_EMERGENCY_CONTACT, REPLACE_SECURITY_PLAN, 
+  SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE} from '../definitions';
+import { UserProfileData } from './reducer';
 import EmergencyContact from '../../model/EmergencyContact';
+import SecurityPlanModel from '../../model/SecurityPlan';
+import { CarePlan, Reference } from '@i4mi/fhir_r4';
+import { addResource, synchronizeResource } from '../midataService/actions';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
   dispatch(
@@ -18,5 +22,31 @@ export function setEmergencyContacts(dispatch, contacts: EmergencyContact[]) {
 export function removeEmergencyContact(dispatch, contact: EmergencyContact) {
   dispatch(
     new Action(REMOVE_EMERGENCY_CONTACT, contact).getObjectAction()
+  );
+}
+
+export function setSecurityPlan(dispatch, plan: CarePlan) {
+  dispatch(
+    new Action(ADD_SECURITY_PLAN, plan).getObjectAction()
+  );
+}
+
+export function deleteSecurityPlan(dispatch, plan: SecurityPlanModel, userReference: Reference) {
+  plan.setStatusToArchived();
+  synchronizeResource(dispatch, plan.getFhirResource(userReference));
+}
+
+export function replaceSecurityPlan(dispatch, newPlan: SecurityPlanModel, oldPlan: SecurityPlanModel, userReference: Reference) {
+  oldPlan.setStatusToArchived();
+  synchronizeResource(dispatch, oldPlan.getFhirResource(userReference));
+  addResource(dispatch, newPlan.getFhirResource(userReference));
+  dispatch(
+    new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction()
+  );
+}
+
+export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {
+  dispatch(
+    new Action(SET_SECURITY_PLAN_HISTORY, plans).getObjectAction()
   );
 }
