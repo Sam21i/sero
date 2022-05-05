@@ -129,7 +129,6 @@ export default class SecurityPlanModel {
 
     // overwrite fhirResource
     this.setModulesOnFhir(_modules);
-    console.log(this.fhirResource)
   }
 
   /**

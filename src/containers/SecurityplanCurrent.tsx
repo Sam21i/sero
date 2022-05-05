@@ -134,6 +134,13 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     });
   }
 
+  filterVisibleModules(): SecurityPlanModule[] {
+    const filteredModules = this.state.modules.filter(m => m.entries.length > 0);
+    return filteredModules.length > 1
+      ? filteredModules
+      : this.state.modules
+  }
+
   save() {
     if (this.state.isEditMode) {
       // get handy references ready
@@ -265,7 +272,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   onActivateRow={this.onDragModule.bind(this)}
                   onReleaseRow={this.onDropModule.bind(this)}
                   sortingEnabled={this.state.isEditMode}
-                  data={this.state.modules}
+                  data={this.state.isEditMode ? this.state.modules : this.filterVisibleModules()}
                   renderHeader={this.renderListHeader.bind(this)}
                   renderFooter={this.renderListFooter.bind(this)}
                   renderRow={(row: {data: SecurityPlanModule; key: string}) => {

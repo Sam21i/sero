@@ -10,7 +10,7 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
-import SecurityPlanModel from '../model/SecurityPlan';
+import SecurityPlanModel, { SecurityPlanModule } from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
@@ -77,8 +77,20 @@ class SecurityplanArchive extends Component<PropsType, State> {
     });
   }
 
+
+  filterVisibleModules(plan: SecurityPlanModel): SecurityPlanModule[] {
+    const filteredModules = plan.getSecurityPlanModules().filter(m => m.entries.length > 0);
+    return filteredModules.length > 1
+      ? filteredModules
+      : plan.getSecurityPlanModules()
+  }
+
   renderSecurityplan() {
-    return this.state.selectedSecurityplan.getSecurityPlanModules().map((module) => {
+    let filteredModules = this.state.selectedSecurityplan.getSecurityPlanModules().filter(m => m.entries.length > 0);
+    filteredModules = filteredModules.length > 1
+      ? filteredModules
+      : this.state.selectedSecurityplan.getSecurityPlanModules();
+    return filteredModules.map((module) => {
       return (
         <SecurityPlanModuleComponent
           localesHelper={this.props.localesHelper}
