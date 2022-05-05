@@ -60,8 +60,9 @@ class SecurityplanArchive extends Component<PropsType, State> {
               <Text
                 numberOfLines={1}
                 style={styles.listItemSubtitleText}>
-                {moment(item.fhirResource.created).format('dd, Do MMMM YYYY') || ''}
+                {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
               </Text>
+
             </View>
             <View style={styles.listItemContentIcon}>
               <SvgCss
