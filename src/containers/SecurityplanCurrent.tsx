@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground } from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
@@ -8,7 +8,6 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
 import LocalesHelper from '../locales';
 import SecurityPlanModel, {SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import MidataService from '../model/MidataService';
 import {SecurityPlanModule} from '../model/SecurityPlan';
 import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
@@ -16,6 +15,8 @@ import SecurityPlanModuleComponent from '../components/SecurityPlanModuleCompone
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
+import * as userProfileActions from '../store/userProfile/actions';
+import * as midataServiceActions from '../store/midataService/actions';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -40,7 +41,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
 
-    const plan = this.props.userProfile.getCurrentSecurityPlan()
+    const plan = this.props.userProfile.getCurrentSecurityPlan();
     const modules = plan.getSecurityPlanModules();
 
     this.state = {
@@ -60,8 +61,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       bubbleVisible: false,
       isEditMode: this.state.isEditMode,
       previousOrder: this.state.moduleOrder.slice() // use slice for copying values but not reference
-    }
-    switch(mode) {
+    };
+    switch (mode) {
       case SECURITYPLAN_SPEECH_BUBBLE_MODE.new:
         this.newSecurityPlan();
         break;
@@ -78,20 +79,26 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   editModule(m: SecurityPlanModule): void {
-    // open modal here
-    console.log('TODO edit module', m);
-    this.setState({modalVisible: true});
-    this.setState({currentEditModule: m});
+    this.setState({currentEditModule: m}, () => {
+      this.setState({modalVisible: true});
+    });
   }
 
   onEditedModule(editedModule: SecurityPlanModule): void {
-    const index = this.state.modules.findIndex(m => m.type === editedModule.type);
+    const index = this.state.modules.findIndex((m) => m.type === editedModule.type);
     if (index > -1) {
-      this.state.modules[index] = editedModule;
+      let modules = [...this.state.modules];
+      modules[index] = editedModule;
       // make sure state gets updated
-      this.setState({
-        modules: this.state.modules
-      });
+      this.setState(
+        {
+          modules: modules
+        },
+        () => {
+          console.log(this.state.modules);
+          this.setState({modalVisible: false});
+        }
+      );
     }
   }
 
@@ -127,7 +134,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     });
   }
 
-  reset() { 
+  reset() {
     this.setState({
       isEditMode: false,
       modules: this.state.currentSecurityplan.getSecurityPlanModules()
@@ -149,47 +156,43 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           }}
           style={styles.optionsButton}
         />
-        { this.state.isEditMode
-          ? <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text>
-          : <View style={styles.editHint} />
-        }
+        {this.state.isEditMode ? <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text> : <View style={styles.editHint} />}
       </View>
-    )
+    );
   }
 
   renderListFooter() {
-    return this.state.isEditMode 
-      ? (
-        <View style={{flexDirection: 'column'}}>
-          {[
-            { label: 'common.save', onPress: this.save.bind(this) },
-            { label: 'common.cancel', onPress: this.reset.bind(this) },
-          ].map((button, index) => 
-            <AppButton
-              key={button.label}
-              label={this.props.localesHelper.localeString(button.label)}
-              position="right"
-              icon={undefined}
-              color={colors.tumbleweed}
-              onPress={button.onPress}
-              style={styles.backButton}
-            />
-          )}
-        </View>)
-      : (
-        <AppButton
-          label={this.props.localesHelper.localeString('common.back')}
-          icon={
-            '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
-          }
-          position="right"
-          color={colors.tumbleweed}
-          onPress={() => {
-            this.props.navigation.goBack();
-          }}
-          style={styles.backButton}
-        />
-      )
+    return this.state.isEditMode ? (
+      <View style={{flexDirection: 'column'}}>
+        {[
+          {label: 'common.save', icon: '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>', onPress: this.save.bind(this)},
+          {label: 'common.cancel', icon: '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"><defs><style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style><clipPath id="clip-path" transform="translate(0 0)"><path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5"/></clipPath><clipPath id="clip-path-2" transform="translate(0 0)"><rect class="cls-1" width="37.5" height="37.5"/></clipPath></defs><g class="cls-2"><line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25"/><line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25"/></g><g class="cls-4"><circle class="cls-3" cx="18.75" cy="18.75" r="17.5"/></g></svg>', onPress: this.reset.bind(this)}
+        ].map((button, index) => (
+          <AppButton
+            key={button.label}
+            label={this.props.localesHelper.localeString(button.label)}
+            position="right"
+            icon={button.icon}
+            color={colors.tumbleweed}
+            onPress={button.onPress}
+            style={styles.backButton}
+          />
+        ))}
+      </View>
+    ) : (
+      <AppButton
+        label={this.props.localesHelper.localeString('common.back')}
+        icon={
+          '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
+        }
+        position="right"
+        color={colors.tumbleweed}
+        onPress={() => {
+          this.props.navigation.goBack();
+        }}
+        style={styles.backButton}
+      />
+    );
   }
 
   render() {
@@ -204,7 +207,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           <View style={styles.topView}>
             <View style={styles.topTextView}>
               <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('securityplan.current')}</Text>
-              <Text style={styles.topViewTextDescr}>{ this.state.currentSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')} </Text>
+              <Text style={styles.topViewTextDescr}>{this.state.currentSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')} </Text>
             </View>
           </View>
           <View style={styles.bottomView}>
@@ -226,6 +229,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   renderRow={(row: {data: SecurityPlanModule; key: string}) => {
                     return (
                       <SecurityPlanModuleComponent
+                        localesHelper={this.props.localesHelper}
                         key={row.key}
                         editable={this.state.isEditMode}
                         isBeingDragged={row.data.type === this.state.draggedModule}
@@ -245,8 +249,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             <SecurityPlanEditModal
               localesHelper={this.props.localesHelper}
               module={this.state.currentEditModule}
-              onClose={() => {
-                this.setState({modalVisible: false});
+              onSave={(module) => {
+                this.onEditedModule(module);
               }}></SecurityPlanEditModal>
           )}
         </ImageBackground>
@@ -281,7 +285,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listHeader: {
-    flexDirection: 'column'
+    marginTop: scale(20)
   },
   editHint: {
     margin: scale(20)
@@ -289,9 +293,7 @@ const styles = StyleSheet.create({
   optionsButton: {
     height: scale(50),
     width: scale(200),
-    paddingVertical: scale(10),
-    marginTop: scale(20),
-    marginBottom: scale(10)
+    paddingVertical: scale(10)
   },
   backButton: {
     height: scale(50),
@@ -326,11 +328,9 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    replaceSecurityPlan: (n: SecurityPlanModel, o: SecurityPlanModel, u: Reference) => 
-      userProfileActions.replaceSecurityPlan(dispatch, n, o, u),
+    replaceSecurityPlan: (n: SecurityPlanModel, o: SecurityPlanModel, u: Reference) => userProfileActions.replaceSecurityPlan(dispatch, n, o, u),
     synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r)
   };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(SecurityplanCurrent);

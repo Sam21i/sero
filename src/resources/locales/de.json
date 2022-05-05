@@ -78,7 +78,11 @@
     "bubbleTitle": "Was möchtest du tun?",
     "editSecurityplan": "Sicherheitsplan bearbeiten",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen",
-    "editHint": "Du kannst die Module neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst. \nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten."
+    "editHint": "Du kannst die Module neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst. \nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
+    "alertLups": {
+      "title": "Beratungstelefon LUPS",
+      "description" : "Kosten: Regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute."
+    }
   },
   "myEnvironment": {
     "title": "Dein \nUmfeld"

@@ -8,6 +8,7 @@ import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import SecurityPlanModel from '../model/SecurityPlan';
@@ -78,7 +79,15 @@ class SecurityplanArchive extends Component<PropsType, State> {
 
   renderSecurityplan() {
     return this.state.selectedSecurityplan.getSecurityPlanModules().map((module) => {
-      return <Text>{module.description}</Text>;
+      return (
+        <SecurityPlanModuleComponent
+          localesHelper={this.props.localesHelper}
+          key={'key.' + module.title}
+          editable={false}
+          isBeingDragged={false}
+          module={module}
+        />
+      );
     });
   }
 
@@ -95,7 +104,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('securityplan.former')}</Text>
-                <Text style={styles.topViewTextDescr}>{moment(this.state.selectedSecurityplan.fhirResource.created).format('dd, Do MMMM YYYY, h:mm')}</Text>
+                <Text style={styles.topViewTextDescr}>{this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')} </Text>
               </View>
             </View>
           ) : (
@@ -119,7 +128,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
                 onPress={() => {
                   this.state.selectedSecurityplan ? this.setState({selectedSecurityplan: undefined}) : this.props.navigation.goBack();
                 }}
-                style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginVertical: 50}}
+                style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
               />
             </ScrollView>
           </View>
