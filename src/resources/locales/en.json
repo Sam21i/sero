@@ -70,6 +70,10 @@
 		"title": "My\nassessment"
 	},
 	"securityplan": {
+		"alertLups": {
+			"description": "Costs: regular call rate up to the 10th minute, thereafter CHF 3.23/minute.",
+			"title": "LUPS advice line"
+		},
 		"bubbleTitle": "What do you like to do?",
 		"current": "Current safety plan",
 		"editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
