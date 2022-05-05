@@ -50,15 +50,15 @@
 			"title": "Mon évaluation"
 		},
 		"contacts": {
-			"text": "Appelles les contacts de ton entourage qui sont là pour toi.",
+			"text": "Appelle les contacts de ton entourage qui sont là pour toi.",
 			"title": "Appeler mes contacts"
 		},
 		"emergency": {
-			"text": "Appelles directement le numéro d'urgence 144.",
+			"text": "Appelle directement le numéro d'urgence 144.",
 			"title": "Appeler le contact d'urgence"
 		},
 		"midata": {
-			"text": "Inscrit ou connecte toi pour enregistrer tes données. Cela te permettra d'utiliser toutes les fonctions de l'application SERO.\n\nTes données sont stockées en toute sécurité sur la plateforme de données de MIDATA et tu es le seul à y avoir accès.",
+			"text": "Inscrit ou connecte toi pour enregistrer tes données. Cela te permettra d'utiliser toutes les fonctions de l'application SERO.\n\nTes données sont stockées en toute sécurité sur la plateforme de données MIDATA et seul toi y a accès.",
 			"title": "Inscription à MIDATA"
 		},
 		"securityplan": {
