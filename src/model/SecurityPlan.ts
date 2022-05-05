@@ -35,7 +35,7 @@ export default class SecurityPlanModel {
   constructor(_data: Partial<SecurityPlanModel> | CarePlan) {
     if ((_data as CarePlan).resourceType && (_data as CarePlan).resourceType === 'CarePlan') {
       this.setFhirResource(_data as CarePlan);
-    } else if (_data === {}) { // create new security plan
+    } else if (Object.getOwnPropertyNames(_data).length === 0) { // create new security plan
       this.fhirResource = EMPTY_SECURITY_PLAN as CarePlan;
       this.fhirResource.created = new Date().toISOString();
       this.fhirResource.id = uuid()

@@ -41,14 +41,21 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
 
-    const plan = this.props.userProfile.getCurrentSecurityPlan()
+    let startWithEmptyPlan = false;
+
+    let plan = this.props.userProfile.getCurrentSecurityPlan();
+    if (plan.getSecurityPlanModules().length === 0) {
+      // create a new, empty security plan
+      plan = new SecurityPlanModel({}); 
+      startWithEmptyPlan = true;
+    }
     const modules = plan.getSecurityPlanModules();
 
     this.state = {
       currentSecurityplan: plan,
       replacedSecurityplan: undefined,
       bubbleVisible: false,
-      isEditMode: false,
+      isEditMode: startWithEmptyPlan,
       isReplaceMode: false,
       modules: modules,
       draggedModule: undefined,
