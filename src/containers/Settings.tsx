@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Text, Button} from 'react-native';
 import RNRestart from 'react-native-restart';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import MidataService from '../model/MidataService';
-import { AppStore } from '../store/reducers';
+import {AppStore} from '../store/reducers';
 import * as miDataServiceActions from '../store/midataService/actions';
 import LocalesHelper from '../locales';
 import {View} from 'react-native';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   localesHelper: LocalesHelper;
@@ -34,10 +34,12 @@ class Settings extends Component<PropsType, State> {
           </Text>
         </View>
         {  this.props.midataService.isAuthenticated() &&
-            <Button title={this.props.localesHelper.localeString('settings.logout')} onPress={() => {
-              this.props.logoutUser();
-              RNRestart.Restart();
-            }}></Button>
+            <Button 
+              title={this.props.localesHelper.localeString('settings.logout')} 
+              onPress={() => {
+                this.props.logoutUser();
+                RNRestart.Restart();
+              }}/>
         }
       </SafeAreaView>
     );
@@ -53,9 +55,9 @@ function mapStateToProps(state: AppStore) {
 }
 
 function mapDispatchToProps(dispatch: Function) {
-    return {
-        logoutUser: () => miDataServiceActions.logoutUser(dispatch),
-    };
+  return {
+    logoutUser: () => miDataServiceActions.logoutUser(dispatch)
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

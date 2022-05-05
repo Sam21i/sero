@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo } from 'react-native';
+import {Text, StyleSheet, ImageBackground, View, FlatList, TouchableWithoutFeedback, Image, ListRenderItemInfo, Platform, PermissionsAndroid } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
+import reducers, {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
@@ -13,6 +14,10 @@ import ContactSpeechBubble, { CONTACT_SPEECH_BUBBLE_MODE } from '../components/C
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
 import { Resource } from '@i4mi/fhir_r4';
+import RNContacts from 'react-native-contacts';
+import RNFS from 'react-native-fs';
+import {STORAGE} from './App';
+import { Input, NativeBaseProvider } from 'native-base';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -28,6 +33,10 @@ interface State {
   listVisible: boolean;
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   selectedContact?: EmergencyContact;
+  addressBookContacts: any[];
+  query: string;
+  showImportButton: boolean;
+  loadingContacts: boolean;
 }
 
 class Contacts extends Component<PropsType, State> {
@@ -35,19 +44,108 @@ class Contacts extends Component<PropsType, State> {
 
   constructor(props: PropsType) {
     super(props);
-
     this.state = {
       bubbleVisible: true,
       listVisible: false,
-      mode: CONTACT_SPEECH_BUBBLE_MODE.menu
-    };
+      mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+      query: '',
+      addressBookContacts: [],
+      showImportButton: true,
+      loadingContacts: false
+    }
+
+    AsyncStorage.getItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION)
+    .then((asked) => {
+      if (asked === 'true') {
+        if (Platform.OS === 'ios') {
+          RNContacts.checkPermission()
+          .then((permission) => {
+            this.setState({
+              showImportButton: permission === 'authorized'
+            });
+          });
+        }
+        if (Platform.OS === 'android') {
+          PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+          .then((permission) => {
+            this.setState({
+              showImportButton: permission
+            });
+          });
+        }
+      }
+    });
   }
 
+  getAllAddressBookContacts(): void {
+    this.setState({
+      showImportButton: true,
+      loadingContacts: true
+    });
+    RNContacts.getAll().then(result => {
+      let abContacts = new Array<EmergencyContact>();
+      const waitForContactsWithImages = new Array<Promise<any>>();
+      result.forEach(contact => {
+        let given = contact.givenName || '';
+        let family = contact.familyName || '';
+        const phone = contact.phoneNumbers && contact.phoneNumbers[0] && contact.phoneNumbers[0].number
+          ? contact.phoneNumbers[0].number
+          : '';
+        if (contact.company) {
+          if (given === '') {
+            given = contact.company;
+          } else if (family === '' && given !== contact.company) {
+            family = contact.company;
+          }
+        }
+        // no need for importing empty contacts
+        if (given.length > 0 || family.length > 0) {
+          if (contact.hasThumbnail){
+            waitForContactsWithImages.push(
+              RNFS.readFile(contact.thumbnailPath, 'base64')
+              .then(result => {
+                const emergencyContact = new EmergencyContact({
+                  given: [given],
+                  family: family,
+                  phone: phone,
+                  image: {
+                    contentType: 'image/png',
+                    data: 'image/png;base64,' + result
+                  }
+                });
+                abContacts.push(emergencyContact);
+                return;
+              })
+              .catch(e => {
+                console.log('error reading contact', e, contact)
+              })
+            );
+          } else {
+            abContacts.push(new EmergencyContact({
+              given: [given],
+              family: family,
+              phone: phone
+            }));
+          }
+        } else {
+          console.log('Emitted contact because it has no useful info', contact);
+        }
+      });
+      Promise.all(waitForContactsWithImages)
+      .finally(() => {
+        this.setState({
+          addressBookContacts: abContacts,
+          loadingContacts: false
+        });
+      });
+    });
+  }
+  
   onBubbleClose(_arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}): void {
     if (_arg.data === undefined) {
       this.setState({
         bubbleVisible: false,
-        listVisible: (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.delete || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.edit),
+        listVisible: (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.import || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.delete || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.edit),
         mode: _arg.mode
       });
       if (_arg.mode === CONTACT_SPEECH_BUBBLE_MODE.add || _arg.mode === CONTACT_SPEECH_BUBBLE_MODE.menu){
@@ -62,6 +160,9 @@ class Contacts extends Component<PropsType, State> {
       if (patientReference) {
         const relatedPersonResource = _arg.data.createFhirResource(patientReference);
         switch (_arg.mode) {
+          case CONTACT_SPEECH_BUBBLE_MODE.import:
+            this.props.addResource(relatedPersonResource);
+            break;
           case CONTACT_SPEECH_BUBBLE_MODE.add:
             this.props.addResource(relatedPersonResource);
             break;
@@ -85,6 +186,68 @@ class Contacts extends Component<PropsType, State> {
     })
   }
 
+  onSpeechBubbleModeChange(_mode: CONTACT_SPEECH_BUBBLE_MODE): void {
+    if (_mode === CONTACT_SPEECH_BUBBLE_MODE.import) {
+      if (Platform.OS === 'ios'){
+        RNContacts.checkPermission()
+        .then((permission) => {
+          if (permission === 'authorized') {
+            this.getAllAddressBookContacts();
+          } else if (permission === 'denied') {
+            this.setState({
+              mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+              showImportButton: false
+            });
+          } else {
+            RNContacts.requestPermission()
+            .then((newPermission) => {
+              AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
+              if (newPermission === 'authorized') {
+                this.getAllAddressBookContacts();
+              } else {
+                this.setState({
+                  mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                  showImportButton: false,
+                  bubbleVisible: true
+                });
+              }
+            });
+          }
+        })
+        .catch((e)=> {
+          console.log('Error with permission', e);
+        });
+      } else if(Platform.OS === 'android') {
+        PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+        .then((permission) => {
+          if (permission){
+            this.getAllAddressBookContacts();
+          } else {
+            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
+            .then((asked) => {
+              AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
+              if (asked === 'granted') { // is 'granted' or 'denied'
+                this.getAllAddressBookContacts();
+              } else {
+                this.setState({
+                  mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                  showImportButton: false,
+                  bubbleVisible: true
+                });
+              }
+            })
+            .catch((e)=> {
+              console.log(e)
+            });
+          }
+        })
+        .catch((e)=> {
+          console.log(e);
+        });
+      }
+    }
+  }
+
   renderContactListItem(_item: ListRenderItemInfo<EmergencyContact>) {
     const contact: EmergencyContact = _item.item;
     return (
@@ -104,8 +267,57 @@ class Contacts extends Component<PropsType, State> {
     )
   }
 
+  renderHeader(){
+    return(
+      <NativeBaseProvider>
+              <View
+      style={{
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+      <Input
+        autoCapitalize='none'
+        autoCorrect={false}
+        onChangeText={this.handleSearch}
+        placeholder={this.props.localesHelper.localeString('common.search') + '...'}
+        style={{
+          borderColor: colors.grey,
+          backgroundColor: colors.white,
+        }}
+        textStyle={{ color: colors.black }}
+        _focus={{borderColor: colors.primary}}
+        clearButtonMode='always'
+        isFullWidth={true}
+        size="xl"
+        placeholderTextColor={colors.black}
+        backgroundColor={colors.white}
+      />
+    </View>
+      </NativeBaseProvider>
+    )
+  }
+
+  handleSearch = (text: string) => {
+    this.setState(
+      { query: text }
+    );
+  }
+
+  contains = (contact: EmergencyContact, query: string) => {
+    const fullName = contact.given[0] + ' ' + contact.family;
+    return fullName.toLowerCase().includes(query) || 
+      contact.phone.includes(query) || 
+      contact.phone.includes(query) || 
+      contact.phone.replace(/[^a-zA-Z0-9]/g,'').includes(query);
+  }
+
   render() {
-    const contacts = this.props.userProfile.getEmergencyContacts();
+    const contacts = (this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete) 
+      ? this.props.userProfile.getEmergencyContacts() 
+      : this.state.addressBookContacts.filter(
+        (contact: EmergencyContact) => this.contains(contact, this.state.query.toLowerCase())
+      );
     return (
       <SafeAreaView style={styles.container} edges={['top']}>
         <ImageBackground
@@ -130,18 +342,37 @@ class Contacts extends Component<PropsType, State> {
             { this.state.bubbleVisible &&
             <View>
               <ContactSpeechBubble
-              mode={this.state.mode}
-              localesHelper={this.props.localesHelper}
-              contact={this.state.selectedContact}
-              onClose={this.onBubbleClose.bind(this)}/>
+                mode={this.state.mode}
+                localesHelper={this.props.localesHelper}
+                contact={this.state.selectedContact}
+                onClose={this.onBubbleClose.bind(this)}
+                showImport={this.state.showImportButton}
+                onModeSelect={this.onSpeechBubbleModeChange.bind(this)}
+              />
             </View>
             }
-            { this.state.listVisible &&
-              <FlatList data={contacts}
-                        alwaysBounceVertical={false}
-                        renderItem={this.renderContactListItem.bind(this)}
-                        showsHorizontalScrollIndicator={false}
-              />
+            { this.state.listVisible && 
+              <View>
+                { this.state.loadingContacts
+                ? <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
+                : <FlatList
+                    ListHeaderComponent={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>}
+                    data={contacts.sort((a, b) => {
+                      // don't show Company Entries at the top
+                      if (a.given[0] === '') {
+                        return 1;
+                      }
+                      if (b.given[0] === '') {
+                        return -1;
+                      }
+                      return a.getNameString().localeCompare(b.getNameString())
+                    })}
+                    alwaysBounceVertical={false}
+                    renderItem={this.renderContactListItem.bind(this)}
+                    showsHorizontalScrollIndicator={false}
+                  />
+              }
+              </View>
             }
           </View>
         </ImageBackground>
@@ -218,6 +449,13 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     fontSize: 1.8 * scale(TextSize.small),
     color: colors.white,
+  },
+  loading: {
+    fontFamily: AppFonts.regular,
+    fontSize: TextSize.small,
+    width: '100%',
+    textAlign: 'center',
+    marginTop: scale(10)
   }
 });
 

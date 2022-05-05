@@ -15,6 +15,7 @@ import * as yup from 'yup';
 import {VStack, FormControl, Input, NativeBaseProvider } from 'native-base';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
+  import = 'IMPORT',
   add = 'ADD',
   delete = 'DELETE',
   edit = 'EDIT',
@@ -30,6 +31,7 @@ const REGEX = {
 }
 
 const MENU_ACTIONS = [
+  { name: 'importContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.import },
   { name: 'addContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.add },
   { name: 'editContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.edit },
   { name: 'deleteContact' , mode: CONTACT_SPEECH_BUBBLE_MODE.delete }
@@ -41,6 +43,8 @@ interface ContactSpeechBubbleProps {
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   onClose: (arg: {mode: CONTACT_SPEECH_BUBBLE_MODE, data?: EmergencyContact}) => void;
   localesHelper: LocalesHelper;
+  onModeSelect?: (mode: CONTACT_SPEECH_BUBBLE_MODE) => void;
+  showImport?: boolean;
   contact?: EmergencyContact;
 };
 
@@ -52,7 +56,7 @@ interface ContactSpeechBubbleState {
   new_image?: {
     contentType: string;
     data: string;
-  },
+  }
 };
 
 class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpeechBubbleState> {
@@ -63,18 +67,26 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       new_family: props.contact ? props.contact.family : '',
       new_phone: props.contact ? props.contact.phone : '',
       new_image: props.contact ? props.contact.image : undefined,
-      mode:  this.props.mode,
+      mode: this.props.mode
     };
   }
 
   selectMode(_mode: CONTACT_SPEECH_BUBBLE_MODE): void {
-    if ((_mode === CONTACT_SPEECH_BUBBLE_MODE.edit || _mode === CONTACT_SPEECH_BUBBLE_MODE.delete) && this.props.contact === undefined) {
+    this.props.onModeSelect && this.props.onModeSelect(_mode);
+    if (
+      (_mode === CONTACT_SPEECH_BUBBLE_MODE.import || 
+      _mode === CONTACT_SPEECH_BUBBLE_MODE.edit || 
+      _mode === CONTACT_SPEECH_BUBBLE_MODE.delete) 
+      && this.props.contact === undefined
+    ) {
       this.props.onClose({
         mode: _mode,
         data: undefined
       });
     }
-    this.setState({mode: _mode});
+    if(_mode === CONTACT_SPEECH_BUBBLE_MODE.add && this.props.contact === undefined){
+      this.setState({mode: _mode});
+    }
   }
 
   pickImage() {
@@ -122,6 +134,16 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           }
     } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete){
       this.props.onClose({mode: this.state.mode, data: this.props.contact})
+    } else if(this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import){
+      this.props.onClose({
+        mode: this.state.mode,
+        data: new EmergencyContact({
+          given: [values.given],
+          family: values.family,
+          phone: values.phone,
+          image: this.state.new_image
+        })
+      });
     }
   }
 
@@ -143,18 +165,20 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
         <View style={styles.actionList}>
           {
             MENU_ACTIONS.map(action => {
-              return (
-                <TouchableWithoutFeedback onPress={() => this.selectMode(action.mode)} key={'menu.' + action.name}>
-                  <View style={styles.actionMenuPoint} key={'action_' + action.name}>
-                    <View style={styles.actionBubble}></View>
-                    <View style={styles.actionTextWrapper}>
-                      <Text style={styles.actionText}>
-                        { this.props.localesHelper.localeString('contacts.' + action.name) }
-                      </Text>
+              if(!(!this.props.showImport && action.name === 'importContact')){
+                return (
+                  <TouchableWithoutFeedback onPress={() => this.selectMode(action.mode)} key={'menu.' + action.name}>
+                    <View style={styles.actionMenuPoint} key={'action_' + action.name}>
+                      <View style={styles.actionBubble}></View>
+                      <View style={styles.actionTextWrapper}>
+                        <Text style={styles.actionText}>
+                          { this.props.localesHelper.localeString('contacts.' + action.name) }
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
+                  </TouchableWithoutFeedback>
+                )
+              }
             })
           }
         </View>
@@ -235,7 +259,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                 <TouchableOpacity onPress={handleSubmit}>
                   <View style={styles.formButton}>
                     <Text style={styles.formButtonText}>
-                      { this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit
+                      { this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit
                         ? this.props.localesHelper.localeString('common.save')
                         : this.props.localesHelper.localeString('common.delete')
                       }
@@ -253,14 +277,24 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
 
   renderProfilePictureButton(){
     switch(this.state.mode){
-      case CONTACT_SPEECH_BUBBLE_MODE.add:
+      case CONTACT_SPEECH_BUBBLE_MODE.import:
         { return this.state.new_image
-          ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-          : <View style={styles.cameraButton}>
-            <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+          ? <View style={{alignItems: 'center'}}>
+          <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image?.data}} />
+          <CameraButton width={scale(20)} height={scale(20)} style={{position: 'absolute', bottom: 0, right: scale(-2)}}/>
+        </View>
+          : <View style={[styles.listItemInitials, {backgroundColor: this.props.contact?.getUniqueColor() }]}>
+                      <CameraButton width={scale(20)} height={scale(20)} style={{position: 'absolute', bottom: 0, right: scale(-2)}}/>
+              <Text style={styles.listItemInitialsText}>{this.props.contact?.getInitials() || ''}</Text>
             </View>
         }
-
+        case CONTACT_SPEECH_BUBBLE_MODE.add:
+          { return this.state.new_image
+            ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
+            : <View style={styles.cameraButton}>
+              <CameraButton width='100%' height='100%' style={{alignSelf:'center'}}/>
+              </View>
+          }
       case CONTACT_SPEECH_BUBBLE_MODE.edit:
         { return this.state.new_image?.data
           ? <View style={{alignItems: 'center'}}>
@@ -274,7 +308,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       case CONTACT_SPEECH_BUBBLE_MODE.delete:
         { return this.state.new_image
           ? <Image style={styles.cameraButton} source={{uri: 'data:' + this.state.new_image.data}} />
-          : <View style={styles.listItemInitials}>
+          : <View style={[styles.listItemInitials, {backgroundColor: this.props.contact?.getUniqueColor() }]}>
               <Text style={styles.listItemInitialsText}>{this.props.contact?.getInitials() || ''}</Text>
             </View>
         }
@@ -401,7 +435,6 @@ const styles = StyleSheet.create({
     borderRadius: 2 * scale(TextSize.small),
     height: 4 * scale(TextSize.small),
     width: 4 * scale(TextSize.small),
-    backgroundColor: colors.petrol
   },
   listItemInitialsText: {
     fontFamily: AppFonts.regular,
