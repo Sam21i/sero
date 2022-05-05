@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Linking, StyleSheet, Text, View} from 'react-native';
+import {Alert, Linking, StyleSheet, Text, View} from 'react-native';
 import CopingIcon from '../resources/images/icons/securityplan/copingStrategies.svg';
 import DistractionIcon from '../resources/images/icons/securityplan/distractionStrategies.svg';
 import MotivationIcon from '../resources/images/icons/securityplan/motivation.svg';
@@ -7,52 +7,61 @@ import BeliefsIcon from '../resources/images/icons/securityplan/personalBeliefs.
 import ContactsIcon from '../resources/images/icons/securityplan/professionalContacts.svg';
 import WarningIcon from '../resources/images/icons/securityplan/warningSigns.svg';
 import EditPencil from '../resources/images/icons/securityplan/pencil.svg';
-import { SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE } from '../model/SecurityPlan';
-import {
-  AppFonts,
-  colors,
-  scale,
-  windowWidth,
-} from '../styles/App.style';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.'])
+import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
+import {AppFonts, colors, scale, windowWidth} from '../styles/App.style';
+import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {LogBox} from 'react-native';
+import LocalesHelper from '../locales';
+LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.']);
 
 interface SecurityPlanModuleComponentProps {
-  module: SecurityPlanModule,
-  editable: boolean,
-  isBeingDragged: boolean,
-  onEdit?: (m: SecurityPlanModule) => void
+  localesHelper: LocalesHelper;
+  module: SecurityPlanModule;
+  editable: boolean;
+  isBeingDragged: boolean;
+  onEdit?: (m: SecurityPlanModule) => void;
 }
 
-interface SecurityPlanModuleState {
- 
-}
+interface SecurityPlanModuleState {}
 
 export default class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps, SecurityPlanModuleState> {
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
-    this.state = {
-    }
+    this.state = {};
   }
 
   callNumber(_number: string): void {
     if (!this.props.isBeingDragged) {
       const phone = 'tel:' + _number.replace(/\s/g, '');
-      Linking.openURL(phone);
+      if (phone === 'tel:0900856565') {
+        Alert.alert(this.props.localesHelper.localeString('securityplan.alertLups.title'), this.props.localesHelper.localeString('securityplan.alertLups.description'), [
+          {
+            text: this.props.localesHelper.localeString('common.cancel'),
+            onPress: () => {},
+            style: 'cancel'
+          },
+          {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}
+        ]);
+      } else {
+        Linking.openURL(phone);
+      }
     }
   }
 
   renderNormalModuleContent() {
     return (
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>{ this.props.module.title }</Text>
+        <Text style={styles.title}>{this.props.module.title}</Text>
         <View>
-          { this.props.module.entries.map((entry, index) => {
-            return  <View style={styles.entry} key={entry.substring(0,10) + index}>
-                      <Text style={styles.bullet}>–</Text>
-                      <Text style={styles.content}>{entry}</Text>
-                    </View> 
+          {this.props.module?.entries.map((entry, index) => {
+            return (
+              <View
+                style={styles.entry}
+                key={entry.substring(0, 10) + index}>
+                <Text style={styles.bullet}>–</Text>
+                <Text style={styles.content}>{entry}</Text>
+              </View>
+            );
           })}
         </View>
       </View>
@@ -62,40 +71,79 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
   renderContactModuleContent() {
     return (
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>{ this.props.module.title }</Text>
+        <Text style={styles.title}>{this.props.module.title}</Text>
         <View>
-          { this.props.module.entries.map((entry, index) => {
+          {this.props.module.entries.map((entry, index) => {
             const label = entry.split('(')[0];
             const phone = entry.split('(')[1].split(')')[0];
-            return  <TouchableWithoutFeedback 
-                      onPress={() => this.callNumber(phone)}
-                      key={entry.substring(0,10) + index}>
-                      <View style={styles.contactEntry} >
-                        <Text style={styles.phoneLabel}>{label}</Text>
-                        <Text style={styles.phoneNumber}>{phone}</Text>
-                      </View>
-                    </TouchableWithoutFeedback>
+            return (
+              <TouchableWithoutFeedback
+                onPress={() => this.callNumber(phone)}
+                key={entry.substring(0, 10) + index}>
+                <View style={styles.contactEntry}>
+                  <Text style={styles.phoneLabel}>{label}</Text>
+                  <Text style={styles.phoneNumber}>{phone}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            );
           })}
         </View>
       </View>
     );
-
   }
 
   renderIcon(type: SECURITY_PLAN_MODULE_TYPE) {
-    switch(type) {
+    switch (type) {
       case SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES:
-        return <CopingIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <CopingIcon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
       case SECURITY_PLAN_MODULE_TYPE.DISTRACTION_STRATIES:
-        return <DistractionIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <DistractionIcon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
       case SECURITY_PLAN_MODULE_TYPE.MOTIVATION:
-        return <MotivationIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <MotivationIcon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
       case SECURITY_PLAN_MODULE_TYPE.PERSONAL_BELIEFS:
-        return <BeliefsIcon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <BeliefsIcon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
       case SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS:
-        return <ContactsIcon Icon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <ContactsIcon
+            Icon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
       case SECURITY_PLAN_MODULE_TYPE.WARNING_SIGNS:
-        return <WarningIcon Icon style={styles.icon} width={scale(40)} height={scale(40)} />
+        return (
+          <WarningIcon
+            Icon
+            style={styles.icon}
+            width={scale(40)}
+            height={scale(40)}
+          />
+        );
     }
   }
 
@@ -103,33 +151,27 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
     return (
       <View style={[styles.componentWrapper, this.props.isBeingDragged ? styles.dragged : {}]}>
         <View style={styles.iconContainer}>
-          {
-            this.props.editable &&
+          {this.props.editable && (
             <View style={{flexDirection: 'column', position: 'absolute', paddingTop: 4}}>
-              <View style={styles.editingGripPoint}/>
-              <View style={styles.editingGripPoint}/>
-              <View style={styles.editingGripPoint}/>
+              <View style={styles.editingGripPoint} />
+              <View style={styles.editingGripPoint} />
+              <View style={styles.editingGripPoint} />
             </View>
-          }
-          { 
-            this.renderIcon(this.props.module.type) 
-          }
-          {
-            this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS &&
-            <TouchableOpacity 
-              onPress={() => this.props.onEdit ? this.props.onEdit(this.props.module) : {}}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10 }}>
-              <EditPencil style={styles.editIcon} width={scale(40)} height={scale(20)} />
+          )}
+          {this.renderIcon(this.props.module.type)}
+          {this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS && (
+            <TouchableOpacity
+              onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+              <EditPencil
+                style={styles.editIcon}
+                width={scale(40)}
+                height={scale(20)}
+              />
             </TouchableOpacity>
-            
-          }
-            
-          
+          )}
         </View>
-        { this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS
-          ? this.renderContactModuleContent()
-          : this.renderNormalModuleContent()
-        }
+        {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS ? this.renderContactModuleContent() : this.renderNormalModuleContent()}
       </View>
     );
   }
@@ -150,7 +192,7 @@ const styles = StyleSheet.create({
   },
   dragged: {
     opacity: 0.75,
-    transform: [{ scale: 0.95 }]
+    transform: [{scale: 0.95}]
   },
   bullet: {
     fontFamily: AppFonts.regular
@@ -198,12 +240,13 @@ const styles = StyleSheet.create({
     marginTop: scale(-10),
     marginRight: scale(-8)
   },
-  editingGripPoint: { 
+  editingGripPoint: {
     marginTop: scale(10),
     marginLeft: scale(8),
-    backgroundColor: colors.black, 
-    opacity: 0.3, 
-    height: scale(4), 
-    width: scale(10), 
-    borderRadius: scale(2)}
+    backgroundColor: colors.black,
+    opacity: 0.3,
+    height: scale(4),
+    width: scale(10),
+    borderRadius: scale(2)
+  }
 });
