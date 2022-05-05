@@ -1,11 +1,19 @@
-import { createReducer } from '../helpers/reducerCreator';
-import { REHYDRATE } from 'redux-persist';
+import {createReducer} from '../helpers/reducerCreator';
+import {REHYDRATE} from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
-import { ADD_SECURITY_PLAN, ADD_TO_USER_PROFILE, LOGOUT_AUTHENTICATE_USER, REPLACE_SECURITY_PLAN, RESOURCE_SENT, SET_EMERGENCY_CONTACTS, SET_SECURITY_PLAN_HISTORY, UPDATE_USER_PROFILE } from '../definitions';
+import {
+  ADD_SECURITY_PLAN,
+  ADD_TO_USER_PROFILE,
+  LOGOUT_AUTHENTICATE_USER,
+  REPLACE_SECURITY_PLAN,
+  RESOURCE_SENT,
+  SET_EMERGENCY_CONTACTS,
+  SET_SECURITY_PLAN_HISTORY,
+  UPDATE_USER_PROFILE
+} from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
-import { CarePlan, CarePlanStatus, RelatedPerson, Resource } from '@i4mi/fhir_r4';
+import {CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import SecurityPlanModel from '../../model/SecurityPlan';
-import { act } from 'react-test-renderer';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -41,54 +49,55 @@ const UserProfileStore = createReducer(new UserProfile(), {
     } else {
       return state;
     }
-
   },
   [ADD_SECURITY_PLAN](state: UserProfile, action: {data: CarePlan}) {
     let newState = new UserProfile(state);
-    newState.setSecurityPlan(action.data)
+    newState.setSecurityPlan(action.data);
     return newState;
   },
   [SET_SECURITY_PLAN_HISTORY](state: UserProfile, action: {data: CarePlan[]}) {
     let newState = new UserProfile(state);
     newState.setSecurityPlanHistory(action.data);
     return newState;
-  },  
+  },
   [REPLACE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlanModel}) {
     let newState = new UserProfile(state);
-    newState.replaceCurrentSecurityPlan(action.data)
+    newState.replaceCurrentSecurityPlan(action.data);
     return newState;
   },
   [RESOURCE_SENT](
     state: UserProfile,
     action: {
-      type: string,
+      type: string;
       resource: {
-        resource: Resource,
-        isUploading: boolean,
-        mustBeSynchronized: boolean,
-        timestamp: Date
-      }
-    }) {
-      if (action.resource.resource.resourceType === 'RelatedPerson') {
-        // the resource id is already updated by reference, but needs to be persisted in store
-        return new UserProfile(state);
-      } else  if (action.resource.resource.resourceType === 'CarePlan') {
-        const carePlan = action.resource.resource as CarePlan;
-        let newState = new UserProfile(state);
-        if (!action.resource.mustBeSynchronized) { 
-          if (newState.getCurrentSecurityPlan().hasEqualFhirId(carePlan)) { // new security plan replacing old one
-            //newState.replaceCurrentSecurityPlan(new SecurityPlanModel(carePlan));
-          }
-        } else if (carePlan.status === CarePlanStatus.REVOKED && newState.currentSecurityPlan.hasEqualFhirId(carePlan)) {
-          newState.deleteCurrentSecurityPlan();
-        } else {
-          // the resource id is already updated by reference, but needs to be persisted in store
+        resource: Resource;
+        isUploading: boolean;
+        mustBeSynchronized: boolean;
+        timestamp: Date;
+      };
+    }
+  ) {
+    if (action.resource.resource.resourceType === 'RelatedPerson') {
+      // the resource id is already updated by reference, but needs to be persisted in store
+      return new UserProfile(state);
+    } else if (action.resource.resource.resourceType === 'CarePlan') {
+      const carePlan = action.resource.resource as CarePlan;
+      let newState = new UserProfile(state);
+      if (!action.resource.mustBeSynchronized) {
+        if (newState.getCurrentSecurityPlan().hasEqualFhirId(carePlan)) {
+          // new security plan replacing old one
+          //newState.replaceCurrentSecurityPlan(new SecurityPlanModel(carePlan));
         }
-        return newState;
+      } else if (carePlan.status === CarePlanStatus.REVOKED && newState.currentSecurityPlan.hasEqualFhirId(carePlan)) {
+        newState.deleteCurrentSecurityPlan();
       } else {
-        return state;
+        // the resource id is already updated by reference, but needs to be persisted in store
       }
-  },
+      return newState;
+    } else {
+      return state;
+    }
+  }
 });
 
 export default UserProfileStore;

@@ -6,7 +6,7 @@ export const ON_BOARDING_ITEMS = [
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_emergencyContact.png'),
     themeColor: 'rgb(10, 95, 108)',
-    titleColor: 'rgb(10, 95, 108)',
+    titleColor: 'rgb(10, 95, 108)'
   },
   {
     key: 2,
@@ -15,7 +15,7 @@ export const ON_BOARDING_ITEMS = [
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_myEnvironment.png'),
     themeColor: 'rgb(10, 95, 108)',
-    titleColor: 'rgb(10, 95, 108)',
+    titleColor: 'rgb(10, 95, 108)'
   },
   {
     key: 3,
@@ -24,7 +24,7 @@ export const ON_BOARDING_ITEMS = [
     background: require('../images/backgrounds/mood_bg_yellow.png'),
     image: require('../images/icons/icon_assessment.png'),
     themeColor: 'rgb(205, 177, 65)',
-    titleColor: 'rgb(205, 177, 65)',
+    titleColor: 'rgb(205, 177, 65)'
   },
   {
     key: 4,
@@ -33,7 +33,7 @@ export const ON_BOARDING_ITEMS = [
     background: require('../images/backgrounds/mood_bg_lightOrange.png'),
     image: require('../images/icons/icon_securityPlan.png'),
     themeColor: 'rgb(201, 95, 30)',
-    titleColor: 'rgb(201, 95, 30)',
+    titleColor: 'rgb(201, 95, 30)'
   },
   {
     key: 5,
@@ -42,6 +42,6 @@ export const ON_BOARDING_ITEMS = [
     background: require('../images/backgrounds/mood_bg_grey.png'),
     image: require('../images/icons/icon_midata.png'),
     themeColor: 'rgb(255,255,255)',
-    titleColor: 'rgb(0,0,0)',
-  },
+    titleColor: 'rgb(0,0,0)'
+  }
 ];

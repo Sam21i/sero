@@ -1,7 +1,7 @@
-import { CarePlan, CarePlanIntent, CarePlanStatus, Reference } from '@i4mi/fhir_r4';
+import {CarePlan, CarePlanIntent, CarePlanStatus, Reference} from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
-import { v4 as uuid } from 'uuid';
-import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityplan.json'; 
+import {v4 as uuid} from 'uuid';
+import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityplan.json';
 
 const CODE_SYSTEM = 'http://midata.coop/sero/securityplan';
 
@@ -30,32 +30,34 @@ export default class SecurityPlanModel {
     contained: [],
     basedOn: [],
     created: ''
-  }
+  };
 
   constructor(_data: Partial<SecurityPlanModel> | CarePlan) {
     if ((_data as CarePlan).resourceType && (_data as CarePlan).resourceType === 'CarePlan') {
       this.setFhirResource(_data as CarePlan);
-    } else if (Object.getOwnPropertyNames(_data).length === 0) { // create new security plan
+    } else if (Object.getOwnPropertyNames(_data).length === 0) {
+      // create new security plan
       this.fhirResource = EMPTY_SECURITY_PLAN as CarePlan;
       this.fhirResource.created = new Date().toISOString();
-      this.fhirResource.id = uuid()
-    } else { // is Partial<SecurityPlanModel>
+      this.fhirResource.id = uuid();
+    } else {
+      // is Partial<SecurityPlanModel>
       Object.assign(this, _data);
     }
   }
 
   /**
    * Sets the complete CarePlan FHIR resource.
-   * @param _fhirResource 
+   * @param _fhirResource
    */
-  private setFhirResource(_fhirResource: CarePlan){
+  private setFhirResource(_fhirResource: CarePlan) {
     this.fhirResource = _fhirResource;
   }
 
   /**
    * Checks if a given FHIR Careplan has the same FHIR ID as the Security Plan.
    * @param _fhirResource a CarePlan resource to compare
-   * @returns             true if both the given _fhirResource and 
+   * @returns             true if both the given _fhirResource and
    *                      the security plans FHIR resource have the same ID
    *                      false if t
    */
@@ -88,16 +90,17 @@ export default class SecurityPlanModel {
 
   /**
    * Gets a date string of the security plans creation date
-   * @param locale 
+   * @param locale
    * @returns locale representation of the date
    */
   getLocaleDate(locale: string): string {
     if (this.fhirResource.created) {
-      return new Intl.DateTimeFormat('de-CH', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(this.fhirResource.created));
+      return new Intl.DateTimeFormat('de-CH', {dateStyle: 'long', timeStyle: 'short'}).format(
+        new Date(this.fhirResource.created)
+      );
     } else {
       return '??.??.???? um ??:??';
     }
-    
   }
 
   /**
@@ -111,21 +114,31 @@ export default class SecurityPlanModel {
     // check validity before we do anything
     if (_modules.length !== this.fhirResource.contained?.length) {
       throw new Error(
-        'Error in updateModulesWithOrder(): Wrong number of modules (expected: ' + this.fhirResource.contained?.length + ', got: ' + _modules.length + (').')
+        'Error in updateModulesWithOrder(): Wrong number of modules (expected: ' +
+          this.fhirResource.contained?.length +
+          ', got: ' +
+          _modules.length +
+          ').'
       );
     }
     for (let i = 0; i < _modules.length; i++) {
-      for (let j = i+1; j < _modules.length; j++) {
+      for (let j = i + 1; j < _modules.length; j++) {
         if (_modules[i].order === _modules[j].order) {
           throw new Error(
-            'Error in updateModulesWithOrder(): Modules must have different order numbers (' + i + '. and ' + j + '. both have ' + _modules[i].order + ').'
+            'Error in updateModulesWithOrder(): Modules must have different order numbers (' +
+              i +
+              '. and ' +
+              j +
+              '. both have ' +
+              _modules[i].order +
+              ').'
           );
         }
       }
     }
 
     // sort array by order number
-    _modules.sort((a,b) => a.order - b.order);
+    _modules.sort((a, b) => a.order - b.order);
 
     // overwrite fhirResource
     this.setModulesOnFhir(_modules);
@@ -133,7 +146,7 @@ export default class SecurityPlanModel {
 
   /**
    * Get the title of the security plan.
-   * @returns   the title of the security plan or an empty string if 
+   * @returns   the title of the security plan or an empty string if
    *            title is not defined.
    */
   getTitle(): string {
@@ -161,12 +174,12 @@ export default class SecurityPlanModel {
   /**
    * Gets the the security plan module of a given type.
    * @param moduleType  the type of the security plan module to be returned.
-   * @returns           the security plan module as 
+   * @returns           the security plan module as
    * @throws            an Error if no security plan has been loaded from midata before or
    *                    the loaded plan does not contain the module requested.
    */
   getSecurityPlanModule(_moduleType: SECURITY_PLAN_MODULE_TYPE): SecurityPlanModule {
-    const index = this.fhirResource.contained?.findIndex(containedResource => {
+    const index = this.fhirResource.contained?.findIndex((containedResource) => {
       fhirpath.evaluate(containedResource, 'CarePlan.category.coding.code')[0] === _moduleType;
     });
     if (index && index > -1 && this.fhirResource.contained) {
@@ -174,7 +187,9 @@ export default class SecurityPlanModel {
       return this.mapCarePlanToSecurityPlanModule(module, index);
     } else {
       throw new Error(
-        'No securityplan module of type ' + _moduleType + ' available. Make sure to load SecurityPlan before trying to get modules.'
+        'No securityplan module of type ' +
+          _moduleType +
+          ' available. Make sure to load SecurityPlan before trying to get modules.'
       );
     }
   }
@@ -191,7 +206,7 @@ export default class SecurityPlanModel {
     this.fhirResource.basedOn = [];
     this.fhirResource.subject = _patientReference;
     this.fhirResource.author = _patientReference;
-    this.fhirResource.contained?.forEach(containedResource => {
+    this.fhirResource.contained?.forEach((containedResource) => {
       if (containedResource.resourceType === 'CarePlan') {
         (containedResource as CarePlan).author = _patientReference;
         (containedResource as CarePlan).subject = _patientReference;
@@ -199,18 +214,20 @@ export default class SecurityPlanModel {
           reference: '#' + containedResource.id,
           type: 'CarePlan'
         });
-      } 
+      }
     });
     return this.fhirResource;
   }
 
   private findModuleByType(_type: SECURITY_PLAN_MODULE_TYPE): CarePlan {
     return fhirpath.evaluate(
-      this.fhirResource, 
-      'CarePlan.contained' + 
-      '.where(category.coding.system=\'' + CODE_SYSTEM + '\')' +
-      '.where(category.coding.code=\'+ _type + \')'
-      )[0];
+      this.fhirResource,
+      'CarePlan.contained' +
+        ".where(category.coding.system='" +
+        CODE_SYSTEM +
+        "')" +
+        ".where(category.coding.code='+ _type + ')"
+    )[0];
   }
 
   /**
@@ -236,7 +253,7 @@ export default class SecurityPlanModel {
           }
         ],
         description: module.description,
-        activity: module.entries.map(entry => {
+        activity: module.entries.map((entry) => {
           return {
             detail: {
               status: 'unknown',
@@ -244,7 +261,7 @@ export default class SecurityPlanModel {
             }
           };
         })
-      }
+      };
     });
   }
 
@@ -254,7 +271,7 @@ export default class SecurityPlanModel {
       order: index,
       title: _sp.title || '',
       description: _sp.description || '',
-      entries: _sp.activity?.map(activity => activity.detail?.description || '') || []
-    }
-  };
+      entries: _sp.activity?.map((activity) => activity.detail?.description || '') || []
+    };
+  }
 }

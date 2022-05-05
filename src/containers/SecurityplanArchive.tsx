@@ -10,7 +10,7 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
-import SecurityPlanModel, { SecurityPlanModule } from '../model/SecurityPlan';
+import SecurityPlanModel, {SecurityPlanModule} from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
@@ -61,7 +61,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
                 style={styles.listItemSubtitleText}>
                 {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
               </Text>
-
             </View>
             <View style={styles.listItemContentIcon}>
               <SvgCss
@@ -77,19 +76,15 @@ class SecurityplanArchive extends Component<PropsType, State> {
     });
   }
 
-
   filterVisibleModules(plan: SecurityPlanModel): SecurityPlanModule[] {
-    const filteredModules = plan.getSecurityPlanModules().filter(m => m.entries.length > 0);
-    return filteredModules.length > 1
-      ? filteredModules
-      : plan.getSecurityPlanModules()
+    const filteredModules = plan.getSecurityPlanModules().filter((m) => m.entries.length > 0);
+    return filteredModules.length > 1 ? filteredModules : plan.getSecurityPlanModules();
   }
 
   renderSecurityplan() {
-    let filteredModules = this.state.selectedSecurityplan.getSecurityPlanModules().filter(m => m.entries.length > 0);
-    filteredModules = filteredModules.length > 1
-      ? filteredModules
-      : this.state.selectedSecurityplan.getSecurityPlanModules();
+    let filteredModules = this.state.selectedSecurityplan.getSecurityPlanModules().filter((m) => m.entries.length > 0);
+    filteredModules =
+      filteredModules.length > 1 ? filteredModules : this.state.selectedSecurityplan.getSecurityPlanModules();
     return filteredModules.map((module) => {
       return (
         <SecurityPlanModuleComponent
@@ -110,13 +105,17 @@ class SecurityplanArchive extends Component<PropsType, State> {
         edges={['top']}>
         <ImageBackground
           source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
-          resizeMode="cover"
+          resizeMode='cover'
           style={styles.backgroundImage}>
           {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('securityplan.former')}</Text>
-                <Text style={styles.topViewTextDescr}>{this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')} </Text>
+                <Text style={styles.topViewTextTitle}>
+                  {this.props.localesHelper.localeString('securityplan.former')}
+                </Text>
+                <Text style={styles.topViewTextDescr}>
+                  {this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
+                </Text>
               </View>
             </View>
           ) : (
@@ -135,10 +134,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
                 icon={
                   '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
                 }
-                position="right"
+                position='right'
                 color={colors.tumbleweed}
                 onPress={() => {
-                  this.state.selectedSecurityplan ? this.setState({selectedSecurityplan: undefined}) : this.props.navigation.goBack();
+                  this.state.selectedSecurityplan
+                    ? this.setState({selectedSecurityplan: undefined})
+                    : this.props.navigation.goBack();
                 }}
                 style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
               />
@@ -228,7 +229,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// Link store data to component :
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,

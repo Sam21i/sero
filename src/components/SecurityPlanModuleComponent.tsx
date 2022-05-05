@@ -24,7 +24,10 @@ interface SecurityPlanModuleComponentProps {
 
 interface SecurityPlanModuleState {}
 
-export default class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps, SecurityPlanModuleState> {
+export default class SecurityPlanModuleComponent extends Component<
+  SecurityPlanModuleComponentProps,
+  SecurityPlanModuleState
+> {
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
     this.state = {};
@@ -34,14 +37,18 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
     if (!this.props.isBeingDragged) {
       const phone = 'tel:' + _number.replace(/\s/g, '');
       if (phone === 'tel:0900856565') {
-        Alert.alert(this.props.localesHelper.localeString('securityplan.alertLups.title'), this.props.localesHelper.localeString('securityplan.alertLups.description'), [
-          {
-            text: this.props.localesHelper.localeString('common.cancel'),
-            onPress: () => {},
-            style: 'cancel'
-          },
-          {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}
-        ]);
+        Alert.alert(
+          this.props.localesHelper.localeString('securityplan.alertLups.title'),
+          this.props.localesHelper.localeString('securityplan.alertLups.description'),
+          [
+            {
+              text: this.props.localesHelper.localeString('common.cancel'),
+              onPress: () => {},
+              style: 'cancel'
+            },
+            {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}
+          ]
+        );
       } else {
         Linking.openURL(phone);
       }
@@ -171,7 +178,9 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
             </TouchableOpacity>
           )}
         </View>
-        {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS ? this.renderContactModuleContent() : this.renderNormalModuleContent()}
+        {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS
+          ? this.renderContactModuleContent()
+          : this.renderNormalModuleContent()}
       </View>
     );
   }
