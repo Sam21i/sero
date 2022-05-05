@@ -17,7 +17,6 @@ interface SecurityPlanEditModalProps {
 }
 
 interface SecurityPlanEditModalState {
-  editedModule: SecurityPlanModule;
   entries: Array<string>;
 }
 
@@ -26,25 +25,13 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
     super(props);
 
     this.state = {
-      entries: this.props.module.entries.slice(),
-      editedModule: Object.assign({}, {...this.props.module})
+      entries: this.props.module.entries.slice()
     };
   }
 
   handleSubmit(values: Array<string>) {
-    this.setState(
-      {
-        editedModule: {
-          ...this.state.editedModule,
-          entries: values.entries.filter((entry: string) => {
-            return entry != '';
-          })
-        }
-      },
-      () => {
-        this.props.onSave(this.state.editedModule);
-      }
-    );
+    this.props.module.entries = this.state.entries;
+    this.props.onSave(this.props.module);
   }
 
   render() {
