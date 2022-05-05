@@ -31,6 +31,7 @@
 				"required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
 			}
 		},
+		"importContact": "Kontakt importieren",
 		"selectContact": "Kontakt auswählen",
 		"title": "Mein Umfeld"
 	},

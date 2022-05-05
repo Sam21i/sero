@@ -31,6 +31,7 @@
 				"required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
 			}
 		},
+		"importContact": "Importer un contact",
 		"selectContact": "Choisir un contact",
 		"title": "Mon entourage"
 	},

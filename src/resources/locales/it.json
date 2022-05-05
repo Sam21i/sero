@@ -31,6 +31,7 @@
 				"required": "Si prega di inserire un numero di telefono fisso o mobile."
 			}
 		},
+		"importContact": "Importare un contatto",
 		"selectContact": "Seleziona contatto",
 		"title": "Mia cerchia"
 	},
