@@ -5,6 +5,7 @@ import { store } from '..';
 import { Guid } from "guid-typescript";
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { STORAGE } from '../../containers/App';
 
 
 export function authenticateUser(dispatch: Function, accessToken: string, accessTokenExpirationDate: string, refreshToken: string, server: string) {
@@ -64,8 +65,12 @@ export function synchronizeResource(dispatch: Function, resource: Resource) {
 
 export function logoutUser(dispatch: Function) {
     try {
-      AsyncStorage.clear();
+      // do not completely clear async storage, because 
+      // STORAGE.ASKED_FOR_CONTACT_PERMISSION needs to be persisted
+      // over logout
+      AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_INTRO);
     } catch (e) {
+        STORAGE.ASKED_FOR_CONTACT_PERMISSION
       console.log('could not clear AsyncStorage', e)
     }
     dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
