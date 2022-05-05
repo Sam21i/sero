@@ -10,7 +10,8 @@
 		"ok": "OK",
 		"options": "Opzioni",
 		"phone": "Telefono",
-		"save": "Salva"
+		"save": "Salva",
+		"search": "Cercare"
 	},
 	"contacts": {
 		"addContact": "Aggiunga un contatto",
@@ -31,6 +32,7 @@
 				"required": "Si prega di inserire un numero di telefono fisso o mobile."
 			}
 		},
+		"importContact": "Importare un contatto",
 		"selectContact": "Seleziona contatto",
 		"title": "Mia cerchia"
 	},

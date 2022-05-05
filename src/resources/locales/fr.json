@@ -10,7 +10,8 @@
 		"ok": "OK",
 		"options": "Options",
 		"phone": "Téléphone",
-		"save": "Enregistrer"
+		"save": "Enregistrer",
+		"search": "Rechercher"
 	},
 	"contacts": {
 		"addContact": "Ajouter un contact",
@@ -31,6 +32,7 @@
 				"required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
 			}
 		},
+		"importContact": "Importer un contact",
 		"selectContact": "Choisir un contact",
 		"title": "Mon entourage"
 	},
