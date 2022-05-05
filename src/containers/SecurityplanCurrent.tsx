@@ -192,19 +192,21 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   renderListHeader() {
     return (
       <View style={styles.listHeader}>
-        <AppButton
-          label={this.props.localesHelper.localeString('common.options')}
-          icon={
-            '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path fill="#fff" d="M256,0C114.8,0,0,114.8,0,256s114.8,256,256,256s256-114.9,256-256S397.2,0,256,0z M256,472.3 c-119.3,0-216.3-97-216.3-216.3S136.7,39.7,256,39.7s216.3,97,216.3,216.3S375.3,472.3,256,472.3z" /> </g> </g> <g> <g id="options"> <path fill="#fff" d="M216,146.3c0-22.1,17.9-40,40-40s40,17.9,40,40s-17.9,40-40,40S216,168.4,216,146.3z M256,213c-22.1,0-40,17.9-40,40 s17.9,40,40,40s40-17.9,40-40S278.1,213,256,213z M256,319.7c-22.1,0-40,17.9-40,40c0,22.1,17.9,40,40,40s40-17.9,40-40 C296,337.6,278.1,319.7,256,319.7z" /> </g> </g> </svg>'
-          }
-          position="left"
-          color={colors.tumbleweed}
-          onPress={() => {
-            this.setState({bubbleVisible: true});
-          }}
-          style={styles.optionsButton}
-        />
-        {this.state.isEditMode ? <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text> : <View style={styles.editHint} />}
+        { this.state.isEditMode 
+          ? <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text> 
+          : <AppButton
+              label={this.props.localesHelper.localeString('common.options')}
+              icon={
+                '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path fill="#fff" d="M256,0C114.8,0,0,114.8,0,256s114.8,256,256,256s256-114.9,256-256S397.2,0,256,0z M256,472.3 c-119.3,0-216.3-97-216.3-216.3S136.7,39.7,256,39.7s216.3,97,216.3,216.3S375.3,472.3,256,472.3z" /> </g> </g> <g> <g id="options"> <path fill="#fff" d="M216,146.3c0-22.1,17.9-40,40-40s40,17.9,40,40s-17.9,40-40,40S216,168.4,216,146.3z M256,213c-22.1,0-40,17.9-40,40 s17.9,40,40,40s40-17.9,40-40S278.1,213,256,213z M256,319.7c-22.1,0-40,17.9-40,40c0,22.1,17.9,40,40,40s40-17.9,40-40 C296,337.6,278.1,319.7,256,319.7z" /> </g> </g> </svg>'
+              }
+              position="left"
+              color={colors.tumbleweed}
+              onPress={() => {
+                this.setState({bubbleVisible: true});
+              }}
+              style={styles.optionsButton}
+            />
+        }
       </View>
     );
   }
@@ -268,7 +270,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             ) : (
               <View>
                 <SortableList
-                  key={'sortlist' + this.state.modalVisible}
+                  key={'sortlist' + this.state.modalVisible + this.state.isEditMode} 
                   onActivateRow={this.onDragModule.bind(this)}
                   onReleaseRow={this.onDropModule.bind(this)}
                   sortingEnabled={this.state.isEditMode}
@@ -337,12 +339,15 @@ const styles = StyleSheet.create({
     marginTop: scale(20)
   },
   editHint: {
-    margin: scale(20)
+    marginHorizontal: scale(20),
+    marginTop: scale(50),
+    marginBottom: scale(30)
   },
   optionsButton: {
     height: scale(50),
     width: scale(200),
-    paddingVertical: scale(10)
+    paddingVertical: scale(10),
+    marginBottom: scale(40)
   },
   backButton: {
     height: scale(50),
