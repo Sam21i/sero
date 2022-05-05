@@ -2,13 +2,7 @@ import React, {Component} from 'react';
 import {Text, Image, StyleSheet, View, ImageBackground} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-  AppFonts,
-  TextSize,
-  scale,
-  verticalScale,
-  colors,
-} from '../styles/App.style';
+import {AppFonts, TextSize, scale, verticalScale, colors} from '../styles/App.style';
 import AppButton from '../components/AppButton';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -28,24 +22,28 @@ class Welcome extends Component<PropsType> {
 
   render() {
     return (
-      <SafeAreaView style={styles.container} edges={['top']}>
+      <SafeAreaView
+        style={styles.container}
+        edges={['top']}>
         <ImageBackground
           source={require('../resources/images/backgrounds/mood_bg_orange.png')}
-          resizeMode="cover"
+          resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <LogoFull width={scale(300)} height={'100%'}></LogoFull>
+            <LogoFull
+              width={scale(300)}
+              height={'100%'}></LogoFull>
           </View>
           <View style={styles.bottomView}>
             <Image
               source={require('../resources/images/backgrounds/mood_bg_grey.png')}
               style={styles.grey}
-              resizeMode="cover"
+              resizeMode='cover'
             />
             <View
               style={{
                 position: 'absolute',
-                bottom: verticalScale(50),
+                bottom: verticalScale(50)
               }}>
               <AppButton
                 label={this.props.localesHelper.localeString('welcome.start')}
@@ -57,43 +55,39 @@ class Welcome extends Component<PropsType> {
                 style={{
                   width: scale(300),
                   paddingVertical: 10,
-                  height: 70,
+                  height: 70
                 }}
-                onPress={() =>
-                  this.props.navigation.navigate('mainOnBoarding')
-                }></AppButton>
+                onPress={() => this.props.navigation.navigate('mainOnBoarding')}></AppButton>
             </View>
 
-          <SpeechBubble
-            bubbleContent={
-              <View style={styles.content}>
-                <Text style={styles.title}>{this.props.localesHelper.localeString('welcome.title')}</Text>
-                <Text style={styles.text}>{this.props.localesHelper.localeString('welcome.greetingText')}</Text>
-              </View>
-            }
-            stylingOptions={{
-              general: {
-                position:{
-                  top: verticalScale(50),
-                },
-                width: scale(337.5),
-              },
-              arrow:{
-                position: {
-                  left: scale(150),
-                  bottom: 0
-                },
-                size: scale(30)
-              },
-              icon:{
-                position:{
-                  left: scale(200)
-                }
+            <SpeechBubble
+              bubbleContent={
+                <View style={styles.content}>
+                  <Text style={styles.title}>{this.props.localesHelper.localeString('welcome.title')}</Text>
+                  <Text style={styles.text}>{this.props.localesHelper.localeString('welcome.greetingText')}</Text>
+                </View>
               }
-
-            }}
-            localesHelper={this.props.localesHelper}
-            ></SpeechBubble>
+              stylingOptions={{
+                general: {
+                  position: {
+                    top: verticalScale(50)
+                  },
+                  width: scale(337.5)
+                },
+                arrow: {
+                  position: {
+                    left: scale(150),
+                    bottom: 0
+                  },
+                  size: scale(30)
+                },
+                icon: {
+                  position: {
+                    left: scale(200)
+                  }
+                }
+              }}
+              localesHelper={this.props.localesHelper}></SpeechBubble>
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -103,53 +97,51 @@ class Welcome extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   backgroundImage: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   topView: {
     flex: 0.26,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   bottomView: {
     flex: 0.74,
     backgroundColor: 'white',
-    alignContent: 'center',
-
+    alignContent: 'center'
   },
   grey: {
     width: '100%',
     height: '100%',
-    opacity: 0.5,
+    opacity: 0.5
   },
   logo: {
     width: scale(290),
-    height: '100%',
+    height: '100%'
   },
   content: {
-    padding: scale(20),
+    padding: scale(20)
   },
   title: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.big),
-    color: colors.primary,
+    color: colors.primary
   },
   text: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.big),
-    color: colors.primary,
-  },
+    color: colors.primary
+  }
 });
 
 // Link store data to component
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
+    localesHelper: state.LocalesHelperStore
   };
 }
 
 export default connect(mapStateToProps, undefined)(Welcome);
-

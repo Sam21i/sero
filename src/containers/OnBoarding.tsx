@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  Image,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {Text, Image, StyleSheet, ImageBackground, TouchableOpacity, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {View} from 'react-native';
@@ -36,7 +29,7 @@ interface PropsType {
     accessToken: string,
     accessTokenExpirationDate: string,
     refreshToken: string,
-    server: string,
+    server: string
   ) => void;
 }
 
@@ -51,7 +44,7 @@ class OnBoarding extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      currentSlide: 0,
+      currentSlide: 0
     };
   }
 
@@ -59,23 +52,23 @@ class OnBoarding extends Component<PropsType, State> {
     return new Promise((resolve, reject) => {
       OAUTH_CONFIG.additionalParameters = {
         ...{
-          language: this.props.localesHelper.getCurrentLanguage(),
-        },
+          language: this.props.localesHelper.getCurrentLanguage()
+        }
       };
       authorize(OAUTH_CONFIG)
-        .then(authResult => {
+        .then((authResult) => {
           this.props.authenticateUser(
             authResult.accessToken,
             authResult.accessTokenExpirationDate,
             authResult.refreshToken,
-            Config.host,
+            Config.host
           );
-          this.props.midataService.getUserData().then(profile => {
+          this.props.midataService.getUserData().then((profile) => {
             this.props.updateUserProfile(profile);
           });
           return resolve();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('auth failed or cancelled', error);
         });
     });
@@ -95,7 +88,9 @@ class OnBoarding extends Component<PropsType, State> {
 
   _renderItem = ({item}) => {
     return (
-      <SafeAreaView style={{flex: 1}} edges={['top']}>
+      <SafeAreaView
+        style={{flex: 1}}
+        edges={['top']}>
         <ImageBackground
           source={item.background}
           style={styles.backgroundImage}>
@@ -107,16 +102,18 @@ class OnBoarding extends Component<PropsType, State> {
                   {this.props.localesHelper.localeString(item.title)}
                 </Text>
               </View>
-              <ScrollView bounces={false} showsVerticalScrollIndicator={true} persistentScrollbar={true}>
+              <ScrollView
+                bounces={false}
+                showsVerticalScrollIndicator={true}
+                persistentScrollbar={true}>
                 <Text style={styles.text}>{this.props.localesHelper.localeString(item.text)}</Text>
               </ScrollView>
             </View>
           </View>
-          <View
-            style={[styles.slideMarking, {backgroundColor: item.themeColor}]}>
+          <View style={[styles.slideMarking, {backgroundColor: item.themeColor}]}>
             <Image
               source={item.image}
-              resizeMode="contain"
+              resizeMode='contain'
               style={{width: '100%', height: '100%'}}></Image>
           </View>
         </ImageBackground>
@@ -129,42 +126,40 @@ class OnBoarding extends Component<PropsType, State> {
     if (activeIndex < 4) {
       button = (
         <AppButton
-        label={this.props.localesHelper.localeString('common.next')}
-        icon={
-          '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
-        }
-        position={'left'}
-        color={colors.grey}
-        style={{
-          position: 'absolute',
-          width: scale(300),
-          height: 70,
-          top: verticalScale(425),
-          left: scale(-10),
-          paddingVertical: 10,
-        }}
-        onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}
-        ></AppButton>
+          label={this.props.localesHelper.localeString('common.next')}
+          icon={
+            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+          }
+          position={'left'}
+          color={colors.grey}
+          style={{
+            position: 'absolute',
+            width: scale(300),
+            height: 70,
+            top: verticalScale(425),
+            left: scale(-10),
+            paddingVertical: 10
+          }}
+          onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}></AppButton>
       );
     } else if (activeIndex === 4) {
       button = (
         <AppButton
-        label={this.props.localesHelper.localeString('common.next')}
-        icon={
-          '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
-        }
-        position={'left'}
-        color={colors.grey}
-        style={{
-          position: 'absolute',
-          width: scale(300),
-          height: 70,
-          top: verticalScale(425),
-          left: scale(-10),
-          paddingVertical: 10,
-        }}
-        onPress={() => this.registerOrLogin()}
-        ></AppButton>
+          label={this.props.localesHelper.localeString('common.next')}
+          icon={
+            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+          }
+          position={'left'}
+          color={colors.grey}
+          style={{
+            position: 'absolute',
+            width: scale(300),
+            height: 70,
+            top: verticalScale(425),
+            left: scale(-10),
+            paddingVertical: 10
+          }}
+          onPress={() => this.registerOrLogin()}></AppButton>
       );
     }
 
@@ -177,9 +172,7 @@ class OnBoarding extends Component<PropsType, State> {
                 key={i}
                 style={[
                   styles.dot,
-                  i === activeIndex
-                    ? {backgroundColor: 'rgba(0, 0, 0, .2)'}
-                    : {backgroundColor: 'white'},
+                  i === activeIndex ? {backgroundColor: 'rgba(0, 0, 0, .2)'} : {backgroundColor: 'white'}
                 ]}
                 onPress={() => this.slider?.goToSlide(i, true)}
               />
@@ -206,16 +199,16 @@ class OnBoarding extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    flex: 1,
+    flex: 1
   },
   topView: {
     flex: 0.26,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   bottomView: {
     flex: 0.74,
-    backgroundColor: 'rgba(255,255,255,0.75)',
+    backgroundColor: 'rgba(255,255,255,0.75)'
   },
   content: {
     position: 'absolute',
@@ -223,15 +216,15 @@ const styles = StyleSheet.create({
     paddingLeft: scale(50),
     paddingRight: scale(30),
     width: '100%',
-    height: verticalScale(300),
+    height: verticalScale(300)
   },
   titleView: {
     paddingRight: scale(40),
-    marginBottom: verticalScale(15),
+    marginBottom: verticalScale(15)
   },
   title: {
     fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.veryBig),
+    fontSize: scale(TextSize.veryBig)
   },
   text: {
     fontFamily: AppFonts.regular,
@@ -248,29 +241,28 @@ const styles = StyleSheet.create({
     top: verticalScale(50),
     paddingVertical: verticalScale(30),
     paddingRight: scale(50),
-    paddingLeft: scale(20),
+    paddingLeft: scale(20)
   },
   paginationContainer: {
     position: 'absolute',
     top: verticalScale(122.5),
-    left: scale(10),
+    left: scale(10)
   },
   paginationDots: {
     height: verticalScale(16),
     margin: scale(10),
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   dot: {
     width: scale(15),
     height: scale(15),
     borderRadius: 10,
-    marginHorizontal: scale(7),
-  },
+    marginHorizontal: scale(7)
+  }
 });
 
-// Link store data to component:
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore,
@@ -282,19 +274,8 @@ function mapDispatchToProps(dispatch: Function) {
   return {
     updateUserProfile: (userProfile: Partial<UserProfile>) =>
       userProfileActions.updateUserProfile(dispatch, userProfile),
-    authenticateUser: (
-      accessToken: string,
-      accessTokenExpirationDate: string,
-      refreshToken: string,
-      server: string,
-    ) =>
-      miDataServiceActions.authenticateUser(
-        dispatch,
-        accessToken,
-        accessTokenExpirationDate,
-        refreshToken,
-        server,
-      ),
+    authenticateUser: (accessToken: string, accessTokenExpirationDate: string, refreshToken: string, server: string) =>
+      miDataServiceActions.authenticateUser(dispatch, accessToken, accessTokenExpirationDate, refreshToken, server)
   };
 }
 

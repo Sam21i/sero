@@ -11,9 +11,15 @@ export default class EmergencyNumberButton extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={() => {this.callEmergency()}}>
+      <TouchableOpacity
+        onPress={() => {
+          this.callEmergency();
+        }}>
         <View style={[styles.button]}>
-          <EmergencyContactIcon width='100%' height='100%'/>
+          <EmergencyContactIcon
+            width='100%'
+            height='100%'
+          />
         </View>
       </TouchableOpacity>
     );
@@ -30,6 +36,6 @@ const styles = StyleSheet.create({
     paddingRight: scale(20),
     backgroundColor: colors.petrol,
     borderBottomLeftRadius: 100,
-    borderTopLeftRadius: 100,
-  },
+    borderTopLeftRadius: 100
+  }
 });

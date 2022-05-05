@@ -28,30 +28,31 @@ class Settings extends Component<PropsType, State> {
   render() {
     return (
       <SafeAreaView edges={['right', 'bottom', 'left']}>
-        <View style={{margin: 25, marginBottom: 50}} >
+        <View style={{margin: 25, marginBottom: 50}}>
           <Text style={{fontFamily: AppFonts.regular, fontSize: scale(TextSize.small)}}>
             {this.props.localesHelper.localeString('settings.later')}
           </Text>
         </View>
-        {  this.props.midataService.isAuthenticated() &&
-            <Button 
-              title={this.props.localesHelper.localeString('settings.logout')} 
-              onPress={() => {
-                this.props.logoutUser();
-                RNRestart.Restart();
-              }}/>
-        }
+        {this.props.midataService.isAuthenticated() && (
+          <Button
+            title={this.props.localesHelper.localeString('settings.logout')}
+            onPress={() => {
+              this.props.logoutUser();
+              RNRestart.Restart();
+            }}
+          />
+        )}
       </SafeAreaView>
     );
   }
 }
 
 function mapStateToProps(state: AppStore) {
-    return {
-        localesHelper: state.LocalesHelperStore,
-        midataService: state.MiDataServiceStore,
-        userProfile: state.UserProfileStore
-    };
+  return {
+    localesHelper: state.LocalesHelperStore,
+    midataService: state.MiDataServiceStore,
+    userProfile: state.UserProfileStore
+  };
 }
 
 function mapDispatchToProps(dispatch: Function) {

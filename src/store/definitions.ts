@@ -16,8 +16,8 @@ export const SET_SECURITY_PLAN_HISTORY = 'userProfile/SET_SECURITY_PLAN_HISTORY'
 export const UPDATE_LOCALE_LANGUAGE = 'localesHelper/UPDATE_LOCALE_LANGUAGE';
 
 export type UserAuthenticationData = {
-    accessToken: string,
-    accessTokenExpirationDate: string,
-    refreshToken: string,
-    server: string
+  accessToken: string;
+  accessTokenExpirationDate: string;
+  refreshToken: string;
+  server: string;
 };
