@@ -70,6 +70,7 @@
 		"title": "Mon\névaluation"
 	},
 	"securityplan": {
+		"addEntry": "Ajouter une entrée",
 		"alertLups": {
 			"description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
 			"title": "Ligne de conseil LUPS"

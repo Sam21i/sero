@@ -70,6 +70,7 @@
 		"title": "My\nassessment"
 	},
 	"securityplan": {
+		"addEntry": "Add entry",
 		"alertLups": {
 			"description": "Costs: regular call rate up to the 10th minute, thereafter CHF 3.23/minute.",
 			"title": "LUPS advice line"

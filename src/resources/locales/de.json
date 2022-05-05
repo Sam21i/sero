@@ -70,6 +70,7 @@
 		"title": "Meine\nEinschätzung"
 	},
 	"securityplan": {
+		"addEntry": "Eintrag hinzufügen",
 		"alertLups": {
 			"description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
 			"title": "Beratungstelefon LUPS"

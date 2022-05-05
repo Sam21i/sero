@@ -70,6 +70,7 @@
 		"title": "La mia\nvalutazione"
 	},
 	"securityplan": {
+		"addEntry": "Aggiungi voce",
 		"alertLups": {
 			"description": "Costi: tariffa regolare fino al 10° minuto, poi CHF 3.23/minuto.",
 			"title": "Linea di consulenza LUPS"
