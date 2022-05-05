@@ -113,11 +113,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       // make sure state gets updated
       this.setState(
         {
-          modules: modules
-        },
-        () => {
-          console.log(this.state.modules);
-          this.setState({modalVisible: false});
+          modules: modules,
+          modalVisible: false
         }
       );
     }
@@ -264,6 +261,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             ) : (
               <View>
                 <SortableList
+                  key={'sortlist' + this.state.modalVisible}
                   onActivateRow={this.onDragModule.bind(this)}
                   onReleaseRow={this.onDropModule.bind(this)}
                   sortingEnabled={this.state.isEditMode}
