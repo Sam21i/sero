@@ -10,7 +10,8 @@
 		"ok": "OK",
 		"options": "Options",
 		"phone": "Telephone",
-		"save": "Save"
+		"save": "Save",
+		"search": "Search"
 	},
 	"contacts": {
 		"addContact": "Add contact",
@@ -31,6 +32,7 @@
 				"required": "Please insert a landline or mobile phone number."
 			}
 		},
+		"importContact": "Import contact",
 		"selectContact": "Select contact",
 		"title": "My community"
 	},
