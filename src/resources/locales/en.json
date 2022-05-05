@@ -10,7 +10,8 @@
 		"ok": "OK",
 		"options": "Options",
 		"phone": "Telephone",
-		"save": "Save"
+		"save": "Save",
+		"search": "Search"
 	},
 	"contacts": {
 		"addContact": "Add contact",

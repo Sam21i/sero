@@ -10,7 +10,8 @@
 		"ok": "OK",
 		"options": "Options",
 		"phone": "Téléphone",
-		"save": "Enregistrer"
+		"save": "Enregistrer",
+		"search": "Rechercher"
 	},
 	"contacts": {
 		"addContact": "Ajouter un contact",
