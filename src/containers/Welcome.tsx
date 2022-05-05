@@ -70,24 +70,25 @@ class Welcome extends Component<PropsType> {
               stylingOptions={{
                 general: {
                   position: {
-                    top: verticalScale(50)
+                    top: verticalScale(50),
+                    left: scale(0)
                   },
                   width: scale(337.5)
                 },
                 arrow: {
                   position: {
                     left: scale(150),
-                    bottom: 0
+                    bottom: verticalScale(0)
                   },
                   size: scale(30)
                 },
                 icon: {
                   position: {
+                    top: verticalScale(0),
                     left: scale(200)
                   }
                 }
-              }}
-              localesHelper={this.props.localesHelper}></SpeechBubble>
+              }}></SpeechBubble>
           </View>
         </ImageBackground>
       </SafeAreaView>

@@ -93,10 +93,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center'
   },
-  loadingView: {
-    flex: 2.5,
-    justifyContent: 'space-around'
-  },
   emergencyContactsView: {
     flex: 2.5,
     alignItems: 'center'

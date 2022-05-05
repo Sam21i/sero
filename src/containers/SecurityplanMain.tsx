@@ -109,18 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  topTextView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(50)
-  },
-  topViewText: {
-    color: colors.white,
-    fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.big)
-  },
   emergencyButton: {
     alignItems: 'flex-end',
     justifyContent: 'center'
