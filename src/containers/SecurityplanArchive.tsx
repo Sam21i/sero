@@ -1,6 +1,5 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
-import moment from 'moment';
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, ImageBackground, ScrollView, TouchableWithoutFeedback} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';

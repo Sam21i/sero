@@ -1,7 +1,7 @@
 import {Formik} from 'formik';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
-import {StyleSheet, Modal, Text, View, Button, TextInput, ImageBackground} from 'react-native';
+import {StyleSheet, Modal, Text, View, Button, ImageBackground} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LocalesHelper from '../locales';
@@ -30,7 +30,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
   }
 
   handleSubmit(values: Array<string>) {
-    this.props.module.entries = this.state.entries;
+    this.props.module.entries = values;
     this.props.onSave(this.props.module);
   }
 
@@ -52,7 +52,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
             <View style={styles.bottomView}>
               <Formik
                 initialValues={{entries: this.state.entries}}
-                onSubmit={(values) => this.handleSubmit(values)}>
+                onSubmit={(values) => this.handleSubmit(values.entries)}>
                 {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
                   <NativeBaseProvider>
                     <View style={{flex: 7}}>
