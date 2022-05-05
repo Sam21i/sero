@@ -1,15 +1,17 @@
 import { CarePlan, CarePlanIntent, CarePlanStatus, Reference } from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
+import { v4 as uuid } from 'uuid';
+import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityplan.json'; 
 
-const CODE_SYSTEM = 'http://midata.coop/sero/CODESYSTEMTBD';
+const CODE_SYSTEM = 'http://midata.coop/sero/securityplan';
 
 export enum SECURITY_PLAN_MODULE_TYPE {
-  MOTIVATION = 'securityplan/motivation',
-  WARNING_SIGNS = 'securityplan/warningSigns',
-  COPING_STRATEGIES = 'securityplan/copingStrategies',
-  DISTRACTION_STRATIES = 'securityplan/distractionStrategies',
-  PERSONAL_BELIEFS = 'securityplan/personalBeliefs',
-  PROFESSIONAL_CONTACTS = 'securityplan/professionalContacts'
+  MOTIVATION = 'motivation',
+  WARNING_SIGNS = 'warningSigns',
+  COPING_STRATEGIES = 'copingStrategies',
+  DISTRACTION_STRATIES = 'distractionStrategies',
+  PERSONAL_BELIEFS = 'personalBeliefs',
+  PROFESSIONAL_CONTACTS = 'professionalContacts'
 }
 
 export interface SecurityPlanModule {
@@ -33,6 +35,10 @@ export default class SecurityPlanModel {
   constructor(_data: Partial<SecurityPlanModel> | CarePlan) {
     if ((_data as CarePlan).resourceType && (_data as CarePlan).resourceType === 'CarePlan') {
       this.setFhirResource(_data as CarePlan);
+    } else if (Object.getOwnPropertyNames(_data).length === 0) { // create new security plan
+      this.fhirResource = EMPTY_SECURITY_PLAN as CarePlan;
+      this.fhirResource.created = new Date().toISOString();
+      this.fhirResource.id = uuid()
     } else { // is Partial<SecurityPlanModel>
       Object.assign(this, _data);
     }
@@ -81,6 +87,20 @@ export default class SecurityPlanModel {
   }
 
   /**
+   * Gets a date string of the security plans creation date
+   * @param locale 
+   * @returns locale representation of the date
+   */
+  getLocaleDate(locale: string): string {
+    if (this.fhirResource.created) {
+      return new Intl.DateTimeFormat('de-CH', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(this.fhirResource.created));
+    } else {
+      return '??.??.???? um ??:??';
+    }
+    
+  }
+
+  /**
    * Updates the security plan modules and their order, given by the order parameter (lowest first)
    * @param _modules  the new modules to replace the current modules in a given order.
    * @throws          an Error if:
@@ -109,7 +129,6 @@ export default class SecurityPlanModel {
 
     // overwrite fhirResource
     this.setModulesOnFhir(_modules);
-    console.log(this.fhirResource)
   }
 
   /**
@@ -202,7 +221,7 @@ export default class SecurityPlanModel {
     this.fhirResource.contained = _modules.map((module, index) => {
       return {
         resourceType: 'CarePlan',
-        id: 'modul' + index,
+        id: module.type,
         status: CarePlanStatus.ACTIVE,
         intent: CarePlanIntent.PLAN,
         title: module.title,

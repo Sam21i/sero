@@ -7,6 +7,8 @@ import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import * as miDataServiceActions from '../store/midataService/actions';
 import LocalesHelper from '../locales';
+import {View} from 'react-native';
+import {AppFonts, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   localesHelper: LocalesHelper;
@@ -26,25 +28,30 @@ class Settings extends Component<PropsType, State> {
   render() {
     return (
       <SafeAreaView edges={['right', 'bottom', 'left']}>
-        {this.props.midataService.isAuthenticated() && (
-          <Button
-            title={this.props.localesHelper.localeString('common.logout')}
-            onPress={() => {
-              this.props.logoutUser();
-              RNRestart.Restart();
-            }}></Button>
-        )}
+        <View style={{margin: 25, marginBottom: 50}} >
+          <Text style={{fontFamily: AppFonts.regular, fontSize: scale(TextSize.small)}}>
+            {this.props.localesHelper.localeString('settings.later')}
+          </Text>
+        </View>
+        {  this.props.midataService.isAuthenticated() &&
+            <Button 
+              title={this.props.localesHelper.localeString('settings.logout')} 
+              onPress={() => {
+                this.props.logoutUser();
+                RNRestart.Restart();
+              }}/>
+        }
       </SafeAreaView>
     );
   }
 }
 
 function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore,
-    midataService: state.MiDataServiceStore,
-    userProfile: state.UserProfileStore
-  };
+    return {
+        localesHelper: state.LocalesHelperStore,
+        midataService: state.MiDataServiceStore,
+        userProfile: state.UserProfileStore
+    };
 }
 
 function mapDispatchToProps(dispatch: Function) {

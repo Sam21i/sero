@@ -1,8 +1,8 @@
 export const ON_BOARDING_ITEMS = [
   {
     key: 1,
-    title: 'Notfallkontakt anrufen',
-    text: 'Hier rufst du direkt die Notfallnummer 144 an.',
+    title: 'onboarding.emergency.title',
+    text: 'onboarding.emergency.text',
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_emergencyContact.png'),
     themeColor: 'rgb(10, 95, 108)',
@@ -10,8 +10,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 2,
-    title: 'Meine Kontakte anrufen',
-    text: 'Hier rufst du die Kontakte aus deinem Umfeld an, die für dich da sind.',
+    title: 'onboarding.contacts.title',
+    text: 'onboarding.contacts.text',
     background: require('../images/backgrounds/mood_bg_blue.png'),
     image: require('../images/icons/icon_myEnvironment.png'),
     themeColor: 'rgb(10, 95, 108)',
@@ -19,8 +19,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 3,
-    title: 'Meine Einschätzung',
-    text: 'Du lernst ein Werkzeug anzuwenden, das dir dabei hilft zu verstehen, wie es dir im Moment geht.',
+    title: 'onboarding.assessment.title',
+    text: 'onboarding.assessment.text',
     background: require('../images/backgrounds/mood_bg_yellow.png'),
     image: require('../images/icons/icon_assessment.png'),
     themeColor: 'rgb(205, 177, 65)',
@@ -28,8 +28,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 4,
-    title: 'Mein Sicherheitsplan',
-    text: 'Erstelle einen persönlichen Sicherheitsplan, um ihn in einer Krisensituation jederzeit aufzurufen.',
+    title: 'onboarding.securityplan.title',
+    text: 'onboarding.securityplan.text',
     background: require('../images/backgrounds/mood_bg_lightOrange.png'),
     image: require('../images/icons/icon_securityPlan.png'),
     themeColor: 'rgb(201, 95, 30)',
@@ -37,8 +37,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 5,
-    title: 'Anmeldung MIDATA',
-    text: 'Bitte registriere dich oder melde dich an, um deine Daten zu speichern. \n\nDies ermöglicht dir die Nutzung aller Funktionen der SERO-App. \n\nDeine Daten werden sicher auf der Datenplattform von MIDATA gespeichert und nur du hast Zugriff darauf.',
+    title: 'onboarding.midata.title',
+    text: 'onboarding.midata.text',
     background: require('../images/backgrounds/mood_bg_grey.png'),
     image: require('../images/icons/icon_midata.png'),
     themeColor: 'rgb(255,255,255)',

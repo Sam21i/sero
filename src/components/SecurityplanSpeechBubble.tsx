@@ -11,7 +11,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 export enum SECURITYPLAN_SPEECH_BUBBLE_MODE {
   edit = 'EDIT',
-  new = 'NEW'
+  new = 'NEW',
+  menu = 'MENU'
 }
 
 const MENU_ACTIONS = [
@@ -22,14 +23,19 @@ const MENU_ACTIONS = [
 interface SecurityplanBubbleProps {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
+  onClose: (mode: SECURITYPLAN_SPEECH_BUBBLE_MODE) => void;
 }
 
-interface ContactSpeechBubbleState {}
+interface ContactSpeechBubbleState {
+  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE;
+}
 
 class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpeechBubbleState> {
   constructor(props: SecurityplanBubbleProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu
+    };
   }
 
   renderBubbleTitle(_translateString: string) {
@@ -39,7 +45,7 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
         <CancelButton
           width={scale(35)}
           height={scale(35)}
-          onPress={() => {}}
+          onPress={() => this.props.onClose(this.state.mode)}
         />
       </View>
     );
@@ -53,7 +59,7 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
           {MENU_ACTIONS.map((action) => {
             return (
               <TouchableWithoutFeedback
-                onPress={() => {}}
+              onPress={() => this.props.onClose(action.mode)}
                 key={'menu.' + action.name}>
                 <View
                   style={styles.actionMenuPoint}

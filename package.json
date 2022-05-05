@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i && cd ios && pod install && cd .. && npm run ios"
+    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i --force && cd ios && pod install && cd .. && npm run ios"
   },
   "dependencies": {
     "@i4mi/fhir_r4": "^1.0.10",
@@ -40,6 +40,7 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",
     "react-native-sensitive-info": "^5.5.8",
+    "react-native-sortable-list": "^0.0.25",
     "react-native-svg": "^12.3.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-version-number": "^0.3.6",
