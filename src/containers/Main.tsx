@@ -131,7 +131,9 @@ class Main extends Component<PropsType, State> {
               }
               position="right"
               color={colors.gold}
-              onPress={() => {this.props.navigation.navigate('Assessment')}}
+              onPress={() => {
+                //this.props.navigation.navigate('Assessment')
+              }}
             />
           </View>
         </ImageBackground>
