@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, ImageBackground, Platform, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import MainNotification from '../components/MainNotification';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
 import MidataService from '../model/MidataService';
-import { AppStore } from '../store/reducers';
-import { connect } from 'react-redux';
+import {AppStore} from '../store/reducers';
+import {connect} from 'react-redux';
 import * as userProfileActions from '../store/userProfile/actions';
 import * as midataServiceActions from '../store/midataService/actions';
 import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
-import { appStyles, colors, verticalScale } from '../styles/App.style';
-import { CarePlan } from '@i4mi/fhir_r4';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {CarePlan} from '@i4mi/fhir_r4';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -51,64 +51,74 @@ class Main extends Component<PropsType, State> {
 
   loadEmergencyContacts(): void {
     try {
-      this.props.midataService.fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-      .then((contacts) => {
-        this.props.setEmergencyContacts(contacts);
-        this.setState({
-          emergencyContactsLoaded: true
+      this.props.midataService
+        .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+        .then((contacts) => {
+          this.props.setEmergencyContacts(contacts);
+          this.setState({
+            emergencyContactsLoaded: true
+          });
+        })
+        .catch((e) => {
+          console.log('could not load related persons', e);
         });
-      })
-      .catch((e) => {
-        console.log('could not load related persons', e)
-      });
-    }
-    catch(e) {
-        console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 
   loadSecurityPlans(): void {
     if (this.props.midataService.isAuthenticated()) {
       // fetch current security plan
-      this.props.midataService.fetchSecurityPlans()
-      .then((plans) => {
-        if (plans.length > 0) {
-          this.props.setSecurityPlan(plans[0]);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      this.props.midataService
+        .fetchSecurityPlans()
+        .then((plans) => {
+          if (plans.length > 0) {
+            this.props.setSecurityPlan(plans[0]);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
       // fetch security plan history
-      this.props.midataService.fetchSecurityPlans(true)
-      .then((plans) => {
-        if (plans.length > 0) {
-          this.props.setSecurityPlanHistory(plans);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      this.props.midataService
+        .fetchSecurityPlans(true)
+        .then((plans) => {
+          if (plans.length > 0) {
+            this.props.setSecurityPlanHistory(plans);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   }
 
   render() {
     return (
-      <SafeAreaView style={styles.container} edges={['top']}>
+      <SafeAreaView
+        style={styles.container}
+        edges={['top']}>
         <ImageBackground
           source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
           resizeMode="cover"
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            {this.state.emergencyContactsLoaded &&
-            <EmergencyContactContainer 
-              emergencyContacts={this.props.userProfile.getEmergencyContacts()}
-              localesHelper={this.props.localesHelper}
-              onPressOptionsButton={this.editContacts.bind(this)} />
-            }
-            {!this.state.emergencyContactsLoaded &&
-            <ActivityIndicator size="large" color={colors.primary} />
-            }
+            {this.state.emergencyContactsLoaded && (
+              <EmergencyContactContainer
+                emergencyContacts={this.props.userProfile.getEmergencyContacts()}
+                localesHelper={this.props.localesHelper}
+                onPressOptionsButton={this.editContacts.bind(this)}
+              />
+            )}
+            {!this.state.emergencyContactsLoaded && (
+              <View style={{width: scale(274), justifyContent: 'center'}}>
+                <ActivityIndicator
+                  size="large"
+                  color={colors.white}
+                />
+              </View>
+            )}
             <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
@@ -122,7 +132,9 @@ class Main extends Component<PropsType, State> {
               }
               position="right"
               color={colors.primary}
-              onPress={() => {this.props.navigation.navigate('Securityplan')}}
+              onPress={() => {
+                this.props.navigation.navigate('Securityplan');
+              }}
             />
             <AppButton
               label={this.props.localesHelper.localeString('prismS.title')}
@@ -131,7 +143,9 @@ class Main extends Component<PropsType, State> {
               }
               position="right"
               color={colors.gold}
-              onPress={() => {this.props.navigation.navigate('Assessment')}}
+              onPress={() => {
+                this.props.navigation.navigate('Assessment');
+              }}
             />
           </View>
         </ImageBackground>
@@ -142,38 +156,37 @@ class Main extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   backgroundImage: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   topView: {
-    height: verticalScale(165) + (Platform.OS === 'android' ? (80 - verticalScale(54)) : 0),
-    flexDirection: 'row',
+    height: verticalScale(165) + (Platform.OS === 'android' ? 80 - verticalScale(54) : 0),
+    flexDirection: 'row'
   },
   bottomView: {
     flex: 0.92,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)',
-  },
+    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+  }
 });
 
-
 function mapStateToProps(state: AppStore) {
-    return {
-        midataService: state.MiDataServiceStore,
-        userProfile: state.UserProfileStore,
-        localesHelper: state.LocalesHelperStore,
-    };
+  return {
+    midataService: state.MiDataServiceStore,
+    userProfile: state.UserProfileStore,
+    localesHelper: state.LocalesHelperStore
+  };
 }
 
 function mapDispatchToProps(dispatch: Function) {
-    return {
-        setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
-        setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
-        setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
-        uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
-    };
+  return {
+    setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
+    setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
+    setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
+    uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
