@@ -12,7 +12,6 @@ import {
 import {Resource, Bundle, Observation} from '@i4mi/fhir_r4';
 import {store} from '..';
 import {Guid} from 'guid-typescript';
-import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE} from '../../containers/App';
 
@@ -200,10 +199,10 @@ export function uploadResource(
       MIDATAStore.fetch(endPoint, 'GET')
         .then((serverResource: Resource) => {
           let mustBeUpdated = _jobItem.resource.hasOwnProperty('effectiveDateTime')
-            ? moment((serverResource as Observation).effectiveDateTime).isBefore(
-                (_jobItem.resource as Observation).effectiveDateTime
-              )
-            : moment(serverResource.meta?.lastUpdated).isBefore(_jobItem.timestamp);
+      //      ? moment((serverResource as Observation).effectiveDateTime).isBefore(
+      //          (_jobItem.resource as Observation).effectiveDateTime
+      //        )
+      //      : moment(serverResource.meta?.lastUpdated).isBefore(_jobItem.timestamp);
 
           if (mustBeUpdated) {
             _jobItem.resource.id = serverResource?.id;
