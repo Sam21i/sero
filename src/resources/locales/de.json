@@ -1,105 +1,105 @@
 {
-	"common": {
-		"archive": "Archiv",
-		"back": "Zurück",
-		"cancel": "Abbrechen",
-		"delete": "Löschen",
-		"family": "Nachname",
-		"given": "Vorname",
-		"next": "Weiter",
-		"ok": "OK",
-		"options": "Optionen",
-		"phone": "Telefon",
-		"save": "Speichern",
-		"search": "Suchen"
-	},
-	"contacts": {
-		"addContact": "Kontakt hinzufügen",
-		"bubbleTitle": "Was möchtest du tun?",
-		"deleteContact": "Kontakt löschen",
-		"editContact": "Kontakt bearbeiten",
-		"err": {
-			"family": {
-				"invalid": "Der Nachname muss aus Buchstaben bestehen.",
-				"required": "Bitte füge einen Nachnamen ein."
-			},
-			"given": {
-				"invalid": "Der Vorname muss aus Buchstaben bestehen.",
-				"required": "Bitte füge einen Vornamen ein."
-			},
-			"phone": {
-				"invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
-				"required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
-			}
-		},
-		"importContact": "Kontakt importieren",
-		"selectContact": "Kontakt auswählen",
-		"title": "Mein Umfeld"
-	},
-	"info": {
-		"later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
-	},
-	"main": {
-		"call": "anrufen",
-		"default": "Entdecke jetzt die SERO App!\nLos geht's...",
-		"emergency": "Notfall",
-		"greeting": "Hallo {{name}}",
-		"myEnvironmentTitle": "Mein Umfeld anrufen"
-	},
-	"onboarding": {
-		"assessment": {
-			"text": "Du lernst ein Werkzeug anzuwenden, das dir dabei hilft zu verstehen, wie es dir im Moment geht.",
-			"title": "Meine Einschätzung"
-		},
-		"contacts": {
-			"text": "Hier rufst du die Kontakte aus deinem Umfeld an, die für dich da sind.",
-			"title": "Meine Kontakte anrufen"
-		},
-		"emergency": {
-			"text": "Hier rufst du direkt die Notfallnummer 144 an.",
-			"title": "Notfallkontakt anrufen"
-		},
-		"midata": {
-			"text": "Registriere dich oder melde dich an, um deine Daten zu speichern. Dies ermöglicht dir die Nutzung aller Funktionen der SERO-App.\n\nDeine Daten werden sicher auf der Datenplattform MIDATA gespeichert und nur du hast Zugriff darauf.",
-			"title": "Anmeldung bei MIDATA"
-		},
-		"securityplan": {
-			"text": "Erstelle einen persönlichen Sicherheitsplan, um ihn in einer Krisensituation jederzeit aufzurufen.",
-			"title": "Mein Sicherheitsplan"
-		}
-	},
-	"prismS": {
-		"title": "Meine\nEinschätzung"
-	},
-	"securityplan": {
-		"addEntry": "Eintrag hinzufügen",
-		"alertLups": {
-			"description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
-			"title": "Beratungstelefon LUPS"
-		},
-		"bubbleTitle": "Was möchtest du tun?",
-		"current": "Aktueller Sicherheitsplan",
-		"defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
-		"editHint": "Du kannst die Abschnitte neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst.\nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
-		"editSecurityplan": "Sicherheitsplan bearbeiten",
-		"former": "Früherer Sicherheitsplan",
-		"newSecurityplan": "Neuen Sicherheitsplan erstellen",
-		"notification": {
-			"copingStrategies": "Eine Bewältigungsstrategie die dir hilft:",
-			"distractionStrategies": "Etwas das dich ablenken kann:",
-			"motivation": "Etwas das dich motiviert:",
-			"personalBeliefs": "Ein Glaubenssatz der dir hilft:"
-		},
-		"title": "Mein\nSicherheitsplan"
-	},
-	"settings": {
-		"later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",
-		"logout": "Abmelden",
-		"title": "Einstellungen"
-	},
-	"welcome": {
-		"greetingText": "Schön, dass du da bist!",
-		"start": "Starten",
-		"title": "Willkommen."
-	}
+  "common": {
+    "archive": "Archiv",
+    "back": "Zurück",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "family": "Nachname",
+    "given": "Vorname",
+    "next": "Weiter",
+    "ok": "OK",
+    "options": "Optionen",
+    "phone": "Telefon",
+    "save": "Speichern",
+    "search": "Suchen"
+  },
+  "contacts": {
+    "addContact": "Kontakt hinzufügen",
+    "bubbleTitle": "Was möchtest du tun?",
+    "deleteContact": "Kontakt löschen",
+    "editContact": "Kontakt bearbeiten",
+    "err": {
+      "family": {
+        "invalid": "Der Nachname muss aus Buchstaben bestehen.",
+        "required": "Bitte füge einen Nachnamen ein."
+      },
+      "given": {
+        "invalid": "Der Vorname muss aus Buchstaben bestehen.",
+        "required": "Bitte füge einen Vornamen ein."
+      },
+      "phone": {
+        "invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
+        "required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
+      }
+    },
+    "importContact": "Kontakt importieren",
+    "selectContact": "Kontakt auswählen",
+    "title": "Mein Umfeld"
+  },
+  "info": {
+    "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
+  },
+  "main": {
+    "call": "anrufen",
+    "default": "Entdecke jetzt die SERO App!\nLos geht's...",
+    "emergency": "Notfall",
+    "greeting": "Hallo {{name}}",
+    "myEnvironmentTitle": "Mein Umfeld anrufen"
+  },
+  "onboarding": {
+    "assessment": {
+      "text": "Du lernst ein Werkzeug anzuwenden, das dir dabei hilft zu verstehen, wie es dir im Moment geht.",
+      "title": "Meine Einschätzung"
+    },
+    "contacts": {
+      "text": "Hier rufst du die Kontakte aus deinem Umfeld an, die für dich da sind.",
+      "title": "Meine Kontakte anrufen"
+    },
+    "emergency": {
+      "text": "Hier rufst du direkt die Notfallnummer 144 an.",
+      "title": "Notfallkontakt anrufen"
+    },
+    "midata": {
+      "text": "Registriere dich oder melde dich an, um deine Daten zu speichern. Dies ermöglicht dir die Nutzung aller Funktionen der SERO-App.\n\nDeine Daten werden sicher auf der Datenplattform MIDATA gespeichert und nur du hast Zugriff darauf.",
+      "title": "Anmeldung bei MIDATA"
+    },
+    "securityplan": {
+      "text": "Erstelle einen persönlichen Sicherheitsplan, um ihn in einer Krisensituation jederzeit aufzurufen.",
+      "title": "Mein Sicherheitsplan"
+    }
+  },
+  "prismS": {
+    "title": "Meine\nEinschätzung"
+  },
+  "securityplan": {
+    "addEntry": "Eintrag hinzufügen",
+    "alertLups": {
+      "description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
+      "title": "Beratungstelefon LUPS"
+    },
+    "bubbleTitle": "Was möchtest du tun?",
+    "current": "Aktueller Sicherheitsplan",
+    "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
+    "editHint": "Du kannst die Abschnitte neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst.\nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
+    "editSecurityplan": "Sicherheitsplan bearbeiten",
+    "former": "Früherer Sicherheitsplan",
+    "newSecurityplan": "Neuen Sicherheitsplan erstellen",
+    "notification": {
+      "copingStrategies": "Eine Bewältigungsstrategie die dir hilft:",
+      "distractionStrategies": "Etwas das dich ablenken kann:",
+      "motivation": "Etwas das dich motiviert:",
+      "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
+    },
+    "title": "Mein\nSicherheitsplan"
+  },
+  "settings": {
+    "later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",
+    "logout": "Abmelden",
+    "title": "Einstellungen"
+  },
+  "welcome": {
+    "greetingText": "Schön, dass du da bist!",
+    "start": "Starten",
+    "title": "Willkommen."
+  }
 }
