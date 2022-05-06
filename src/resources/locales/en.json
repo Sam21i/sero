@@ -6,6 +6,7 @@
 		"delete": "Delete",
 		"family": "Last name",
 		"given": "First name",
+		"loading": "Loading data",
 		"next": "Next",
 		"ok": "OK",
 		"options": "Options",
