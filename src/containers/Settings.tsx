@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Text, Button} from 'react-native';
-import RNRestart from 'react-native-restart';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import MidataService from '../model/MidataService';
@@ -38,7 +37,6 @@ class Settings extends Component<PropsType, State> {
             title={this.props.localesHelper.localeString('settings.logout')}
             onPress={() => {
               this.props.logoutUser();
-              RNRestart.Restart();
             }}
           />
         )}

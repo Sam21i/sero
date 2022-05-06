@@ -9,6 +9,7 @@ import {
 import EmergencyContact from './EmergencyContact';
 import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
 import SecurityPlanModel from './SecurityPlan';
+import RNRestart from 'react-native-restart';
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
@@ -64,6 +65,7 @@ export default class UserProfile {
     this.emergencyContacts = [];
     this.securityPlanHistory = [];
     this.currentSecurityPlan = new SecurityPlanModel({});
+    RNRestart.Restart();
   }
 
   getFhirId(): string {
