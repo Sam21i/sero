@@ -99,7 +99,7 @@ export default class SecurityPlanModel {
         new Date(this.fhirResource.created)
       );
     } else {
-      return '??.??.???? um ??:??';
+      return '';
     }
   }
 
