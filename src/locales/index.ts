@@ -1,18 +1,13 @@
 import I18n from 'react-native-i18n';
 import * as RNLocalize from 'react-native-localize';
-import moment from 'moment';
 import {I18nManager} from 'react-native';
 import memoize from 'lodash.memoize';
 import 'intl';
 
 // Import all locales
-// DO NOT AN IMPORT FROM import 'moment/locale/en'; -> Crash the app, it's already include in moment.
 import * as de from '../resources/locales/de.json';
-import 'moment/locale/de';
 import * as fr from '../resources/locales/fr.json';
-import 'moment/locale/fr';
 import * as it from '../resources/locales/it.json';
-import 'moment/locale/it';
 
 const DEFAULT_LOCALE = 'de';
 let translationKey: {[index: string]: any} = {de: de, fr: fr, it: it};
@@ -74,15 +69,8 @@ export default class LocalesHelper {
       I18n.translations = {[language]: translationKey[language]};
       I18n.locale = language;
 
-      // Update moment :
-      this.chooseMomentLocale(language);
       this.currentLang = language;
     }
-  }
-
-  chooseMomentLocale(local: string) {
-    // Localizing momentjs
-    moment.locale(local);
   }
 
   getDevicePreferedLanguage(): string {
