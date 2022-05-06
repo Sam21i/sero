@@ -5,7 +5,6 @@ import Main from './Main';
 import Info from './Info';
 import Settings from './Settings';
 import OnBoarding from './OnBoarding';
-
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
@@ -41,12 +40,12 @@ function OnBoardingStackScreen({route}: {route: any}) {
   return (
     <OnBoardingStack.Navigator>
       <OnBoardingStack.Screen
-        name="mainWelcome"
+        name='mainWelcome'
         component={Welcome}
         options={{headerShown: false}}
       />
       <OnBoardingStack.Screen
-        name="mainOnBoarding"
+        name='mainOnBoarding'
         component={OnBoarding}
         options={{headerShown: false}}
       />
@@ -60,19 +59,19 @@ function MainStackScreen({route}: {route: any}) {
   return (
     <MainStack.Navigator screenOptions={{headerShown: false}}>
       <MainStack.Screen
-        name="Home"
+        name='Home'
         component={Main}
         options={{
           gestureDirection: 'vertical'
         }}></MainStack.Screen>
       <MainStack.Screen
-        name="Contacts"
+        name='Contacts'
         component={Contacts}
         options={{
           animationEnabled: false
         }}></MainStack.Screen>
       <MainStack.Screen
-        name="Assessment"
+        name='Assessment'
         component={Assessment}
         options={{
           animationEnabled: false
@@ -87,7 +86,7 @@ function InfoStackScreen({route}: {route: any}) {
   return (
     <InfoStack.Navigator>
       <InfoStack.Screen
-        name="Information"
+        name='Information'
         component={Info}
         options={{}}></InfoStack.Screen>
     </InfoStack.Navigator>
@@ -100,7 +99,7 @@ function SettingsStackScreen({route}: {route: any}) {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
-        name="Settings"
+        name='Settings'
         component={Settings}
         options={{}}></SettingsStack.Screen>
     </SettingsStack.Navigator>
@@ -113,7 +112,7 @@ function SecurityplanStackScreen({route}: {route: any}) {
   return (
     <SecurityplanStack.Navigator>
       <SecurityplanStack.Screen
-        name="SecurityplanMain"
+        name='SecurityplanMain'
         component={SecurityplanMain}
         options={{
           headerShown: false,
@@ -121,7 +120,7 @@ function SecurityplanStackScreen({route}: {route: any}) {
         }}></SecurityplanStack.Screen>
 
       <SecurityplanStack.Screen
-        name="SecurityplanCurrent"
+        name='SecurityplanCurrent'
         component={SecurityplanCurrent}
         options={{
           headerShown: false,
@@ -129,7 +128,7 @@ function SecurityplanStackScreen({route}: {route: any}) {
         }}></SecurityplanStack.Screen>
 
       <SecurityplanStack.Screen
-        name="SecurityplanArchive"
+        name='SecurityplanArchive'
         component={SecurityplanArchive}
         options={{
           headerShown: false,
@@ -179,9 +178,13 @@ export default class App extends Component<PropsType, State> {
           <SafeAreaProvider>
             <NavigationContainer
               onStateChange={(state) => {
-                const mainScreenHistoryIndex = state?.history?.findIndex((historyEntry) => historyEntry.key.indexOf('MainScreen') > -1) || -1;
+                const mainScreenHistoryIndex =
+                  state?.history?.findIndex((historyEntry) => historyEntry.key.indexOf('MainScreen') > -1) || -1;
                 if (mainScreenHistoryIndex > 0) {
-                  if (state?.history && (state.history[mainScreenHistoryIndex - 1].key as string).indexOf('OnBoarding') > -1) {
+                  if (
+                    state?.history &&
+                    (state.history[mainScreenHistoryIndex - 1].key as string).indexOf('OnBoarding') > -1
+                  ) {
                     // we just navigated from OnBoarding to MainScreen
                     // now we clear everything in the history before the MainScreen
                     // (I feel like there must be an easier way of doing this, but I couldn't find it)
@@ -189,7 +192,7 @@ export default class App extends Component<PropsType, State> {
                   }
                 }
               }}>
-              <StatusBar barStyle="dark-content" />
+              <StatusBar barStyle='dark-content' />
               <Tab.Navigator
                 screenOptions={({route}) => ({
                   tabBarShowLabel: false,
@@ -205,7 +208,7 @@ export default class App extends Component<PropsType, State> {
                 })}>
                 {!this.state.showRealApp ? (
                   <Tab.Screen
-                    name="OnBoarding"
+                    name='OnBoarding'
                     component={OnBoardingStackScreen}
                     options={{tabBarStyle: {display: 'none'}}}
                   />
@@ -213,7 +216,7 @@ export default class App extends Component<PropsType, State> {
                   <></>
                 )}
                 <Tab.Screen
-                  name="MainScreen"
+                  name='MainScreen'
                   component={MainStackScreen}
                   options={{
                     tabBarIcon: ({focused, color, size}) =>
@@ -225,8 +228,14 @@ export default class App extends Component<PropsType, State> {
                   }}
                 />
                 <Tab.Screen
-                  name="InfoScreen"
+                  name='InfoScreen'
                   component={InfoStackScreen}
+                  listeners={{
+                    tabPress: (e) => {
+                      console.log('suppress info tab screen');
+                      e.preventDefault();
+                    }
+                  }}
                   options={{
                     tabBarIcon: ({focused, color, size}) =>
                       generateTabIcon(
@@ -237,7 +246,7 @@ export default class App extends Component<PropsType, State> {
                   }}
                 />
                 <Tab.Screen
-                  name="SettingsScreen"
+                  name='SettingsScreen'
                   component={SettingsStackScreen}
                   options={{
                     tabBarIcon: ({focused, color, size}) =>
@@ -249,7 +258,7 @@ export default class App extends Component<PropsType, State> {
                   }}
                 />
                 <Tab.Screen
-                  name="Securityplan"
+                  name='Securityplan'
                   component={SecurityplanStackScreen}
                 />
               </Tab.Navigator>

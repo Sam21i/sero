@@ -1,14 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Svg, {Circle, Rect} from 'react-native-svg';
-import { connect } from 'react-redux';
-import { AppStore } from '../store/reducers';
+import {connect} from 'react-redux';
+import {AppStore} from '../store/reducers';
 import LocalesHelper from '../locales';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
-  localesHelper: LocalesHelper
+  localesHelper: LocalesHelper;
 }
 
 interface State {}
@@ -23,7 +22,7 @@ class Info extends Component<PropsType, State> {
   render() {
     return (
       <SafeAreaView edges={['right', 'bottom', 'left']}>
-        <View style={{margin: 25, marginBottom: 50}} >
+        <View style={{margin: 25, marginBottom: 50}}>
           <Text style={{fontFamily: AppFonts.regular, fontSize: scale(TextSize.small)}}>
             {this.props.localesHelper.localeString('info.later')}
           </Text>
@@ -35,13 +34,8 @@ class Info extends Component<PropsType, State> {
 
 function mapStateToProps(state: AppStore) {
   return {
-      localesHelper: state.LocalesHelperStore
+    localesHelper: state.LocalesHelperStore
   };
 }
 
-function mapDispatchToProps(dispatch: Function) {
-  return {
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Info);
+export default connect(mapStateToProps, undefined)(Info);

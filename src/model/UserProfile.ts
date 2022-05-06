@@ -1,8 +1,14 @@
-import { CarePlan, CarePlanStatus, Patient, PatientAdministrativeGender, PatientCommunication, Reference } from "@i4mi/fhir_r4";
-import EmergencyContact from "./EmergencyContact";
-import  { DEFAULT_CONTACTS } from "../resources/static/defaultContacts";
-import SecurityPlanModel from "./SecurityPlan";
-
+import {
+  CarePlan,
+  CarePlanStatus,
+  Patient,
+  PatientAdministrativeGender,
+  PatientCommunication,
+  Reference
+} from '@i4mi/fhir_r4';
+import EmergencyContact from './EmergencyContact';
+import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
+import SecurityPlanModel from './SecurityPlan';
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
@@ -21,10 +27,10 @@ export default class UserProfile {
       this.patientResource = _attributes.patientResource as Patient;
     }
     if (_attributes.emergencyContacts) {
-      this.emergencyContacts = _attributes.emergencyContacts.map(c => new EmergencyContact(c));
+      this.emergencyContacts = _attributes.emergencyContacts.map((c) => new EmergencyContact(c));
     }
     if (_attributes.securityPlanHistory) {
-      this.securityPlanHistory = _attributes.securityPlanHistory.map(sp => new SecurityPlanModel(sp));
+      this.securityPlanHistory = _attributes.securityPlanHistory.map((sp) => new SecurityPlanModel(sp));
     }
     if (_attributes.currentSecurityPlan) {
       this.currentSecurityPlan = new SecurityPlanModel(_attributes.currentSecurityPlan);
@@ -32,17 +38,17 @@ export default class UserProfile {
   }
 
   /**
-  * CAVE: Modifies store, do not call outside of reducer
-  **/
+   * CAVE: Modifies store, do not call outside of reducer
+   **/
   setEmergencyContacts(_contacts: EmergencyContact[]): void {
-    _contacts.forEach(contact => this.addEmergencyContact(contact));
+    _contacts.forEach((contact) => this.addEmergencyContact(contact));
   }
 
   /**
-  * CAVE: Modifies store, do not call outside of reducer
-  **/
+   * CAVE: Modifies store, do not call outside of reducer
+   **/
   addEmergencyContact(_contact: EmergencyContact): void {
-    const index = this.emergencyContacts.findIndex(c => c.isEqual(_contact));
+    const index = this.emergencyContacts.findIndex((c) => c.isEqual(_contact));
     if (index === -1) {
       this.emergencyContacts.push(_contact);
     } else {
@@ -51,8 +57,8 @@ export default class UserProfile {
   }
 
   /**
-  * CAVE: Modifies store, do not call outside of reducer
-  **/
+   * CAVE: Modifies store, do not call outside of reducer
+   **/
   resetProfileData() {
     this.patientResource = {id: ''};
     this.emergencyContacts = [];
@@ -64,12 +70,14 @@ export default class UserProfile {
     if (this.patientResource.id) {
       return this.patientResource.id;
     } else {
-      throw new Error('No FHIR resource id set.')
+      throw new Error('No FHIR resource id set.');
     }
   }
 
   getEmergencyContacts(): EmergencyContact[] {
-    const allContacts = DEFAULT_CONTACTS.map(dc => new EmergencyContact(dc)).concat(this.emergencyContacts.filter(contact => !contact.fhirResource || contact.fhirResource.active));
+    const allContacts = DEFAULT_CONTACTS.map((dc) => new EmergencyContact(dc)).concat(
+      this.emergencyContacts.filter((contact) => !contact.fhirResource || contact.fhirResource.active)
+    );
     return allContacts;
   }
 
@@ -79,9 +87,9 @@ export default class UserProfile {
   }
 
   getBirthYear(): string | undefined {
-    return (this.patientResource.id === '' || !this.patientResource.birthDate)
-    ? undefined
-    : new Date(this.patientResource.birthDate).getFullYear().toString();
+    return this.patientResource.id === '' || !this.patientResource.birthDate
+      ? undefined
+      : new Date(this.patientResource.birthDate).getFullYear().toString();
   }
 
   getPreferredLanguageCode(): string | undefined {
@@ -135,7 +143,7 @@ export default class UserProfile {
   }
 
   /**
-   * Sets a new current security plan. If you want to archive the current security plan, 
+   * Sets a new current security plan. If you want to archive the current security plan,
    * use the replaceCurrentSecurityPlan() method
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _fhirResource a CarePlan FHIR resource than complies to the SecurityPlan IG
@@ -144,23 +152,23 @@ export default class UserProfile {
     this.currentSecurityPlan = new SecurityPlanModel(_fhirResource);
   }
 
-    /**
+  /**
    * Sets the history of the security plans.
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _fhirResources an Array of CarePlan resources representing the Security Plan history
    * @throws               an Error if the array contains an active security plan
    */
   setSecurityPlanHistory(_fhirResources: CarePlan[]): void {
-    this.securityPlanHistory = _fhirResources.map(r => {
+    this.securityPlanHistory = _fhirResources.map((r) => {
       if (r.status === CarePlanStatus.ACTIVE) {
         throw new Error('Can not put active Security Plan to history.');
       }
-      return new SecurityPlanModel(r)
+      return new SecurityPlanModel(r);
     });
   }
 
   /**
-   * Replaces and archives the current security plan. 
+   * Replaces and archives the current security plan.
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _plan   the new Security Plan as SecurityPlan object
    */
@@ -183,8 +191,8 @@ export default class UserProfile {
   }
 
   /**
-   * Gets the current Security Plan 
-   * @returns A representation of the current security plan, 
+   * Gets the current Security Plan
+   * @returns A representation of the current security plan,
    *          that is thought for read access only.
    */
   getCurrentSecurityPlan(): SecurityPlanModel {
@@ -192,7 +200,7 @@ export default class UserProfile {
   }
 
   /**
-   * Gets the FHIR resource of the current Security Plan 
+   * Gets the FHIR resource of the current Security Plan
    * @returns  A CarePlan FHIR resource representing the current security plan
    * @throws   An error if no Patient resource has been set yet to the user profile.
    */

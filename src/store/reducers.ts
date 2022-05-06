@@ -9,8 +9,8 @@ const store = Object.assign(
   {
     LocalesHelperStore,
     MiDataServiceStore,
-    UserProfileStore,
-  },
+    UserProfileStore
+  }
 );
 export default combineReducers(store);
 

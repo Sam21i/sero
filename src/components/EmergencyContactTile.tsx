@@ -1,20 +1,7 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity
-} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
-import {
-  AppFonts,
-  colors,
-  isSmallScreen,
-  scale,
-  TextSize,
-  verticalScale
-} from '../styles/App.style';
+import {AppFonts, colors, isSmallScreen, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface EmergencyContactProps {
   size: number;
@@ -27,9 +14,9 @@ interface EmergencyContactProps {
 const HORIZONTAL_MARGIN = 10;
 
 export default class EmergencyContactTile extends Component<EmergencyContactProps> {
-    constructor(props: EmergencyContactProps) {
-        super(props);
-    }
+  constructor(props: EmergencyContactProps) {
+    super(props);
+  }
 
   render() {
     //Image Avatar Styling
@@ -37,14 +24,14 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       width: scale(this.props.size),
       height: scale(this.props.size),
       marginHorizontal: HORIZONTAL_MARGIN,
-      borderRadius: scale(this.props.size / 2),
+      borderRadius: scale(this.props.size / 2)
     };
 
     const textContainerStyle = {
       borderRadius: scale(this.props.size / 2),
       color: colors.white,
       textAlign: 'center',
-      fontSize: scale(this.props.size / 2.25),
+      fontSize: scale(this.props.size / 2.25)
     };
 
     let emergencyContactAvatar;
@@ -60,17 +47,22 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       textAlignVertical: 'center',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'center'
     };
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
           <TouchableOpacity onPress={this.props.onPress}>
-            <Image style={image_avatar} source={{uri: 'data:' + contact.image.data}} />
+            <Image
+              style={image_avatar}
+              source={{uri: 'data:' + contact.image.data}}
+            />
           </TouchableOpacity>
           <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
-            <Text style={styles.text} numberOfLines={2}>
-             {contact.getNameString()}
+            <Text
+              style={styles.text}
+              numberOfLines={2}>
+              {contact.getNameString()}
             </Text>
           </View>
         </View>
@@ -84,16 +76,18 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
                 <Text
                   style={[
                     {
-                      ...textContainerStyle,
+                      ...textContainerStyle
                     },
-                    this.props.textStyle,
+                    this.props.textStyle
                   ]}>
                   {contact.getInitials()}
                 </Text>
               )}
             </View>
             <View style={[styles.textView, {width: this.props.size + HORIZONTAL_MARGIN}]}>
-              <Text style={styles.text} numberOfLines={2} >
+              <Text
+                style={styles.text}
+                numberOfLines={2}>
                 {contact.getNameString()}
               </Text>
             </View>
@@ -112,12 +106,12 @@ const styles = StyleSheet.create({
   textView: {
     alignSelf: 'center',
     marginHorizontal: 0,
-    marginTop: verticalScale(2.5),
+    marginTop: verticalScale(2.5)
   },
   text: {
     textAlign: 'center',
     color: colors.white,
     fontFamily: AppFonts.medium,
-    fontSize: isSmallScreen() ? TextSize.verySmall : TextSize.small,
-  },
+    fontSize: isSmallScreen() ? TextSize.verySmall : TextSize.small
+  }
 });

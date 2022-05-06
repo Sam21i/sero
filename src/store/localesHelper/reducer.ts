@@ -1,14 +1,14 @@
-import { createReducer } from '../helpers/reducerCreator';
+import {createReducer} from '../helpers/reducerCreator';
 import LocalesHelper from '../../locales';
-import { REHYDRATE } from 'redux-persist';
-import { UPDATE_LOCALE_LANGUAGE } from '../definitions';
+import {REHYDRATE} from 'redux-persist';
+import {UPDATE_LOCALE_LANGUAGE} from '../definitions';
 
 export type LocalHelperData = string;
 
 // Definition of actions listeners
 const LocalesHelperStore = createReducer(new LocalesHelper(), {
   [REHYDRATE](state: LocalesHelper, action) {
-    if (action.payload && action.payload.LocalesHelperStore) {
+    if (action.payload && action.payload.LocalesHelperStore) {
       return new LocalesHelper(action.payload.LocalesHelperStore);
     }
     return state;

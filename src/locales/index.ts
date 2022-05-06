@@ -27,7 +27,7 @@ I18n.fallbacks = true;
 
 const translate = memoize(
   (key: string, config: any) => I18n.t(key, config), // memoized function
-  (key: string, config: any) => (config ? key + JSON.stringify(config) : key), // index resolver
+  (key: string, config: any) => (config ? key + JSON.stringify(config) : key) // index resolver
 );
 
 /**
@@ -39,10 +39,7 @@ export default class LocalesHelper {
   private static isAppLocalesLoaded = false;
 
   constructor(localizationHelper?: Partial<LocalesHelper>) {
-    if (
-      localizationHelper !== undefined &&
-      localizationHelper.currentLang !== undefined
-    ) {
+    if (localizationHelper !== undefined && localizationHelper.currentLang !== undefined) {
       this.updateLanguage(localizationHelper.currentLang);
     } else {
       this.currentLang = I18n.locale;
@@ -56,9 +53,7 @@ export default class LocalesHelper {
     if (!LocalesHelper.isAppLocalesLoaded) {
       // fallback if no available language fits
       const fallback = {languageTag: DEFAULT_LOCALE, isRTL: false};
-      const {languageTag, isRTL} =
-        RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) ||
-        fallback;
+      const {languageTag, isRTL} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
       this.updateLanguage(languageTag, isRTL);
       LocalesHelper.isAppLocalesLoaded = true;
     }
@@ -92,9 +87,7 @@ export default class LocalesHelper {
 
   getDevicePreferedLanguage(): string {
     const fallback = {languageTag: DEFAULT_LOCALE, isRTL: false};
-    const {languageTag, isRTL} =
-      RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) ||
-      fallback;
+    const {languageTag, isRTL} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
     return languageTag;
   }
 

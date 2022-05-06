@@ -59,14 +59,16 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
           {MENU_ACTIONS.map((action) => {
             return (
               <TouchableWithoutFeedback
-              onPress={() => this.props.onClose(action.mode)}
+                onPress={() => this.props.onClose(action.mode)}
                 key={'menu.' + action.name}>
                 <View
                   style={styles.actionMenuPoint}
                   key={'action_' + action.name}>
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
-                    <Text style={styles.actionText}>{this.props.localesHelper.localeString('securityplan.' + action.name)}</Text>
+                    <Text style={styles.actionText}>
+                      {this.props.localesHelper.localeString('securityplan.' + action.name)}
+                    </Text>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
@@ -79,7 +81,14 @@ class ContactSpeechBubble extends Component<SecurityplanBubbleProps, ContactSpee
 
   renderIcon() {
     return (
-      <View style={{position: 'absolute', justifyContent: 'center', alignContent: 'center', width: '100%', marginLeft: scale(57.5)}}>
+      <View
+        style={{
+          position: 'absolute',
+          justifyContent: 'center',
+          alignContent: 'center',
+          width: '100%',
+          marginLeft: scale(57.5)
+        }}>
         <PersonIcon
           width={80}
           height={80}
@@ -159,7 +168,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// Link store data to component:
 function mapStateToProps(state: AppStore) {
   return {
     localesHelper: state.LocalesHelperStore

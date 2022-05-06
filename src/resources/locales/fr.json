@@ -1,96 +1,98 @@
 {
-	"common": {
-		"archive": "Archives",
-		"back": "Retour",
-		"cancel": "Annuler",
-		"delete": "Effacer",
-		"family": "Nom de famille",
-		"given": "Prénom",
-		"next": "Suivant",
-		"ok": "OK",
-		"options": "Options",
-		"phone": "Téléphone",
-		"save": "Enregistrer"
-	},
-	"contacts": {
-		"addContact": "Ajouter un contact",
-		"bubbleTitle": "Que veux-tu faire?",
-		"deleteContact": "Effacer un contact",
-		"editContact": "Modifier un contact",
-		"err": {
-			"family": {
-				"invalid": "Le nom de famille doit être composé de lettres.",
-				"required": "Ajoute un nom de famille, s'il te plaît."
-			},
-			"given": {
-				"invalid": "Le prénom doit être composé de lettres.",
-				"required": "Ajoute un prénom de famille, s'il te plaît."
-			},
-			"phone": {
-				"invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
-				"required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
-			}
-		},
-		"selectContact": "Choisir un contact",
-		"title": "Mon entourage"
-	},
-	"info": {
-		"later": "Remarque: des informations au sujet de l'application SERO seront intégrées dans une version ultérieure."
-	},
-	"main": {
-		"call": "appeler",
-		"default": "Découvre l'application SERO!\nC'est parti...",
-		"emergency": "Urgences",
-		"greeting": "Salut {{name}}",
-		"myEnvironmentTitle": "Appeler mon entourage"
-	},
-	"onboarding": {
-		"assessment": {
-			"text": "Tu apprends à utiliser un outil qui t'aide à comprendre comment tu te sens dans le moment présent.",
-			"title": "Mon évaluation"
-		},
-		"contacts": {
-			"text": "Appelles les contacts de ton entourage qui sont là pour toi.",
-			"title": "Appeler mes contacts"
-		},
-		"emergency": {
-			"text": "Appelles directement le numéro d'urgence 144.",
-			"title": "Appeler le contact d'urgence"
-		},
-		"midata": {
-			"text": "Inscrit ou connecte toi pour enregistrer tes données. Cela te permettra d'utiliser toutes les fonctions de l'application SERO.\n\nTes données sont stockées en toute sécurité sur la plateforme de données de MIDATA et tu es le seul à y avoir accès.",
-			"title": "Inscription à MIDATA"
-		},
-		"securityplan": {
-			"text": "Crée un plan de sécurité personnel pour pouvoir le consulter à tout moment en cas de crise.",
-			"title": "Mon plan de sécurité"
-		}
-	},
-	"prismS": {
-		"title": "Mon\névaluation"
-	},
-	"securityplan": {
-		"addEntry": "Ajouter une entrée",
-		"alertLups": {
-			"description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
-			"title": "Ligne de conseil LUPS"
-		},
-		"bubbleTitle": "Que veux-tu faire?",
-		"current": "Plan de sécurité actuel",
-		"editHint": "Tu peux réorganiser les sections en les faisant glisser vers un autre endroit de la liste.\nEn cliquant sur le crayon, tu peux modifier leur contenu.",
-		"editSecurityplan": "Modifier le plan de sécurité",
-		"former": "Plan de sécurité précédent",
-		"newSecurityplan": "Créer un nouveau plan de sécurité",
-		"title": "Mon plan de\nsécurité"
-	},
-	"settings": {
-		"later": "Remarque: les préférences seront intégrées dans une version ultérieure.",
-		"logout": "Se déconnecter",
-		"title": "Préférences"
-	},
-	"welcome": {
-		"greetingText": "C'est bien que tu sois là!",
-		"start": "Commencer",
-		"title": "Bienvenue."
-	}
+  "common": {
+    "archive": "Archives",
+    "back": "Retour",
+    "cancel": "Annuler",
+    "delete": "Effacer",
+    "family": "Nom de famille",
+    "given": "Prénom",
+    "next": "Suivant",
+    "ok": "OK",
+    "options": "Options",
+    "phone": "Téléphone",
+    "save": "Enregistrer",
+    "search": "Rechercher"
+  },
+  "contacts": {
+    "addContact": "Ajouter un contact",
+    "bubbleTitle": "Que veux-tu faire?",
+    "deleteContact": "Effacer un contact",
+    "editContact": "Modifier un contact",
+    "err": {
+      "family": {
+        "invalid": "Le nom de famille doit être composé de lettres.",
+        "required": "Ajoute un nom de famille, s'il te plaît."
+      },
+      "given": {
+        "invalid": "Le prénom doit être composé de lettres.",
+        "required": "Ajoute un prénom de famille, s'il te plaît."
+      },
+      "phone": {
+        "invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
+        "required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
+      }
+    },
+    "importContact": "Importer un contact",
+    "selectContact": "Choisir un contact",
+    "title": "Mon entourage"
+  },
+  "info": {
+    "later": "Remarque: des informations au sujet de l'application SERO seront intégrées dans une version ultérieure."
+  },
+  "main": {
+    "call": "appeler",
+    "default": "Découvre l'application SERO!\nC'est parti...",
+    "emergency": "Urgences",
+    "greeting": "Salut {{name}}",
+    "myEnvironmentTitle": "Appeler mon entourage"
+  },
+  "onboarding": {
+    "assessment": {
+      "text": "Tu apprends à utiliser un outil qui t'aide à comprendre comment tu te sens dans le moment présent.",
+      "title": "Mon évaluation"
+    },
+    "contacts": {
+      "text": "Appelle les contacts de ton entourage qui sont là pour toi.",
+      "title": "Appeler mes contacts"
+    },
+    "emergency": {
+      "text": "Appelle directement le numéro d'urgence 144.",
+      "title": "Appeler le contact d'urgence"
+    },
+    "midata": {
+      "text": "Inscrit ou connecte toi pour enregistrer tes données. Cela te permettra d'utiliser toutes les fonctions de l'application SERO.\n\nTes données sont stockées en toute sécurité sur la plateforme de données MIDATA et seul toi y a accès.",
+      "title": "Inscription à MIDATA"
+    },
+    "securityplan": {
+      "text": "Crée un plan de sécurité personnel pour pouvoir le consulter à tout moment en cas de crise.",
+      "title": "Mon plan de sécurité"
+    }
+  },
+  "prismS": {
+    "title": "Mon\névaluation"
+  },
+  "securityplan": {
+    "addEntry": "Ajouter une entrée",
+    "alertLups": {
+      "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
+      "title": "Ligne de conseil LUPS"
+    },
+    "bubbleTitle": "Que veux-tu faire?",
+    "current": "Plan de sécurité actuel",
+    "editHint": "Tu peux réorganiser les sections en les faisant glisser vers un autre endroit de la liste.\nEn cliquant sur le crayon, tu peux modifier leur contenu.",
+    "editSecurityplan": "Modifier le plan de sécurité",
+    "former": "Plan de sécurité précédent",
+    "newSecurityplan": "Créer un nouveau plan de sécurité",
+    "title": "Mon plan de\nsécurité"
+  },
+  "settings": {
+    "later": "Remarque: les préférences seront intégrées dans une version ultérieure.",
+    "logout": "Se déconnecter",
+    "title": "Préférences"
+  },
+  "welcome": {
+    "greetingText": "C'est bien que tu sois là!",
+    "start": "Commencer",
+    "title": "Bienvenue."
+  }
 }
