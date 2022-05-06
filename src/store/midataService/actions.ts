@@ -1,9 +1,8 @@
 import Action from '../helpers/Action';
 import { UserAuthenticationData, UPDATE_USER_AUTHENTICATION, LOGOUT_AUTHENTICATE_USER, ADD_RESOURCE, ADD_RESOURCE_TO_SYNCHRONIZE, RESOURCE_SENT, ALL_RESOURCES_SENT, ADD_TO_USER_PROFILE } from '../definitions';
-import { Resource, Bundle, Observation } from '@i4mi/fhir_r4';
+import { Resource, Bundle, Observation, CarePlanStatus, CarePlan, EndpointStatus } from '@i4mi/fhir_r4';
 import { store } from '..';
 import { Guid } from "guid-typescript";
-import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { STORAGE } from '../../containers/App';
 
@@ -168,41 +167,78 @@ export function uploadResource( dispatch: Function, _jobItem: {resource : Resour
                     uploadPendingResources(dispatch);
                     return Promise.resolve();
                 } else {
-                    if (_jobItem.resource.resourceType === 'AllergyIntolerance') {
-                        //endPoint = '/fhir/' + _jobItem.resource.resourceType + '?code=' + (_jobItem.resource as AllergyIntolerance).code.coding.find(coding => coding.system === 'http://snomed.info/sct')?.code;
+                    if (_jobItem.resource.resourceType === 'CarePlan' && (_jobItem.resource as CarePlan).status === CarePlanStatus.ACTIVE) {
+                        // if we don't have an ID, only syncing the active care plan does make sense
+                        endPoint = '/fhir/CarePlan?status=active';
                     } else {
+                        // syncing RelatedPerson without the acual ID doesn't make sense
                         console.log('Could not sync resource, ', _jobItem);
                         return Promise.reject();
                     }
                 }
             } else {
-                endPoint = '/fhir/' + _jobItem.resource.resourceType + '/' +  _jobItem.resource.id;
+                if (_jobItem.resource.resourceType === 'CarePlan' && (_jobItem.resource as CarePlan).status === CarePlanStatus.ACTIVE) {
+                    // if we don't have an ID, only syncing the active care plan does make sense
+                    endPoint = '/fhir/CarePlan?status=active';
+                } else {
+                    // syncing RelatedPerson without the acual ID doesn't make sense
+                    console.log('Could not sync resource, ', _jobItem);
+                    return Promise.reject();
+                }
             }
 
 
             // TODO : try/catch when user's token no more valid!
-            MIDATAStore.fetch( endPoint, 'GET' ).then((serverResource: Resource) => {
-                let mustBeUpdated = _jobItem.resource.hasOwnProperty('effectiveDateTime')
-                                            ? moment((serverResource as Observation).effectiveDateTime).isBefore( (_jobItem.resource as Observation).effectiveDateTime )
-                                            : moment(serverResource.meta?.lastUpdated).isBefore(_jobItem.timestamp)
-
-                if (mustBeUpdated) {
-                    _jobItem.resource.id = serverResource?.id;
-                    _jobItem.resource.meta = serverResource?.meta;
-
-                    // TODO : try/catch when user's token no more valid!
-                    MIDATAStore.fetch(endPoint, 'PUT', JSON.stringify(_jobItem.resource))
-                    .then((bundle : Bundle) => {
+            MIDATAStore.fetch( endPoint, 'GET' )
+            .then((serverResource: Resource) => {
+                let mustBeUpdated = false;
+                if (serverResource.resourceType === 'Bundle') {
+                    const bundle = serverResource as Bundle;
+                    if (bundle.entry && bundle.entry[0]) {
+                        serverResource = bundle.entry[0];
+                    } else {
+                        serverResource = {}; // nothing found that matches
+                    }
+                }
+                if (serverResource && serverResource.meta?.lastUpdated) {
+                    mustBeUpdated = new Date(serverResource.meta.lastUpdated).getTime() < _jobItem.timestamp.getTime();
+                } else {
+                    // search result was empty bundle, so don't update but upload
+                    MIDATAStore.fetch('/fhir/' + _jobItem.resource.resourceType, 'POST', JSON.stringify(_jobItem.resource))
+                    .then((createdResource: Resource) => {
+                        _jobItem.resource.id = createdResource.id;
                         dispatch({
                             type: RESOURCE_SENT,
                             resource: _jobItem
                         });
                         uploadPendingResources(dispatch);
-                    }).catch((error)=>{
+                    })
+                    .catch((error)=>{
+                        console.log('error in uploading resource', error)
+                        _jobItem.isUploading = false;
+                    });
+                    return resolve();
+                }
+
+                if (mustBeUpdated) {
+                    _jobItem.resource.id = serverResource?.id;
+                    _jobItem.resource.meta = serverResource?.meta;
+                    endPoint = '/fhir/' + _jobItem.resource.resourceType + '/' + _jobItem.resource.id
+
+                    // TODO : try/catch when user's token no more valid!
+                    MIDATAStore.fetch(endPoint, 'PUT', JSON.stringify(_jobItem.resource))
+                    .then(() => {
+                        dispatch({
+                            type: RESOURCE_SENT,
+                            resource: _jobItem
+                        });
+                        uploadPendingResources(dispatch);
+                    })
+                    .catch((error)=>{
                         console.log('error in updating resource', error)
                         _jobItem.isUploading = false;
                     });
-                    resolve();
+                    return resolve();
 
                 } else {
                     _jobItem.resource = serverResource;
@@ -210,9 +246,10 @@ export function uploadResource( dispatch: Function, _jobItem: {resource : Resour
                         type: RESOURCE_SENT,
                         resource: _jobItem
                     });
-                    resolve();
+                    return esolve();
                 }
-            }).catch((error: Error) => {
+            })
+            .catch((error: Error) => {
                 // TODO-heg2 catch Error when Server Response is 404 because Resource ID is not found (=> can't be updated, but uploaded)
                 console.log(error);
                 _jobItem.isUploading = false;
@@ -282,7 +319,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
                         //     });
                         // });
                     } else {
-                        console.log('Could not delete resource - bundle sync for type ' + _resource.resourceType +' not implemented', _resource);
+                        console.warn('Could not delete resource - bundle sync for type ' + _resource.resourceType +' not implemented', _resource);
                         return reject();
                     }
                 }
