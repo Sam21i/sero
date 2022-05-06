@@ -1,105 +1,106 @@
 {
-  "common": {
-    "archive": "Archive",
-    "back": "Back",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "family": "Last name",
-    "given": "First name",
-    "next": "Next",
-    "ok": "OK",
-    "options": "Options",
-    "phone": "Telephone",
-    "save": "Save",
-    "search": "Search"
-  },
-  "contacts": {
-    "addContact": "Add contact",
-    "bubbleTitle": "What do you like to do?",
-    "deleteContact": "Delete contact",
-    "editContact": "Modify contact",
-    "err": {
-      "family": {
-        "invalid": "The last name must consist of letters.",
-        "required": "Please insert a last name."
-      },
-      "given": {
-        "invalid": "The first name must consist of letters.",
-        "required": "Please insert a first name."
-      },
-      "phone": {
-        "invalid": "No a valid Swiss landline or mobile number.",
-        "required": "Please insert a landline or mobile phone number."
-      }
-    },
-    "importContact": "Import contact",
-    "selectContact": "Select contact",
-    "title": "My community"
-  },
-  "info": {
-    "later": "Note: information about the SERO app will be included in a later version."
-  },
-  "main": {
-    "call": "call",
-    "default": "Discover the SERO app now!\nGet started...",
-    "emergency": "Emergency",
-    "greeting": "Hello {{name}}",
-    "myEnvironmentTitle": "Call my community"
-  },
-  "onboarding": {
-    "assessment": {
-      "text": "You learn to use a tool that helps you understand how you are doing in the moment.",
-      "title": "My assessment"
-    },
-    "contacts": {
-      "text": "Here you call the contacts from your environment who are there for you.",
-      "title": "Call my contacts"
-    },
-    "emergency": {
-      "text": "Here you call directly the emergency number 144.",
-      "title": "Call emergency contact"
-    },
-    "midata": {
-      "text": "Register or log in to save your data. This will allow you to use all the features of the SERO app.\n\nYour data is stored securely on MIDATA's data platform and only you have access to it.",
-      "title": "Registration at MIDATA"
-    },
-    "securityplan": {
-      "text": "Create a personal safety plan so that it can be consulted at any time in the event of a crisis.",
-      "title": "My safety plan"
-    }
-  },
-  "prismS": {
-    "title": "My\nassessment"
-  },
-  "securityplan": {
-    "addEntry": "Add entry",
-    "alertLups": {
-      "description": "Costs: regular call rate up to the 10th minute, thereafter CHF 3.23/minute.",
-      "title": "LUPS advice line"
-    },
-    "bubbleTitle": "What do you like to do?",
-    "current": "Current safety plan",
-    "defaultHint": "Here you can access and edit your current safety plan and view previous ones.",
-    "editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
-    "editSecurityplan": "Edit safety plan",
-    "former": "Previous safety plan",
-    "newSecurityplan": "Create new safety plan",
-    "notification": {
-      "copingStrategies": "A coping strategy to help you:",
-      "distractionStrategies": "Something to distract you:",
-      "motivation": "Something to motivate you:",
-      "personalBeliefs": "A belief that helps you:"
-    },
-    "title": "My safety\nplan"
-  },
-  "settings": {
-    "later": "Note: the settings will be built into a later version.",
-    "logout": "Log out",
-    "title": "Settings"
-  },
-  "welcome": {
-    "greetingText": "Glad to have you here!",
-    "start": "Start",
-    "title": "Welcome."
-  }
+	"common": {
+		"archive": "Archive",
+		"back": "Back",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"family": "Last name",
+		"given": "First name",
+		"loading": "Loading data",
+		"next": "Next",
+		"ok": "OK",
+		"options": "Options",
+		"phone": "Telephone",
+		"save": "Save",
+		"search": "Search"
+	},
+	"contacts": {
+		"addContact": "Add contact",
+		"bubbleTitle": "What do you like to do?",
+		"deleteContact": "Delete contact",
+		"editContact": "Modify contact",
+		"err": {
+			"family": {
+				"invalid": "The last name must consist of letters.",
+				"required": "Please insert a last name."
+			},
+			"given": {
+				"invalid": "The first name must consist of letters.",
+				"required": "Please insert a first name."
+			},
+			"phone": {
+				"invalid": "No a valid Swiss landline or mobile number.",
+				"required": "Please insert a landline or mobile phone number."
+			}
+		},
+		"importContact": "Import contact",
+		"selectContact": "Select contact",
+		"title": "My community"
+	},
+	"info": {
+		"later": "Note: information about the SERO app will be included in a later version."
+	},
+	"main": {
+		"call": "call",
+		"default": "Discover the SERO app now!\nGet started...",
+		"emergency": "Emergency",
+		"greeting": "Hello {{name}}",
+		"myEnvironmentTitle": "Call my community"
+	},
+	"onboarding": {
+		"assessment": {
+			"text": "You learn to use a tool that helps you understand how you are doing in the moment.",
+			"title": "My assessment"
+		},
+		"contacts": {
+			"text": "Here you call the contacts from your environment who are there for you.",
+			"title": "Call my contacts"
+		},
+		"emergency": {
+			"text": "Here you call directly the emergency number 144.",
+			"title": "Call emergency contact"
+		},
+		"midata": {
+			"text": "Register or log in to save your data. This will allow you to use all the features of the SERO app.\n\nYour data is stored securely on MIDATA's data platform and only you have access to it.",
+			"title": "Registration at MIDATA"
+		},
+		"securityplan": {
+			"text": "Create a personal safety plan so that it can be consulted at any time in the event of a crisis.",
+			"title": "My safety plan"
+		}
+	},
+	"prismS": {
+		"title": "My\nassessment"
+	},
+	"securityplan": {
+		"addEntry": "Add entry",
+		"alertLups": {
+			"description": "Costs: regular call rate up to the 10th minute, thereafter CHF 3.23/minute.",
+			"title": "LUPS advice line"
+		},
+		"bubbleTitle": "What do you like to do?",
+		"current": "Current safety plan",
+		"defaultHint": "Here you can access and edit your current safety plan and view previous ones.",
+		"editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
+		"editSecurityplan": "Edit safety plan",
+		"former": "Previous safety plan",
+		"newSecurityplan": "Create new safety plan",
+		"notification": {
+			"copingStrategies": "A coping strategy to help you:",
+			"distractionStrategies": "Something to distract you:",
+			"motivation": "Something to motivate you:",
+			"personalBeliefs": "A belief that helps you:"
+		},
+		"title": "My safety\nplan"
+	},
+	"settings": {
+		"later": "Note: the settings will be built into a later version.",
+		"logout": "Log out",
+		"title": "Settings"
+	},
+	"welcome": {
+		"greetingText": "Glad to have you here!",
+		"start": "Start",
+		"title": "Welcome."
+	}
 }
