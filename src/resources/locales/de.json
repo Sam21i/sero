@@ -79,21 +79,21 @@
     },
     "bubbleTitle": "Was möchtest du tun?",
     "current": "Aktueller Sicherheitsplan",
+    "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
     "editHint": "Du kannst die Abschnitte neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst.\nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
     "editSecurityplan": "Sicherheitsplan bearbeiten",
     "former": "Früherer Sicherheitsplan",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen",
-    "title": "Mein\nSicherheitsplan",
-    "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
     "notification": {
-      "motivation": "Etwas das dich motiviert:",
       "copingStrategies": "Eine Bewältigungsstrategie die dir hilft:",
       "distractionStrategies": "Etwas das dich ablenken kann:",
+      "motivation": "Etwas das dich motiviert:",
       "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
-    }
+    },
+    "title": "Mein\nSicherheitsplan"
   },
   "settings": {
-    "later": "Hinweis: Die Einstellungen werden in einer späteren Version eingebaut.",
+    "later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",
     "logout": "Abmelden",
     "title": "Einstellungen"
   },
