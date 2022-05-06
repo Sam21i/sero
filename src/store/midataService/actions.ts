@@ -194,8 +194,8 @@ export function uploadResource( dispatch: Function, _jobItem: {resource : Resour
                 let mustBeUpdated = false;
                 if (serverResource.resourceType === 'Bundle') {
                     const bundle = serverResource as Bundle;
-                    if (bundle.entry && bundle.entry[0]) {
-                        serverResource = bundle.entry[0];
+                    if (bundle.entry && bundle.entry[0] && bundle.entry[0].resource) {
+                        serverResource = bundle.entry[0].resource;
                     } else {
                         serverResource = {}; // nothing found that matches
                     }
