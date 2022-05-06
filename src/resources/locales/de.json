@@ -83,7 +83,14 @@
     "editSecurityplan": "Sicherheitsplan bearbeiten",
     "former": "Früherer Sicherheitsplan",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen",
-    "title": "Mein\nSicherheitsplan"
+    "title": "Mein\nSicherheitsplan",
+    "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
+    "notification": {
+      "motivation": "Etwas das dich motiviert:",
+      "copingStrategies": "Eine Bewältigungsstrategie die dir hilft:",
+      "distractionStrategies": "Etwas das dich ablenken kann:",
+      "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
+    }
   },
   "settings": {
     "later": "Hinweis: Die Einstellungen werden in einer späteren Version eingebaut.",

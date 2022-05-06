@@ -52,7 +52,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
             <View style={styles.bottomView}>
               <Formik
                 initialValues={{entries: this.state.entries}}
-                onSubmit={(values) => this.handleSubmit(values.entries)}>
+                onSubmit={(values) => this.handleSubmit(values.entries.filter((v) => v !== ''))}>
                 {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
                   <NativeBaseProvider>
                     <View style={{flex: 7}}>
