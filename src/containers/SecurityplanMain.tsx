@@ -6,12 +6,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import MainNotification from '../components/MainNotification';
+import SecurityPlanNotification from '../components/SecurityPlanNotification';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {SecurityPlanModule} from '../model/SecurityPlan';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -25,7 +26,10 @@ interface PropsType {
 interface State {
   bubbleVisible: boolean;
   listVisible: boolean;
+  modules: SecurityPlanModule[];
 }
+
+const NOTIFICATION_OPTIONS = ['motivation', 'copingStrategies', 'distractionStrategies', 'personalBeliefs'];
 
 class SecurityplanMain extends Component<PropsType, State> {
   constructor(props: PropsType) {
@@ -33,8 +37,31 @@ class SecurityplanMain extends Component<PropsType, State> {
 
     this.state = {
       bubbleVisible: true,
-      listVisible: false
+      listVisible: false,
+      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules()
     };
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  getRandomMessage(): string {
+    const filteredModules = this.state.modules.filter(
+      (m) => m.entries.length > 0 && m.type !== 'professionalContacts' && m.type !== 'warningSigns'
+    );
+    if (filteredModules.length !== 0) {
+      const selectedModule = filteredModules[this.getRandomInt(filteredModules.length)];
+      const selectedEntry = selectedModule.entries[this.getRandomInt(selectedModule.entries.length)];
+      return (
+        this.props.localesHelper.localeString(
+          'securityplan.notification.' +
+            NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex((item) => item === selectedModule.type)]
+        ) + selectedEntry
+      );
+    } else {
+      return this.props.localesHelper.localeString('securityplan.defaultHint');
+    }
   }
 
   render() {
@@ -56,7 +83,7 @@ class SecurityplanMain extends Component<PropsType, State> {
           </View>
 
           <View style={styles.bottomView}>
-            <MainNotification />
+            <SecurityPlanNotification message={this.getRandomMessage()} />
           </View>
           <View style={appStyles.buttonContainer}>
             <AppButton
@@ -119,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   bottomView: {
-    flex: 0.92,
+    flex: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.65)'
   }
 });
