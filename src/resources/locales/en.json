@@ -79,10 +79,17 @@
     },
     "bubbleTitle": "What do you like to do?",
     "current": "Current safety plan",
+    "defaultHint": "Here you can access and edit your current safety plan and view previous ones.",
     "editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
     "editSecurityplan": "Edit safety plan",
     "former": "Previous safety plan",
     "newSecurityplan": "Create new safety plan",
+    "notification": {
+      "copingStrategies": "A coping strategy to help you:",
+      "distractionStrategies": "Something to distract you:",
+      "motivation": "Something to motivate you:",
+      "personalBeliefs": "A belief that helps you:"
+    },
     "title": "My safety\nplan"
   },
   "settings": {

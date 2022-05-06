@@ -9,17 +9,47 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 interface PropsType {
   localesHelper: LocalesHelper;
   userProfile: UserProfile;
+  message: string;
 }
 
-class MainNotification extends Component<PropsType> {
+interface State {}
+
+class SecurityPlanNotification extends Component<PropsType, State> {
+  constructor(props: PropsType) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     const userName = this.props.userProfile.getGivenName();
+    const messageParts = this.props.message.split(':');
     return (
       <View style={styles.view}>
         <Text style={styles.title}>
           {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
         </Text>
-        <Text style={styles.text}>{this.props.localesHelper.localeString('main.default')}</Text>
+        {messageParts.length === 1 ? (
+          <Text
+            numberOfLines={3}
+            style={styles.text}
+            adjustsFontSizeToFit>
+            {messageParts[0]}
+          </Text>
+        ) : (
+          <View>
+            <Text
+              numberOfLines={2}
+              style={styles.text}
+              adjustsFontSizeToFit>
+              {messageParts[0] + ':'}
+            </Text>
+            <Text
+              numberOfLines={2}
+              style={styles.text}>
+              {'- ' + messageParts[1]}
+            </Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -29,7 +59,8 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     marginTop: verticalScale(40),
-    paddingLeft: scale(40)
+    paddingLeft: scale(40),
+    paddingRight: scale(20)
   },
   title: {
     fontSize: scale(TextSize.big),
@@ -38,7 +69,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(10)
   },
   text: {
-    fontSize: scale(TextSize.normal),
+    fontSize: scale(TextSize.small),
     fontFamily: AppFonts.regular,
     color: colors.black
   }
@@ -51,4 +82,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps)(MainNotification);
+export default connect(mapStateToProps)(SecurityPlanNotification);
