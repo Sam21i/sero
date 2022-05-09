@@ -35,17 +35,17 @@
     },
     "importContact": "Kontakt importieren",
     "selectContact": "Kontakt auswählen",
-    "title": "Mein Umfeld"
+    "title": "Meine Kontakte"
   },
   "info": {
     "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
   },
   "main": {
-    "call": "anrufen",
+    "callEmergencyBottom": "anrufen",
+    "callEmergencyTop": "Notfall",
     "default": "Entdecke jetzt die SERO App!\nLos geht's...",
-    "emergency": "Notfall",
     "greeting": "Hallo {{name}}",
-    "myEnvironmentTitle": "Mein Umfeld anrufen"
+    "myEnvironmentTitle": "Meine Kontakte anrufen"
   },
   "onboarding": {
     "assessment": {

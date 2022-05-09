@@ -35,17 +35,17 @@
     },
     "importContact": "Import contact",
     "selectContact": "Select contact",
-    "title": "My community"
+    "title": "My contacts"
   },
   "info": {
     "later": "Note: information about the SERO app will be included in a later version."
   },
   "main": {
-    "call": "call",
+    "callEmergencyBottom": "call",
+    "callEmergencyTop": "Emergency",
     "default": "Discover the SERO app now!\nGet started...",
-    "emergency": "Emergency",
     "greeting": "Hello {{name}}",
-    "myEnvironmentTitle": "Call my community"
+    "myEnvironmentTitle": "Call my contacts"
   },
   "onboarding": {
     "assessment": {

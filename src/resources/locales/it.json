@@ -35,17 +35,17 @@
     },
     "importContact": "Importare un contatto",
     "selectContact": "Seleziona contatto",
-    "title": "Mia cerchia"
+    "title": "I miei contatti"
   },
   "info": {
     "later": "Nota: le informazioni sull'app SERO saranno incluse in una versione successiva."
   },
   "main": {
-    "call": "chiamare",
+    "callEmergencyBottom": "emergenza",
+    "callEmergencyTop": "Chiamare",
     "default": "Scoprite l'applicazione SERO!\nEcco qui...",
-    "emergency": "Emergenza",
     "greeting": "Ciao {{name}}",
-    "myEnvironmentTitle": "Chiama la mia cerchia"
+    "myEnvironmentTitle": "Chiama i miei contatti"
   },
   "onboarding": {
     "assessment": {
