@@ -9,7 +9,7 @@ import {
   ALL_RESOURCES_SENT,
   ADD_TO_USER_PROFILE
 } from '../definitions';
-import {Resource, Bundle, Observation} from '@i4mi/fhir_r4';
+import {Resource, Bundle, CarePlanStatus, CarePlan} from '@i4mi/fhir_r4';
 import {store} from '..';
 import {Guid} from 'guid-typescript';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -184,9 +184,16 @@ export function uploadResource(
           uploadPendingResources(dispatch);
           return Promise.resolve();
         } else {
-          if (_jobItem.resource.resourceType === 'AllergyIntolerance') {
-            //endPoint = '/fhir/' + _jobItem.resource.resourceType + '?code=' + (_jobItem.resource as AllergyIntolerance).code.coding.find(coding => coding.system === 'http://snomed.info/sct')?.code;
+          if (_jobItem.resource.resourceType === 'CarePlan') {
+            const carePlan = _jobItem.resource as CarePlan;
+            if (carePlan.status === CarePlanStatus.ACTIVE) {
+              // if we don't have an ID, only syncing the active care plan does make sense
+              endPoint = '/fhir/CarePlan?status=active';
+            } else {
+              endPoint = '/fhir/CarePlan/' + carePlan.id;
+            } 
           } else {
+            // syncing RelatedPerson without the acual ID doesn't make sense
             console.log('Could not sync resource, ', _jobItem);
             return Promise.reject();
           }
@@ -198,19 +205,43 @@ export function uploadResource(
       // TODO : try/catch when user's token no more valid!
       MIDATAStore.fetch(endPoint, 'GET')
         .then((serverResource: Resource) => {
-          let mustBeUpdated = _jobItem.resource.hasOwnProperty('effectiveDateTime')
-      //      ? moment((serverResource as Observation).effectiveDateTime).isBefore(
-      //          (_jobItem.resource as Observation).effectiveDateTime
-      //        )
-      //      : moment(serverResource.meta?.lastUpdated).isBefore(_jobItem.timestamp);
+          let mustBeUpdated = false;
+          if (serverResource.resourceType === 'Bundle') {
+            const bundle = serverResource as Bundle;
+            if (bundle.entry && bundle.entry[0] && bundle.entry[0].resource) {
+              serverResource = bundle.entry[0].resource;
+            } else {
+              serverResource = {}; // nothing found that matches
+            }
+          }
+          if (serverResource && serverResource.meta?.lastUpdated) {
+            mustBeUpdated = new Date(serverResource.meta.lastUpdated).getTime() < _jobItem.timestamp.getTime();
+          } else {
+            // search result was empty bundle, so don't update but upload
+            MIDATAStore.fetch('/fhir/' + _jobItem.resource.resourceType, 'POST', JSON.stringify(_jobItem.resource))
+              .then((createdResource: Resource) => {
+                _jobItem.resource.id = createdResource.id;
+                dispatch({
+                  type: RESOURCE_SENT,
+                  resource: _jobItem
+                });
+                uploadPendingResources(dispatch);
+              })
+              .catch((error) => {
+                console.log('error in uploading resource', error);
+                _jobItem.isUploading = false;
+              });
+            return resolve();
+          }
 
           if (mustBeUpdated) {
             _jobItem.resource.id = serverResource?.id;
             _jobItem.resource.meta = serverResource?.meta;
+            endPoint = '/fhir/' + _jobItem.resource.resourceType + '/' + _jobItem.resource.id;
 
             // TODO : try/catch when user's token no more valid!
             MIDATAStore.fetch(endPoint, 'PUT', JSON.stringify(_jobItem.resource))
-              .then((bundle: Bundle) => {
+              .then(() => {
                 dispatch({
                   type: RESOURCE_SENT,
                   resource: _jobItem
@@ -221,14 +252,14 @@ export function uploadResource(
                 console.log('error in updating resource', error);
                 _jobItem.isUploading = false;
               });
-            resolve();
+            return resolve();
           } else {
             _jobItem.resource = serverResource;
             dispatch({
               type: RESOURCE_SENT,
               resource: _jobItem
             });
-            resolve();
+            return resolve();
           }
         })
         .catch((error: Error) => {
@@ -245,7 +276,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
   return new Promise((resolve, reject) => {
     if (_resource.id) {
       if (Guid.isGuid(_resource.id)) {
-        // this means resource is in a yet unsynced bundle
+        // we have a GUID if the resource isn't known to MIDATA yet
         const pendingJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
         let foundResourceInPendingJobs = false;
         // look for the bundle if it's still in queue
@@ -302,7 +333,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
             //     });
             // });
           } else {
-            console.log(
+            console.warn(
               'Could not delete resource - bundle sync for type ' + _resource.resourceType + ' not implemented',
               _resource
             );

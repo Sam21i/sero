@@ -82,16 +82,18 @@ const UserProfileStore = createReducer(new UserProfile(), {
       return new UserProfile(state);
     } else if (action.resource.resource.resourceType === 'CarePlan') {
       const carePlan = action.resource.resource as CarePlan;
+      const newResourceId = carePlan.id + '';
+
       let newState = new UserProfile(state);
       if (!action.resource.mustBeSynchronized) {
         if (newState.getCurrentSecurityPlan().hasEqualFhirId(carePlan)) {
-          // new security plan replacing old one
-          //newState.replaceCurrentSecurityPlan(new SecurityPlanModel(carePlan));
+          // new security plan replacing old one, but already updated, nothing to do here
         }
       } else if (carePlan.status === CarePlanStatus.REVOKED && newState.currentSecurityPlan.hasEqualFhirId(carePlan)) {
         newState.deleteCurrentSecurityPlan();
       } else {
-        // the resource id is already updated by reference, but needs to be persisted in store
+        // fight the reducer voodoo that somewhere got the old temporary id and put it on the careplan
+        carePlan.id = newResourceId;
       }
       return newState;
     } else {
