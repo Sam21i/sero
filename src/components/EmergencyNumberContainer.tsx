@@ -18,7 +18,7 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
       <View style={styles.view}>
         <View style={styles.topTextView}>
           <Text style={styles.topText}>
-            {this.props.localesHelper.localeString('main.emergency')}
+            {this.props.localesHelper.localeString('main.callEmergencyTop')}
           </Text>
         </View>
         <View style={styles.iconView}>
@@ -26,7 +26,7 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
         </View>
         <View style={styles.bottomTextView}>
           <Text style={styles.bottomText}>
-            {this.props.localesHelper.localeString('main.call')}
+            {this.props.localesHelper.localeString('main.callEmergencyBottom')}
           </Text>
         </View>
       </View>
