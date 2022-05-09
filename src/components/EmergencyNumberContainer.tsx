@@ -15,13 +15,17 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
     return (
       <View style={styles.view}>
         <View style={styles.topTextView}>
-          <Text style={styles.topText}>{this.props.localesHelper.localeString('main.emergency')}</Text>
+          <Text style={styles.topText}>
+            {this.props.localesHelper.localeString('main.callEmergencyTop')}
+          </Text>
         </View>
         <View style={styles.iconView}>
           <EmergencyNumberButton />
         </View>
         <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>{this.props.localesHelper.localeString('main.call')}</Text>
+          <Text style={styles.bottomText}>
+            {this.props.localesHelper.localeString('main.callEmergencyBottom')}
+          </Text>
         </View>
       </View>
     );
