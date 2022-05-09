@@ -87,8 +87,7 @@ const UserProfileStore = createReducer(new UserProfile(), {
       let newState = new UserProfile(state);
       if (!action.resource.mustBeSynchronized) {
         if (newState.getCurrentSecurityPlan().hasEqualFhirId(carePlan)) {
-          // new security plan replacing old one
-          newState.replaceCurrentSecurityPlan(new SecurityPlanModel(carePlan));
+          // new security plan replacing old one, but already updated, nothing to do here
         }
       } else if (carePlan.status === CarePlanStatus.REVOKED && newState.currentSecurityPlan.hasEqualFhirId(carePlan)) {
         newState.deleteCurrentSecurityPlan();

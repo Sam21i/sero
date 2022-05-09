@@ -184,12 +184,14 @@ export function uploadResource(
           uploadPendingResources(dispatch);
           return Promise.resolve();
         } else {
-          if (
-            _jobItem.resource.resourceType === 'CarePlan' &&
-            (_jobItem.resource as CarePlan).status === CarePlanStatus.ACTIVE
-          ) {
-            // if we don't have an ID, only syncing the active care plan does make sense
-            endPoint = '/fhir/CarePlan?status=active';
+          if (_jobItem.resource.resourceType === 'CarePlan') {
+            const carePlan = _jobItem.resource as CarePlan;
+            if (carePlan.status === CarePlanStatus.ACTIVE) {
+              // if we don't have an ID, only syncing the active care plan does make sense
+              endPoint = '/fhir/CarePlan?status=active';
+            } else {
+              endPoint = '/fhir/CarePlan/' + carePlan.id;
+            } 
           } else {
             // syncing RelatedPerson without the acual ID doesn't make sense
             console.log('Could not sync resource, ', _jobItem);
@@ -197,17 +199,7 @@ export function uploadResource(
           }
         }
       } else {
-        if (
-          _jobItem.resource.resourceType === 'CarePlan' &&
-          (_jobItem.resource as CarePlan).status === CarePlanStatus.ACTIVE
-        ) {
-          // if we don't have an ID, only syncing the active care plan does make sense
-          endPoint = '/fhir/CarePlan?status=active';
-        } else {
-          // syncing RelatedPerson without the acual ID doesn't make sense
-          console.log('Could not sync resource, ', _jobItem);
-          return Promise.reject();
-        }
+        endPoint = '/fhir/' + _jobItem.resource.resourceType + '/' + _jobItem.resource.id;
       }
 
       // TODO : try/catch when user's token no more valid!
@@ -284,7 +276,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
   return new Promise((resolve, reject) => {
     if (_resource.id) {
       if (Guid.isGuid(_resource.id)) {
-        // this means resource is in a yet unsynced bundle
+        // we have a GUID if the resource isn't known to MIDATA yet
         const pendingJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
         let foundResourceInPendingJobs = false;
         // look for the bundle if it's still in queue
