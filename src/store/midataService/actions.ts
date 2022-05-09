@@ -259,7 +259,7 @@ export function uploadResource(
               type: RESOURCE_SENT,
               resource: _jobItem
             });
-            return esolve();
+            return resolve();
           }
         })
         .catch((error: Error) => {
