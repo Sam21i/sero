@@ -1767,7 +1767,7 @@
     </editor_configuration>
     <primary_language>fr-CH</primary_language>
     <configuration>
-        <indent>tab</indent>
+        <indent>space2</indent>
         <format>namespaced-json</format>
         <support_arrays>true</support_arrays>
     </configuration>
