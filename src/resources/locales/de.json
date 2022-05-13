@@ -35,7 +35,11 @@
     },
     "importContact": "Kontakt importieren",
     "selectContact": "Kontakt auswählen",
-    "title": "Meine Kontakte"
+    "title": "Meine Kontakte",
+    "permissionAndroid": {
+      "title": "\"SERO\" möchte auf Ihre Kontakte zugreifen",
+      "message": "Der Zugriff auf die Kontakte ermöglicht das Importieren der Kontakte, um diese direkt aus der App kontaktieren zu können."
+    }
   },
   "info": {
     "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
