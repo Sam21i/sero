@@ -1,0 +1,2 @@
+NSContactsUsageDescription = "Accessing the contacts allows importing the contacts to be able to contact them directly from the app.";
+NSPhotoLibraryUsageDescription = "Accessing the Photos app improves the user experience by allowing users to personalize certain areas of the app with the content they create.";
