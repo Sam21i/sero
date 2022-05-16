@@ -35,6 +35,7 @@ interface PropsType {
 
 interface State {
   currentSlide: number;
+  isLoggingIn: boolean;
 }
 
 class OnBoarding extends Component<PropsType, State> {
@@ -44,11 +45,13 @@ class OnBoarding extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      currentSlide: 0
+      currentSlide: 0,
+      isLoggingIn: false
     };
   }
 
   authenthicate(): Promise<void> {
+    this.setState({ isLoggingIn: true });
     return new Promise((resolve, reject) => {
       OAUTH_CONFIG.additionalParameters = {
         ...{
@@ -65,16 +68,21 @@ class OnBoarding extends Component<PropsType, State> {
           );
           this.props.midataService.getUserData().then((profile) => {
             this.props.updateUserProfile(profile);
+            this.setState({ isLoggingIn: false });
             return resolve();
           });
         })
         .catch((error) => {
           console.log('auth failed or cancelled', error);
+          this.setState({ isLoggingIn: false });
         });
     });
   }
   registerOrLogin() {
-    this.authenthicate().then(this.onDone.bind(this));
+    // don't process clicks if we already are logging in
+    if (!this.state.isLoggingIn) {
+      this.authenthicate().then(this.onDone.bind(this));
+    }
   }
 
   onDone() {
