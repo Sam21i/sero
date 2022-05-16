@@ -65,8 +65,8 @@ class OnBoarding extends Component<PropsType, State> {
           );
           this.props.midataService.getUserData().then((profile) => {
             this.props.updateUserProfile(profile);
+            return resolve();
           });
-          return resolve();
         })
         .catch((error) => {
           console.log('auth failed or cancelled', error);
