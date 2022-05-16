@@ -189,7 +189,7 @@ export default class UserProfile {
    * DO NOT USE OUTSIDE THE REDUCER
    */
   deleteCurrentSecurityPlan(): void {
-    this.replaceCurrentSecurityPlan(new SecurityPlanModel({}));
+    this.currentSecurityPlan = new SecurityPlanModel({});
   }
 
   /**

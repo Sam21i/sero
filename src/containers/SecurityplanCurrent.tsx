@@ -138,23 +138,20 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   save() {
-    if (this.state.isEditMode) {
-      // get handy references ready
-      const userReference = this.props.userProfile.getFhirReference();
-      // sync order of modules in table and model
-      this.state.moduleOrder.forEach((orderEntry, index) => {
-        this.state.modules[parseInt(orderEntry)].order = index;
-      });
-      this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
-      // then send to midata
-      if (userReference) {
-        this.props.synchronizeResource(this.state.currentSecurityplan.getFhirResource(userReference));
-      }
-    }
+    const userReference = this.props.userProfile.getFhirReference();
+    // sync order of modules in table and model
+    this.state.moduleOrder.forEach((orderEntry, index) => {
+      this.state.modules[parseInt(orderEntry)].order = index;
+    });
+    this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
+
     if (this.state.isReplaceMode) {
-      const userReference = this.props.userProfile.getFhirReference();
       if (userReference && this.state.replacedSecurityplan) {
         this.props.replaceSecurityPlan(this.state.currentSecurityplan, this.state.replacedSecurityplan, userReference);
+      }
+    } else if (this.state.isEditMode) {
+      if (userReference) {
+        this.props.synchronizeResource(this.state.currentSecurityplan.getFhirResource(userReference));
       }
     }
 
