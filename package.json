@@ -11,6 +11,7 @@
     "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i --force && cd ios && pod install && cd .. && npm run ios"
   },
   "dependencies": {
+    "@i4mi/fhir_questionnaire": "^0.0.9",
     "@i4mi/fhir_r4": "^1.0.10",
     "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-navigation/bottom-tabs": "^6.2.0",
