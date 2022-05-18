@@ -1,2 +1,2 @@
-NSContactsUsageDescription = "L'accès aux contacts permet d'importer les contacts pour pouvoir les contacter directement depuis l'application.";
+NSContactsUsageDescription = "L'accès aux contacts te permet d'importer les numéros de téléphone des personnes importantes dans l'application SERO et de pouvoir les appeler directement.";
 NSPhotoLibraryUsageDescription = "L'accès à l'application Photos améliore l'expérience utilisateur en permettant aux utilisateurs de personnaliser certaines sections de l'application avec le contenu qu'ils créent.";
