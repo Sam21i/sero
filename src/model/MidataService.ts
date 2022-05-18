@@ -212,6 +212,8 @@ export default class MidataService {
           } else if (response.status === 401) {
             logoutUser(store.dispatch);
             return reject('Can\'t fetch: Server responds with "401 unauthorized".');
+          } else if (response.status === 409) {
+            return reject('Conflict updating resource.');
           } else {
             return reject('Bad response with status: ' + response.status);
           }
