@@ -19,6 +19,7 @@
 		9A7206D54F0C4CBC917F3437 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA4A001C2490409CA099F2E3 /* RobotoCondensed-Bold.ttf */; };
 		A1673144FF0A4D05B03387EE /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BDAB73B1CAE4B8291888C57 /* Roboto-Medium.ttf */; };
 		CF4CA13A430F41838F337C40 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A781D0A35AF4322AE84446D /* RobotoCondensed-Regular.ttf */; };
+		D00420C4282E4DC7006F9824 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D00420C6282E4DC7006F9824 /* InfoPlist.strings */; };
 		D054CBE927BE54DB0087C161 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D054CBE827BE54DB0087C161 /* BootSplash.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SERO/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-SERO-SEROTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SERO-SEROTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-SERO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO.debug.xcconfig"; path = "Target Support Files/Pods-SERO/Pods-SERO.debug.xcconfig"; sourceTree = "<group>"; };
+		D00420C5282E4DC7006F9824 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D00420C7282E4DEC006F9824 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D00420C8282E4E3A006F9824 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D00420C9282E4E69006F9824 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-SERO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SERO.release.xcconfig"; path = "Target Support Files/Pods-SERO/Pods-SERO.release.xcconfig"; sourceTree = "<group>"; };
 		D054CBE827BE54DB0087C161 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = SERO/BootSplash.storyboard; sourceTree = "<group>"; };
 		EA4A001C2490409CA099F2E3 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Bold.ttf"; path = "../src/resources/fonts/RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
@@ -105,6 +110,7 @@
 				D054CBE827BE54DB0087C161 /* BootSplash.storyboard */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				D00420C6282E4DC7006F9824 /* InfoPlist.strings */,
 			);
 			name = SERO;
 			sourceTree = "<group>";
@@ -244,6 +250,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				it,
+				de,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -275,6 +284,7 @@
 				A1673144FF0A4D05B03387EE /* Roboto-Medium.ttf in Resources */,
 				09E066DB788A4100860F6BF9 /* Roboto-Regular.ttf in Resources */,
 				9A7206D54F0C4CBC917F3437 /* RobotoCondensed-Bold.ttf in Resources */,
+				D00420C4282E4DC7006F9824 /* InfoPlist.strings in Resources */,
 				CF4CA13A430F41838F337C40 /* RobotoCondensed-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +466,20 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D00420C6282E4DC7006F9824 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D00420C5282E4DC7006F9824 /* en */,
+				D00420C7282E4DEC006F9824 /* fr */,
+				D00420C8282E4E3A006F9824 /* de */,
+				D00420C9282E4E69006F9824 /* it */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
