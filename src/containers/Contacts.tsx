@@ -76,9 +76,23 @@ class Contacts extends Component<PropsType, State> {
         }
         if (Platform.OS === 'android') {
           PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((permission) => {
-            this.setState({
-              showImportButton: permission
-            });
+            if (permission) {
+              this.setState({
+                showImportButton: true
+              });
+            } else {
+              AsyncStorage.getItem(STORAGE.PERMISSION_STATUS_ANDROID).then((permission) => {
+                if (permission === 'denied') {
+                  this.setState({
+                    showImportButton: true
+                  });
+                } else if (permission === 'never_ask_again') {
+                  this.setState({
+                    showImportButton: false
+                  });
+                }
+              });
+            }
           });
         }
       }
@@ -235,13 +249,25 @@ class Contacts extends Component<PropsType, State> {
             if (permission) {
               this.getAllAddressBookContacts();
             } else {
-              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
-                .then((asked) => {
+              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+                title: this.props.localesHelper.localeString('contacts.permissionAndroid.title'),
+                message: this.props.localesHelper.localeString('contacts.permissionAndroid.message'),
+                buttonPositive: this.props.localesHelper.localeString('common.ok')
+              })
+                .then((permission) => {
                   AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
-                  if (asked === 'granted') {
+                  if (permission === PermissionsAndroid.RESULTS.GRANTED) {
                     // is 'granted' or 'denied'
                     this.getAllAddressBookContacts();
-                  } else {
+                  } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
+                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'denied');
+                    this.setState({
+                      mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                      showImportButton: true,
+                      bubbleVisible: true
+                    });
+                  } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'never_ask_again');
                     this.setState({
                       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
                       showImportButton: false,
