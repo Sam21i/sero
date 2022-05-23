@@ -42,6 +42,7 @@ class Main extends Component<PropsType, State> {
       this.loadEmergencyContacts();
       this.loadSecurityPlans();
       this.props.uploadPendingResources();
+      this.loadPrismSessions();
     }
   }
 
@@ -64,6 +65,16 @@ class Main extends Component<PropsType, State> {
         });
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  loadPrismSessions(): void {
+    const userId = this.props.userProfile.getFhirId();
+    if (userId && this.props.midataService.isAuthenticated()) {
+      this.props.midataService.fetchPrismSessions(userId)
+      .then(sessions => {
+        console.log('fetched prism sessions', sessions);
+      })
     }
   }
 
@@ -185,7 +196,7 @@ function mapDispatchToProps(dispatch: Function) {
     setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
     setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
     setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
-    uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
+    uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch),
   };
 }
 

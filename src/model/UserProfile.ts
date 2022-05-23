@@ -10,12 +10,14 @@ import EmergencyContact from './EmergencyContact';
 import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
 import SecurityPlanModel from './SecurityPlan';
 import RNRestart from 'react-native-restart';
+import PrismSession, { PrismResources } from './PrismSession';
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
   emergencyContacts: EmergencyContact[] = [];
   securityPlanHistory: SecurityPlanModel[] = [];
   currentSecurityPlan: SecurityPlanModel = new SecurityPlanModel({});
+  prismSessions: PrismSession[] = [];
 
   constructor(_userProfile?: Partial<UserProfile>) {
     if (_userProfile) {
@@ -35,6 +37,9 @@ export default class UserProfile {
     }
     if (_attributes.currentSecurityPlan) {
       this.currentSecurityPlan = new SecurityPlanModel(_attributes.currentSecurityPlan);
+    }
+    if (_attributes.prismSessions) {
+      this.prismSessions = _attributes.prismSessions.map((ps) => new PrismSession(ps));
     }
   }
 
@@ -65,6 +70,7 @@ export default class UserProfile {
     this.emergencyContacts = [];
     this.securityPlanHistory = [];
     this.currentSecurityPlan = new SecurityPlanModel({});
+    this.prismSessions = [];
     RNRestart.Restart();
   }
 
@@ -218,5 +224,34 @@ export default class UserProfile {
    */
   getSecurityPlanHistory(): SecurityPlanModel[] {
     return this.securityPlanHistory;
+  }
+
+  /**
+   * Creates PRISM-S Sessions from FHIR Resources and stores them to the user profile.
+   * Use this to add the previous sessions loaded from MIDATA.
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _resources Array of corresponding Observation, Media, 
+   *                   QuestionnaireResponse and Questionnaire resources.
+   */
+  setPrismSessions(_resources: PrismResources[]): void {
+    this.prismSessions = _resources.map(r => new PrismSession(r));
+  }
+
+  /**
+   * Add a single PrismSession to the existing sessions (without overwriting previous
+   * sessions). Use this to 
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _session  a PrismSession object representing the session.
+   */
+  addPrismSession(_session: PrismSession) {
+    this.prismSessions.push(_session);
+  }
+
+  /**
+   * Gets the previous prism sessions the user has done.
+   * @returns An array of PrismSession objects.
+   */
+  getPrismSessions(): PrismSession[] {
+    return this.prismSessions;
   }
 }

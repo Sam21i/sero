@@ -9,6 +9,12 @@ const PRISM_WIDTH = 29.4;
 // width of the generated SVG image in pixel
 const SVG_WIDTH = 500;
 
+export const PRISM_OBSERVATION_CODE = {
+  system: 'http://midata.coop/prisms',
+  code: 'selfAssessment',
+  display: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method.'
+}
+
 export class Position {
     // the horizontal position of the black disc in pixel, measured from the left
     horizontal: number;
@@ -63,32 +69,41 @@ export class Position {
 
 interface PrismInitializer {
     blackDiscPosition: Position;
-    yellowDiscPosition: Position;
+    yellowCirclePosition: Position;
     canvasWidth: number;
     date?: Date;
     questionnaire?: Questionnaire
+}
+
+export interface PrismResources {
+    observation: Observation,
+    media: Media,
+    questionnaireResponse: QuestionnaireResponse,
+    questionnaire: Questionnaire
 }
 
 export default class PrismSession {
     // position of the black disc
     blackDiscPosition: Position = new Position(0,0);
     // position of the yellow disc
-    yellowDiscPosition: Position = new Position(0,0);
+    yellowCirclePosition: Position = new Position(0,0);
     // the date when the PRISM-S was done
     date: Date = new Date();
-    // the with of the virtual PRISM-S
+    // the width of the virtual PRISM-S
     canvasWidth: number = 1;
     private questionnaireData?: QuestionnaireData;
     private observation?: Observation;
     private media?: Media;
 
-    constructor(_data: PrismSession | PrismInitializer ) {
-        if (_data.hasOwnProperty('getUploadBundle')) { // it's of type PrismSession
+    constructor(_data: PrismSession | PrismInitializer | PrismResources) {
+        if (_data.hasOwnProperty('questionnaireData')) { // it's of type PrismSession
             Object.assign(this, _data);
+        } else if (_data.hasOwnProperty('observation') ) {
+
         } else {
             const init = _data as PrismInitializer
             this.blackDiscPosition = init.blackDiscPosition;
-            this.yellowDiscPosition = init.yellowDiscPosition;
+            this.yellowCirclePosition = init.yellowCirclePosition;
             this.date = init.date || new Date();
             this.canvasWidth = init.canvasWidth;
             if (init.questionnaire) {
@@ -179,11 +194,7 @@ export default class PrismSession {
             id: 'temp-prism-observation',
             code: {
               coding: [
-                {
-                  system: 'http://midata.coop/prisms',
-                  code: 'selfAssessment',
-                  display: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method.'
-                }
+                PRISM_OBSERVATION_CODE
               ],
               text: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method.'
             },
@@ -204,7 +215,7 @@ export default class PrismSession {
                   ]
                 },
                 valueQuantity: {
-                  value: this.blackDiscPosition.getCentimeterDistance(this.yellowDiscPosition, this.canvasWidth),
+                  value: this.blackDiscPosition.getCentimeterDistance(this.yellowCirclePosition, this.canvasWidth),
                   system: 'http://unitsofmeasure.org',
                   code: 'cm',
                   unit: 'Centimeter'

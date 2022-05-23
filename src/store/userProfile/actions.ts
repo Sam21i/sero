@@ -4,6 +4,7 @@ import {
   REMOVE_EMERGENCY_CONTACT,
   REPLACE_SECURITY_PLAN,
   SET_EMERGENCY_CONTACTS,
+  SET_PRISM_SESSIONS,
   SET_SECURITY_PLAN_HISTORY,
   UPDATE_USER_PROFILE
 } from '../definitions';
@@ -12,6 +13,7 @@ import EmergencyContact from '../../model/EmergencyContact';
 import SecurityPlanModel from '../../model/SecurityPlan';
 import {CarePlan, Reference} from '@i4mi/fhir_r4';
 import {addResource, synchronizeResource} from '../midataService/actions';
+import { PrismResources } from '../../model/PrismSession';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
   dispatch(new Action(UPDATE_USER_PROFILE, userProfileInfo).getObjectAction());
@@ -44,6 +46,10 @@ export function replaceSecurityPlan(
   synchronizeResource(dispatch, oldPlan.getFhirResource(userReference));
   addResource(dispatch, newPlan.getFhirResource(userReference));
   dispatch(new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction());
+}
+
+export function setPrismSessionsFromMIDATA(dispatch, sessions: PrismResources) {
+  dispatch(new Action(SET_PRISM_SESSIONS, sessions));
 }
 
 export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {

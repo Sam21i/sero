@@ -1,11 +1,14 @@
 import Config from 'react-native-config';
 import UserProfile from './UserProfile';
-import {Bundle, CarePlan, CarePlanStatus, Patient, RelatedPerson, Resource} from '@i4mi/fhir_r4';
+import {Bundle, CarePlan, CarePlanStatus, Media, Observation, Patient, Questionnaire, QuestionnaireResponse, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import UserSession from './UserSession';
 import {store} from '../store';
 import {logoutUser} from '../store/midataService/actions';
 import EmergencyContact from './EmergencyContact';
 import RNFetchBlob from 'rn-fetch-blob';
+import { PrismResources, PRISM_OBSERVATION_CODE } from './PrismSession';
+import PRISM_QUESTIONNAIRE  from '../resources/static/Questionnaire.json'
+import { QuestionnaireData } from '@i4mi/fhir_questionnaire';
 
 export default class MidataService {
   currentSession: UserSession = new UserSession();
@@ -19,6 +22,9 @@ export default class MidataService {
   readonly PATIENT_ENDPOINT = '/fhir/Patient';
   readonly RELATED_PERSON_ENDPOINT = '/fhir/RelatedPerson';
   readonly CARE_PLAN_ENDPOINT = '/fhir/CarePlan';
+  readonly RESPONSE_ENDPOINT = '/fhir/QuestionnaireResponse';
+  readonly MEDIA_ENDPOINT = '/fhir/Media';
+
 
   constructor(miDataServiceStore?: MidataService) {
     if (miDataServiceStore) {
@@ -143,6 +149,95 @@ export default class MidataService {
           console.log('could not load related persons', e);
           return reject();
         });
+    });
+  }
+
+  public fetchPrismSessions(_userID: string): Promise<PrismResources[]> {
+    const prismResources = new Array<PrismResources>();
+    const questionnaire = undefined;
+
+    const waitForIt = [
+      // fetch Questionnaire (needed for rendering follow-up questions)
+      new Promise((resolve, reject) => {
+        console.warn('TODO: implement fetching PRISM questionnaire from (open endpoint?) MIDATA');
+        return resolve(PRISM_QUESTIONNAIRE as Questionnaire);
+      }),
+      // fetch PRISM-S observation resources
+      new Promise((resolve, reject) => {
+        this.fetch(this.OBSERVATION_ENDPOINT + '?patient=' + _userID + '&code=' + PRISM_OBSERVATION_CODE.system + '|' + PRISM_OBSERVATION_CODE.code)
+      .then(res => {
+        const bundle = res as Bundle;
+        bundle.entry?.forEach(entry => {
+          const observation = entry as Observation;
+          const resources: Partial<PrismResources> = {
+            observation: observation as Observation,
+            questionnaire: questionnaire
+          }
+          // fetch QuestionnaireResponse to Observation
+          waitForIt.push(
+            this.fetch(this.RESPONSE_ENDPOINT + '?part-of=Observation/' + observation.id)
+            .then(res => {
+              const responseBundle = res as Bundle;
+              if (responseBundle.entry && responseBundle.entry[0] && responseBundle.entry[0].resource) {
+                resources.questionnaireResponse = responseBundle.entry[0].resource as QuestionnaireResponse;
+              }
+            })
+            .catch(e => {
+              console.log('Error fetching QuestionnaireResponse for PRISM observation ' + observation.id);
+              reject(e);
+            })
+          );
+          // fetch Media to Observation
+          const mediaReference = observation.derivedFrom 
+            ? observation.derivedFrom[0].reference
+            : undefined;
+          if (mediaReference) {
+            waitForIt.push(
+              this.fetch('fhir/' + mediaReference)
+              .then(res => {
+                if (res.resourceType === 'Media') {
+                  resources.media = res as Media;
+                }
+              })
+              .catch(e => {
+                console.log('Error fetching' + mediaReference + ' for PRISM observation ' + observation.id);
+                reject(e);
+              })
+            );
+          } else {
+            console.warn('PRISM observation ' + observation.id + ' has no derivedFrom Media resource.');
+          }
+          
+          prismResources.push(resources as PrismResources);
+        });
+        return resolve(undefined);
+      })
+      .catch(e => {
+        console.log('Error fetching prism resources: ', e);
+        reject(e);
+      })
+      })
+    ];
+    return Promise.all(waitForIt)
+    .then(() => {
+      return prismResources.filter(r => {
+        // only return complete PrismResource sets
+        if (
+          r.media !== undefined &&
+          r.observation !== undefined &&
+          r.questionnaire !== undefined &&
+          r.questionnaireResponse !== undefined
+        ) {
+          return true;
+        } else {
+          console.log('Observation ' + r.observation + ' resulted in incomplete PrismResources set and was thus filtered out.', r);
+          return false;
+        }
+      });
+    })
+    .catch(e => {
+      console.log('Something unexpected happened fetching all the PRISM-S sessions.', e);
+      return Promise.reject();
     });
   }
 
