@@ -1,13 +1,17 @@
-
+import base64 from 'react-native-base64'
 import { IQuestion, QuestionnaireData } from "@i4mi/fhir_questionnaire";
 import { Bundle, BundleHTTPVerb, BundleType, I4MIBundle, Media, MediaStatus, Observation, ObservationStatus, Questionnaire, QuestionnaireResponse, Reference } from "@i4mi/fhir_r4";
 
-// aspec ratio of the PRISM-S plate
-const PRISM_RATIO = Math.SQRT2;
-// width of the real PRISM-S plate in cm
-const PRISM_WIDTH = 29.4;
-// width of the generated SVG image in pixel
-const SVG_WIDTH = 500;
+const PRISM_RATIO = Math.SQRT2;               // aspec ratio of the PRISM-S plate
+const PRISM_WIDTH = 29.4;                     // width of the real PRISM-S plate in cm
+const SVG_WIDTH = 500;                        // width of the generated SVG image in pixel 
+const PRISM_BLACK = '#000000';                // colour of the black disc
+const PRISM_YELLOW = '#fbb300';               // colour of the yellow circle
+const PRISM_YELLOW_RADIUS_RATIO = 0.2381 / 2; // diameter of yellow circle is 23.81% of plate width
+const PRISM_BLACK_RADIUS_RATIO = 0.1701 / 2;  // diameter of black plate is 17,01% of plate width
+const YELLOW_DISC_MARGIN_RATIO = 0.068;       // distance of the yellow circle to bottom / right is 6.8% of plate width
+
+
 
 export const PRISM_OBSERVATION_CODE = {
   system: 'http://midata.coop/prisms',
@@ -65,11 +69,18 @@ export class Position {
         const pixelPerCm = _plateWidth / PRISM_WIDTH;
         return this.getDistance(_position) / pixelPerCm;
     }
+
+    /**
+     * 
+     * @returns true if both vertical and horizontal values are 0
+     */
+    isZero(): boolean {
+      return this.vertical === 0 && this.horizontal === 0;
+    }
 }
 
 interface PrismInitializer {
     blackDiscPosition: Position;
-    yellowCirclePosition: Position;
     canvasWidth: number;
     date?: Date;
     questionnaire?: Questionnaire
@@ -94,18 +105,27 @@ export default class PrismSession {
     private questionnaireData?: QuestionnaireData;
     private observation?: Observation;
     private media?: Media;
+    private image?: {
+      contentType: string;
+      data: string;
+    };
 
     constructor(_data: PrismSession | PrismInitializer | PrismResources) {
         if (_data.hasOwnProperty('questionnaireData')) { // it's of type PrismSession
             Object.assign(this, _data);
         } else if (_data.hasOwnProperty('observation') ) {
-
+          console.warn('read everything from Observation');
         } else {
             const init = _data as PrismInitializer
             this.blackDiscPosition = init.blackDiscPosition;
-            this.yellowCirclePosition = init.yellowCirclePosition;
-            this.date = init.date || new Date();
             this.canvasWidth = init.canvasWidth;
+            const canvasHeight = init.canvasWidth / PRISM_RATIO;
+            this.yellowCirclePosition = new Position(
+              init.canvasWidth - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * this.canvasWidth),
+              canvasHeight - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * this.canvasWidth)
+            )
+            this.date = init.date || new Date();
+
             if (init.questionnaire) {
                 this.questionnaireData = new QuestionnaireData(init.questionnaire);
             }
@@ -119,9 +139,9 @@ export default class PrismSession {
         this.questionnaireData.restoreAnswersFromQuestionnaireResponse(_answers);
     }
 
-
-    getFollowUpQuestions(): IQuestion[] {
-     return this.questionnaireData?.items || [];
+    getQuestionnaireData(): QuestionnaireData {
+      if (!this.questionnaireData) throw new Error('No QuestionnaireData set, initialize correctly first.');
+      return this.questionnaireData;
     }
 
     /**
@@ -129,30 +149,39 @@ export default class PrismSession {
      * @returns a valid FHIR bundle of type transaction
      */
     getUploadBundle(_patientReference: Reference): Bundle {
-        if (!this.questionnaireData) throw new Error('QuestionnaireData is undefined, can\'t create FHIR bundle');
-        const questionnaireResponse = this.questionnaireData.getQuestionnaireResponse('de', _patientReference, this.date);
-        const media = this.getMedia(_patientReference);
-        const observation = this.getObservation(_patientReference)
-        questionnaireResponse.id = 'temp-prism-questionnaireResponse';
-        questionnaireResponse.partOf = [
-            {
-                reference: 'Observation/' + observation.id,
-                type: 'Observation'
-            }
-        ];
-        observation.derivedFrom = [
-            {
-              reference: 'Media/' + media.id,
-              type: 'Media'
-            }
-        ];    
-        
-        const bundle = new I4MIBundle(BundleType.TRANSACTION);
-        bundle.addEntry(BundleHTTPVerb.POST, 'QuestionnaireResponse', questionnaireResponse);
-        bundle.addEntry(BundleHTTPVerb.POST, 'Observation', observation);
-        bundle.addEntry(BundleHTTPVerb.POST, 'Media', media);
+      if (!this.questionnaireData) throw new Error('QuestionnaireData is undefined, can\'t create FHIR bundle');
+      const questionnaireResponse = this.questionnaireData.getQuestionnaireResponse('de', _patientReference, this.date);
+      const media = this.getMedia(_patientReference);
+      const observation = this.getObservation(_patientReference)
+      questionnaireResponse.id = 'temp-prism-questionnaireResponse';
+      questionnaireResponse.partOf = [
+          {
+              reference: 'Observation/' + observation.id,
+              type: 'Observation'
+          }
+      ];
+      observation.derivedFrom = [
+          {
+            reference: 'Media/' + media.id,
+            type: 'Media'
+          }
+      ];    
+      
+      const bundle = new I4MIBundle(BundleType.TRANSACTION);
+      bundle.addEntry(BundleHTTPVerb.POST, 'QuestionnaireResponse', questionnaireResponse);
+      bundle.addEntry(BundleHTTPVerb.POST, 'Observation', observation);
+      bundle.addEntry(BundleHTTPVerb.POST, 'Media', media);
 
-        return bundle;
+      return bundle;
+    }
+
+    /**
+     * Add an image to the PrismSession (from camera or library)
+     * @param contentType  should be image/png or image/jpeg, depending on the image
+     * @param data         the image, encoded in Base64
+     */
+    addImage(image: {contentType: string; data: string}): void {
+      this.image = image;
     }
 
     private getMedia(_patientReference: Reference): Media {
@@ -174,21 +203,43 @@ export default class PrismSession {
                 subject: _patientReference,
                 createdDateTime: this.date.toISOString(),
                 operator: _patientReference,
-                height: (SVG_WIDTH / PRISM_RATIO).toString(),
+                height: Math.round(SVG_WIDTH / PRISM_RATIO).toString(),
                 width: SVG_WIDTH.toString(),
                 frames: '1',
-                content: {
-                  contentType: 'image/svg',
-                  data: this.createBase64Svg(),
-                  creation: this.date.toISOString()
-                }
+                content: this.getImage()
               }
     }
 
+    private getImage(): {
+      contentType: string;
+      data: string;
+      title: string;
+      creation: string;
+    } {
+      if (this.image) { // return photo taken
+        return {
+          contentType: this.image.contentType,
+          data: this.image.data,
+          title: 'PRISM-S_' + this.date.toISOString().substring(0,17) + '.' + this.image.contentType.split('/')[1],
+          creation: this.date.toISOString()
+        };
+      } else {
+        return { // create svg
+          contentType: 'image/svg+xml',
+          title: 'PRISM-S_' + this.date.toISOString().substring(0,17) + '.svg',
+          data: base64.encode(this.drawSVG(
+            this.blackDiscPosition, 
+            this.yellowCirclePosition, 
+            SVG_WIDTH
+          )),
+          creation: this.date.toISOString()
+        };
+      }
+    }
+
     private getObservation(_patientReference: Reference): Observation {
-        return this.observation 
-            ? this.observation
-            : {
+      if (this.observation) return this.observation;
+      const newObservation = {
             resourceType: 'Observation',
             status: ObservationStatus.FINAL,
             id: 'temp-prism-observation',
@@ -203,7 +254,9 @@ export default class PrismSession {
             performer: [
                 _patientReference
             ],
-            component: [
+            component: this.blackDiscPosition.isZero() || this.yellowCirclePosition.isZero()
+            ? []
+            : [
               {
                 code: {
                   coding: [
@@ -265,19 +318,51 @@ export default class PrismSession {
               ]
             }
           }
+      return newObservation;
     }
 
     /**
-     * Creates an SVG image of the PRISM-S plate
-     * @returns     the SVG image as a base64 string
+     * Draws a SVG image from the positions of the circles
+     * @param blackDiscPos      position of the black disc
+     * @param yellowCirclePos   position of the yellow circle
+     * @param width?            specify width of the drawn image. optional, default is the given
+     *                          with of the PRISM-S session (depending on screen size)
+     * @returns                 the SVG as a string
+     * @throws                  an Error if any of the positions is outside the canvas
      */
-    private createBase64Svg(): string {
-        const height = SVG_WIDTH / PRISM_RATIO;
-        const imageString = '';
-        return 'data:image/svg;base64,' + Buffer.from(imageString).toString('base64');
-    }
-
-    private calculateCentimeters(): number {
-        return 0;
+    private drawSVG(blackDiscPos: Position, yellowCirclePos: Position, width?: number): string {
+      const RATIO = width
+        ? width / this.canvasWidth
+        : 1;
+      const CANVAS_WIDTH = width 
+        ? width
+        : this.canvasWidth;
+      const CANVAS_HEIGHT = CANVAS_WIDTH / PRISM_RATIO;
+      const YELLOW_RADIUS = CANVAS_WIDTH * PRISM_YELLOW_RADIUS_RATIO;
+      const BLACK_RADIUS = CANVAS_WIDTH * PRISM_BLACK_RADIUS_RATIO;
+      if (
+        (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
+        (blackDiscPos.horizontal - BLACK_RADIUS) * RATIO < 0 ||
+        (blackDiscPos.vertical + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
+        (blackDiscPos.vertical - BLACK_RADIUS) * RATIO < 0 ||
+        (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
+        (yellowCirclePos.horizontal - YELLOW_RADIUS) * RATIO < 0 ||
+        (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
+        (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
+      ) throw new Error('Invalid parameters, at least one position is outside the canvas.');
+      // TODO: something here is not quite right when RATIO is not 1
+      const image = '<svg width="' + CANVAS_WIDTH + '" height="' + CANVAS_HEIGHT + '" xmlns="http://www.w3.org/2000/svg">\n  <g>\n    ' + 
+        '<ellipse id="yellowCircle" ' + 
+                  'ry="' + YELLOW_RADIUS + '" ' + 
+                  'cy="' + (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO + '" ' + 
+                  'cx="' + (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO + '" ' +
+                  'fill="' + PRISM_YELLOW + '"/>\n    ' + 
+        '<ellipse id="blackDisc" ' + 
+                  'ry="' + BLACK_RADIUS + '" ' +
+                  'cy="' + (blackDiscPos.vertical + BLACK_RADIUS) * RATIO + '" ' +
+                  'cx="' + (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO + '" ' +
+                  'fill="' + PRISM_BLACK + '"/>\n  ' + 
+        '</g>\n</svg>';
+      return image;
     }
 }

@@ -8,7 +8,6 @@ import EmergencyContact from './EmergencyContact';
 import RNFetchBlob from 'rn-fetch-blob';
 import { PrismResources, PRISM_OBSERVATION_CODE } from './PrismSession';
 import PRISM_QUESTIONNAIRE  from '../resources/static/Questionnaire.json'
-import { QuestionnaireData } from '@i4mi/fhir_questionnaire';
 
 export default class MidataService {
   currentSession: UserSession = new UserSession();
