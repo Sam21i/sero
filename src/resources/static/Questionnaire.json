@@ -29,8 +29,8 @@
     "code": [
         {
             "system": "http://snomed.info/sct",
-            "code": "363870007 TODO",
-            "display": "Mental state, behavior / psychosocial function observable TODO"
+            "code": "363870007",
+            "display": "Mental state, behavior / psychosocial function observable"
         }
     ],
     "item": [

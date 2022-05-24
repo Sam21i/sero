@@ -196,6 +196,8 @@ export default class MidataService {
               .then(res => {
                 if (res.resourceType === 'Media') {
                   resources.media = res as Media;
+                  // TODO: fetch actual image
+                  console.warn('TODO: fetch actual image linked in media resource');
                 }
               })
               .catch(e => {

@@ -15,7 +15,8 @@ import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import {appStyles, colors, scale, verticalScale} from '../styles/App.style';
-import {CarePlan} from '@i4mi/fhir_r4';
+import {CarePlan } from '@i4mi/fhir_r4';
+
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -155,7 +156,7 @@ class Main extends Component<PropsType, State> {
               position='right'
               color={colors.gold}
               onPress={() => {
-                //this.props.navigation.navigate('Assessment')
+                this.props.navigation.navigate('Assessment')
               }}
             />
           </View>
