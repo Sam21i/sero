@@ -153,89 +153,93 @@ export default class MidataService {
 
   public fetchPrismSessions(_userID: string): Promise<PrismResources[]> {
     const prismResources = new Array<PrismResources>();
-    const questionnaire = undefined;
-
-    const waitForIt = [
+    
+    return Promise.all([
       // fetch Questionnaire (needed for rendering follow-up questions)
       new Promise((resolve, reject) => {
         console.warn('TODO: implement fetching PRISM questionnaire from (open endpoint?) MIDATA');
+        
         return resolve(PRISM_QUESTIONNAIRE as Questionnaire);
       }),
       // fetch PRISM-S observation resources
       new Promise((resolve, reject) => {
+        const waitForIt = new Array<Promise<any>>();
         this.fetch(this.OBSERVATION_ENDPOINT + '?patient=' + _userID + '&code=' + PRISM_OBSERVATION_CODE.system + '|' + PRISM_OBSERVATION_CODE.code)
-      .then(res => {
-        const bundle = res as Bundle;
-        bundle.entry?.forEach(entry => {
-          const observation = entry.resource as Observation;
-          const resources: Partial<PrismResources> = {
-            observation: observation as Observation,
-            questionnaire: questionnaire
-          }
-          // fetch QuestionnaireResponse to Observation
-          waitForIt.push(
-            this.fetch(this.RESPONSE_ENDPOINT + '?part-of=Observation/' + observation.id)
-            .then(res => {
-              const responseBundle = res as Bundle;
-              if (responseBundle.entry && responseBundle.entry[0] && responseBundle.entry[0].resource) {
-                resources.questionnaireResponse = responseBundle.entry[0].resource as QuestionnaireResponse;
-                return resources.questionnaireResponse;
-              } else {
-                // This observation has no corresponding QuestionnaireResponse. Which is fine. Totally fine. Really.
-                return undefined;
-              }
-            })
-            .catch(e => {
-              console.log('Error fetching QuestionnaireResponse for PRISM observation ' + observation.id);
-              return reject(e);
-            })
-          );
-          // fetch Media to Observation
-          const mediaReference = observation.derivedFrom 
-            ? observation.derivedFrom[0].reference
-            : undefined;
-          if (mediaReference) {
+        .then(res => {
+          const bundle = res as Bundle;
+          bundle.entry?.forEach(entry => {
+            const observation = entry.resource as Observation;
+            const resources: Partial<PrismResources> = {
+              observation: observation as Observation
+            }
+            // fetch QuestionnaireResponse to Observation
             waitForIt.push(
-              this.fetch('/fhir/' + mediaReference)
+              this.fetch(this.RESPONSE_ENDPOINT + '?part-of=Observation/' + observation.id)
               .then(res => {
-                if (res.resourceType === 'Media') {
-                  const media = res as Media;
-                  resources.media = media;
-                  if (media.content.url) {
-                    return this.fetchImageBase64WithToken(media.content.url)
-                    .then(imageData => {
-                      media.content.data = imageData;
-                      return media;
-                    })
-                    .catch(e => {
-                      console.log('Error fetching image for Media/' + media.id + ':', e);
-                      reject(e);
-                    });
-                  }
+                const responseBundle = res as Bundle;
+                if (responseBundle.entry && responseBundle.entry[0] && responseBundle.entry[0].resource) {
+                  resources.questionnaireResponse = responseBundle.entry[0].resource as QuestionnaireResponse;
+                  return resources.questionnaireResponse;
+                } else {
+                  // This observation has no corresponding QuestionnaireResponse. Which is fine. Totally fine. Really.
+                  return undefined;
                 }
               })
               .catch(e => {
-                console.log('Error fetching' + mediaReference + ' for PRISM observation ' + observation.id);
-                reject(e);
+                console.log('Error fetching QuestionnaireResponse for PRISM observation ' + observation.id);
+                return reject(e);
               })
             );
-          } else {
-            console.warn('PRISM observation ' + observation.id + ' has no derivedFrom Media resource.');
-          }
-          
-          prismResources.push(resources as PrismResources);
-        });
-        if (!bundle.entry || bundle.entry.length === 0) {
-          return resolve([]);
-        }
+            // fetch Media to Observation
+            const mediaReference = observation.derivedFrom 
+              ? observation.derivedFrom[0].reference
+              : undefined;
+            if (mediaReference) {
+              waitForIt.push(
+                this.fetch('/fhir/' + mediaReference)
+                .then(res => {
+                  if (res.resourceType === 'Media') {
+                    const media = res as Media;
+                    resources.media = media;
+                    if (media.content.url) {
+                      return this.fetchImageBase64WithToken(media.content.url)
+                      .then(imageData => {
+                        media.content.data = imageData;
+                        return media;
+                      })
+                      .catch(e => {
+                        console.log('Error fetching image for Media/' + media.id + ':', e);
+                        reject(e);
+                      });
+                    }
+                  }
+                })
+                .catch(e => {
+                  console.log('Error fetching' + mediaReference + ' for PRISM observation ' + observation.id);
+                  reject(e);
+                })
+              );
+            } else {
+              console.warn('PRISM observation ' + observation.id + ' has no derivedFrom Media resource.');
+            }
+            
+            prismResources.push(resources as PrismResources);
+          });
+          return Promise.all(waitForIt)
+          .then(() => {
+            return resolve(prismResources);
+          })
+          .catch(e => {
+            console.log('something went wrong during fetching additional resources', e);
+            return reject(e);
+          });
+        })
+        .catch(e => {
+          console.log('Error fetching prism resources: ', e);
+          reject(e);
+        })
       })
-      .catch(e => {
-        console.log('Error fetching prism resources: ', e);
-        reject(e);
-      })
-      })
-    ];
-    return Promise.all(waitForIt)
+    ])
     .then((results) => {
       return prismResources.filter(r => {
         // only return complete PrismResource sets
