@@ -39,8 +39,8 @@ export class Position {
     getCentimeterPosition(_plateWidth: number): {horizontal: number, vertical: number} {
         const pixelPerCm = _plateWidth / PRISM_WIDTH;
         return {
-            horizontal: this.horizontal / pixelPerCm,
-            vertical: this.vertical / pixelPerCm
+            horizontal: Math.round(10 * this.horizontal / pixelPerCm) / 10,
+            vertical: Math.round(this.vertical / pixelPerCm) / 10
         };
     }
 
@@ -67,7 +67,7 @@ export class Position {
      */
     getCentimeterDistance(_position: Position, _plateWidth: number): number {
         const pixelPerCm = _plateWidth / PRISM_WIDTH;
-        return this.getDistance(_position) / pixelPerCm;
+        return Math.round(this.getDistance(_position) / pixelPerCm) / 10;
     }
 
     /**
@@ -220,13 +220,13 @@ export default class PrismSession {
         return {
           contentType: this.image.contentType,
           data: this.image.data,
-          title: 'PRISM-S_' + this.date.toISOString().substring(0,17) + '.' + this.image.contentType.split('/')[1],
+          title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.' + this.image.contentType.split('/')[1],
           creation: this.date.toISOString()
         };
       } else {
         return { // create svg
           contentType: 'image/svg+xml',
-          title: 'PRISM-S_' + this.date.toISOString().substring(0,17) + '.svg',
+          title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.svg',
           data: base64.encode(this.drawSVG(
             this.blackDiscPosition, 
             this.yellowCirclePosition, 
@@ -247,7 +247,7 @@ export default class PrismSession {
               coding: [
                 PRISM_OBSERVATION_CODE
               ],
-              text: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method.'
+              text: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method'
             },
             subject: _patientReference,
             effectiveDateTime: this.date.toISOString(),
@@ -263,7 +263,7 @@ export default class PrismSession {
                     {
                       system: 'http://midata.coop/prisms',
                       code: 'distance',
-                      display: 'Distance between the black disc and the yellow circle in cm extrapolated to the A4 format of the PRISM-S board.'
+                      display: 'Distance between the black disc and the yellow circle in cm extrapolated to the A4 format of the PRISM-S board'
                     }
                   ]
                 },
@@ -280,7 +280,7 @@ export default class PrismSession {
                     {
                       system: 'http://midata.coop/prisms',
                       code: 'xCoordinate',
-                      display: 'Value of the x coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board.'
+                      display: 'Value of the x coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
                     }
                   ]
                 },
@@ -297,7 +297,7 @@ export default class PrismSession {
                     {
                       system: 'http://midata.coop/prisms',
                       code: 'yCoordinate',
-                      display: 'Value of the y coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board.'
+                      display: 'Value of the y coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
                     }
                   ]
                 },
@@ -313,7 +313,7 @@ export default class PrismSession {
                 {
                   system: 'http://midata.coop/prisms',
                   code: 'appMethod',
-                  display: 'Self-assessment in an app with a virtual PRISM-S board.'
+                  display: 'Self-assessment in an app with a virtual PRISM-S board'
                 }
               ]
             }

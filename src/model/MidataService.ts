@@ -167,7 +167,7 @@ export default class MidataService {
       .then(res => {
         const bundle = res as Bundle;
         bundle.entry?.forEach(entry => {
-          const observation = entry as Observation;
+          const observation = entry.resource as Observation;
           const resources: Partial<PrismResources> = {
             observation: observation as Observation,
             questionnaire: questionnaire
