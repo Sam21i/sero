@@ -179,11 +179,15 @@ export default class MidataService {
               const responseBundle = res as Bundle;
               if (responseBundle.entry && responseBundle.entry[0] && responseBundle.entry[0].resource) {
                 resources.questionnaireResponse = responseBundle.entry[0].resource as QuestionnaireResponse;
+                return resources.questionnaireResponse;
+              } else {
+                // This observation has no corresponding QuestionnaireResponse. Which is fine. Totally fine. Really.
+                return undefined;
               }
             })
             .catch(e => {
               console.log('Error fetching QuestionnaireResponse for PRISM observation ' + observation.id);
-              reject(e);
+              return reject(e);
             })
           );
           // fetch Media to Observation
@@ -192,12 +196,22 @@ export default class MidataService {
             : undefined;
           if (mediaReference) {
             waitForIt.push(
-              this.fetch('fhir/' + mediaReference)
+              this.fetch('/fhir/' + mediaReference)
               .then(res => {
                 if (res.resourceType === 'Media') {
-                  resources.media = res as Media;
-                  // TODO: fetch actual image
-                  console.warn('TODO: fetch actual image linked in media resource');
+                  const media = res as Media;
+                  resources.media = media;
+                  if (media.content.url) {
+                    return this.fetchImageBase64WithToken(media.content.url)
+                    .then(imageData => {
+                      media.content.data = imageData;
+                      return media;
+                    })
+                    .catch(e => {
+                      console.log('Error fetching image for Media/' + media.id + ':', e);
+                      reject(e);
+                    });
+                  }
                 }
               })
               .catch(e => {
@@ -211,7 +225,9 @@ export default class MidataService {
           
           prismResources.push(resources as PrismResources);
         });
-        return resolve(undefined);
+        if (!bundle.entry || bundle.entry.length === 0) {
+          return resolve([]);
+        }
       })
       .catch(e => {
         console.log('Error fetching prism resources: ', e);
@@ -220,15 +236,11 @@ export default class MidataService {
       })
     ];
     return Promise.all(waitForIt)
-    .then(() => {
+    .then((results) => {
       return prismResources.filter(r => {
         // only return complete PrismResource sets
-        if (
-          r.media !== undefined &&
-          r.observation !== undefined &&
-          r.questionnaire !== undefined &&
-          r.questionnaireResponse !== undefined
-        ) {
+        r.questionnaire = results[0] as Questionnaire;
+        if (r.media !== undefined && r.observation !== undefined) {
           return true;
         } else {
           console.log('Observation ' + r.observation + ' resulted in incomplete PrismResources set and was thus filtered out.', r);
