@@ -2,6 +2,7 @@ import {createReducer} from '../helpers/reducerCreator';
 import {REHYDRATE} from 'redux-persist';
 import UserProfile from '../../model/UserProfile';
 import {
+  ADD_PRISM_SESSION,
   ADD_SECURITY_PLAN,
   ADD_TO_USER_PROFILE,
   LOGOUT_AUTHENTICATE_USER,
@@ -13,9 +14,9 @@ import {
   UPDATE_USER_PROFILE
 } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
-import {CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
+import {Bundle, CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import SecurityPlanModel from '../../model/SecurityPlan';
-import { PrismResources } from '../../model/PrismSession';
+import PrismSession, { PrismResources } from '../../model/PrismSession';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -72,6 +73,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
     newState.setPrismSessions(action.data);
     return newState;
   },
+  [ADD_PRISM_SESSION](state: UserProfile, action: {data: PrismSession}) {
+    const newState = new UserProfile(state);
+    newState.addPrismSession(action.data);
+    return newState;
+  },
   [RESOURCE_SENT](
     state: UserProfile,
     action: {
@@ -84,10 +90,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
       };
     }
   ) {
-    if (action.resource.resource.resourceType === 'RelatedPerson') {
+    const resource = action.resource.resource;
+    if (resource.resourceType === 'RelatedPerson') {
       // the resource id is already updated by reference, but needs to be persisted in store
       return new UserProfile(state);
-    } else if (action.resource.resource.resourceType === 'CarePlan') {
+    } else if (resource.resourceType === 'CarePlan') {
       const carePlan = action.resource.resource as CarePlan;
       const newResourceId = carePlan.id + '';
 
@@ -103,9 +110,6 @@ const UserProfileStore = createReducer(new UserProfile(), {
         carePlan.id = newResourceId;
       }
       return newState;
-    } else if(action.resource.resource.resourceType === 'Bundle') {
-      console.log('uploaded a bundle', action.resource.resource)
-      return state;
     } else {
       return state;
     }

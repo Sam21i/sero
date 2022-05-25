@@ -76,7 +76,6 @@ class Main extends Component<PropsType, State> {
     if (userId && this.props.midataService.isAuthenticated()) {
       this.props.midataService.fetchPrismSessions(userId)
       .then(sessions => {
-        console.log('fetched prism sessions', sessions);
         this.props.setPrismSessions(sessions);
       })
     }

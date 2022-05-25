@@ -11,7 +11,9 @@ import { connect } from 'react-redux';
 import { AppStore } from '../store/reducers';
 import LocalesHelper from '../locales';
 import * as midataServiceActions from '../store/midataService/actions';
+import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
+import session from 'redux-persist/lib/storage/session';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -19,6 +21,7 @@ interface PropsType {
   userProfile: UserProfile;
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
+  addPrismSession: (s: PrismSession) => void;
 }
 
 interface State {}
@@ -92,6 +95,8 @@ class Assessment extends Component<PropsType, State> {
       console.log('PRISM Bundle:', prismBundle);
       // upload to MIDATA
       this.props.addResource(prismBundle);
+      // and also add to UserProfile
+      this.props.addPrismSession(prismSession);
     }
 
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
@@ -118,6 +123,7 @@ function mapStateToProps(state: AppStore) {
 function mapDispatchToProps(dispatch: Function) {
   return {
     addResource: (r: Resource) => midataServiceActions.addResource(dispatch, r),
+    addPrismSession: (s: PrismSession) => userProfileActions.addNewPrismSession(dispatch, s)
   };
 }
 
