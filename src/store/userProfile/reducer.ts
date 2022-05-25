@@ -8,12 +8,14 @@ import {
   REPLACE_SECURITY_PLAN,
   RESOURCE_SENT,
   SET_EMERGENCY_CONTACTS,
+  SET_PRISM_SESSIONS,
   SET_SECURITY_PLAN_HISTORY,
   UPDATE_USER_PROFILE
 } from '../definitions';
 import EmergencyContact from '../../model/EmergencyContact';
 import {CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import SecurityPlanModel from '../../model/SecurityPlan';
+import { PrismResources } from '../../model/PrismSession';
 
 export type UserProfileData = Partial<UserProfile>;
 
@@ -65,6 +67,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
     newState.replaceCurrentSecurityPlan(action.data);
     return newState;
   },
+  [SET_PRISM_SESSIONS](state: UserProfile, action: {data: PrismResources[]}) {
+    const newState = new UserProfile(state);
+    newState.setPrismSessions(action.data);
+    return newState;
+  },
   [RESOURCE_SENT](
     state: UserProfile,
     action: {
@@ -96,6 +103,9 @@ const UserProfileStore = createReducer(new UserProfile(), {
         carePlan.id = newResourceId;
       }
       return newState;
+    } else if(action.resource.resource.resourceType === 'Bundle') {
+      console.log('uploaded a bundle', action.resource.resource)
+      return state;
     } else {
       return state;
     }

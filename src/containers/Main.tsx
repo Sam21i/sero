@@ -16,6 +16,7 @@ import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import {appStyles, colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan } from '@i4mi/fhir_r4';
+import { PrismResources } from '../model/PrismSession';
 
 
 interface PropsType {
@@ -27,6 +28,7 @@ interface PropsType {
   setEmergencyContacts: (e: EmergencyContact[]) => void;
   setSecurityPlan: (plan: CarePlan) => void;
   setSecurityPlanHistory: (plans: CarePlan[]) => void;
+  setPrismSessions: (sessions: PrismResources[]) => void;
 }
 
 interface State {
@@ -42,8 +44,8 @@ class Main extends Component<PropsType, State> {
     if (this.props.midataService.isAuthenticated()) {
       this.loadEmergencyContacts();
       this.loadSecurityPlans();
-      this.props.uploadPendingResources();
       this.loadPrismSessions();
+      this.props.uploadPendingResources();
     }
   }
 
@@ -75,6 +77,7 @@ class Main extends Component<PropsType, State> {
       this.props.midataService.fetchPrismSessions(userId)
       .then(sessions => {
         console.log('fetched prism sessions', sessions);
+        this.props.setPrismSessions(sessions);
       })
     }
   }
@@ -196,6 +199,7 @@ function mapDispatchToProps(dispatch: Function) {
   return {
     setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
     setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
+    setPrismSessions: (sessions: PrismResources[]) => userProfileActions.setPrismSessionsFromMIDATA(dispatch, sessions),
     setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
     uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch),
   };

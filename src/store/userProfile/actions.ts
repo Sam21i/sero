@@ -48,8 +48,8 @@ export function replaceSecurityPlan(
   dispatch(new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction());
 }
 
-export function setPrismSessionsFromMIDATA(dispatch, sessions: PrismResources) {
-  dispatch(new Action(SET_PRISM_SESSIONS, sessions));
+export function setPrismSessionsFromMIDATA(dispatch, sessions: PrismResources[]) {
+  dispatch(new Action(SET_PRISM_SESSIONS, sessions).getObjectAction());
 }
 
 export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {

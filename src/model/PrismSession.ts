@@ -1,5 +1,5 @@
 import base64 from 'react-native-base64'
-import { IQuestion, QuestionnaireData } from "@i4mi/fhir_questionnaire";
+import { QuestionnaireData } from "@i4mi/fhir_questionnaire";
 import { Bundle, BundleHTTPVerb, BundleType, I4MIBundle, Media, MediaStatus, Observation, ObservationStatus, Questionnaire, QuestionnaireResponse, Reference } from "@i4mi/fhir_r4";
 
 const PRISM_RATIO = Math.SQRT2;               // aspec ratio of the PRISM-S plate
@@ -11,8 +11,6 @@ const PRISM_YELLOW_RADIUS_RATIO = 0.2381 / 2; // diameter of yellow circle is 23
 const PRISM_BLACK_RADIUS_RATIO = 0.1701 / 2;  // diameter of black plate is 17,01% of plate width
 const YELLOW_DISC_MARGIN_RATIO = 0.068;       // distance of the yellow circle to bottom / right is 6.8% of plate width
 
-
-
 export const PRISM_OBSERVATION_CODE = {
   system: 'http://midata.coop/prisms',
   code: 'selfAssessment',
@@ -20,349 +18,440 @@ export const PRISM_OBSERVATION_CODE = {
 }
 
 export class Position {
-    // the horizontal position of the black disc in pixel, measured from the left
-    horizontal: number;
-    // the vertical position of the black disc in pixel, measured from the top
-    vertical: number;
+  // the horizontal position of the black disc in pixel, measured from the left
+  horizontal: number;
+  // the vertical position of the black disc in pixel, measured from the top
+  vertical: number;
 
-    constructor(_horizontal: number, _vertical: number) {
-        this.horizontal = _horizontal;
-        this.vertical = _vertical;
-    }
+  constructor(_horizontal: number, _vertical: number) {
+    this.horizontal = _horizontal;
+    this.vertical = _vertical;
+  }
 
-    /**
-     * Gets the position translated to centimeters on a corresponding real PRISM-S plate (in A4)
-     * @param _plateWidth   the width of the virtual prism plate in pixel
-     * @returns             the vertical and horizontal positions
-     *                        in cm on a corresponding real PRISM-S plate (in A4 size)
-     */
-    getCentimeterPosition(_plateWidth: number): {horizontal: number, vertical: number} {
-        const pixelPerCm = _plateWidth / PRISM_WIDTH;
-        return {
-            horizontal: Math.round(10 * this.horizontal / pixelPerCm) / 10,
-            vertical: Math.round(this.vertical / pixelPerCm) / 10
-        };
-    }
+  /**
+   * Gets the position translated to centimeters on a corresponding real PRISM-S plate (in A4)
+   * @param _plateWidth   the width of the virtual prism plate in pixel
+   * @returns             the vertical and horizontal positions
+   *                        in cm on a corresponding real PRISM-S plate (in A4 size)
+   */
+  getCentimeterPosition(_plateWidth: number): {horizontal: number, vertical: number} {
+    const pixelPerCm = _plateWidth / PRISM_WIDTH;
+    return {
+      horizontal: Math.round(10 * this.horizontal / pixelPerCm) / 10,
+      vertical: Math.round(10 * this.vertical / pixelPerCm) / 10
+    };
+  }
 
-    /**
-     * Calculates the distance between two positions in pixel.
-     * CAUTION: When comparing PRISM discs, mind to give the coordinates of the center of the disc,
-     * not the upper left corner (which is the coordinate of the image representing the disc)
-     * @param _position     the position object to compare to
-     * @returns             the distance in pixel between the two positions
-     */
-    getDistance(_position: Position): number {
-        const horizontalDistance = _position.horizontal - this.horizontal;
-        const verticalDistance = _position.vertical - this.vertical;
-        return Math.sqrt(Math.pow(horizontalDistance, 2) + Math.pow(verticalDistance, 2));
-    }
+  /**
+   * Calculates the distance between two positions in pixel.
+   * CAUTION: When comparing PRISM discs, mind to give the coordinates of the center of the disc,
+   * not the upper left corner (which is the coordinate of the image representing the disc)
+   * @param _position     the position object to compare to
+   * @returns             the distance in pixel between the two positions
+   */
+  getDistance(_position: Position): number {
+    const horizontalDistance = _position.horizontal - this.horizontal;
+    const verticalDistance = _position.vertical - this.vertical;
+    return Math.round(10 * Math.sqrt(Math.pow(horizontalDistance, 2) + Math.pow(verticalDistance, 2))) / 10;
+  }
 
-    /**
-     * Calculates the distance between two positions in cm.
-     * CAUTION: When comparing PRISM discs, mind to give the coordinates of the center of the disc,
-     * not the upper left corner (which is the coordinate of the image representing the disc)
-     * @param _position     the position object to compare to
-     * @param _plateWidth   the width of the virtual prism plate in pixel
-     * @returns             the distance in cm on a corresponding real PRISM-S plate (in A4 size)
-     */
-    getCentimeterDistance(_position: Position, _plateWidth: number): number {
-        const pixelPerCm = _plateWidth / PRISM_WIDTH;
-        return Math.round(this.getDistance(_position) / pixelPerCm) / 10;
-    }
+  /**
+   * Calculates the distance between two positions in cm.
+   * CAUTION: When comparing PRISM discs, mind to give the coordinates of the center of the disc,
+   * not the upper left corner (which is the coordinate of the image representing the disc)
+   * @param _position     the position object to compare to
+   * @param _plateWidth   the width of the virtual prism plate in pixel
+   * @returns             the distance in cm on a corresponding real PRISM-S plate (in A4 size)
+   */
+  getCentimeterDistance(_position: Position, _plateWidth: number): number {
+    const pixelPerCm = _plateWidth / PRISM_WIDTH;
+    return Math.round(10 * this.getDistance(_position) / pixelPerCm) / 10;
+  }
 
-    /**
-     * 
-     * @returns true if both vertical and horizontal values are 0
-     */
-    isZero(): boolean {
-      return this.vertical === 0 && this.horizontal === 0;
-    }
+  /**
+   * 
+   * @returns true if both vertical and horizontal values are 0
+   */
+  isZero(): boolean {
+    return this.vertical === 0 && this.horizontal === 0;
+  }
 }
 
 interface PrismInitializer {
-    blackDiscPosition: Position;
-    canvasWidth: number;
-    date?: Date;
-    questionnaire?: Questionnaire
+  blackDiscPosition?: Position;
+  canvasWidth: number;
+  date?: Date;
+  questionnaire?: Questionnaire
 }
 
 export interface PrismResources {
-    observation: Observation,
-    media: Media,
-    questionnaireResponse: QuestionnaireResponse,
-    questionnaire: Questionnaire
+  observation: Observation,
+  media: Media,
+  questionnaireResponse: QuestionnaireResponse,
+  questionnaire: Questionnaire
 }
 
 export default class PrismSession {
-    // position of the black disc
-    blackDiscPosition: Position = new Position(0,0);
-    // position of the yellow disc
-    yellowCirclePosition: Position = new Position(0,0);
-    // the date when the PRISM-S was done
-    date: Date = new Date();
-    // the width of the virtual PRISM-S
-    canvasWidth: number = 1;
-    private questionnaireData?: QuestionnaireData;
-    private observation?: Observation;
-    private media?: Media;
-    private image?: {
-      contentType: string;
-      data: string;
-    };
+  // position of the black disc
+  blackDiscPosition: Position = new Position(0,0);
+  // position of the yellow disc
+  yellowCirclePosition: Position = new Position(0,0);
+  // the date when the PRISM-S was done
+  date: Date = new Date();
+  // the width of the virtual PRISM-S
+  canvasWidth: number = 1;
+  private questionnaireData?: QuestionnaireData;
+  private observation?: Observation;
+  private media?: Media;
+  private image?: {
+    contentType: string;
+    data: string;
+  };
 
-    constructor(_data: PrismSession | PrismInitializer | PrismResources) {
-        if (_data.hasOwnProperty('questionnaireData')) { // it's of type PrismSession
-            Object.assign(this, _data);
-        } else if (_data.hasOwnProperty('observation') ) {
-          console.warn('read everything from Observation');
-        } else {
-            const init = _data as PrismInitializer
-            this.blackDiscPosition = init.blackDiscPosition;
-            this.canvasWidth = init.canvasWidth;
-            const canvasHeight = init.canvasWidth / PRISM_RATIO;
-            this.yellowCirclePosition = new Position(
-              init.canvasWidth - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * this.canvasWidth),
-              canvasHeight - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * this.canvasWidth)
-            )
-            this.date = init.date || new Date();
+  constructor(_data: PrismSession | PrismResources | PrismInitializer ) {
+    if (_data.hasOwnProperty('questionnaireData')) { // it's of type PrismSession
+      Object.assign(this, _data);
+    } else if (_data.hasOwnProperty('observation') ) { // it's of typ PrismResources
+      const resources = _data as PrismResources;
+      this.fillFromFHIR(resources.observation, resources.media, resources.questionnaire, resources.questionnaireResponse);
+    } else { // it's of type PrismInitializer
+      const init = _data as PrismInitializer
+      this.blackDiscPosition = init.blackDiscPosition || this.blackDiscPosition;
+      this.canvasWidth = init.canvasWidth;
+      this.yellowCirclePosition = this.getDefaultYellowPosition(init.canvasWidth)
+      this.date = init.date || new Date();
 
-            if (init.questionnaire) {
-                this.questionnaireData = new QuestionnaireData(init.questionnaire);
-            }
-        }
-    }
-
-    fillFromFHIR(_observation: Observation, _media: Media, _answers: QuestionnaireResponse, _questionnaire: Questionnaire) {
-        this.observation = _observation,
-        this.media = _media;
-        this.questionnaireData = new QuestionnaireData(_questionnaire);
-        this.questionnaireData.restoreAnswersFromQuestionnaireResponse(_answers);
-    }
-
-    getQuestionnaireData(): QuestionnaireData {
-      if (!this.questionnaireData) throw new Error('No QuestionnaireData set, initialize correctly first.');
-      return this.questionnaireData;
-    }
-
-    /**
-     * Returns a bundle representing the prism session, ready to upload to MIDATA
-     * @returns a valid FHIR bundle of type transaction
-     */
-    getUploadBundle(_patientReference: Reference): Bundle {
-      if (!this.questionnaireData) throw new Error('QuestionnaireData is undefined, can\'t create FHIR bundle');
-      const questionnaireResponse = this.questionnaireData.getQuestionnaireResponse('de', _patientReference, this.date);
-      const media = this.getMedia(_patientReference);
-      const observation = this.getObservation(_patientReference)
-      questionnaireResponse.id = 'temp-prism-questionnaireResponse';
-      questionnaireResponse.partOf = [
-          {
-              reference: 'Observation/' + observation.id,
-              type: 'Observation'
-          }
-      ];
-      observation.derivedFrom = [
-          {
-            reference: 'Media/' + media.id,
-            type: 'Media'
-          }
-      ];    
-      
-      const bundle = new I4MIBundle(BundleType.TRANSACTION);
-      bundle.addEntry(BundleHTTPVerb.POST, 'QuestionnaireResponse', questionnaireResponse);
-      bundle.addEntry(BundleHTTPVerb.POST, 'Observation', observation);
-      bundle.addEntry(BundleHTTPVerb.POST, 'Media', media);
-
-      return bundle;
-    }
-
-    /**
-     * Add an image to the PrismSession (from camera or library)
-     * @param contentType  should be image/png or image/jpeg, depending on the image
-     * @param data         the image, encoded in Base64
-     */
-    addImage(image: {contentType: string; data: string}): void {
-      this.image = image;
-    }
-
-    private getMedia(_patientReference: Reference): Media {
-        return this.media
-            ? this.media
-            : {
-                resourceType: 'Media',
-                status: MediaStatus.COMPLETED,
-                id: 'temp-prism-media',
-                type: {
-                  coding: [
-                    {
-                      system: 'http://terminology.hl7.org/CodeSystem/media-type',
-                      code: 'image',
-                      display: 'Image'
-                    }
-                  ]
-                },
-                subject: _patientReference,
-                createdDateTime: this.date.toISOString(),
-                operator: _patientReference,
-                height: Math.round(SVG_WIDTH / PRISM_RATIO).toString(),
-                width: SVG_WIDTH.toString(),
-                frames: '1',
-                content: this.getImage()
-              }
-    }
-
-    private getImage(): {
-      contentType: string;
-      data: string;
-      title: string;
-      creation: string;
-    } {
-      if (this.image) { // return photo taken
-        return {
-          contentType: this.image.contentType,
-          data: this.image.data,
-          title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.' + this.image.contentType.split('/')[1],
-          creation: this.date.toISOString()
-        };
-      } else {
-        return { // create svg
-          contentType: 'image/svg+xml',
-          title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.svg',
-          data: base64.encode(this.drawSVG(
-            this.blackDiscPosition, 
-            this.yellowCirclePosition, 
-            SVG_WIDTH
-          )),
-          creation: this.date.toISOString()
-        };
+      if (init.questionnaire) {
+        this.questionnaireData = new QuestionnaireData(init.questionnaire);
       }
     }
+  }
 
-    private getObservation(_patientReference: Reference): Observation {
-      if (this.observation) return this.observation;
-      const newObservation = {
-            resourceType: 'Observation',
-            status: ObservationStatus.FINAL,
-            id: 'temp-prism-observation',
-            code: {
-              coding: [
-                PRISM_OBSERVATION_CODE
-              ],
-              text: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method'
-            },
-            subject: _patientReference,
-            effectiveDateTime: this.date.toISOString(),
-            performer: [
-                _patientReference
-            ],
-            component: this.blackDiscPosition.isZero() || this.yellowCirclePosition.isZero()
-            ? []
-            : [
-              {
-                code: {
-                  coding: [
-                    {
-                      system: 'http://midata.coop/prisms',
-                      code: 'distance',
-                      display: 'Distance between the black disc and the yellow circle in cm extrapolated to the A4 format of the PRISM-S board'
-                    }
-                  ]
-                },
-                valueQuantity: {
-                  value: this.blackDiscPosition.getCentimeterDistance(this.yellowCirclePosition, this.canvasWidth),
-                  system: 'http://unitsofmeasure.org',
-                  code: 'cm',
-                  unit: 'Centimeter'
-                }
-              },
-              {
-                code: {
-                  coding: [
-                    {
-                      system: 'http://midata.coop/prisms',
-                      code: 'xCoordinate',
-                      display: 'Value of the x coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
-                    }
-                  ]
-                },
-                valueQuantity: {
-                  value: this.blackDiscPosition.getCentimeterPosition(this.canvasWidth).horizontal,
-                  system: 'http://unitsofmeasure.org',
-                  code: 'cm',
-                  unit: 'Centimeter'
-                }
-              },
-              {
-                code: {
-                  coding: [
-                    {
-                      system: 'http://midata.coop/prisms',
-                      code: 'yCoordinate',
-                      display: 'Value of the y coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
-                    }
-                  ]
-                },
-                valueQuantity: {
-                  value: this.blackDiscPosition.getCentimeterPosition(this.canvasWidth).vertical,
-                  code: 'cm',
-                  unit: 'Centimeter'
-                }
-              }
-            ],
-            method: {
-              coding: [
-                {
-                  system: 'http://midata.coop/prisms',
-                  code: 'appMethod',
-                  display: 'Self-assessment in an app with a virtual PRISM-S board'
-                }
-              ]
+  /**
+   * Initializes the PRISM-S session from a set of resources. 
+   * @param _observation      Observation resource 
+   * @param _media            Media resource referred in the Observation
+   * @param _questionnaire    Questionnaire resource that defines the Questions
+   * @param _answers?         QuestionnaireResponse resource that defines the answers to the questions (optional)
+   */
+  fillFromFHIR(_observation: Observation, _media: Media, _questionnaire: Questionnaire, _answers?: QuestionnaireResponse) {
+    this.observation = _observation,
+    this.media = _media;
+    if (_media.content.contentType && _media.content.data) {
+      this.image = {
+        contentType: _media.content.contentType,
+        data: _media.content.data
+      };
+    }
+    this.canvasWidth = _media.width
+      ? parseInt(_media.width)
+      : SVG_WIDTH;
+    this.questionnaireData = new QuestionnaireData(_questionnaire);
+    if (_answers) {
+      this.questionnaireData.restoreAnswersFromQuestionnaireResponse(_answers);
+    }
+    this.date = _observation.effectiveDateTime
+      ? new Date(_observation.effectiveDateTime)
+      : new Date();
+    this.yellowCirclePosition = this.getDefaultYellowPosition(this.canvasWidth);
+    if (_observation.component) {
+      const horizontalComp = _observation.component.find(comp => {
+        const coding = comp.code.coding?.find(coding => coding.system === 'http://midata.coop/prisms' && coding.code === 'xCoordinate');
+        return coding !== undefined;
+      });
+      const verticalComp = _observation.component.find(comp => {
+        const coding = comp.code.coding?.find(coding => coding.system === 'http://midata.coop/prisms' && coding.code === 'yCoordinate');
+        return coding !== undefined;
+      });
+      if (horizontalComp?.valueQuantity?.value && verticalComp?.valueQuantity?.value) {
+        this.blackDiscPosition = new Position(
+          this.getPixelFromA4Cm(horizontalComp.valueQuantity.value, this.canvasWidth), 
+          this.getPixelFromA4Cm(verticalComp.valueQuantity.value, this.canvasWidth)
+        );
+      }
+    }
+  }
+
+  /**
+   * Returns the model of QuestionnaireData. Use .getQuestions() to receive the actual IQuestion items, 
+   * and .updateQuestionAnswers() to set an answer to a question.
+   * @returns   The Questionnaire as a model ready for manipulation and generate QuestionnaireResponse
+   * @throws    An error if no Questionnaire was provided beforehand and the QuestionnaireData could not have been initialized.
+   */
+  getQuestionnaireData(): QuestionnaireData {
+    if (!this.questionnaireData) throw new Error('No QuestionnaireData set, initialize correctly first.');
+    return this.questionnaireData;
+  }
+
+  /**
+   * Returns a bundle representing the prism session, ready to upload to MIDATA
+   * @returns a valid FHIR bundle of type transaction
+   */
+  getUploadBundle(_patientReference: Reference): Bundle {
+    if (!this.questionnaireData) throw new Error('QuestionnaireData is undefined, can\'t create FHIR bundle');
+    const questionnaireResponse = this.questionnaireData.getQuestionnaireResponse('de', _patientReference, this.date);
+    const media = this.getMedia(_patientReference);
+    const observation = this.getObservation(_patientReference)
+    questionnaireResponse.id = 'temp-prism-questionnaireResponse';
+    questionnaireResponse.partOf = [
+      {
+        reference: 'Observation/' + observation.id,
+        type: 'Observation'
+      }
+    ];
+    observation.derivedFrom = [
+      {
+      reference: 'Media/' + media.id,
+      type: 'Media'
+      }
+    ];    
+    
+    const bundle = new I4MIBundle(BundleType.TRANSACTION);
+    bundle.addEntry(BundleHTTPVerb.POST, 'QuestionnaireResponse', questionnaireResponse);
+    bundle.addEntry(BundleHTTPVerb.POST, 'Observation', observation);
+    bundle.addEntry(BundleHTTPVerb.POST, 'Media', media);
+
+    return bundle;
+  }
+
+  /**
+   * Add an image to the PrismSession (from camera or library)
+   * @param contentType  should be image/png or image/jpeg, depending on the image
+   * @param data         the image, encoded in Base64
+   */
+  addImage(image: {contentType: string; data: string}): void {
+    this.image = image;
+  }
+
+  /**
+   * Gets the PRISM-S board as a SVG image string
+   * @returns   the SVG as a string (NOT base64 encoded)
+   * @throws    an Error if there is no image available or type is not SVG
+   */
+  getSVGImage(): string {
+    if (!this.image || !this.image.contentType.includes('svg')) {
+      throw new Error('No svg image available');
+    }
+    return base64.decode(this.image.data);
+  }
+
+  /**
+   * Gets the PRISM-S board as a base64 encoded string
+   * @returns   an object containing contentType (as string) 
+   *            and the actual image data (as base64 encoded string)
+   * @throws    an Error if there is no image available or only an image of type SVG
+   */
+  getBase64Image(): {contentType: string, data: string} {
+    if (!this.image) {
+      throw new Error('No image available.');
+    }
+    if (this.image.contentType.includes('svg')) {
+      throw new Error('Available image is SVG, use getSVGImage() instead.');
+    }
+    return this.image;
+  }
+
+  private getMedia(_patientReference: Reference): Media {
+    return this.media
+      ? this.media
+      : {
+        resourceType: 'Media',
+        status: MediaStatus.COMPLETED,
+        id: 'temp-prism-media',
+        type: {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/media-type',
+              code: 'image',
+              display: 'Image'
             }
-          }
-      return newObservation;
-    }
+          ]
+        },
+        subject: _patientReference,
+        createdDateTime: this.date.toISOString(),
+        operator: _patientReference,
+        height: Math.round(SVG_WIDTH / PRISM_RATIO).toString(),
+        width: SVG_WIDTH.toString(),
+        frames: '1',
+        content: this.getImage()
+      }
+  }
 
-    /**
-     * Draws a SVG image from the positions of the circles
-     * @param blackDiscPos      position of the black disc
-     * @param yellowCirclePos   position of the yellow circle
-     * @param width?            specify width of the drawn image. optional, default is the given
-     *                          with of the PRISM-S session (depending on screen size)
-     * @returns                 the SVG as a string
-     * @throws                  an Error if any of the positions is outside the canvas
-     */
-    private drawSVG(blackDiscPos: Position, yellowCirclePos: Position, width?: number): string {
-      const RATIO = width
-        ? width / this.canvasWidth
-        : 1;
-      const CANVAS_WIDTH = width 
-        ? width
-        : this.canvasWidth;
-      const CANVAS_HEIGHT = CANVAS_WIDTH / PRISM_RATIO;
-      const YELLOW_RADIUS = CANVAS_WIDTH * PRISM_YELLOW_RADIUS_RATIO;
-      const BLACK_RADIUS = CANVAS_WIDTH * PRISM_BLACK_RADIUS_RATIO;
-      if (
-        (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-        (blackDiscPos.horizontal - BLACK_RADIUS) * RATIO < 0 ||
-        (blackDiscPos.vertical + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-        (blackDiscPos.vertical - BLACK_RADIUS) * RATIO < 0 ||
-        (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-        (yellowCirclePos.horizontal - YELLOW_RADIUS) * RATIO < 0 ||
-        (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-        (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
-      ) throw new Error('Invalid parameters, at least one position is outside the canvas.');
-      // TODO: something here is not quite right when RATIO is not 1
-      const image = '<svg width="' + CANVAS_WIDTH + '" height="' + CANVAS_HEIGHT + '" xmlns="http://www.w3.org/2000/svg">\n  <g>\n    ' + 
-        '<ellipse id="yellowCircle" ' + 
-                  'ry="' + YELLOW_RADIUS + '" ' + 
-                  'cy="' + (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO + '" ' + 
-                  'cx="' + (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO + '" ' +
-                  'fill="' + PRISM_YELLOW + '"/>\n    ' + 
-        '<ellipse id="blackDisc" ' + 
-                  'ry="' + BLACK_RADIUS + '" ' +
-                  'cy="' + (blackDiscPos.vertical + BLACK_RADIUS) * RATIO + '" ' +
-                  'cx="' + (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO + '" ' +
-                  'fill="' + PRISM_BLACK + '"/>\n  ' + 
-        '</g>\n</svg>';
-      return image;
+  private getImage(): {
+    contentType: string;
+    data: string;
+    title: string;
+    creation: string;
+  } {
+    if (this.image) { // return photo taken
+      return {
+        contentType: this.image.contentType,
+        data: this.image.data,
+        title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.' + this.image.contentType.split('/')[1],
+        creation: this.date.toISOString()
+      };
+    } else {
+      return { // create svg
+        contentType: 'image/svg+xml',
+        title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.svg',
+        data: base64.encode(this.drawSVG(
+          this.blackDiscPosition, 
+          this.yellowCirclePosition, 
+          SVG_WIDTH
+        )),
+        creation: this.date.toISOString()
+      };
     }
+  }
+
+  private getObservation(_patientReference: Reference): Observation {
+    if (this.observation) return this.observation;
+    return {
+      resourceType: 'Observation',
+      status: ObservationStatus.FINAL,
+      id: 'temp-prism-observation',
+      code: {
+        coding: [
+          PRISM_OBSERVATION_CODE
+        ],
+        text: 'Self-assessment of the suicidal urge and the personal meaning of this urge by the affected person using the PRISM-S method'
+      },
+      subject: _patientReference,
+      effectiveDateTime: this.date.toISOString(),
+      performer: [
+          _patientReference
+      ],
+      component: this.blackDiscPosition.isZero() || this.yellowCirclePosition.isZero()
+      ? []
+      : [
+        {
+          code: {
+            coding: [
+              {
+                system: 'http://midata.coop/prisms',
+                code: 'distance',
+                display: 'Distance between the black disc and the yellow circle in cm extrapolated to the A4 format of the PRISM-S board'
+              }
+            ]
+          },
+          valueQuantity: {
+            value: this.blackDiscPosition.getCentimeterDistance(this.yellowCirclePosition, this.canvasWidth),
+            system: 'http://unitsofmeasure.org',
+            code: 'cm',
+            unit: 'Centimeter'
+          }
+        },
+        {
+          code: {
+            coding: [
+              {
+                system: 'http://midata.coop/prisms',
+                code: 'xCoordinate',
+                display: 'Value of the x coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
+              }
+            ]
+          },
+          valueQuantity: {
+            value: this.blackDiscPosition.getCentimeterPosition(this.canvasWidth).horizontal,
+            system: 'http://unitsofmeasure.org',
+            code: 'cm',
+            unit: 'Centimeter'
+          }
+        },
+        {
+          code: {
+            coding: [
+              {
+                system: 'http://midata.coop/prisms',
+                code: 'yCoordinate',
+                display: 'Value of the y coordinate of the black disk in cm extrapolated to the A4 format of the PRISM-S board'
+              }
+            ]
+          },
+          valueQuantity: {
+            value: this.blackDiscPosition.getCentimeterPosition(this.canvasWidth).vertical,
+            code: 'cm',
+            unit: 'Centimeter'
+          }
+        }
+      ],
+      method: {
+        coding: [
+          {
+            system: 'http://midata.coop/prisms',
+            code: 'appMethod',
+            display: 'Self-assessment in an app with a virtual PRISM-S board'
+          }
+        ]
+      }
+    };
+  }
+
+  /**
+   * Gets the position of the yellow circle, on a new canvas with a given width
+   * @param _canvasWidth the widht of the canvas the yellow circle is drawn on
+   * @returns            the position of the yellow circle as a position element
+   */
+  private getDefaultYellowPosition(_canvasWidth: number): Position {
+    return new Position(
+      _canvasWidth - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth),
+      _canvasWidth / PRISM_RATIO - ((YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth)
+    );
+  }
+
+  /**
+   * Helper function to calculate how many pixel correspond to a cm on an A4 sheet of paper.
+   * @param _cm           the centimeter value on the paper
+   * @param _canvasWidth  the pixel width of the canvas representing the paper
+   * @returns             the number of pixel that correspond to the given cm value
+   */
+  private getPixelFromA4Cm(_cm: number, _canvasWidth: number): number {
+    const ratio = _canvasWidth / PRISM_WIDTH;
+    return Math.round(_cm * ratio);
+  }
+
+  /**
+   * Draws a SVG image from the positions of the circles
+   * @param blackDiscPos      position of the black disc
+   * @param yellowCirclePos   position of the yellow circle
+   * @param width?            specify width of the drawn image. optional, default is the given
+   *                          with of the PRISM-S session (depending on screen size)
+   * @returns                 the SVG as a string
+   * @throws                  an Error if any of the positions is outside the canvas
+   */
+  private drawSVG(blackDiscPos: Position, yellowCirclePos: Position, width?: number): string {
+    const RATIO = width
+      ? width / this.canvasWidth
+      : 1;
+    const CANVAS_WIDTH = width 
+      ? width
+      : this.canvasWidth;
+    const CANVAS_HEIGHT = CANVAS_WIDTH / PRISM_RATIO;
+    const YELLOW_RADIUS = CANVAS_WIDTH * PRISM_YELLOW_RADIUS_RATIO;
+    const BLACK_RADIUS = CANVAS_WIDTH * PRISM_BLACK_RADIUS_RATIO;
+    if (
+      (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
+      (blackDiscPos.horizontal - BLACK_RADIUS) * RATIO < 0 ||
+      (blackDiscPos.vertical + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
+      (blackDiscPos.vertical - BLACK_RADIUS) * RATIO < 0 ||
+      (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
+      (yellowCirclePos.horizontal - YELLOW_RADIUS) * RATIO < 0 ||
+      (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
+      (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
+    ) throw new Error('Invalid parameters, at least one position is outside the canvas.');
+    // TODO: something here is not quite right when RATIO is not 1
+    const image = '<svg width="' + CANVAS_WIDTH + '" height="' + CANVAS_HEIGHT + '" xmlns="http://www.w3.org/2000/svg">\n  <g>\n    ' + 
+      '<ellipse id="yellowCircle" ' + 
+                'ry="' + YELLOW_RADIUS + '" ' + 
+                'cy="' + (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO + '" ' + 
+                'cx="' + (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO + '" ' +
+                'fill="' + PRISM_YELLOW + '"/>\n    ' + 
+      '<ellipse id="blackDisc" ' + 
+                'ry="' + BLACK_RADIUS + '" ' +
+                'cy="' + (blackDiscPos.vertical + BLACK_RADIUS) * RATIO + '" ' +
+                'cx="' + (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO + '" ' +
+                'fill="' + PRISM_BLACK + '"/>\n  ' + 
+      '</g>\n</svg>';
+    return image;
+  }
 }
