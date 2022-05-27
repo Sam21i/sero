@@ -89,7 +89,6 @@ class Assessment extends Component<PropsType, State> {
   }
 
   save() {
-    console.log(this.answers)
     // Set the answers in state to the questionnaireData object
     this.state.prismSession?.getQuestionnaireData().getQuestions().forEach((question) => {
       this.setAnswerForQuestion(question);
@@ -105,6 +104,7 @@ class Assessment extends Component<PropsType, State> {
     const ref = this.props.userProfile.getFhirReference();
     if (ref && this.state.prismSession) {
       const prismBundle = this.state.prismSession.getUploadBundle(ref);
+      prismBundle.id = 'prism-bundle'; // needs a temporary id or there will be errors in midataActions
       // upload to MIDATA
       this.props.addResource(prismBundle);
       console.log(prismBundle)

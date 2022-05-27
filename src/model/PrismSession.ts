@@ -238,7 +238,6 @@ export default class PrismSession {
         contentType: 'image/svg+xml',
         data: base64.encode(svgString)
       }
-      console.log(svgString)
       return svgString;
     }
     return base64.decode(this.image.data);
@@ -296,7 +295,7 @@ export default class PrismSession {
       return {
         contentType: this.image.contentType,
         data: this.image.data,
-        title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.' + this.image.contentType.split('/')[1],
+        title: 'PRISM-S_' + this.date.toISOString().substring(0,16) + '.' + this.image.contentType.split('/')[1].split('+')[0],
         creation: this.date.toISOString()
       };
     } else {
