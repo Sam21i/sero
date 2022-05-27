@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -13,7 +13,9 @@ import LocalesHelper from '../locales';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
-import session from 'redux-persist/lib/storage/session';
+import { IQuestion } from '@i4mi/fhir_questionnaire';
+import {SvgCss} from 'react-native-svg';
+import { Input, NativeBaseProvider } from 'native-base';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -24,13 +26,21 @@ interface PropsType {
   addPrismSession: (s: PrismSession) => void;
 }
 
-interface State {}
+interface State {
+  prismSession: PrismSession | undefined;
+
+}
 
 class Assessment extends Component<PropsType, State> {
+  answers: {
+    [name: string]: string
+  } = {}
   constructor(props: PropsType) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      prismSession: undefined
+    };
   }
 
   componentDidMount() {
@@ -43,7 +53,6 @@ class Assessment extends Component<PropsType, State> {
 
     // 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
     // erstellt und gespeichert wird
-    // TODO: richtig implementieren mit GUI und so ;-), und dann den Teil hier löschen
     const prismSession = new PrismSession({
       // Position der schwarzen Scheibe am Schluss des Assessments (also wie es abgespeichert wird) - in tatsächlichen Pixel
       blackDiscPosition: new Position(100, 100), 
@@ -54,59 +63,122 @@ class Assessment extends Component<PropsType, State> {
     });
 
     // hier werden die Fragenobjekte aus dem Questionnaire geholt, die dann auch zum rendern verwendet werden können
-    const questionaire = prismSession.getQuestionnaireData();
-
-    // da wir im Beispiel nichts rendern, iterieren wir einfach über die Fragen und "beantworten" sie
-    questionaire.getQuestions().forEach(q => {
-      if (q.type === QuestionnaireItemType.GROUP && q.subItems) {
-        // Fragen vom Typ GROUP haben Unter-Items, aber keine eigene Frage / Antwort
-        // also beantworten wir die Unter-Items (theoretisch können diese auch wieder vom Typ GROUP sein, 
-        // aber in diesem Questionnaire haben wir nur zwei Ebenen, also müssen wir diesen Fall nicht berücksichtigen)
-        q.subItems.forEach(sq => {
-          questionaire.updateQuestionAnswers(sq, {
-            answer: {
-              de: 'Das ist eine Antwort auf eine Unterfrage. 🚇' // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
-            },
-            code: {
-              valueString: 'Das ist eine Antwort auf eine Unterfrage. 🚇' // bei Freitext-Fragen wie wir es hier haben, 
-                                                                          // ist der code / valueString gleich wie der Displaystring
-            }
-          });
-        });
-      } else { // hier kommen wir zu den Fragen, die nicht vom Typ GROUP sind (erste Ebene), die müssen wir auch noch beantworten
-        questionaire.updateQuestionAnswers(q, {
-          answer: {
-            de: 'Das ist eine Antwort auf eine Überfrage. 🔝' // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
-          },
-          code: {
-            valueString: 'Das ist eine Antwort auf eine Überfrage. 🔝' // bei Freitext-Fragen wie wir es hier haben, 
-                                                                       // ist der code / valueString gleich wie der Displaystring
-          }
-        });
-      }
+    this.setState({ 
+      prismSession: prismSession
     });
-
-    // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
-    // also können wir das Upload-Bundle generieren
-    // dazu brauchen wir noch die User Referenz
-    const ref = this.props.userProfile.getFhirReference();
-    if (ref) {
-      const prismBundle = prismSession.getUploadBundle(ref)
-      console.log('PRISM Bundle:', prismBundle);
-      // upload to MIDATA
-      this.props.addResource(prismBundle);
-      // and also add to UserProfile
-      this.props.addPrismSession(prismSession);
-    }
 
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
 
   }
 
+  setAnswerForQuestion(question: IQuestion) {
+    if (this.answers[question.id]) {
+      this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(
+        question,
+        {
+          answer: {
+            de: this.answers[question.id]          // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
+          },
+          code: {
+            valueString: this.answers[question.id] // bei Freitext-Fragen wie wir es hier haben, 
+                                                   // ist der code.valueString gleich wie der Displaystring
+          }
+        }
+      )
+    }
+  }
+
+  save() {
+    console.log(this.answers)
+    // Set the answers in state to the questionnaireData object
+    this.state.prismSession?.getQuestionnaireData().getQuestions().forEach((question) => {
+      this.setAnswerForQuestion(question);
+      if (question.subItems) {
+        question.subItems.forEach(subitem => this.setAnswerForQuestion(subitem));
+      }
+    });
+
+    // 🛑 Test- und Beispielimplementation 🛑
+    // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
+    // also können wir das Upload-Bundle generieren
+    // dazu brauchen wir noch die User Referenz
+    const ref = this.props.userProfile.getFhirReference();
+    if (ref && this.state.prismSession) {
+      const prismBundle = this.state.prismSession.getUploadBundle(ref);
+      // upload to MIDATA
+      this.props.addResource(prismBundle);
+      console.log(prismBundle)
+      // and also add to UserProfile
+      this.props.addPrismSession(this.state.prismSession);
+    } else {
+      console.log('Entweder noch keine User Reference oder Prism Session vorhanden.');
+    }
+    // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
+  }
+
+  renderQuestion(element: {index: number, item: IQuestion}) {
+    const question = element.item;
+    const questionnaireData = this.state.prismSession?.getQuestionnaireData();
+    if (!questionnaireData) { // this should not happen when we already are rendering questions
+      return <></>
+    }
+    switch (question.type) {
+      case QuestionnaireItemType.GROUP: return (
+        <View key={question.id}>
+          <Text>== {question.label.de} ==</Text>
+          { question.subItems && question.subItems.map((si: IQuestion, i: number) => this.renderQuestion({index: i, item: si}))}
+        </View>
+      );
+      case QuestionnaireItemType.TEXT: return (
+        <NativeBaseProvider key={question.id}>
+          <Text>{question.label.de}</Text>
+          <Input 
+            value={this.answers[question.id]}
+            keyboardType={'default'}
+            placeholder='gib hier deine Antwort ein'
+            autoCorrect={true}
+            onChangeText={
+              (text) => 
+                this.answers[question.id] = text
+              //   questionnaireData.updateQuestionAnswers(question, {
+              //   answer: {
+              //     de: text          // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
+              //   },
+              //   code: {
+              //     valueString: text // bei Freitext-Fragen wie wir es hier haben, 
+              //                       // ist der code.valueString gleich wie der Displaystring
+              //   }
+              // })
+            }
+          />
+        </NativeBaseProvider>
+      );
+      default: return <Text key={question.id}>Rendering Question Type {question.type} not supported</Text>
+    }
+  }
+
   render() {
+    let image = '';
+    try { image = this.state.prismSession?.getSVGImage() || ''}
+    catch(e) { console.log(e) };
     return (
-      <SafeAreaView edges={['top', 'bottom']}>
-        <Text>Assessment (quer)</Text>
+      <SafeAreaView edges={['left', 'right']}>
+        { this.state.prismSession && 
+          <View>
+            <FlatList
+              data={this.state.prismSession.getQuestionnaireData().getQuestions()}
+              renderItem={(listElement) => this.renderQuestion(listElement)}
+              keyExtractor={item => item.id}
+              ListFooterComponent={
+                <View style={{marginBottom: 20, backgroundColor:'#f5f5f5'}}>
+                  <Text onPress={this.save.bind(this)} >[speichern]</Text>
+                  {/* TODO: i have no idea, why the image is not displayed at all*/}
+                  <SvgCss xml={image}></SvgCss>
+                </View>
+              }
+            />
+          </View>
+        }       
       </SafeAreaView>
     );
   }

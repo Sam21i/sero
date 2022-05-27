@@ -229,8 +229,17 @@ export default class PrismSession {
    * @throws    an Error if there is no image available or type is not SVG
    */
   getSVGImage(): string {
-    if (!this.image || !this.image.contentType.includes('svg')) {
-      throw new Error('No svg image available');
+    if (this.image && !this.image.contentType.includes('svg')) {
+      throw new Error('Available image is not SVG');
+    }
+    if (!this.image) {
+      const svgString = this.drawSVG(this.blackDiscPosition, this.yellowCirclePosition, this.canvasWidth)
+      this.image = {
+        contentType: 'image/svg+xml',
+        data: base64.encode(svgString)
+      }
+      console.log(svgString)
+      return svgString;
     }
     return base64.decode(this.image.data);
   }
