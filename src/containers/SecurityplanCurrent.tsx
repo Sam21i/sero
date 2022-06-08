@@ -13,7 +13,7 @@ import SortableList from 'react-native-sortable-list';
 import UserProfile from '../model/UserProfile';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
 import * as userProfileActions from '../store/userProfile/actions';
 import * as midataServiceActions from '../store/midataService/actions';
@@ -187,7 +187,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           <AppButton
             label={this.props.localesHelper.localeString('common.options')}
             icon={
-              '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path fill="#fff" d="M256,0C114.8,0,0,114.8,0,256s114.8,256,256,256s256-114.9,256-256S397.2,0,256,0z M256,472.3 c-119.3,0-216.3-97-216.3-216.3S136.7,39.7,256,39.7s216.3,97,216.3,216.3S375.3,472.3,256,472.3z" /> </g> </g> <g> <g id="options"> <path fill="#fff" d="M216,146.3c0-22.1,17.9-40,40-40s40,17.9,40,40s-17.9,40-40,40S216,168.4,216,146.3z M256,213c-22.1,0-40,17.9-40,40 s17.9,40,40,40s40-17.9,40-40S278.1,213,256,213z M256,319.7c-22.1,0-40,17.9-40,40c0,22.1,17.9,40,40,40s40-17.9,40-40 C296,337.6,278.1,319.7,256,319.7z" /> </g> </g> </svg>'
+              '<?xml version="1.0" encoding="iso-8859-1"?> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"> <g> <g> <g> <path fill="#FFFFFF" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,480 C132.288,480,32,379.712,32,256S132.288,32,256,32s224,100.288,224,224S379.712,480,256,480z" /> <circle fill="#FFFFFF" cx="256" cy="256" r="32" /> <circle fill="#FFFFFF" cx="368" cy="256" r="32" /> <circle fill="#FFFFFF" cx="144" cy="256" r="32" /> </g> </g> </g> </svg>'
             }
             position='left'
             color={colors.tumbleweed}
@@ -272,6 +272,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             ) : (
               <View>
                 <SortableList
+                  style={{height: '100%'}}
                   key={'sortlist' + this.state.modalVisible + this.state.isEditMode}
                   onActivateRow={this.onDragModule.bind(this)}
                   onReleaseRow={this.onDropModule.bind(this)}
@@ -314,7 +315,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
+    backgroundColor: colors.primary50opac,
     flex: 1
   },
   topTextView: {
@@ -353,7 +354,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     height: scale(50),
-    width: scale(200),
+    width: scale(225),
     paddingVertical: scale(10),
     marginVertical: 0,
     marginBottom: 20
@@ -365,11 +366,11 @@ const styles = StyleSheet.create({
   emergencyButton: {
     position: 'absolute',
     right: -0.2,
-    top: scale(55)
+    top: verticalScale(45)
   },
   bottomView: {
     flex: 7,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+    backgroundColor: colors.white65opac
   }
 });
 

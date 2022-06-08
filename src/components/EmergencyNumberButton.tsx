@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     width: scale(90),
-    height: verticalScale(75),
+    height: scale(75),
     paddingVertical: verticalScale(15),
     paddingLeft: scale(10),
     paddingRight: scale(20),

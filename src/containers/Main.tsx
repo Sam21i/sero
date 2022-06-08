@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, ImageBackground, Platform, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import MainNotification from '../components/MainNotification';
@@ -14,7 +14,7 @@ import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
-import {appStyles, colors, scale, verticalScale} from '../styles/App.style';
+import {colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan} from '@i4mi/fhir_r4';
 
 interface PropsType {
@@ -122,9 +122,16 @@ class Main extends Component<PropsType, State> {
             <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
+            <View style={{height: verticalScale(55)}}></View>
+
             <MainNotification />
           </View>
-          <View style={appStyles.buttonContainer}>
+          <View
+            style={{
+              paddingBottom: verticalScale(55),
+              position: 'relative',
+              backgroundColor: colors.white65opac
+            }}>
             <AppButton
               label={this.props.localesHelper.localeString('securityplan.title')}
               icon={
@@ -135,17 +142,20 @@ class Main extends Component<PropsType, State> {
               onPress={() => {
                 this.props.navigation.navigate('Securityplan');
               }}
+              isLargeButton
             />
+            <View style={{height: verticalScale(15)}}></View>
             <AppButton
               label={this.props.localesHelper.localeString('prismS.title')}
               icon={
-                '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;} .st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;} </style> <g> <path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7" /> <circle class="st1" cx="107.9" cy="88.9" r="17.7"/> <rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/> </g> </svg>'
+                '<?xml version="1.0" encoding="utf-8"?> <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;} .st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;} </style> <g> <path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7" /> <circle class="st1" cx="107.9" cy="88.9" r="17.7"/> <rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/> </g> </svg>'
               }
               position='right'
               color={colors.gold}
               onPress={() => {
                 //this.props.navigation.navigate('Assessment')
               }}
+              isLargeButton
             />
           </View>
         </ImageBackground>
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+    backgroundColor: colors.white65opac
   }
 });
 

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   localesHelper: LocalesHelper;
@@ -26,7 +26,7 @@ class SecurityPlanNotification extends Component<PropsType, State> {
     return (
       <View style={styles.view}>
         <Text style={styles.title}>
-          {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+          {userName ? userName : ''}
         </Text>
         {messageParts.length === 1 ? (
           <Text
@@ -58,9 +58,8 @@ class SecurityPlanNotification extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    marginTop: verticalScale(40),
     paddingLeft: scale(40),
-    paddingRight: scale(20)
+    paddingRight: scale(20),
   },
   title: {
     fontSize: scale(TextSize.big),

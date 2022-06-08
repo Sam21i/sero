@@ -144,7 +144,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
 
 const styles = StyleSheet.create({
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
+    backgroundColor: colors.primary50opac,
     flex: 1.5,
     alignItems: 'center',
     justifyContent: 'center'
@@ -176,9 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   backButton: {
-    height: scale(50),
-    width: scale(200),
-    paddingVertical: scale(10),
+    width: scale(225),
     marginVertical: scale(10)
   },
   icon: {

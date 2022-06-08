@@ -20,7 +20,7 @@ import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
@@ -381,13 +381,10 @@ class Contacts extends Component<PropsType, State> {
                   : this.props.localesHelper.localeString('contacts.title')}
               </Text>
             </View>
-            <View style={styles.emergencyButton}>
-              <EmergencyNumberButton />
-            </View>
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
-              <View>
+              <View style={{position: 'relative', top: verticalScale(80)}}>
                 <ContactSpeechBubble
                   mode={this.state.mode}
                   localesHelper={this.props.localesHelper}
@@ -399,7 +396,7 @@ class Contacts extends Component<PropsType, State> {
               </View>
             )}
             {this.state.listVisible && (
-              <View>
+              <View style={{position: 'relative', top: verticalScale(50)}}>
                 {this.state.loadingContacts ? (
                   <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
                 ) : (
@@ -424,6 +421,9 @@ class Contacts extends Component<PropsType, State> {
                 )}
               </View>
             )}
+          </View>
+          <View style={styles.emergencyButton}>
+            <EmergencyNumberButton />
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -452,17 +452,18 @@ const styles = StyleSheet.create({
     fontSize: scale(TextSize.big)
   },
   emergencyButton: {
-    alignItems: 'flex-end',
-    justifyContent: 'center'
+    position: 'absolute',
+    right: -0.2,
+    top: verticalScale(45)
   },
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
-    flex: 0.4,
+    backgroundColor: colors.primary50opac,
+    flex: 1,
     flexDirection: 'row'
   },
   bottomView: {
-    flex: 1,
-    backgroundColor: colors.linen
+    flex: 7,
+    backgroundColor: colors.white65opac
   },
   listItem: {
     marginVertical: scale(10),

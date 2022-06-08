@@ -51,7 +51,7 @@ class OnBoarding extends Component<PropsType, State> {
   }
 
   authenthicate(): Promise<void> {
-    this.setState({ isLoggingIn: true });
+    this.setState({isLoggingIn: true});
     return new Promise((resolve, reject) => {
       OAUTH_CONFIG.additionalParameters = {
         ...{
@@ -68,13 +68,13 @@ class OnBoarding extends Component<PropsType, State> {
           );
           this.props.midataService.getUserData().then((profile) => {
             this.props.updateUserProfile(profile);
-            this.setState({ isLoggingIn: false });
+            this.setState({isLoggingIn: false});
             return resolve();
           });
         })
         .catch((error) => {
           console.log('auth failed or cancelled', error);
-          this.setState({ isLoggingIn: false });
+          this.setState({isLoggingIn: false});
         });
     });
   }
@@ -142,13 +142,12 @@ class OnBoarding extends Component<PropsType, State> {
           color={colors.grey}
           style={{
             position: 'absolute',
-            width: scale(300),
-            height: 70,
-            top: verticalScale(425),
-            left: scale(-10),
-            paddingVertical: 10
+            top: verticalScale(357.5),
+            left: scale(-10)
           }}
-          onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}></AppButton>
+          onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}
+          isLargeButton
+        />
       );
     } else if (activeIndex === 4) {
       button = (
@@ -161,13 +160,12 @@ class OnBoarding extends Component<PropsType, State> {
           color={colors.grey}
           style={{
             position: 'absolute',
-            width: scale(300),
-            height: 70,
-            top: verticalScale(425),
-            left: scale(-10),
-            paddingVertical: 10
+            top: verticalScale(357.5),
+            left: scale(-10)
           }}
-          onPress={() => this.registerOrLogin()}></AppButton>
+          onPress={() => this.registerOrLogin()}
+          isLargeButton
+        />
       );
     }
 
@@ -180,7 +178,7 @@ class OnBoarding extends Component<PropsType, State> {
                 key={i}
                 style={[
                   styles.dot,
-                  i === activeIndex ? {backgroundColor: 'rgba(0, 0, 0, .2)'} : {backgroundColor: 'white'}
+                  i === activeIndex ? {backgroundColor: colors.grey} : {backgroundColor: 'white'}
                 ]}
                 onPress={() => this.slider?.goToSlide(i, true)}
               />
@@ -216,7 +214,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 0.74,
-    backgroundColor: 'rgba(255,255,255,0.75)'
+    backgroundColor: colors.white65opac
   },
   content: {
     position: 'absolute',
