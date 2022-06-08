@@ -10,64 +10,47 @@ interface CategoryButtonProps {
   position: string;
   onPress?: () => void;
   style?: {};
-  isLargeButton: Boolean;
+  isLargeButton: boolean;
 }
 
 export default class AppButton extends Component<CategoryButtonProps> {
   render() {
-    if (this.props.position === 'right') {
-      return (
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
-          <View
-            style={[
-              styles.buttonRight,
-              {
-                ...this.props.style,
-                backgroundColor: this.props.color,
-                minHeight: this.props.isLargeButton ? scale(75) : scale(50)
-              }
-            ]}>
-            {this.props.icon != undefined ? (
-              <SvgCss
-                xml={this.props.icon}
-                style={styles.icon}
-              />
-            ) : (
-              <></>
-            )}
+    return (
+      <TouchableWithoutFeedback onPress={this.props.onPress}>
+        <View
+          style={[
+            this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
+            {
+              ...this.props.style,
+              backgroundColor: this.props.color,
+              minHeight: this.props.isLargeButton ? scale(82) : scale(50)
+            }
+          ]}>
+          {this.props.position === 'left' && (
             <Text
               numberOfLines={2}
               style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
               {this.props.label}
             </Text>
-          </View>
-        </TouchableWithoutFeedback>
-      );
-    } else if (this.props.position === 'left') {
-      return (
-        <TouchableWithoutFeedback onPress={this.props.onPress}>
-          <View style={[styles.buttonLeft, {...this.props.style, backgroundColor: this.props.color, minHeight: this.props.isLargeButton ? scale(75) : scale(50)}]}>
+          )}
+          {this.props.icon != undefined ? (
+            <SvgCss
+              xml={this.props.icon}
+              style={styles.icon}
+            />
+          ) : (
+            <></>
+          )}
+          {this.props.position === 'right' && (
             <Text
               numberOfLines={2}
-              style={[
-                styles.buttonText,
-                this.props.icon == undefined ? {textAlign: 'center'} : {},
-                {paddingLeft: scale(40)}
-              ]}>
+              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
               {this.props.label}
             </Text>
-            {this.props.icon != undefined ? (
-              <SvgCss
-                xml={this.props.icon}
-                style={styles.icon}
-              />
-            ) : (
-              <></>
-            )}
-          </View>
-        </TouchableWithoutFeedback>
-      );
-    }
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
