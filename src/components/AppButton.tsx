@@ -10,6 +10,7 @@ interface CategoryButtonProps {
   position: string;
   onPress?: () => void;
   style?: {};
+  isLargeButton: Boolean;
 }
 
 export default class AppButton extends Component<CategoryButtonProps> {
@@ -17,7 +18,15 @@ export default class AppButton extends Component<CategoryButtonProps> {
     if (this.props.position === 'right') {
       return (
         <TouchableWithoutFeedback onPress={this.props.onPress}>
-          <View style={[styles.buttonRight, {...this.props.style}, {backgroundColor: this.props.color}]}>
+          <View
+            style={[
+              styles.buttonRight,
+              {
+                ...this.props.style,
+                backgroundColor: this.props.color,
+                minHeight: this.props.isLargeButton ? scale(75) : scale(50)
+              }
+            ]}>
             {this.props.icon != undefined ? (
               <SvgCss
                 xml={this.props.icon}
@@ -26,7 +35,9 @@ export default class AppButton extends Component<CategoryButtonProps> {
             ) : (
               <></>
             )}
-            <Text style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
+            <Text
+              numberOfLines={2}
+              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
               {this.props.label}
             </Text>
           </View>
@@ -35,8 +46,9 @@ export default class AppButton extends Component<CategoryButtonProps> {
     } else if (this.props.position === 'left') {
       return (
         <TouchableWithoutFeedback onPress={this.props.onPress}>
-          <View style={[styles.buttonLeft, {...this.props.style}, {backgroundColor: this.props.color}]}>
+          <View style={[styles.buttonLeft, {...this.props.style, backgroundColor: this.props.color, minHeight: this.props.isLargeButton ? scale(75) : scale(50)}]}>
             <Text
+              numberOfLines={2}
               style={[
                 styles.buttonText,
                 this.props.icon == undefined ? {textAlign: 'center'} : {},
@@ -80,6 +92,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     flex: 3,
+    paddingLeft: 20,
+    paddingRight: 20,
     fontSize: scale(TextSize.normalPlus),
     fontFamily: AppFonts.medium,
     color: colors.white,

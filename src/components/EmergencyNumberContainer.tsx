@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Linking, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';

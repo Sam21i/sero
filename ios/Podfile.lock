@@ -369,7 +369,7 @@ PODS:
     - React-Core
   - RNBootSplash (4.1.5):
     - React-Core
-  - RNCAsyncStorage (1.17.4):
+  - RNCAsyncStorage (1.17.5):
     - React-Core
   - RNFS (2.20.0):
     - React-Core
@@ -637,7 +637,7 @@ SPEC CHECKSUMS:
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNBootSplash: 2830c475d5793d6cf12312d1e8f5f1decb0dd3e8
-  RNCAsyncStorage: 9367a646dc24e3ab7b6874d79bc1bfd0832dce58
+  RNCAsyncStorage: 81187912cc9a5c2591ddb161e03e587688afb764
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 61628a2c859172551aa2100d3e73d1e57878392f
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, ImageBackground, Platform, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import MainNotification from '../components/MainNotification';
@@ -14,7 +14,7 @@ import UserProfile from '../model/UserProfile';
 import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
-import {appStyles, colors, scale, verticalScale} from '../styles/App.style';
+import {colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan} from '@i4mi/fhir_r4';
 
 interface PropsType {
@@ -122,9 +122,16 @@ class Main extends Component<PropsType, State> {
             <EmergencyNumberContainer />
           </View>
           <View style={styles.bottomView}>
+            <View style={{height: verticalScale(55)}}></View>
+
             <MainNotification />
           </View>
-          <View style={appStyles.buttonContainer}>
+          <View
+            style={{
+              paddingBottom: verticalScale(55),
+              position: 'relative',
+              backgroundColor: 'rgba(255, 255, 255, 0.65)',
+            }}>
             <AppButton
               label={this.props.localesHelper.localeString('securityplan.title')}
               icon={
@@ -136,6 +143,7 @@ class Main extends Component<PropsType, State> {
                 this.props.navigation.navigate('Securityplan');
               }}
             />
+            <View style={{height: verticalScale(15)}}></View>
             <AppButton
               label={this.props.localesHelper.localeString('prismS.title')}
               icon={
@@ -146,6 +154,7 @@ class Main extends Component<PropsType, State> {
               onPress={() => {
                 //this.props.navigation.navigate('Assessment')
               }}
+              isLargeButton={true}
             />
           </View>
         </ImageBackground>

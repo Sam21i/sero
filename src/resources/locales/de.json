@@ -47,7 +47,7 @@
   "main": {
     "callEmergencyBottom": "anrufen",
     "callEmergencyTop": "Notfall",
-    "default": "Entdecke jetzt die SERO App!\nLos geht's...",
+    "default": "Entdecke jetzt die SERO App! Los geht's...",
     "greeting": "Hallo {{name}}",
     "myEnvironmentTitle": "Meine Kontakte anrufen"
   },
@@ -74,7 +74,7 @@
     }
   },
   "prismS": {
-    "title": "Meine\nEinschätzung"
+    "title": "Meine Einschätzung"
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
@@ -95,7 +95,7 @@
       "motivation": "Etwas das dich motiviert:",
       "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
     },
-    "title": "Mein\nSicherheitsplan"
+    "title": "Mein Sicherheitsplan"
   },
   "settings": {
     "later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",

@@ -13,7 +13,7 @@ import MidataService from '../model/MidataService';
 import SecurityPlanModel, {SecurityPlanModule} from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -141,7 +141,8 @@ class SecurityplanArchive extends Component<PropsType, State> {
                     ? this.setState({selectedSecurityplan: undefined})
                     : this.props.navigation.goBack();
                 }}
-                style={{height: scale(50), width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
+                style={{width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
+                isLargeButton={false}
               />
             </ScrollView>
           </View>
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   emergencyButton: {
     position: 'absolute',
     right: -0.2,
-    top: scale(55)
+    top: verticalScale(45)
   },
   bottomView: {
     flex: 7,

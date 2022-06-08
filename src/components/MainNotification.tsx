@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   localesHelper: LocalesHelper;
@@ -28,8 +28,8 @@ class MainNotification extends Component<PropsType> {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    marginTop: verticalScale(40),
-    paddingLeft: scale(40)
+    paddingLeft: scale(40),
+    paddingRight: scale(60)
   },
   title: {
     fontSize: scale(TextSize.big),
