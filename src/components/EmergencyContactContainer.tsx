@@ -49,8 +49,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
             <TouchableOpacity onPress={this.props.onPressOptionsButton}>
               {this.props.emergencyContacts.length > 0 && (
                 <OptionsIcon
-                  width={scale(30)}
-                  height={scale(30)}
+                  width={scale(27.5)}
+                  height={scale(27.5)}
                 />
               )}
             </TouchableOpacity>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 2.71,
     flexDirection: 'column',
-    backgroundColor: '#rgba(203, 95, 11, 0.25)'
+    backgroundColor: colors.primary25opac
   },
   titleView: {
     flex: 1,

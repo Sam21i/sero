@@ -187,7 +187,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           <AppButton
             label={this.props.localesHelper.localeString('common.options')}
             icon={
-              '<?xml version="1.0" encoding="iso-8859-1"?> <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"> <g> <g> <g> <path fill="#FFFFFF" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,480 C132.288,480,32,379.712,32,256S132.288,32,256,32s224,100.288,224,224S379.712,480,256,480z" /> <circle fill="#FFFFFF" cx="256" cy="256" r="32" /> <circle fill="#FFFFFF" cx="368" cy="256" r="32" /> <circle fill="#FFFFFF" cx="144" cy="256" r="32" /> </g> </g> </g> </svg>'
+              '<?xml version="1.0" encoding="iso-8859-1"?> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"> <g> <g> <g> <path fill="#FFFFFF" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,480 C132.288,480,32,379.712,32,256S132.288,32,256,32s224,100.288,224,224S379.712,480,256,480z" /> <circle fill="#FFFFFF" cx="256" cy="256" r="32" /> <circle fill="#FFFFFF" cx="368" cy="256" r="32" /> <circle fill="#FFFFFF" cx="144" cy="256" r="32" /> </g> </g> </g> </svg>'
             }
             position='left'
             color={colors.tumbleweed}
@@ -315,7 +315,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
+    backgroundColor: colors.primary50opac,
     flex: 1
   },
   topTextView: {
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     height: scale(50),
-    width: scale(200),
+    width: scale(225),
     paddingVertical: scale(10),
     marginVertical: 0,
     marginBottom: 20
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 7,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+    backgroundColor: colors.white65opac
   }
 });
 

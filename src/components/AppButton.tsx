@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
@@ -10,13 +10,17 @@ interface CategoryButtonProps {
   position: string;
   onPress?: () => void;
   style?: {};
-  isLargeButton: boolean;
+  isLargeButton?: boolean;
+  isDisabled?: boolean;
 }
 
 export default class AppButton extends Component<CategoryButtonProps> {
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this.props.onPress}>
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        disabled={this.props.isDisabled}
+        activeOpacity={0.5}>
         <View
           style={[
             this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
@@ -49,7 +53,7 @@ export default class AppButton extends Component<CategoryButtonProps> {
             </Text>
           )}
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     );
   }
 }
@@ -58,8 +62,7 @@ const styles = StyleSheet.create({
   buttonRight: {
     alignSelf: 'flex-end',
     width: scale(300),
-    paddingVertical: verticalScale(15),
-    paddingLeft: Platform.OS === 'ios' ? scale(5) : 0,
+    padding: scale(10),
     borderBottomLeftRadius: scale(50),
     borderTopLeftRadius: scale(50),
     flexDirection: 'row'
@@ -67,17 +70,15 @@ const styles = StyleSheet.create({
   buttonLeft: {
     alignSelf: 'flex-start',
     width: scale(300),
-    paddingVertical: verticalScale(15),
-    paddingRight: Platform.OS === 'ios' ? scale(5) : 0,
+    padding: scale(10),
     borderBottomRightRadius: scale(50),
     borderTopRightRadius: scale(50),
     flexDirection: 'row'
   },
   buttonText: {
     flex: 3,
-    paddingLeft: 20,
-    paddingRight: 20,
     fontSize: scale(TextSize.normalPlus),
+    marginHorizontal: scale(20),
     fontFamily: AppFonts.medium,
     color: colors.white,
     alignSelf: 'center'

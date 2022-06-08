@@ -83,8 +83,7 @@ class SecurityplanMain extends Component<PropsType, State> {
             <SecurityPlanNotification message={this.getRandomMessage()} />
             <View
               style={{
-                position: 'relative',
-                backgroundColor: 'rgba(255, 255, 255, 0.00)'
+                position: 'relative'
               }}>
               <AppButton
                 label={this.props.localesHelper.localeString('securityplan.current')}
@@ -96,7 +95,7 @@ class SecurityplanMain extends Component<PropsType, State> {
                 onPress={() => {
                   this.props.navigation.navigate('SecurityplanCurrent');
                 }}
-                isLargeButton={true}
+                isLargeButton
               />
               <View style={{height: verticalScale(15)}}></View>
               <AppButton
@@ -109,7 +108,8 @@ class SecurityplanMain extends Component<PropsType, State> {
                 onPress={() => {
                   this.props.navigation.navigate('SecurityplanArchive');
                 }}
-                isLargeButton={true}
+                isLargeButton
+                isDisabled={this.props.userProfile.getSecurityPlanHistory().length === 0}
               />
             </View>
             <View style={{height: verticalScale(55)}}></View>
@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
     top: verticalScale(45)
   },
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
+    backgroundColor: colors.primary50opac,
     flex: 1
   },
   bottomView: {
     flex: 7,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+    backgroundColor: colors.white65opac
   }
 });
 

@@ -44,6 +44,7 @@ export const TextSize = {
 export const colors = {
   black: 'rgb(26, 25, 23)',
   white: 'rgb(255, 255, 255)',
+  white65opac: 'rgba(255, 255, 255, 0.65)',
   lightGrey: 'rgb(235,235,235)',
   veryLightGrey: 'rgb(200,200,200)',
   grey: 'rgb(128,128,128)',
@@ -53,6 +54,8 @@ export const colors = {
   alert: 'rgb(185, 50, 100)',
 
   primary: 'rgb(201, 95, 30)',
+  primary50opac: 'rgba(201, 95, 30, .5)',
+  primary25opac: 'rgba(201, 95, 30, .25)',
   petrol: 'rgb(10, 95, 108)',
   gold: 'rgb(205, 177, 65)',
   linen: 'rgb(250, 239, 231)',

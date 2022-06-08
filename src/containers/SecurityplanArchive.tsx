@@ -157,7 +157,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
+    backgroundColor: colors.primary50opac,
     flex: 1
   },
   topTextView: {
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 7,
-    backgroundColor: 'rgba(255, 255, 255, 0.65)'
+    backgroundColor: colors.white65opac
   },
   listItem: {
     marginVertical: scale(10),

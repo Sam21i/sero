@@ -52,12 +52,9 @@ class Welcome extends Component<PropsType> {
                 }
                 position={'left'}
                 color={colors.grey}
-                style={{
-                  width: scale(300),
-                  paddingVertical: 10,
-                  height: 70
-                }}
-                onPress={() => this.props.navigation.navigate('mainOnBoarding')}></AppButton>
+                onPress={() => this.props.navigation.navigate('mainOnBoarding')}
+                isLargeButton
+              />
             </View>
 
             <SpeechBubble
