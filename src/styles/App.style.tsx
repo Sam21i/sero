@@ -48,6 +48,7 @@ export const colors = {
   lightGrey: 'rgb(235,235,235)',
   veryLightGrey: 'rgb(200,200,200)',
   grey: 'rgb(128,128,128)',
+  blue: 'rgb(0, 122, 255)',
 
   success: 'rgb(0, 170, 230)',
   warning: 'rgb(191, 58, 46)',

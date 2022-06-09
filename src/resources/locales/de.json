@@ -49,7 +49,8 @@
     "callEmergencyTop": "Notfall",
     "default": "Entdecke jetzt die SERO App! Los geht's...",
     "greeting": "Hallo {{name}}",
-    "myEnvironmentTitle": "Meine Kontakte anrufen"
+    "myEnvironmentTitle": "Meine Kontakte anrufen",
+    "securityplanUpdated": "Ist dein Sicherheitsplan noch aktuell?"
   },
   "onboarding": {
     "assessment": {
@@ -94,6 +95,10 @@
       "distractionStrategies": "Etwas das dich ablenken kann:",
       "motivation": "Etwas das dich motiviert:",
       "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
+    },
+    "examples": {
+      "copingStrategies": "z. B. Zeichnen, Entspannungsübungen, Kochen, Musik hören etc.",
+      "distractionStrategies": "z. B. Freunde treffen, Waldspaziergang, Kinobesuch, Biken etc."
     },
     "title": "Mein Sicherheitsplan"
   },

@@ -1,14 +1,15 @@
 import {Formik} from 'formik';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
-import {StyleSheet, Modal, Text, View, Button, ImageBackground} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {StyleSheet, Modal, Text, View, ImageBackground, TouchableOpacity} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LocalesHelper from '../locales';
-import {SecurityPlanModule} from '../model/SecurityPlan';
+import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import AppButton from './AppButton';
 import TrashIcon from '../resources/images/icons/icon_trash.svg';
+import AddIcon from '../resources/images/icons/securityplan/icon_add.svg';
 
 interface SecurityPlanEditModalProps {
   localesHelper: LocalesHelper;
@@ -60,6 +61,20 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                         <View style={styles.descriptionView}>
                           <Text style={styles.descriptionViewText}>{this.props.module.description}</Text>
                         </View>
+                        {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES && (
+                          <View style={styles.exampleView}>
+                            <Text style={styles.exampleViewText}>
+                              {this.props.localesHelper.localeString('securityplan.examples.copingStrategies')}
+                            </Text>
+                          </View>
+                        )}
+                        {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.DISTRACTION_STRATIES && (
+                          <View style={styles.exampleView}>
+                            <Text style={styles.exampleViewText}>
+                              {this.props.localesHelper.localeString('securityplan.examples.distractionStrategies')}
+                            </Text>
+                          </View>
+                        )}
                         {values.entries.map((entry, index) => (
                           <View
                             key={'input.' + index}
@@ -101,9 +116,13 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                             </TouchableOpacity>
                           </View>
                         ))}
-                        <Button
+                        <AppButton
+                          icon='<?xml version="1.0" encoding="iso-8859-1"?> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path fill="#fff" d="M256,0C114.833,0,0,114.833,0,256s114.833,256,256,256s256-114.853,256-256S397.167,0,256,0z M256,472.341 c-119.275,0-216.341-97.046-216.341-216.341S136.725,39.659,256,39.659S472.341,136.705,472.341,256S375.295,472.341,256,472.341z " /> </g> </g> <g> <g> <path fill="#fff" d="M355.148,234.386H275.83v-79.318c0-10.946-8.864-19.83-19.83-19.83s-19.83,8.884-19.83,19.83v79.318h-79.318 c-10.966,0-19.83,8.884-19.83,19.83s8.864,19.83,19.83,19.83h79.318v79.318c0,10.946,8.864,19.83,19.83,19.83 s19.83-8.884,19.83-19.83v-79.318h79.318c10.966,0,19.83-8.884,19.83-19.83S366.114,234.386,355.148,234.386z" /> </g> </g> </svg>'
                           onPress={() => setFieldValue('entries', [...values.entries, ''])}
-                          title={'+ ' + this.props.localesHelper.localeString('securityplan.addEntry')}
+                          label={this.props.localesHelper.localeString('securityplan.addEntry')}
+                          position='left'
+                          color={colors.grey}
+                          style={styles.addButton}
                         />
                       </ScrollView>
                     </View>
@@ -155,14 +174,26 @@ const styles = StyleSheet.create({
     fontSize: scale(TextSize.big)
   },
   descriptionView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10)
+  },
+  exampleView: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingHorizontal: scale(20),
+    paddingVertical: scale(10)
   },
   descriptionViewText: {
     color: colors.black,
     fontFamily: AppFonts.medium,
     fontSize: scale(TextSize.small)
+  },
+  exampleViewText: {
+    color: colors.black,
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.verySmall)
   },
   bottomView: {
     flex: 10,
@@ -177,6 +208,10 @@ const styles = StyleSheet.create({
   },
   backButton: {
     width: scale(225),
+    marginVertical: scale(10)
+  },
+  addButton: {
+    width: scale(250),
     marginVertical: scale(10)
   },
   icon: {

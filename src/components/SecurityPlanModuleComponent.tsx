@@ -77,7 +77,7 @@ export default class SecurityPlanModuleComponent extends Component<
 
   renderContactModuleContent() {
     return (
-      <View style={styles.contentContainer}>
+      <View style={[styles.contentContainer, {width: windowWidth - scale(95)}]}>
         <Text style={styles.title}>{this.props.module.title}</Text>
         <View>
           {this.props.module.entries.map((entry, index) => {
@@ -166,35 +166,41 @@ export default class SecurityPlanModuleComponent extends Component<
             </View>
           )}
           {this.renderIcon(this.props.module.type)}
-          {this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS && (
-            <TouchableOpacity
-              onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-              <EditPencil
-                style={styles.editIcon}
-                width={scale(40)}
-                height={scale(20)}
-              />
-            </TouchableOpacity>
-          )}
         </View>
         {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS
           ? this.renderContactModuleContent()
           : this.renderNormalModuleContent()}
+
+        {this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS && (
+          <View style={styles.editPencilContainer}>
+            <TouchableOpacity onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}>
+              <EditPencil
+                style={styles.editIcon}
+                width={scale(30)}
+                height={scale(50)}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  editPencilContainer: {
+    width: 50,
+    justifyContent: 'center'
+  },
   componentWrapper: {
     flexDirection: 'row',
     marginBottom: scale(20)
   },
   contentContainer: {
     flexDirection: 'column',
-    marginLeft: scale(10),
-    marginTop: scale(3)
+    paddingLeft: scale(10),
+    paddingTop: scale(0),
+    width: windowWidth - scale(130)
   },
   entry: {
     flexDirection: 'row'
@@ -207,17 +213,15 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular
   },
   title: {
-    color: colors.tumbleweed,
+    color: colors.primary,
     fontFamily: AppFonts.bold,
-    marginBottom: scale(2),
-    width: windowWidth - scale(110)
+    paddingBottom: scale(2)
   },
   content: {
-    marginLeft: scale(5),
-    marginRight: scale(15),
+    paddingLeft: scale(5),
+    paddingRight: scale(15),
     fontFamily: AppFonts.regular,
-    flexWrap: 'wrap',
-    width: windowWidth - scale(110)
+    flexWrap: 'wrap'
   },
   contactEntry: {
     flexDirection: 'row',
@@ -235,7 +239,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: colors.primary,
     height: scale(60),
-    width: scale(80),
+    width: scale(70),
     borderBottomRightRadius: scale(30),
     borderTopRightRadius: scale(30)
   },
@@ -245,9 +249,7 @@ const styles = StyleSheet.create({
     marginRight: scale(10)
   },
   editIcon: {
-    alignSelf: 'flex-end',
-    marginTop: scale(-10),
-    marginRight: scale(-8)
+    alignSelf: 'center',
   },
   editingGripPoint: {
     marginTop: scale(10),
