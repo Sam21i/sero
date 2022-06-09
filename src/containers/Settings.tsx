@@ -8,7 +8,7 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import LocalesHelper from '../locales';
 import {View} from 'react-native';
 import {AppFonts, scale, TextSize} from '../styles/App.style';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -39,12 +39,10 @@ class Settings extends Component<PropsType, State> {
             {this.props.localesHelper.localeString('settings.later')}
           </Text>
         </View>
-        {this.props.midataService.isAuthenticated() && (
-          <Button
-            title={this.props.localesHelper.localeString('settings.logout')}
-            onPress={this.logout.bind(this)}
-          />
-        )}
+        <Button
+          title={this.props.localesHelper.localeString('settings.logout')}
+          onPress={this.logout.bind(this)}
+        />
       </SafeAreaView>
     );
   }

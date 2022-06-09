@@ -15,9 +15,8 @@ import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import {colors, scale, verticalScale} from '../styles/App.style';
-import {CarePlan } from '@i4mi/fhir_r4';
-import { PrismResources } from '../model/PrismSession';
-
+import {CarePlan} from '@i4mi/fhir_r4';
+import {PrismResources} from '../model/PrismSession';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -74,12 +73,15 @@ class Main extends Component<PropsType, State> {
   }
 
   loadPrismSessions(): void {
-    const userId = this.props.userProfile.getFhirId();
-    if (userId && this.props.midataService.isAuthenticated()) {
-      this.props.midataService.fetchPrismSessions(userId)
-      .then(sessions => {
-        this.props.setPrismSessions(sessions);
-      })
+    try {
+      const userId = this.props.userProfile.getFhirId();
+      if (userId && this.props.midataService.isAuthenticated()) {
+        this.props.midataService.fetchPrismSessions(userId).then((sessions) => {
+          this.props.setPrismSessions(sessions);
+        });
+      }
+    } catch (error) {
+      console.log(e);
     }
   }
 
@@ -171,7 +173,7 @@ class Main extends Component<PropsType, State> {
               position='right'
               color={colors.gold}
               onPress={() => {
-                this.props.navigation.navigate('Assessment')
+                this.props.navigation.navigate('Assessment');
               }}
               isLargeButton
             />
@@ -214,7 +216,7 @@ function mapDispatchToProps(dispatch: Function) {
     setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
     setPrismSessions: (sessions: PrismResources[]) => userProfileActions.setPrismSessionsFromMIDATA(dispatch, sessions),
     setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
-    uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch),
+    uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
   };
 }
 
