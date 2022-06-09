@@ -110,7 +110,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>
+                <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
                   {this.props.localesHelper.localeString('securityplan.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   topViewTextTitle: {
     color: colors.white,
     fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.normal)
+    fontSize: scale(TextSize.big)
   },
   topViewTextDescr: {
     color: colors.black,

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
-import MainNotification from '../components/MainNotification';
+import MainNotification, {NOTIFICATION_TYPE} from '../components/MainNotification';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
 import MidataService from '../model/MidataService';
@@ -30,13 +30,15 @@ interface PropsType {
 
 interface State {
   emergencyContactsLoaded: boolean;
+  securityPlanLoaded: boolean;
 }
 
 class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      emergencyContactsLoaded: false
+      emergencyContactsLoaded: false,
+      securityPlanLoaded: false
     };
     if (this.props.midataService.isAuthenticated()) {
       this.loadEmergencyContacts();
@@ -75,6 +77,9 @@ class Main extends Component<PropsType, State> {
         .then((plans) => {
           if (plans.length > 0) {
             this.props.setSecurityPlan(plans[0]);
+            this.setState({
+              securityPlanLoaded: true
+            });
           }
         })
         .catch((e) => {
@@ -123,8 +128,7 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-
-            <MainNotification />
+            {this.state.securityPlanLoaded && <MainNotification type={NOTIFICATION_TYPE.main} />}
           </View>
           <View
             style={{

@@ -6,13 +6,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import SecurityPlanNotification from '../components/SecurityPlanNotification';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {SecurityPlanModule} from '../model/SecurityPlan';
+import MainNotification, {NOTIFICATION_TYPE} from '../components/MainNotification';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -80,7 +80,7 @@ class SecurityplanMain extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <SecurityPlanNotification message={this.getRandomMessage()} />
+            <MainNotification type={NOTIFICATION_TYPE.securityplan} />
             <View
               style={{
                 position: 'relative'
