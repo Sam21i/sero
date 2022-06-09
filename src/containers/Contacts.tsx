@@ -20,7 +20,7 @@ import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
@@ -76,9 +76,23 @@ class Contacts extends Component<PropsType, State> {
         }
         if (Platform.OS === 'android') {
           PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_CONTACTS).then((permission) => {
-            this.setState({
-              showImportButton: permission
-            });
+            if (permission) {
+              this.setState({
+                showImportButton: true
+              });
+            } else {
+              AsyncStorage.getItem(STORAGE.PERMISSION_STATUS_ANDROID).then((permission) => {
+                if (permission === 'denied') {
+                  this.setState({
+                    showImportButton: true
+                  });
+                } else if (permission === 'never_ask_again') {
+                  this.setState({
+                    showImportButton: false
+                  });
+                }
+              });
+            }
           });
         }
       }
@@ -235,13 +249,25 @@ class Contacts extends Component<PropsType, State> {
             if (permission) {
               this.getAllAddressBookContacts();
             } else {
-              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS)
-                .then((asked) => {
+              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+                title: this.props.localesHelper.localeString('contacts.permissionAndroid.title'),
+                message: this.props.localesHelper.localeString('contacts.permissionAndroid.message'),
+                buttonPositive: this.props.localesHelper.localeString('common.ok')
+              })
+                .then((permission) => {
                   AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
-                  if (asked === 'granted') {
+                  if (permission === PermissionsAndroid.RESULTS.GRANTED) {
                     // is 'granted' or 'denied'
                     this.getAllAddressBookContacts();
-                  } else {
+                  } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
+                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'denied');
+                    this.setState({
+                      mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
+                      showImportButton: true,
+                      bubbleVisible: true
+                    });
+                  } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'never_ask_again');
                     this.setState({
                       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
                       showImportButton: false,
@@ -355,13 +381,10 @@ class Contacts extends Component<PropsType, State> {
                   : this.props.localesHelper.localeString('contacts.title')}
               </Text>
             </View>
-            <View style={styles.emergencyButton}>
-              <EmergencyNumberButton />
-            </View>
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
-              <View>
+              <View style={{position: 'relative', top: verticalScale(80)}}>
                 <ContactSpeechBubble
                   mode={this.state.mode}
                   localesHelper={this.props.localesHelper}
@@ -373,7 +396,7 @@ class Contacts extends Component<PropsType, State> {
               </View>
             )}
             {this.state.listVisible && (
-              <View>
+              <View style={{position: 'relative', top: verticalScale(50)}}>
                 {this.state.loadingContacts ? (
                   <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
                 ) : (
@@ -398,6 +421,9 @@ class Contacts extends Component<PropsType, State> {
                 )}
               </View>
             )}
+          </View>
+          <View style={styles.emergencyButton}>
+            <EmergencyNumberButton />
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -426,17 +452,18 @@ const styles = StyleSheet.create({
     fontSize: scale(TextSize.big)
   },
   emergencyButton: {
-    alignItems: 'flex-end',
-    justifyContent: 'center'
+    position: 'absolute',
+    right: -0.2,
+    top: verticalScale(45)
   },
   topView: {
-    backgroundColor: 'rgba(203, 95, 11, 0.5)',
-    flex: 0.4,
+    backgroundColor: colors.primary50opac,
+    flex: 1,
     flexDirection: 'row'
   },
   bottomView: {
-    flex: 1,
-    backgroundColor: colors.linen
+    flex: 7,
+    backgroundColor: colors.white65opac
   },
   listItem: {
     marginVertical: scale(10),

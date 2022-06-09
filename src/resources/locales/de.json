@@ -35,7 +35,11 @@
     },
     "importContact": "Kontakt importieren",
     "selectContact": "Kontakt auswählen",
-    "title": "Meine Kontakte"
+    "title": "Meine Kontakte",
+    "permissionAndroid": {
+      "title": "\"SERO\" möchte auf Ihre Kontakte zugreifen",
+      "message": "Der Zugriff auf die Kontakte ermöglicht es dir, die Telefonnummern wichtiger Personen in die SERO-App zu importieren und diese direkt anrufen zu können."
+    }
   },
   "info": {
     "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
@@ -43,9 +47,10 @@
   "main": {
     "callEmergencyBottom": "anrufen",
     "callEmergencyTop": "Notfall",
-    "default": "Entdecke jetzt die SERO App!\nLos geht's...",
+    "default": "Entdecke jetzt die SERO App! Los geht's...",
     "greeting": "Hallo {{name}}",
-    "myEnvironmentTitle": "Meine Kontakte anrufen"
+    "myEnvironmentTitle": "Meine Kontakte anrufen",
+    "securityplanUpdated": "Ist dein Sicherheitsplan noch aktuell?"
   },
   "onboarding": {
     "assessment": {
@@ -70,7 +75,7 @@
     }
   },
   "prismS": {
-    "title": "Meine\nEinschätzung"
+    "title": "Meine Einschätzung"
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
@@ -91,7 +96,11 @@
       "motivation": "Etwas das dich motiviert:",
       "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
     },
-    "title": "Mein\nSicherheitsplan"
+    "examples": {
+      "copingStrategies": "z. B. Zeichnen, Entspannungsübungen, Kochen, Musik hören etc.",
+      "distractionStrategies": "z. B. Freunde treffen, Waldspaziergang, Kinobesuch, Biken etc."
+    },
+    "title": "Mein Sicherheitsplan"
   },
   "settings": {
     "later": "Hinweis: die Einstellungen werden in einer späteren Version eingebaut.",

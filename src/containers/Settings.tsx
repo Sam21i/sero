@@ -8,11 +8,13 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import LocalesHelper from '../locales';
 import {View} from 'react-native';
 import {AppFonts, scale, TextSize} from '../styles/App.style';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface PropsType {
+  navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   midataService: MidataService;
-  logoutUser: () => void;
+  logoutUser: () => Promise<void>;
 }
 
 interface State {}
@@ -20,8 +22,13 @@ interface State {}
 class Settings extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-
     this.state = {};
+  }
+
+  logout(): void {
+    this.props.logoutUser().then(() => {
+      this.props.navigation.navigate('OnBoarding');
+    });
   }
 
   render() {
@@ -35,9 +42,7 @@ class Settings extends Component<PropsType, State> {
         {this.props.midataService.isAuthenticated() && (
           <Button
             title={this.props.localesHelper.localeString('settings.logout')}
-            onPress={() => {
-              this.props.logoutUser();
-            }}
+            onPress={this.logout.bind(this)}
           />
         )}
       </SafeAreaView>

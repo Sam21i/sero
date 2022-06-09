@@ -74,17 +74,21 @@ export function synchronizeResource(dispatch: Function, resource: Resource) {
   });
 }
 
-export function logoutUser(dispatch: Function) {
-  try {
+export function logoutUser(dispatch: Function): Promise<void> {
+  return new Promise((resolve, reject) => {
     // do not completely clear async storage, because
     // STORAGE.ASKED_FOR_CONTACT_PERMISSION needs to be persisted
     // over logout
-    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_INTRO);
-  } catch (e) {
-    STORAGE.ASKED_FOR_CONTACT_PERMISSION;
-    console.log('could not clear AsyncStorage', e);
-  }
-  dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
+    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_INTRO).then(() => {
+      dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
+      return resolve();
+    })
+    .catch(e => {
+      console.log('could not clear AsyncStorage', e);
+      return reject();
+    });
+  });
+  
 }
 
 export async function uploadPendingResources(dispatch: Function): Promise<void> {

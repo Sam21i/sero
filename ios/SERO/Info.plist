@@ -36,11 +36,9 @@
 		</dict>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Der Zugriff auf die Kontakte ermöglicht das Importieren der Kontakte, um diese direkt aus der App kontaktieren zu können.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Der Zugriff auf die Fotos-App verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, bestimmte Bereiche der App mit den von ihm erstellten Inhalten zu personalisieren.</string>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>

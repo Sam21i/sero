@@ -26,12 +26,14 @@ import SecurityplanArchive from './SecurityplanArchive';
 interface PropsType {}
 
 interface State {
-  showRealApp: boolean;
+  showIntro: boolean;
 }
 
 export enum STORAGE {
   SHOULD_DISPLAY_INTRO = '@displayIntro',
-  ASKED_FOR_CONTACT_PERMISSION = '@contactPermission'
+  ASKED_FOR_CONTACT_PERMISSION = '@contactPermission',
+  PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid'
+
 }
 
 const OnBoardingStack = createStackNavigator();
@@ -151,7 +153,7 @@ export default class App extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      showRealApp: false
+      showIntro: true
     };
     this.checkContentToDisplay();
   }
@@ -161,12 +163,12 @@ export default class App extends Component<PropsType, State> {
   }
 
   async checkContentToDisplay() {
-    await AsyncStorage.getItem(STORAGE.SHOULD_DISPLAY_INTRO).then((value) => {
-      if (value !== null) {
-        this.setState({
-          showRealApp: true
-        });
-      }
+
+    await AsyncStorage.getItem(STORAGE.SHOULD_DISPLAY_INTRO).then((intro) => {
+      // show intro when nothing is set (first start), or it was explicitly set to true
+      this.setState({
+        showIntro: intro === null || intro === 'true'
+      });
       RNBootSplash.hide();
     });
   }
@@ -194,6 +196,7 @@ export default class App extends Component<PropsType, State> {
               }}>
               <StatusBar barStyle='dark-content' />
               <Tab.Navigator
+                initialRouteName={ this.state.showIntro ? 'OnBoarding' : 'MainScreen'}
                 screenOptions={({route}) => ({
                   tabBarShowLabel: false,
                   headerShown: false,
@@ -206,15 +209,11 @@ export default class App extends Component<PropsType, State> {
                       }
                     : undefined
                 })}>
-                {!this.state.showRealApp ? (
-                  <Tab.Screen
-                    name='OnBoarding'
-                    component={OnBoardingStackScreen}
-                    options={{tabBarStyle: {display: 'none'}}}
-                  />
-                ) : (
-                  <></>
-                )}
+                <Tab.Screen
+                  name='OnBoarding'
+                  component={OnBoardingStackScreen}
+                  options={{tabBarStyle: {display: 'none'}}}
+                />
                 <Tab.Screen
                   name='MainScreen'
                   component={MainStackScreen}

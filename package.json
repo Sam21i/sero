@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i --force && cd ios && pod install && cd .. && npm run ios"
+    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i && cd ios && pod install && cd .. && npm run ios"
   },
   "dependencies": {
     "@i4mi/fhir_questionnaire": "^0.0.11",

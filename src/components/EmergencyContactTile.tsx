@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
-import {AppFonts, colors, isSmallScreen, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
 
 interface EmergencyContactProps {
   size: number;
@@ -19,7 +19,6 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
   }
 
   render() {
-    //Image Avatar Styling
     const image_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
@@ -37,7 +36,6 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     let emergencyContactAvatar;
     const contact = this.props.contact;
 
-    //If source is undefined or not provided then default_text_avatar styles will be used to display default user avatar
     const text_avatar = {
       width: scale(this.props.size),
       height: scale(this.props.size),
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
   textView: {
     alignSelf: 'center',
     marginHorizontal: 0,
-    marginTop: verticalScale(2.5)
+    marginTop: scale(2.5)
   },
   text: {
     textAlign: 'center',

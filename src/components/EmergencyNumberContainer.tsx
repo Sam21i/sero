@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Linking, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
@@ -15,17 +15,13 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
     return (
       <View style={styles.view}>
         <View style={styles.topTextView}>
-          <Text style={styles.topText}>
-            {this.props.localesHelper.localeString('main.callEmergencyTop')}
-          </Text>
+          <Text style={styles.topText}>{this.props.localesHelper.localeString('main.callEmergencyTop')}</Text>
         </View>
         <View style={styles.iconView}>
           <EmergencyNumberButton />
         </View>
         <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>
-            {this.props.localesHelper.localeString('main.callEmergencyBottom')}
-          </Text>
+          <Text style={styles.bottomText}>{this.props.localesHelper.localeString('main.callEmergencyBottom')}</Text>
         </View>
       </View>
     );
@@ -35,7 +31,7 @@ class EmergencyContact extends Component<EmergencyNumberContainerProps> {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    backgroundColor: 'rgba(203, 95, 11, 0.5)'
+    backgroundColor: colors.primary50opac
   },
   topTextView: {
     flex: 1,
