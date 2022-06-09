@@ -140,9 +140,12 @@ export function uploadResource(
             const response = result as Bundle;
             const request = _jobItem.resource as Bundle;
             for (const i in response.entry) {
-              const type = request.entry[i].resource.resourceType;
-              const id = response.entry[i].response.location.split(type + '/')[1].split('/')[0];
-              request.entry[i].resource.id = id;
+              if (response.entry[i].response.status.includes('created')) {
+                const type = request.entry[i].resource.resourceType;
+                const idPart = response.entry[i].response.location.split(type + '/')[1]
+                const id = idPart.split('/')[0];
+                request.entry[i].resource.id = id;
+              }
             }
           } else {
             _jobItem.resource.id = result.id;

@@ -16,6 +16,7 @@ import LocalesHelper from '../locales';
 import AppButton from '../components/AppButton';
 import {colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan} from '@i4mi/fhir_r4';
+import {PrismResources} from '../model/PrismSession';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -26,6 +27,7 @@ interface PropsType {
   setEmergencyContacts: (e: EmergencyContact[]) => void;
   setSecurityPlan: (plan: CarePlan) => void;
   setSecurityPlanHistory: (plans: CarePlan[]) => void;
+  setPrismSessions: (sessions: PrismResources[]) => void;
 }
 
 interface State {
@@ -43,6 +45,7 @@ class Main extends Component<PropsType, State> {
     if (this.props.midataService.isAuthenticated()) {
       this.loadEmergencyContacts();
       this.loadSecurityPlans();
+      this.loadPrismSessions();
       this.props.uploadPendingResources();
     }
   }
@@ -65,6 +68,19 @@ class Main extends Component<PropsType, State> {
           console.log('could not load related persons', e);
         });
     } catch (e) {
+      console.log(e);
+    }
+  }
+
+  loadPrismSessions(): void {
+    try {
+      const userId = this.props.userProfile.getFhirId();
+      if (userId && this.props.midataService.isAuthenticated()) {
+        this.props.midataService.fetchPrismSessions(userId).then((sessions) => {
+          this.props.setPrismSessions(sessions);
+        });
+      }
+    } catch (error) {
       console.log(e);
     }
   }
@@ -157,7 +173,7 @@ class Main extends Component<PropsType, State> {
               position='right'
               color={colors.gold}
               onPress={() => {
-                //this.props.navigation.navigate('Assessment')
+                this.props.navigation.navigate('Assessment');
               }}
               isLargeButton
             />
@@ -198,6 +214,7 @@ function mapDispatchToProps(dispatch: Function) {
   return {
     setEmergencyContacts: (contacts: EmergencyContact[]) => userProfileActions.setEmergencyContacts(dispatch, contacts),
     setSecurityPlan: (plan: CarePlan) => userProfileActions.setSecurityPlan(dispatch, plan),
+    setPrismSessions: (sessions: PrismResources[]) => userProfileActions.setPrismSessionsFromMIDATA(dispatch, sessions),
     setSecurityPlanHistory: (plans: CarePlan[]) => userProfileActions.setSecurityPlanHistory(dispatch, plans),
     uploadPendingResources: () => midataServiceActions.uploadPendingResources(dispatch)
   };

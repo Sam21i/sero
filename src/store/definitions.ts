@@ -12,6 +12,8 @@ export const ADD_TO_USER_PROFILE = 'userProfile/ADD_TO_USER_PROFILE';
 export const ADD_SECURITY_PLAN = 'userProfile/ADD_SECURITY_PLAN';
 export const REPLACE_SECURITY_PLAN = 'userProfile/REPLACE_SECURITY_PLAN';
 export const SET_SECURITY_PLAN_HISTORY = 'userProfile/SET_SECURITY_PLAN_HISTORY';
+export const SET_PRISM_SESSIONS = 'userProfile/SET_PRISM_SESSIONS';
+export const ADD_PRISM_SESSION = 'userProfile/ADD_PRISM_SESSION';
 
 export const UPDATE_LOCALE_LANGUAGE = 'localesHelper/UPDATE_LOCALE_LANGUAGE';
 
