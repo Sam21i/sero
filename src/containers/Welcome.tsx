@@ -16,10 +16,6 @@ interface PropsType {
 }
 
 class Welcome extends Component<PropsType> {
-  onPress = () => {
-    this.props.navigation.navigate('mainOnBoarding');
-  };
-
   render() {
     return (
       <SafeAreaView
@@ -46,13 +42,13 @@ class Welcome extends Component<PropsType> {
                 bottom: verticalScale(50)
               }}>
               <AppButton
-                label={this.props.localesHelper.localeString('welcome.start')}
+                label={this.props.localesHelper.localeString('common.start')}
                 icon={
                   '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
                 }
                 position={'left'}
                 color={colors.grey}
-                onPress={() => this.props.navigation.navigate('mainOnBoarding')}
+                onPress={() => this.props.navigation.navigate('Onboarding')}
                 isLargeButton
               />
             </View>

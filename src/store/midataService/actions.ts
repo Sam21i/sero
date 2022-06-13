@@ -79,7 +79,7 @@ export function logoutUser(dispatch: Function): Promise<void> {
     // do not completely clear async storage, because
     // STORAGE.ASKED_FOR_CONTACT_PERMISSION needs to be persisted
     // over logout
-    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_INTRO).then(() => {
+    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_ONBOARDING).then(() => {
       dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
       return resolve();
     })

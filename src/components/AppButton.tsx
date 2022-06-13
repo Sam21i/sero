@@ -5,7 +5,7 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 
 interface CategoryButtonProps {
   label: string;
-  icon: string;
+  icon?: string;
   color: string;
   position: string;
   onPress?: () => void;

@@ -12,7 +12,7 @@ import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {SecurityPlanModule} from '../model/SecurityPlan';
-import MainNotification, {NOTIFICATION_TYPE} from '../components/MainNotification';
+import Banner, {BANNER_TYPE} from '../components/Banner';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -80,7 +80,7 @@ class SecurityplanMain extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <MainNotification type={NOTIFICATION_TYPE.securityplan} />
+            <Banner type={BANNER_TYPE.securityplan} />
             <View
               style={{
                 position: 'relative'
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginLeft: scale(50)
+    marginLeft: scale(40)
   },
   topViewText: {
     color: colors.white,

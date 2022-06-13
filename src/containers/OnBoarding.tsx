@@ -38,7 +38,7 @@ interface State {
   isLoggingIn: boolean;
 }
 
-class OnBoarding extends Component<PropsType, State> {
+class Onboarding extends Component<PropsType, State> {
   slider: any;
 
   constructor(props: PropsType) {
@@ -87,11 +87,12 @@ class OnBoarding extends Component<PropsType, State> {
 
   onDone() {
     try {
-      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_INTRO, 'false');
+      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ONBOARDING, 'false');
+      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'true');
     } catch (e) {
       // saving error
     }
-    this.props.navigation.navigate('MainScreen');
+    this.props.navigation.navigate('MainStackScreen');
   }
 
   _renderItem = ({item}) => {
@@ -176,10 +177,7 @@ class OnBoarding extends Component<PropsType, State> {
             ON_BOARDING_ITEMS.map((_, i) => (
               <TouchableOpacity
                 key={i}
-                style={[
-                  styles.dot,
-                  i === activeIndex ? {backgroundColor: colors.grey} : {backgroundColor: 'white'}
-                ]}
+                style={[styles.dot, i === activeIndex ? {backgroundColor: colors.grey} : {backgroundColor: 'white'}]}
                 onPress={() => this.slider?.goToSlide(i, true)}
               />
             ))}
@@ -285,4 +283,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OnBoarding);
+export default connect(mapStateToProps, mapDispatchToProps)(Onboarding);

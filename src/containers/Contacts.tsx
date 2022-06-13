@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginLeft: scale(50)
+    marginLeft: scale(40)
   },
   topViewText: {
     color: colors.white,

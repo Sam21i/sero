@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ColorSchemeName, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
@@ -12,20 +12,24 @@ interface PropsType {
   defaultChance?: number;
   securityplanUpdatedChance?: number;
   positiveChance?: number;
-  type: NOTIFICATION_TYPE;
+  type: BANNER_TYPE;
+  titleColor?: string;
 }
 
-export const enum NOTIFICATION_TYPE {
+export const enum BANNER_TYPE {
   main = 'MAIN',
-  securityplan = 'SECURITYPLAN'
+  securityplan = 'SECURITYPLAN',
+  assessment = 'ASSESSMENT'
 }
+
 const NOTIFICATION_OPTIONS = ['motivation', 'copingStrategies', 'distractionStrategies', 'personalBeliefs'];
 
-class MainNotification extends Component<PropsType> {
+class Banner extends Component<PropsType> {
   static defaultProps = {
     defaultChance: 2,
     securityplanUpdatedChance: 1,
-    positiveChance: 3
+    positiveChance: 3,
+    titleColor: colors.primary
   };
 
   constructor(props: PropsType) {
@@ -87,28 +91,36 @@ class MainNotification extends Component<PropsType> {
 
   render() {
     const userName = this.props.userProfile.getGivenName();
-    if (this.props.type === NOTIFICATION_TYPE.securityplan) {
+    if (this.props.type === BANNER_TYPE.securityplan) {
       return (
-        <View
-          key={this.props.userProfile.getCurrentSecurityPlan().fhirResource.id}
-          style={styles.view}>
-          <Text style={styles.title}>
+        <View style={styles.view}>
+          <Text style={[styles.title, {color: this.props.titleColor}]}>
             {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
           </Text>
           <Text style={styles.text}>{this.props.localesHelper.localeString('securityplan.defaultHint')}</Text>
         </View>
       );
+    } else if (this.props.type === BANNER_TYPE.assessment) {
+      return (
+        <View style={styles.view}>
+          <Text style={[styles.title, {color: this.props.titleColor}]}>
+            {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+          </Text>
+          <Text style={styles.text}>{this.props.localesHelper.localeString('assessment.defaultHint')}</Text>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          key={this.props.userProfile.getCurrentSecurityPlan().fhirResource.id}
+          style={styles.view}>
+          <Text style={[styles.title, {color: this.props.titleColor}]}>
+            {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+          </Text>
+          {this.props.userProfile.getCurrentSecurityPlan().fhirResource.id !== undefined ? this.renderMessage() : ''}
+        </View>
+      );
     }
-    return (
-      <View
-        key={this.props.userProfile.getCurrentSecurityPlan().fhirResource.id}
-        style={styles.view}>
-        <Text style={styles.title}>
-          {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
-        </Text>
-        {this.props.userProfile.getCurrentSecurityPlan().fhirResource.id !== undefined ? this.renderMessage() : ''}
-      </View>
-    );
   }
 }
 
@@ -121,7 +133,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: scale(TextSize.big),
     fontFamily: AppFonts.bold,
-    color: colors.primary,
     marginBottom: scale(10)
   },
   text: {
@@ -138,4 +149,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps)(MainNotification);
+export default connect(mapStateToProps)(Banner);

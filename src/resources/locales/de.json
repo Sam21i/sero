@@ -12,7 +12,8 @@
     "options": "Optionen",
     "phone": "Telefon",
     "save": "Speichern",
-    "search": "Suchen"
+    "search": "Suchen",
+    "start": "Starten"
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -74,8 +75,13 @@
       "title": "Mein Sicherheitsplan"
     }
   },
-  "prismS": {
-    "title": "Meine Einschätzung"
+  "assessment": {
+    "title": "Meine Einschätzung",
+    "defaultHint": "Wie fühlst du dich in diesem Moment?",
+    "addEntry": "Neuen Eintrag hinzufügen",
+    "former": "Frühere Einschätzung",
+    "selectImage": "Foto aus Bibliothek auswählen",
+    "newImage": "Neues Foto aufnehmen"
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
@@ -109,7 +115,6 @@
   },
   "welcome": {
     "greetingText": "Schön, dass du da bist!",
-    "start": "Starten",
     "title": "Willkommen."
   }
 }

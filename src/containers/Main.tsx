@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
-import MainNotification, {NOTIFICATION_TYPE} from '../components/MainNotification';
+import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
 import MidataService from '../model/MidataService';
@@ -144,7 +144,7 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            {this.state.securityPlanLoaded && <MainNotification type={NOTIFICATION_TYPE.main} />}
+            {this.state.securityPlanLoaded && <Banner type={BANNER_TYPE.main} />}
           </View>
           <View
             style={{
@@ -160,20 +160,23 @@ class Main extends Component<PropsType, State> {
               position='right'
               color={colors.primary}
               onPress={() => {
-                this.props.navigation.navigate('Securityplan');
+                this.props.navigation.navigate('SecurityplanStackScreen');
               }}
               isLargeButton
             />
             <View style={{height: verticalScale(15)}}></View>
             <AppButton
-              label={this.props.localesHelper.localeString('prismS.title')}
+              label={this.props.localesHelper.localeString('assessment.title')}
               icon={
                 '<?xml version="1.0" encoding="utf-8"?> <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;} .st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;} </style> <g> <path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7" /> <circle class="st1" cx="107.9" cy="88.9" r="17.7"/> <rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/> </g> </svg>'
               }
               position='right'
               color={colors.gold}
               onPress={() => {
-                this.props.navigation.navigate('Assessment');
+                this.props.navigation.reset({
+                  index: 0,
+                  routes: [{name: 'AssessmentStackScreen'}]
+                });
               }}
               isLargeButton
             />
