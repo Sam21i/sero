@@ -148,7 +148,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
                 </Text>
                 { svgImage !== '' && 
                   <SvgCss
-                    xml={ASSESSMENT_RESOURCES.intro.prismImage}
+                    xml={svgImage}
                     style={[
                       styles.image,
                       {
