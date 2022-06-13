@@ -21,6 +21,7 @@ import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
 import Question from '../components/Question';
+import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/v33x-theme/tools';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -29,6 +30,7 @@ interface PropsType {
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
+  route: {params: {session: PrismSession}}
 }
 
 interface State {
@@ -36,14 +38,11 @@ interface State {
 }
 
 class AssessmentQuestions extends Component<PropsType, State> {
-  answers: {
-    [name: string]: string;
-  } = {};
   constructor(props: PropsType) {
     super(props);
 
     this.state = {
-      prismSession: undefined
+      prismSession: props.route.params.session
     };
   }
 
@@ -51,7 +50,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToPortrait();
     });
-    // 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
+    /** 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
     // erstellt und gespeichert wird
     const prismSession = new PrismSession({
       // Position der schwarzen Scheibe am Schluss des Assessments (also wie es abgespeichert wird) - in tatsächlichen Pixel
@@ -65,37 +64,13 @@ class AssessmentQuestions extends Component<PropsType, State> {
     // hier werden die Fragenobjekte aus dem Questionnaire geholt, die dann auch zum rendern verwendet werden können
     this.setState({
       prismSession: prismSession
-    });
+    });**/
 
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
   }
 
-  setAnswerForQuestion(question: IQuestion) {
-    if (this.answers[question.id]) {
-      this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(question, {
-        answer: {
-          de: this.answers[question.id] // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
-        },
-        code: {
-          valueString: this.answers[question.id] // bei Freitext-Fragen wie wir es hier haben,
-          // ist der code.valueString gleich wie der Displaystring
-        }
-      });
-    }
-  }
 
   save() {
-    // Set the answers in state to the questionnaireData object
-    this.state.prismSession
-      ?.getQuestionnaireData()
-      .getQuestions()
-      .forEach((question) => {
-        this.setAnswerForQuestion(question);
-        if (question.subItems) {
-          question.subItems.forEach((subitem) => this.setAnswerForQuestion(subitem));
-        }
-      });
-
     // 🛑 Test- und Beispielimplementation 🛑
     // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
     // also können wir das Upload-Bundle generieren
@@ -128,12 +103,24 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   render() {
-    let image = '';
+    let svgImage = '';
+    let base64Image = {
+      contentType: '',
+      data: ''
+    };
     try {
-      image = this.state.prismSession?.getSVGImage() || '';
-    } catch (e) {
+      base64Image = this.state.prismSession?.getBase64Image() || base64Image;
+    }
+    catch (e) {
       console.log(e);
     }
+    try {
+      svgImage = this.state.prismSession?.getSVGImage() || '';
+    } 
+    catch (e) {
+      console.log(e);
+    }
+
     return (
       <SafeAreaView
         style={styles.container}
@@ -163,21 +150,40 @@ class AssessmentQuestions extends Component<PropsType, State> {
                   }}>
                   {this.props.localesHelper.localeString('assessment.followUpTitle')}
                 </Text>
-                <SvgCss
-                  xml={ASSESSMENT_RESOURCES.intro.prismImage}
-                  style={[
-                    styles.image,
-                    {
-                      shadowColor: colors.black,
-                      shadowOffset: {
-                        width: scale(5),
-                        height: scale(5)
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: scale(5)
-                    }
-                  ]}
-                />
+                { svgImage !== '' && 
+                  <SvgCss
+                    xml={ASSESSMENT_RESOURCES.intro.prismImage}
+                    style={[
+                      styles.image,
+                      {
+                        shadowColor: colors.black,
+                        shadowOffset: {
+                          width: scale(5),
+                          height: scale(5)
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: scale(5)
+                      }
+                    ]}
+                  />
+                }
+                { base64Image.contentType !== '' &&
+                            <Image
+                              style={[
+                                styles.image,
+                                {
+                                  shadowColor: colors.black,
+                                  shadowOffset: {
+                                    width: scale(5),
+                                    height: scale(5)
+                                  },
+                                  shadowOpacity: 0.25,
+                                  shadowRadius: scale(5)
+                                }
+                              ]}
+                              source={{uri: 'data:' + base64Image.data}}
+                          />
+                          }
                 <Text
                   style={{
                     paddingBottom: scale(10),
@@ -208,11 +214,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
                             }}>
                             [speichern]
                           </Text>
-                          {/* TODO: i have no idea, why the image is not displayed at all*/}
-                          <SvgCss
-                            xml={image}
-                            width={100}
-                            height={100}></SvgCss>
                         </View>
                       }
                     />

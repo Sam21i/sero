@@ -26,7 +26,7 @@ import AssessmentIntroDescription from './AssessmentIntroDescription';
 import AssessmentIntroTutorial from './AssessmentIntroTutorial';
 import AssessmentQuestions from './AssessmentQuestions';
 import {colors} from '../styles/App.style';
-import Onboarding from './Onboarding';
+import Onboarding from './OnBoarding';
 import AssessmentImage from './AssessmentImage';
 import Information from './Information';
 

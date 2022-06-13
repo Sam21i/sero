@@ -7,12 +7,14 @@ import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
+import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import UserProfile from '../model/UserProfile';
-import {Resource} from '@i4mi/fhir_r4';
+import {Questionnaire, Resource} from '@i4mi/fhir_r4';
 import AssessmentSpeechBubble, {ASSESSMENT_SPEECH_BUBBLE_MODE} from '../components/AssessmentSpeechBubble';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import PrismSession from '../model/PrismSession';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -32,7 +34,7 @@ interface State {
   };
 }
 
-const MAX_IMAGE_SIZE = 500;
+const MAX_IMAGE_SIZE = 800;
 
 class AssessmentImage extends Component<PropsType, State> {
   constructor(props: PropsType) {
@@ -44,58 +46,46 @@ class AssessmentImage extends Component<PropsType, State> {
       new_image: undefined
     };
   }
+  
+  setImage(image: ImagePickerResponse) {
+    if (!image.didCancel && image.assets && image.assets.length > 0) {
+      const type = image.assets[0].type?.replace('jpg', 'jpeg');
+      const prismSession = new PrismSession({
+        canvasWidth: image.assets[0].width || MAX_IMAGE_SIZE,
+        questionnaire: PRISM_QUESTIONNAIRE as Questionnaire
+      });
+      prismSession.addImage({
+        contentType: type || '',
+        data: type + ';base64,' + image.assets[0].base64 || ''
+      });
+      this.props.navigation.navigate('AssessmentQuestions', {session: prismSession});
+    }
+  }
 
   pickImage() {
     launchImageLibrary({
       mediaType: 'photo',
+      maxHeight: MAX_IMAGE_SIZE,
+      maxWidth: MAX_IMAGE_SIZE,
       includeBase64: true
     })
-      .then((image) => {
-        if (!image.didCancel && image.assets && image.assets.length > 0) {
-          const type = image.assets[0].type?.replace('jpg', 'jpeg');
-          this.setState(
-            {
-              new_image: {
-                contentType: type || '',
-                data: type + ';base64,' + image.assets[0].base64 || ''
-              }
-            },
-            () => {
-              console.log(this.state.new_image);
-              this.props.navigation.navigate('AssessmentQuestions', {prismExample: this.state.new_image});
-            }
-          );
-        }
-      })
-      .catch((e) => {
-        console.log('Error picking image', e);
-      });
+    .then((image) => this.setImage(image))
+    .catch((e) => {
+      console.log('Error picking image', e);
+    });
   }
 
   newImage() {
     launchCamera({
       mediaType: 'photo',
+      maxHeight: MAX_IMAGE_SIZE,
+      maxWidth: MAX_IMAGE_SIZE,
       includeBase64: true
     })
-      .then((image) => {
-        if (!image.didCancel && image.assets && image.assets.length > 0) {
-          const type = image.assets[0].type?.replace('jpg', 'jpeg');
-          this.setState(
-            {
-              new_image: {
-                contentType: type || '',
-                data: type + ';base64,' + image.assets[0].base64 || ''
-              }
-            },
-            () => {
-              this.props.navigation.navigate('AssessmentQuestions', {prismExample: this.state.new_image});
-            }
-          );
-        }
-      })
-      .catch((e) => {
-        console.log('Error picking image', e);
-      });
+    .then((image) => this.setImage(image))
+    .catch((e) => {
+      console.log('Error taking image', e);
+    });
   }
 
   async onBubbleClose(mode: ASSESSMENT_SPEECH_BUBBLE_MODE): Promise<void> {
@@ -108,6 +98,7 @@ class AssessmentImage extends Component<PropsType, State> {
         break;
       case ASSESSMENT_SPEECH_BUBBLE_MODE.select:
         this.pickImage();
+        break;
       default:
       // nothing to do here, just close the bubble
     }
