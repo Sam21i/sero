@@ -13,7 +13,7 @@ import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
 import AssessmentSpeechBubble, {ASSESSMENT_SPEECH_BUBBLE_MODE} from '../components/AssessmentSpeechBubble';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import PrismSession from '../model/PrismSession';
+import PrismSession, { PrismInitializer } from '../model/PrismSession';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -49,15 +49,15 @@ class AssessmentImage extends Component<PropsType, State> {
   setImage(image: ImagePickerResponse) {
     if (!image.didCancel && image.assets && image.assets.length > 0) {
       const type = image.assets[0].type?.replace('jpg', 'jpeg');
-      const prismSession = new PrismSession({
+      const prismData: PrismInitializer = {
         canvasWidth: image.assets[0].width || MAX_IMAGE_SIZE,
-        questionnaire: this.props.midataService.getPrismQuestionnaire()
-      });
-      prismSession.addImage({
-        contentType: type || '',
-        data: type + ';base64,' + image.assets[0].base64 || ''
-      });
-      this.props.navigation.navigate('AssessmentQuestions', {session: prismSession});
+        questionnaire: this.props.midataService.getPrismQuestionnaire(),
+        image: {
+          contentType: type || '',
+          data: type + ';base64,' + image.assets[0].base64 || ''
+        }
+      };
+      this.props.navigation.navigate('AssessmentQuestions', {prismData: prismData});
     }
   }
 

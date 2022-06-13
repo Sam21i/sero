@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Resource} from '@i4mi/fhir_r4';
-import PrismSession, {Position} from '../model/PrismSession';
+import PrismSession, {Position, PrismInitializer} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -26,7 +26,7 @@ interface PropsType {
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
-  route: {params: {session: PrismSession}}
+  route: {params: {prismData: PrismInitializer}}
 }
 
 interface State {
@@ -38,7 +38,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      prismSession: props.route.params.session
+      prismSession: new PrismSession(props.route.params.prismData)
     };
   }
 
