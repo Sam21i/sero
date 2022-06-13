@@ -40,7 +40,8 @@ class AssessmentImage extends Component<PropsType, State> {
 
     this.state = {
       bubbleVisible: true,
-      mode: ASSESSMENT_SPEECH_BUBBLE_MODE.menu
+      mode: ASSESSMENT_SPEECH_BUBBLE_MODE.menu,
+      new_image: undefined
     };
   }
 
@@ -60,6 +61,7 @@ class AssessmentImage extends Component<PropsType, State> {
               }
             },
             () => {
+              console.log(this.state.new_image);
               this.props.navigation.navigate('AssessmentQuestions', {prismExample: this.state.new_image});
             }
           );

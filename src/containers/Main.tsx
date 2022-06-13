@@ -38,7 +38,7 @@ class Main extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      emergencyContactsLoaded: false,
+      emergencyContactsLoaded: false
     };
     if (this.props.midataService.isAuthenticated()) {
       this.loadEmergencyContacts();

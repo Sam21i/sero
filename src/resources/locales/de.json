@@ -81,7 +81,9 @@
     "addEntry": "Neuen Eintrag hinzufügen",
     "former": "Frühere Einschätzung",
     "selectImage": "Foto aus Bibliothek auswählen",
-    "newImage": "Neues Foto aufnehmen"
+    "newImage": "Neues Foto aufnehmen",
+    "followUpTitle": "Folgefragen",
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich dsa Leben zu nehmen) an."
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",

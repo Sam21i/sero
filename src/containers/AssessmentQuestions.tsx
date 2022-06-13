@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FlatList, Image, Text, View} from 'react-native';
+import {FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,6 +16,11 @@ import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
 import {Input, NativeBaseProvider} from 'native-base';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import AppButton from '../components/AppButton';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
+import Question from '../components/Question';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -28,7 +33,6 @@ interface PropsType {
 
 interface State {
   prismSession: PrismSession | undefined;
-  prismExample: string;
 }
 
 class AssessmentQuestions extends Component<PropsType, State> {
@@ -39,11 +43,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      prismSession: undefined,
-      prismExample:
-        this.props.navigation.getState().routes[
-          this.props.navigation.getState().routes.findIndex((item) => item.name === 'AssessmentQuestions')
-        ].params.prismExample.data
+      prismSession: undefined
     };
   }
 
@@ -115,49 +115,16 @@ class AssessmentQuestions extends Component<PropsType, State> {
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
   }
 
-  renderQuestion(element: {index: number; item: IQuestion}) {
-    const question = element.item;
-    const questionnaireData = this.state.prismSession?.getQuestionnaireData();
-    if (!questionnaireData) {
-      // this should not happen when we already are rendering questions
-      return <></>;
-    }
-    switch (question.type) {
-      case QuestionnaireItemType.GROUP:
-        return (
-          <View key={question.id}>
-            <Text>== {question.label.de} ==</Text>
-            {question.subItems &&
-              question.subItems.map((si: IQuestion, i: number) => this.renderQuestion({index: i, item: si}))}
-          </View>
-        );
-      case QuestionnaireItemType.TEXT:
-        return (
-          <NativeBaseProvider key={question.id}>
-            <Text>{question.label.de}</Text>
-            <Input
-              value={this.answers[question.id]}
-              keyboardType={'default'}
-              placeholder='gib hier deine Antwort ein'
-              autoCorrect={true}
-              onChangeText={
-                (text) => (this.answers[question.id] = text)
-                //   questionnaireData.updateQuestionAnswers(question, {
-                //   answer: {
-                //     de: text          // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
-                //   },
-                //   code: {
-                //     valueString: text // bei Freitext-Fragen wie wir es hier haben,
-                //                       // ist der code.valueString gleich wie der Displaystring
-                //   }
-                // })
-              }
-            />
-          </NativeBaseProvider>
-        );
-      default:
-        return <Text key={question.id}>Rendering Question Type {question.type} not supported</Text>;
-    }
+  onChangeText(newText: string, question: IQuestion) {
+    this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(question, {
+      answer: {
+        de: newText // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
+      },
+      code: {
+        valueString: newText // bei Freitext-Fragen wie wir es hier haben,
+        // ist der code.valueString gleich wie der Displaystring
+      }
+    });
   }
 
   render() {
@@ -168,40 +135,155 @@ class AssessmentQuestions extends Component<PropsType, State> {
       console.log(e);
     }
     return (
-      <SafeAreaView edges={['left', 'right']}>
-        {this.state.prismSession && (
-          <View>
-            <FlatList
-              data={this.state.prismSession.getQuestionnaireData().getQuestions()}
-              renderItem={(listElement) => this.renderQuestion(listElement)}
-              keyExtractor={(item) => item.id}
-              ListFooterComponent={
-                <View style={{marginBottom: 20, backgroundColor: '#f5f5f5'}}>
-                  <Text
-                    onPress={() => {
-                      this.save.bind(this);
-                      this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
-                    }}>
-                    [speichern]
-                  </Text>
-                  {/* TODO: i have no idea, why the image is not displayed at all*/}
-                  <SvgCss
-                    xml={image}
-                    width={100}
-                    height={100}></SvgCss>
-                  <Image
-                    style={{width: 200, height: 200}}
-                    source={{uri: 'data:' + this.state.prismExample}}
-                  />
-                </View>
-              }
-            />
+      <SafeAreaView
+        style={styles.container}
+        edges={['top']}>
+        <ImageBackground
+          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          resizeMode='cover'
+          style={styles.backgroundImage}>
+          <View style={styles.topView}>
+            <View style={styles.topTextView}>
+              <Text style={styles.topViewTextTitle}>
+                {this.props.localesHelper.localeString('assessment.addEntry')}
+              </Text>
+            </View>
           </View>
-        )}
+          <View style={styles.bottomView}>
+            <ScrollView>
+              {/* View for PRISM-Image and Description */}
+              <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                <View style={{height: verticalScale(55)}}></View>
+                <Text
+                  style={{
+                    paddingBottom: scale(10),
+                    color: colors.primary2_60opac,
+                    fontFamily: AppFonts.bold,
+                    fontSize: scale(TextSize.big)
+                  }}>
+                  {this.props.localesHelper.localeString('assessment.followUpTitle')}
+                </Text>
+                <SvgCss
+                  xml={ASSESSMENT_RESOURCES.intro.prismImage}
+                  style={[
+                    styles.image,
+                    {
+                      shadowColor: colors.black,
+                      shadowOffset: {
+                        width: scale(5),
+                        height: scale(5)
+                      },
+                      shadowOpacity: 0.25,
+                      shadowRadius: scale(5)
+                    }
+                  ]}
+                />
+                <Text
+                  style={{
+                    paddingBottom: scale(10),
+                    color: colors.black,
+                    fontFamily: AppFonts.bold,
+                    fontSize: scale(TextSize.verySmall)
+                  }}>
+                  {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
+                </Text>
+
+                {this.state.prismSession && (
+                  <View>
+                    <FlatList
+                      scrollEnabled={false}
+                      data={this.state.prismSession.getQuestionnaireData().getQuestions()}
+                      renderItem={(listElement) => (
+                        <Question
+                          question={listElement.item}
+                          onChangeText={this.onChangeText}></Question>
+                      )}
+                      keyExtractor={(item) => item.id}
+                      ListFooterComponent={
+                        <View style={{marginBottom: 20, backgroundColor: '#f5f5f5'}}>
+                          <Text
+                            onPress={() => {
+                              this.save.bind(this);
+                              this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
+                            }}>
+                            [speichern]
+                          </Text>
+                          {/* TODO: i have no idea, why the image is not displayed at all*/}
+                          <SvgCss
+                            xml={image}
+                            width={100}
+                            height={100}></SvgCss>
+                        </View>
+                      }
+                    />
+                  </View>
+                )}
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.emergencyButton}>
+            <EmergencyNumberButton />
+          </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  topView: {
+    backgroundColor: colors.gold50opac,
+    flex: 1
+  },
+  topTextView: {
+    flex: 1,
+    paddingLeft: scale(50),
+    alignSelf: 'flex-start',
+    justifyContent: 'center'
+  },
+  topViewTextTitle: {
+    color: colors.white,
+    fontFamily: AppFonts.bold,
+    fontSize: scale(TextSize.normal)
+  },
+  topViewTextDescr: {
+    color: colors.black,
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.verySmall)
+  },
+  container: {
+    flex: 1
+  },
+  backgroundImage: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  emergencyButton: {
+    position: 'absolute',
+    right: -0.2,
+    top: verticalScale(45)
+  },
+  bottomView: {
+    flex: 7,
+    backgroundColor: colors.white65opac
+  },
+  image: {
+    width: scale(297 * 0.75),
+    height: scale(210 * 0.75),
+    marginVertical: scale(15)
+  },
+  icon: {
+    flex: 1,
+    height: '100%'
+  },
+  listItemContent: {
+    flex: 3
+  },
+  listItemContentIcon: {
+    flex: 1,
+    margin: 10
+  }
+});
 
 function mapStateToProps(state: AppStore) {
   return {

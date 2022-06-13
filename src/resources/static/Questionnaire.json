@@ -39,7 +39,7 @@
             "type": "text",
             "repeats": false,
             "required": false, 
-            "text": "Sehen Sie sich nun die Distanz zwischen dem gelben Punkt (Ihnen selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an. Was bedeutet es für Sie, dass Sie die schwarze Scheibe dort platziert haben?",
+            "text": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?",
             "_text": {
                 "extension": [
                     {
@@ -51,7 +51,7 @@
                             },
                             {
                                 "url": "content",
-                                "valueString": "Sehen Sie sich nun die Distanz zwischen dem gelben Punkt (Ihnen selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an. Was bedeutet es für Sie, dass Sie die schwarze Scheibe dort platziert haben?"
+                                "valueString": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?"
                             }
                         ]
                     }
