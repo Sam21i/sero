@@ -3,9 +3,8 @@ import {FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, View} fr
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Questionnaire, QuestionnaireItemType, Resource} from '@i4mi/fhir_r4';
-import PrismSession, {Position} from '../model/PrismSession';
-import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
+import {Resource} from '@i4mi/fhir_r4';
+import PrismSession, {Position, PrismInitializer} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -15,9 +14,7 @@ import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
-import {Input, NativeBaseProvider} from 'native-base';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
 import Question from '../components/Question';
@@ -29,6 +26,7 @@ interface PropsType {
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
+  route: {params: {prismData: PrismInitializer}}
 }
 
 interface State {
@@ -36,14 +34,11 @@ interface State {
 }
 
 class AssessmentQuestions extends Component<PropsType, State> {
-  answers: {
-    [name: string]: string;
-  } = {};
   constructor(props: PropsType) {
     super(props);
 
     this.state = {
-      prismSession: undefined
+      prismSession: new PrismSession(props.route.params.prismData)
     };
   }
 
@@ -51,7 +46,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToPortrait();
     });
-    // 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
+    /** 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
     // erstellt und gespeichert wird
     const prismSession = new PrismSession({
       // Position der schwarzen Scheibe am Schluss des Assessments (also wie es abgespeichert wird) - in tatsächlichen Pixel
@@ -65,37 +60,13 @@ class AssessmentQuestions extends Component<PropsType, State> {
     // hier werden die Fragenobjekte aus dem Questionnaire geholt, die dann auch zum rendern verwendet werden können
     this.setState({
       prismSession: prismSession
-    });
+    });**/
 
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
   }
 
-  setAnswerForQuestion(question: IQuestion) {
-    if (this.answers[question.id]) {
-      this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(question, {
-        answer: {
-          de: this.answers[question.id] // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
-        },
-        code: {
-          valueString: this.answers[question.id] // bei Freitext-Fragen wie wir es hier haben,
-          // ist der code.valueString gleich wie der Displaystring
-        }
-      });
-    }
-  }
 
   save() {
-    // Set the answers in state to the questionnaireData object
-    this.state.prismSession
-      ?.getQuestionnaireData()
-      .getQuestions()
-      .forEach((question) => {
-        this.setAnswerForQuestion(question);
-        if (question.subItems) {
-          question.subItems.forEach((subitem) => this.setAnswerForQuestion(subitem));
-        }
-      });
-
     // 🛑 Test- und Beispielimplementation 🛑
     // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
     // also können wir das Upload-Bundle generieren
@@ -128,12 +99,24 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   render() {
-    let image = '';
+    let svgImage = '';
+    let base64Image = {
+      contentType: '',
+      data: ''
+    };
     try {
-      image = this.state.prismSession?.getSVGImage() || '';
-    } catch (e) {
+      base64Image = this.state.prismSession?.getBase64Image() || base64Image;
+    }
+    catch (e) {
       console.log(e);
     }
+    try {
+      svgImage = this.state.prismSession?.getSVGImage() || '';
+    } 
+    catch (e) {
+      console.log(e);
+    }
+
     return (
       <SafeAreaView
         style={styles.container}
@@ -163,21 +146,40 @@ class AssessmentQuestions extends Component<PropsType, State> {
                   }}>
                   {this.props.localesHelper.localeString('assessment.followUpTitle')}
                 </Text>
-                <SvgCss
-                  xml={ASSESSMENT_RESOURCES.intro.prismImage}
-                  style={[
-                    styles.image,
-                    {
-                      shadowColor: colors.black,
-                      shadowOffset: {
-                        width: scale(5),
-                        height: scale(5)
-                      },
-                      shadowOpacity: 0.25,
-                      shadowRadius: scale(5)
-                    }
-                  ]}
-                />
+                { svgImage !== '' && 
+                  <SvgCss
+                    xml={svgImage}
+                    style={[
+                      styles.image,
+                      {
+                        shadowColor: colors.black,
+                        shadowOffset: {
+                          width: scale(5),
+                          height: scale(5)
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: scale(5)
+                      }
+                    ]}
+                  />
+                }
+                { base64Image.contentType !== '' &&
+                            <Image
+                              style={[
+                                styles.image,
+                                {
+                                  shadowColor: colors.black,
+                                  shadowOffset: {
+                                    width: scale(5),
+                                    height: scale(5)
+                                  },
+                                  shadowOpacity: 0.25,
+                                  shadowRadius: scale(5)
+                                }
+                              ]}
+                              source={{uri: 'data:' + base64Image.data}}
+                          />
+                          }
                 <Text
                   style={{
                     paddingBottom: scale(10),
@@ -208,11 +210,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
                             }}>
                             [speichern]
                           </Text>
-                          {/* TODO: i have no idea, why the image is not displayed at all*/}
-                          <SvgCss
-                            xml={image}
-                            width={100}
-                            height={100}></SvgCss>
                         </View>
                       }
                     />

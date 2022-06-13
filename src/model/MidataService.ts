@@ -11,6 +11,7 @@ import PRISM_QUESTIONNAIRE  from '../resources/static/Questionnaire.json'
 
 export default class MidataService {
   currentSession: UserSession = new UserSession();
+  prismQuestionnaire = PRISM_QUESTIONNAIRE as Questionnaire; // TODO: load from MIDATA
   pendingResources: Array<{
     resource: Resource;
     isUploading: boolean;
@@ -387,6 +388,14 @@ export default class MidataService {
           });
       }
     });
+  }
+
+  public getPrismQuestionnaire(): Questionnaire {
+    return this.prismQuestionnaire;
+  }
+
+  public setPrismQuestionnaire(q: Questionnaire): void {
+    this.prismQuestionnaire = q;
   }
 
   private setPendingResources(

@@ -77,11 +77,15 @@ export class Position {
   }
 }
 
-interface PrismInitializer {
+export interface PrismInitializer {
   blackDiscPosition?: Position;
   canvasWidth: number;
   date?: Date;
-  questionnaire?: Questionnaire
+  questionnaire?: Questionnaire;
+  image?: {
+    contentType: string,
+    data: string
+  }
 }
 
 export interface PrismResources {
@@ -123,6 +127,9 @@ export default class PrismSession {
 
       if (init.questionnaire) {
         this.questionnaireData = new QuestionnaireData(init.questionnaire);
+      }
+      if (init.image) {
+        this.addImage(init.image);
       }
     }
   }
