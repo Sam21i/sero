@@ -32,7 +32,6 @@ interface PropsType {
 
 interface State {
   emergencyContactsLoaded: boolean;
-  securityPlanLoaded: boolean;
 }
 
 class Main extends Component<PropsType, State> {
@@ -40,7 +39,6 @@ class Main extends Component<PropsType, State> {
     super(props);
     this.state = {
       emergencyContactsLoaded: false,
-      securityPlanLoaded: false
     };
     if (this.props.midataService.isAuthenticated()) {
       this.loadEmergencyContacts();
@@ -93,9 +91,6 @@ class Main extends Component<PropsType, State> {
         .then((plans) => {
           if (plans.length > 0) {
             this.props.setSecurityPlan(plans[0]);
-            this.setState({
-              securityPlanLoaded: true
-            });
           }
         })
         .catch((e) => {
@@ -144,7 +139,7 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            {this.state.securityPlanLoaded && <Banner type={BANNER_TYPE.main} />}
+            <Banner type={BANNER_TYPE.main} />
           </View>
           <View
             style={{
