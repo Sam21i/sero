@@ -7,11 +7,10 @@ import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
-import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import UserProfile from '../model/UserProfile';
-import {Questionnaire, Resource} from '@i4mi/fhir_r4';
+import {Resource} from '@i4mi/fhir_r4';
 import AssessmentSpeechBubble, {ASSESSMENT_SPEECH_BUBBLE_MODE} from '../components/AssessmentSpeechBubble';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import PrismSession from '../model/PrismSession';
@@ -52,7 +51,7 @@ class AssessmentImage extends Component<PropsType, State> {
       const type = image.assets[0].type?.replace('jpg', 'jpeg');
       const prismSession = new PrismSession({
         canvasWidth: image.assets[0].width || MAX_IMAGE_SIZE,
-        questionnaire: PRISM_QUESTIONNAIRE as Questionnaire
+        questionnaire: this.props.midataService.getPrismQuestionnaire()
       });
       prismSession.addImage({
         contentType: type || '',

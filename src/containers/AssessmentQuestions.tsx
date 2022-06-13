@@ -3,9 +3,8 @@ import {FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, View} fr
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Questionnaire, QuestionnaireItemType, Resource} from '@i4mi/fhir_r4';
+import {Resource} from '@i4mi/fhir_r4';
 import PrismSession, {Position} from '../model/PrismSession';
-import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -15,13 +14,10 @@ import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
-import {Input, NativeBaseProvider} from 'native-base';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
 import Question from '../components/Question';
-import { convertAbsoluteToRem } from 'native-base/lib/typescript/theme/v33x-theme/tools';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
