@@ -254,6 +254,8 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <View style={styles.bottomView}>
               {!this.state.quitBubbleVisible && (
                 <KeyboardAwareFlatList
+                  enableOnAndroid={true}
+                  extraScrollHeight={Platform.OS === 'ios' ? scale(10) : scale(5)}
                   style={{paddingLeft: scale(40), paddingRight: scale(20)}}
                   ListHeaderComponent={this.renderHeader.bind(this)}
                   data={this.state.prismSession.getQuestionnaireData().getQuestions()}

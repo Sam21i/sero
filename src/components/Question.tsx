@@ -80,12 +80,12 @@ export default class Question extends Component<PropsType, State> {
               <Text style={styles.questionText}>{this.props.question.label.de}</Text>
               <TextArea
                 borderWidth='0'
-                borderBottomWidth='1'
+                borderBottomWidth={scale(1)}
                 borderBottomColor={colors.grey}
                 h='auto'
                 placeholder='...'
                 size='lg'
-                _focus={{borderColor: colors.gold, backgroundColor: colors.white}}
+                _focus={{borderBottomWidth: scale(1), borderBottomColor: colors.gold, backgroundColor: colors.white}}
                 defaultValue={this.answer}
                 keyboardType='default'
                 autoCorrect={true}
