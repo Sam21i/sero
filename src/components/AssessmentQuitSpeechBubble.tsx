@@ -7,7 +7,6 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import CancelButton from '../resources/images/common/cancel.svg';
 import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
-import {StackNavigationProp} from '@react-navigation/stack';
 
 export enum ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE {
   yes = 'YES',
@@ -16,13 +15,12 @@ export enum ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE {
 }
 
 const MENU_ACTIONS = [
-  {name: 'quitYes', mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.yes},
-  {name: 'quitNo', mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.no}
+  {name: 'yes', mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.yes},
+  {name: 'no', mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.no}
 ];
 
 interface Props {
   localesHelper: LocalesHelper;
-  navigation: StackNavigationProp<any>;
   onClose: (mode?: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE) => void;
 }
 
@@ -39,7 +37,6 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
   }
 
   renderBubbleTitle(_translateString: string) {
-    console.log(this.state.mode);
     return (
       <View style={styles.titleBar}>
         <Text
@@ -72,7 +69,7 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
                     <Text style={styles.actionText}>
-                      {this.props.localesHelper.localeString('assessment.' + action.name)}
+                      {this.props.localesHelper.localeString('common.' + action.name)}
                     </Text>
                   </View>
                 </View>

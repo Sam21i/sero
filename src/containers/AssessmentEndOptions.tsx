@@ -3,14 +3,10 @@ import {Text, StyleSheet, ImageBackground, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
-import MidataService from '../model/MidataService';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import * as midataServiceActions from '../store/midataService/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import UserProfile from '../model/UserProfile';
-import {Resource} from '@i4mi/fhir_r4';
 import AssessmentEndOptionsSpeechBubble, {
   ASSESSMENT_END_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentEndOptionsSpeechBubble';
@@ -18,10 +14,6 @@ import AssessmentEndOptionsSpeechBubble, {
 interface PropsType {
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
-  midataService: MidataService;
-  userProfile: UserProfile;
-  addResource: (r: Resource) => void;
-  synchronizeResource: (r: Resource) => void;
 }
 
 interface State {
@@ -122,64 +114,13 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 7,
     backgroundColor: colors.white65opac
-  },
-  listItem: {
-    marginVertical: scale(10),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: scale(60),
-    backgroundColor: colors.grey,
-    height: 4 * scale(TextSize.small),
-    borderTopRightRadius: 2 * scale(TextSize.small),
-    borderBottomRightRadius: 2 * scale(TextSize.small)
-  },
-  listItemText: {
-    marginTop: 1.4 * scale(TextSize.small),
-    marginLeft: 2 * scale(TextSize.small),
-    fontFamily: AppFonts.regular,
-    fontSize: scale(TextSize.small),
-    color: colors.white,
-    maxWidth: scale(200)
-  },
-  listItemImage: {
-    borderRadius: 2 * scale(TextSize.small),
-    height: 4 * scale(TextSize.small),
-    width: 4 * scale(TextSize.small)
-  },
-  listItemInitials: {
-    borderRadius: 2 * scale(TextSize.small),
-    height: 4 * scale(TextSize.small),
-    width: 4 * scale(TextSize.small),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  listItemInitialsText: {
-    fontFamily: AppFonts.regular,
-    fontSize: 1.8 * scale(TextSize.small),
-    color: colors.white
-  },
-  loading: {
-    fontFamily: AppFonts.regular,
-    fontSize: TextSize.small,
-    width: '100%',
-    textAlign: 'center',
-    marginTop: scale(10)
   }
 });
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
-    midataService: state.MiDataServiceStore,
-    userProfile: state.UserProfileStore
+    localesHelper: state.LocalesHelperStore
   };
 }
 
-function mapDispatchToProps(dispatch: Function) {
-  return {
-    addResource: (r: Resource) => midataServiceActions.addResource(dispatch, r),
-    synchronizeResource: (r: Resource) => midataServiceActions.synchronizeResource(dispatch, r)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentEndOptions);
+export default connect(mapStateToProps, undefined)(AssessmentEndOptions);

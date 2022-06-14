@@ -21,6 +21,7 @@ import Question from '../components/Question';
 import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '../components/AssessmentQuitSpeechBubble';
 import AssessmentEndOptions from './AssessmentEndOptions';
 import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -65,7 +66,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   onChangeText(newText: string, question: IQuestion) {
-    console.log(newText, question);
     this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(question, {
       answer: {
         de: newText
@@ -78,7 +78,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
 
   _renderButtons() {
     return (
-      <View>
+      <View style={{marginTop: scale(20)}}>
         {[
           {
             label: 'common.save',
@@ -135,6 +135,92 @@ class AssessmentQuestions extends Component<PropsType, State> {
     }
   }
 
+  renderHeader() {
+    let svgImage = '';
+    let base64Image = {
+      contentType: '',
+      data: ''
+    };
+    try {
+      base64Image = this.state.prismSession?.getBase64Image() || base64Image;
+    } catch (e) {}
+    try {
+      svgImage = this.state.prismSession?.getSVGImage() || '';
+    } catch (e) {}
+    return (
+      <View>
+        <View style={{height: verticalScale(55)}}></View>
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.primary2_60opac,
+            fontFamily: AppFonts.bold,
+            fontSize: scale(TextSize.big)
+          }}>
+          {this.props.localesHelper.localeString('assessment.followUpTitle')}
+        </Text>
+
+        {svgImage !== '' && (
+          <SvgCss
+            xml={svgImage}
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+          />
+        )}
+        {base64Image.contentType !== '' && (
+          <Image
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+            source={{uri: 'data:' + base64Image.data}}
+          />
+        )}
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.black,
+            fontFamily: AppFonts.medium,
+            fontSize: scale(TextSize.small)
+          }}>
+          {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
+        </Text>
+      </View>
+    );
+  }
+
+  renderFooter() {
+    return this._renderButtons();
+  }
+
+  renderQuestion(listElement) {
+    return (
+      <Question
+        key={listElement.id}
+        question={listElement}
+        onChangeText={this.onChangeText.bind(this)}
+      />
+    );
+  }
+
   render() {
     let svgImage = '';
     let base64Image = {
@@ -143,14 +229,10 @@ class AssessmentQuestions extends Component<PropsType, State> {
     };
     try {
       base64Image = this.state.prismSession?.getBase64Image() || base64Image;
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     try {
       svgImage = this.state.prismSession?.getSVGImage() || '';
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     return (
       <SafeAreaView
         style={styles.container}
@@ -171,91 +253,20 @@ class AssessmentQuestions extends Component<PropsType, State> {
             </View>
             <View style={styles.bottomView}>
               {!this.state.quitBubbleVisible && (
-                <ScrollView>
-                  <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-                    <View style={{height: verticalScale(55)}}></View>
-                    <Text
-                      style={{
-                        paddingBottom: scale(10),
-                        color: colors.primary2_60opac,
-                        fontFamily: AppFonts.bold,
-                        fontSize: scale(TextSize.big)
-                      }}>
-                      {this.props.localesHelper.localeString('assessment.followUpTitle')}
-                    </Text>
-
-                    {svgImage !== '' && (
-                      <SvgCss
-                        xml={svgImage}
-                        style={[
-                          styles.image,
-                          {
-                            shadowColor: colors.black,
-                            shadowOffset: {
-                              width: scale(5),
-                              height: scale(5)
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: scale(5)
-                          }
-                        ]}
-                      />
-                    )}
-                    {base64Image.contentType !== '' && (
-                      <Image
-                        style={[
-                          styles.image,
-                          {
-                            shadowColor: colors.black,
-                            shadowOffset: {
-                              width: scale(5),
-                              height: scale(5)
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: scale(5)
-                          }
-                        ]}
-                        source={{uri: 'data:' + base64Image.data}}
-                      />
-                    )}
-
-                    <Text
-                      style={{
-                        paddingBottom: scale(10),
-                        color: colors.black,
-                        fontFamily: AppFonts.medium,
-                        fontSize: scale(TextSize.small)
-                      }}>
-                      {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
-                    </Text>
-
-                    {this.state.prismSession && (
-                      <View>
-                        {this.state.prismSession
-                          .getQuestionnaireData()
-                          .getQuestions()
-                          .map((listElement) => {
-                            return (
-                              <Question
-                                key={listElement.id}
-                                question={listElement}
-                                onChangeText={this.onChangeText.bind(this)}
-                              />
-                            );
-                          })}
-                      </View>
-                    )}
-                  </View>
-                  <View
-                    style={{
-                      position: 'relative',
-                      marginVertical: scale(20)
-                    }}>
-                    {this._renderButtons()}
-                  </View>
-                </ScrollView>
+                <KeyboardAwareFlatList
+                  style={{paddingLeft: scale(40), paddingRight: scale(20)}}
+                  ListHeaderComponent={this.renderHeader.bind(this)}
+                  data={this.state.prismSession.getQuestionnaireData().getQuestions()}
+                  renderItem={(listElement) => (
+                    <Question
+                      question={listElement.item}
+                      onChangeText={this.onChangeText}
+                    />
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListFooterComponent={this.renderFooter.bind(this)}
+                />
               )}
-
               {this.state.quitBubbleVisible && (
                 <AssessmentQuitSpeechBubble
                   navigation={this.props.navigation}
@@ -338,8 +349,9 @@ const styles = StyleSheet.create({
     height: scale(50),
     width: scale(225),
     paddingVertical: scale(10),
-    marginVertical: 0,
-    marginBottom: 20
+    marginBottom: 20,
+    position: 'relative',
+    right: -scale(20)
   }
 });
 

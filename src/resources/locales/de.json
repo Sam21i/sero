@@ -13,7 +13,9 @@
     "phone": "Telefon",
     "save": "Speichern",
     "search": "Suchen",
-    "start": "Starten"
+    "start": "Starten",
+    "yes": "Ja",
+    "no": "Nein"
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -84,8 +86,6 @@
     "newImage": "Neues Foto aufnehmen",
     "followUpTitle": "Folgefragen",
     "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
-    "quitYes": "Ja",
-    "quitNo": "Nein",
     "cancelQuestion": "Willst du wirklich abbrechen?",
     "goTosecurityplan": "Sicherheitsplan einsehen",
     "goToMainPage": "Zur Übersichtsseite gehen",

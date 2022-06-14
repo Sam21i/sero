@@ -8,11 +8,8 @@ import {
   TouchableWithoutFeedback,
   Image,
   ListRenderItemInfo,
-  Platform,
-  PermissionsAndroid,
   Linking
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -22,13 +19,10 @@ import {connect} from 'react-redux';
 import * as midataServiceActions from '../store/midataService/actions';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
+import {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyContact from '../model/EmergencyContact';
 import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
-import RNContacts from 'react-native-contacts';
-import RNFS from 'react-native-fs';
-import {STORAGE} from './App';
 import {Input, NativeBaseProvider} from 'native-base';
 import AppButton from '../components/AppButton';
 
@@ -106,6 +100,7 @@ class Contacts extends Component<PropsType, State> {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
+          <View style={{paddingTop: verticalScale(50)}}></View>
           <Input
             autoCapitalize='none'
             autoCorrect={false}
@@ -116,7 +111,7 @@ class Contacts extends Component<PropsType, State> {
               backgroundColor: colors.white
             }}
             textStyle={{color: colors.black}}
-            _focus={{borderColor: colors.primary}}
+            _focus={{borderColor: colors.gold}}
             clearButtonMode='always'
             isFullWidth={true}
             size='xl'
@@ -154,7 +149,7 @@ class Contacts extends Component<PropsType, State> {
         onPress={() => {
           this.props.navigation.navigate('AssessmentEndOptions');
         }}
-        style={{width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
+        style={styles.backButton}
         isLargeButton={false}
       />
     );
@@ -183,25 +178,23 @@ class Contacts extends Component<PropsType, State> {
             </View>
           </View>
           <View style={styles.bottomView}>
-            <View style={{position: 'relative', top: verticalScale(50)}}>
-              <FlatList
-                ListHeaderComponent={this.renderHeader()}
-                data={contacts.sort((a, b) => {
-                  // don't show Company Entries at the top
-                  if (a.given[0] === '') {
-                    return 1;
-                  }
-                  if (b.given[0] === '') {
-                    return -1;
-                  }
-                  return a.getNameString().localeCompare(b.getNameString());
-                })}
-                alwaysBounceVertical={false}
-                renderItem={this.renderContactListItem.bind(this)}
-                showsHorizontalScrollIndicator={false}
-                ListFooterComponent={this._renderListFooter.bind(this)}
-              />
-            </View>
+            <FlatList
+              ListHeaderComponent={this.renderHeader()}
+              data={contacts.sort((a, b) => {
+                // don't show Company Entries at the top
+                if (a.given[0] === '') {
+                  return 1;
+                }
+                if (b.given[0] === '') {
+                  return -1;
+                }
+                return a.getNameString().localeCompare(b.getNameString());
+              })}
+              alwaysBounceVertical={false}
+              renderItem={this.renderContactListItem.bind(this)}
+              showsHorizontalScrollIndicator={false}
+              ListFooterComponent={this._renderListFooter.bind(this)}
+            />
           </View>
 
           <View style={styles.emergencyButton}>
@@ -215,11 +208,10 @@ class Contacts extends Component<PropsType, State> {
 
 const styles = StyleSheet.create({
   backButton: {
-    height: scale(50),
-    width: scale(225),
+    width: scale(200),
     paddingVertical: scale(10),
-    marginVertical: 0,
-    marginBottom: 20
+    marginTop: scale(20),
+    marginBottom: scale(40)
   },
   container: {
     flex: 1
@@ -288,13 +280,6 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     fontSize: 1.8 * scale(TextSize.small),
     color: colors.white
-  },
-  loading: {
-    fontFamily: AppFonts.regular,
-    fontSize: TextSize.small,
-    width: '100%',
-    textAlign: 'center',
-    marginTop: scale(10)
   }
 });
 
