@@ -83,7 +83,14 @@
     "selectImage": "Foto aus Bibliothek auswählen",
     "newImage": "Neues Foto aufnehmen",
     "followUpTitle": "Folgefragen",
-    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich dsa Leben zu nehmen) an."
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
+    "quitYes": "Ja",
+    "quitNo": "Nein",
+    "cancelQuestion": "Willst du wirklich abbrechen?",
+    "goTosecurityplan": "Sicherheitsplan einsehen",
+    "goToMainPage": "Zur Übersichtsseite gehen",
+    "goToEmergencyContact": "Jemanden anrufen",
+    "bubbleTitle": "Was möchtest du tun?"
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",

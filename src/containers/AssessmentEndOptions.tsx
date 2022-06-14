@@ -11,11 +11,9 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
-import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {PrismInitializer} from '../model/PrismSession';
-import AssessmentImageSpeechBubble, {
-  ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE
-} from '../components/AssessmentImageSpeechBubble';
+import AssessmentEndOptionsSpeechBubble, {
+  ASSESSMENT_END_SPEECH_BUBBLE_MODE
+} from '../components/AssessmentEndOptionsSpeechBubble';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -28,74 +26,29 @@ interface PropsType {
 
 interface State {
   bubbleVisible: boolean;
-  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE;
-  new_image?: {
-    contentType: string;
-    data: string;
-  };
+  mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE;
 }
 
-const MAX_IMAGE_SIZE = 800;
-
-class AssessmentImage extends Component<PropsType, State> {
+class AssessmentEndOptions extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
 
     this.state = {
       bubbleVisible: true,
-      mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-      new_image: undefined
+      mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE.menu
     };
   }
 
-  setImage(image: ImagePickerResponse) {
-    if (!image.didCancel && image.assets && image.assets.length > 0) {
-      const type = image.assets[0].type?.replace('jpg', 'jpeg');
-      const prismData: PrismInitializer = {
-        canvasWidth: image.assets[0].width || MAX_IMAGE_SIZE,
-        questionnaire: this.props.midataService.getPrismQuestionnaire(),
-        image: {
-          contentType: type || '',
-          data: type + ';base64,' + image.assets[0].base64 || ''
-        }
-      };
-      this.props.navigation.navigate('AssessmentQuestions', {prismData: prismData});
-    }
-  }
-
-  pickImage() {
-    launchImageLibrary({
-      mediaType: 'photo',
-      maxHeight: MAX_IMAGE_SIZE,
-      maxWidth: MAX_IMAGE_SIZE,
-      includeBase64: true
-    })
-      .then((image) => this.setImage(image))
-      .catch((e) => {
-        console.log('Error picking image', e);
-      });
-  }
-
-  newImage() {
-    launchCamera({
-      mediaType: 'photo',
-      maxHeight: MAX_IMAGE_SIZE,
-      maxWidth: MAX_IMAGE_SIZE,
-      includeBase64: true
-    })
-      .then((image) => this.setImage(image))
-      .catch((e) => {
-        console.log('Error taking image', e);
-      });
-  }
-
-  async onBubbleClose(mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE): Promise<void> {
+  async onBubbleClose(mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE): Promise<void> {
     switch (mode) {
-      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new:
-        this.newImage();
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.securityplan:
+        this.props.navigation.navigate('SecurityplanStackScreen', {screen: 'SecurityplanCurrent'});
         break;
-      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.select:
-        this.pickImage();
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.mainPage:
+        this.props.navigation.navigate('MainStackScreen');
+        break;
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.emergencyContact:
+        this.props.navigation.navigate('AssessmentContacts');
         break;
       default:
         this.setState({
@@ -120,7 +73,7 @@ class AssessmentImage extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
-              <AssessmentImageSpeechBubble
+              <AssessmentEndOptionsSpeechBubble
                 localesHelper={this.props.localesHelper}
                 navigation={this.props.navigation}
                 onClose={this.onBubbleClose.bind(this)}
@@ -229,4 +182,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentImage);
+export default connect(mapStateToProps, mapDispatchToProps)(AssessmentEndOptions);
