@@ -47,8 +47,12 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{ASSESSMENT_RESOURCES.intro.title}</Text>
-                  <Text style={styles.description}>{ASSESSMENT_RESOURCES.intro.description}</Text>
+                  <Text style={styles.title}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.intro.title)}
+                  </Text>
+                  <Text style={styles.description}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.intro.description)}
+                  </Text>
                   <SvgCss
                     xml={ASSESSMENT_RESOURCES.intro.prismImage}
                     style={[
@@ -103,7 +107,7 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
           <Text style={styles.bulletPoint}>{'\u2022' + ' '}</Text>
         </View>
         <View style={styles.bulletTextView}>
-          <Text style={styles.bulletText}>{item}</Text>
+          <Text style={styles.bulletText}>{this.props.localesHelper.localeString(item)}</Text>
         </View>
       </View>
     );
