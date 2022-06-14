@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, ImageBackground, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -94,7 +94,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
           }
         ].map((button, index) => (
           <AppButton
-            key={index}
+            key={'appButton_' + index}
             label={this.props.localesHelper.localeString(button.label)}
             position='right'
             icon={button.icon}

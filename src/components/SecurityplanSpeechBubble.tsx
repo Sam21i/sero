@@ -56,14 +56,14 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
       <>
         {this.renderBubbleTitle('securityplan.bubbleTitle')}
         <View style={styles.actionList}>
-          {MENU_ACTIONS.map((action) => {
+          {MENU_ACTIONS.map((action, index) => {
             return (
               <TouchableWithoutFeedback
                 onPress={() => this.props.onClose(action.mode)}
-                key={'menu.' + action.name}>
+                key={'menu_' + index}>
                 <View
                   style={styles.actionMenuPoint}
-                  key={'action_' + action.name}>
+                  key={'action_' + index}>
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
                     <Text style={styles.actionText}>

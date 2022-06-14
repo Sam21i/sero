@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import EmergencyContact from '../model/EmergencyContact';
-import {AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
 
 interface EmergencyContactProps {
   size: number;
@@ -50,7 +50,9 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     if (contact.image) {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <TouchableOpacity onPress={this.props.onPress}>
+          <TouchableOpacity
+            activeOpacity={activeOpacity}
+            onPress={this.props.onPress}>
             <Image
               style={image_avatar}
               source={{uri: 'data:' + contact.image.data}}
@@ -68,7 +70,9 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
     } else {
       emergencyContactAvatar = (
         <View style={styles.view}>
-          <TouchableOpacity onPress={this.props.onPress}>
+          <TouchableOpacity
+            activeOpacity={activeOpacity}
+            onPress={this.props.onPress}>
             <View style={text_avatar}>
               {!!contact.getNameString() && (
                 <Text

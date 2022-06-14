@@ -12,7 +12,7 @@ import LocalesHelper from '../locales';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
-import {AppFonts, colors, scale, TextSize, windowHeight, windowWidth} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize, windowHeight, windowWidth} from '../styles/App.style';
 import {SvgCss} from 'react-native-svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -44,10 +44,10 @@ class AssessmentBoard extends Component<PropsType, State> {
   _renderActionButton(item) {
     return (
       <TouchableOpacity
+        activeOpacity={activeOpacity}
         onPress={() => {
           this.props.navigation.navigate(item.navigateTo);
         }}
-        activeOpacity={0.5}
         style={styles.button}>
         <Text style={styles.buttonText}>{item.name}</Text>
       </TouchableOpacity>
@@ -74,29 +74,29 @@ class AssessmentBoard extends Component<PropsType, State> {
           </View>
           <View style={{flex: 1, backgroundColor: colors.gold50opac}}>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
                 this.props.navigation.navigate('AssessmentImage');
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Foto'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
                 this.props.navigation.navigate('AssessmentStackScreen', {
                   screen: 'AssessmentIntroStackScreen',
                   params: {screen: 'AssessmentIntroTutorial'}
                 });
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Anleitung'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
                 this.props.navigation.navigate('AssessmentQuestions');
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Speichern'}</Text>
             </TouchableOpacity>

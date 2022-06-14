@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {colors, scale, verticalScale} from '../styles/App.style';
+import {activeOpacity, colors, scale, verticalScale} from '../styles/App.style';
 import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
 
 export default class EmergencyNumberButton extends Component {
@@ -12,6 +12,7 @@ export default class EmergencyNumberButton extends Component {
   render() {
     return (
       <TouchableOpacity
+        activeOpacity={activeOpacity}
         onPress={() => {
           this.callEmergency();
         }}>
