@@ -131,45 +131,6 @@ class Onboarding extends Component<PropsType, State> {
   };
 
   _renderPagination = (activeIndex: number) => {
-    let button;
-    if (activeIndex < 4) {
-      button = (
-        <AppButton
-          label={this.props.localesHelper.localeString('common.next')}
-          icon={
-            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
-          }
-          position={'left'}
-          color={colors.grey}
-          style={{
-            position: 'absolute',
-            top: verticalScale(357.5),
-            left: scale(-10)
-          }}
-          onPress={() => this.slider?.goToSlide(activeIndex + 1, true)}
-          isLargeButton
-        />
-      );
-    } else if (activeIndex === 4) {
-      button = (
-        <AppButton
-          label={this.props.localesHelper.localeString('common.next')}
-          icon={
-            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
-          }
-          position={'left'}
-          color={colors.grey}
-          style={{
-            position: 'absolute',
-            top: verticalScale(357.5),
-            left: scale(-10)
-          }}
-          onPress={() => this.registerOrLogin()}
-          isLargeButton
-        />
-      );
-    }
-
     return (
       <SafeAreaView style={styles.paginationContainer}>
         <View style={styles.paginationDots}>
@@ -182,21 +143,33 @@ class Onboarding extends Component<PropsType, State> {
               />
             ))}
         </View>
-        {button}
+        <AppButton
+          label={this.props.localesHelper.localeString('common.next')}
+          icon={
+            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
+          }
+          position='left'
+          color={colors.grey}
+          style={{
+            position: 'absolute',
+            top: verticalScale(412),
+            left: scale(-10)
+          }}
+          onPress={() => (activeIndex < 4 ? this.slider?.goToSlide(activeIndex + 1, true) : this.registerOrLogin())}
+          isLargeButton
+        />
       </SafeAreaView>
     );
   };
 
   render() {
     return (
-      <>
-        <AppIntroSlider
-          ref={(ref: AppIntroSlider) => (this.slider = ref)}
-          renderItem={this._renderItem}
-          data={ON_BOARDING_ITEMS}
-          renderPagination={this._renderPagination}
-        />
-      </>
+      <AppIntroSlider
+        ref={(ref: AppIntroSlider) => (this.slider = ref)}
+        renderItem={this._renderItem}
+        data={ON_BOARDING_ITEMS}
+        renderPagination={this._renderPagination}
+      />
     );
   }
 }
@@ -206,9 +179,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   topView: {
-    flex: 0.26,
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex: 0.26
   },
   bottomView: {
     flex: 0.74,
@@ -216,11 +187,9 @@ const styles = StyleSheet.create({
   },
   content: {
     position: 'absolute',
-    top: verticalScale(40),
-    paddingLeft: scale(50),
-    paddingRight: scale(30),
-    width: '100%',
-    height: verticalScale(300)
+    top: verticalScale(50),
+    paddingLeft: scale(40),
+    paddingRight: scale(30)
   },
   titleView: {
     paddingRight: scale(40),
@@ -232,8 +201,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: AppFonts.regular,
-    fontSize: scale(TextSize.small),
-    color: colors.black
+    fontSize: scale(TextSize.small)
   },
   slideMarking: {
     position: 'absolute',
@@ -255,15 +223,13 @@ const styles = StyleSheet.create({
   paginationDots: {
     height: verticalScale(16),
     margin: scale(10),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'row'
   },
   dot: {
     width: scale(15),
     height: scale(15),
     borderRadius: 10,
-    marginHorizontal: scale(7)
+    marginHorizontal: scale(8)
   }
 });
 

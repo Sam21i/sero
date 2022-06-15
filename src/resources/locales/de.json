@@ -83,7 +83,30 @@
     "selectImage": "Foto aus Bibliothek auswählen",
     "newImage": "Neues Foto aufnehmen",
     "followUpTitle": "Folgefragen",
-    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich dsa Leben zu nehmen) an."
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich dsa Leben zu nehmen) an.",
+    "resources": {
+      "intro": {
+        "title": "Was ist PRISM-S?",
+        "description": "Mit PRISM-S kannst du einschätzen, wie stark dein Drang ist, dir das Leben zu nehmen.",
+        "explanation": {
+          "item1": "Die weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar.",
+          "item2": "Der gelbe Punkt bist du in deinem Leben.",
+          "item3": "Die schwarze Scheibe steht für deinen momentanen Drang, dir das Leben zu nehmen."
+        }
+      },
+      "tutorial": {
+        "title": "Anleitung",
+        "description": "Platziere die schwarze Scheibe in deinem Lebensraum (weisse Fläche).",
+        "questions": {
+          "hint": "Stelle dir dabei die Fragen:",
+          "questionList": {
+            "item1": "Welchen Platz in meinern Leben nimmt zurzeit mein Drang ein, mir das Leben zu nehmen?",
+            "item2": "Wie nah oder wie weit weg von mir (gelber Punkt) ist dieser Drang im Moment?"
+          }
+        },
+        "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang."
+      }
+    }
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",

@@ -9,7 +9,6 @@ import {
 import EmergencyContact from './EmergencyContact';
 import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
 import SecurityPlanModel from './SecurityPlan';
-import RNRestart from 'react-native-restart';
 import PrismSession, { PrismResources } from './PrismSession';
 
 export default class UserProfile {
@@ -71,7 +70,6 @@ export default class UserProfile {
     this.securityPlanHistory = [];
     this.currentSecurityPlan = new SecurityPlanModel({});
     this.prismSessions = [];
-    RNRestart.Restart();
   }
 
   getFhirId(): string {
