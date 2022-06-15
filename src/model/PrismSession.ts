@@ -232,15 +232,15 @@ export default class PrismSession {
 
   /**
    * Gets the PRISM-S board as a SVG image string
-   * @returns   the SVG as a string (NOT base64 encoded)
-   * @throws    an Error if there is no image available or type is not SVG
+   * @returns   the SVG as a string (NOT base64 encoded) or an empty string
+   *            if no SVG image is available
    */
   getSVGImage(): string {
     if (this.image && !this.image.contentType.includes('svg')) {
-      throw new Error('Available image is not SVG');
+      return '';
     }
     if (!this.image) {
-      const svgString = this.drawSVG(this.blackDiscPosition, this.yellowCirclePosition, this.canvasWidth)
+      const svgString = this.drawSVG(this.blackDiscPosition, this.yellowCirclePosition, SVG_WIDTH)
       this.image = {
         contentType: 'image/svg+xml',
         data: base64.encode(svgString)
@@ -254,14 +254,14 @@ export default class PrismSession {
    * Gets the PRISM-S board as a base64 encoded string
    * @returns   an object containing contentType (as string) 
    *            and the actual image data (as base64 encoded string)
-   * @throws    an Error if there is no image available or only an image of type SVG
+   *            or contentType and data as empty strings if no base64 image is available
    */
   getBase64Image(): {contentType: string, data: string} {
-    if (!this.image) {
-      throw new Error('No image available.');
-    }
-    if (this.image.contentType.includes('svg')) {
-      throw new Error('Available image is SVG, use getSVGImage() instead.');
+    if (!this.image || this.image.contentType.includes('svg')) {
+      return {
+        contentType: '',
+        data: ''
+      };
     }
     return this.image;
   }
@@ -454,7 +454,6 @@ export default class PrismSession {
       (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
       (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
     ) throw new Error('Invalid parameters, at least one position is outside the canvas.');
-    // TODO: something here is not quite right when RATIO is not 1
     const image = '<svg width="' + CANVAS_WIDTH + '" height="' + CANVAS_HEIGHT + '" xmlns="http://www.w3.org/2000/svg">\n  <g>\n    ' + 
       '<ellipse id="yellowCircle" ' + 
                 'ry="' + YELLOW_RADIUS + '" ' + 
