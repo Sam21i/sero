@@ -20,39 +20,31 @@ export default class AppButton extends Component<CategoryButtonProps> {
       <TouchableOpacity
         onPress={this.props.onPress}
         disabled={this.props.isDisabled}
-        activeOpacity={0.5}>
-        <View
-          style={[
-            this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
-            {
-              ...this.props.style,
-              backgroundColor: this.props.color,
-              minHeight: this.props.isLargeButton ? scale(82) : scale(50)
-            }
-          ]}>
-          {this.props.position === 'left' && (
-            <Text
-              numberOfLines={2}
-              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
-              {this.props.label}
-            </Text>
-          )}
-          {this.props.icon != undefined ? (
-            <SvgCss
-              xml={this.props.icon}
-              style={styles.icon}
-            />
-          ) : (
-            <></>
-          )}
-          {this.props.position === 'right' && (
-            <Text
-              numberOfLines={2}
-              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
-              {this.props.label}
-            </Text>
-          )}
-        </View>
+        activeOpacity={0.5}
+        style={[
+          this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
+          {
+            ...this.props.style,
+            backgroundColor: this.props.color,
+            minHeight: this.props.isLargeButton ? scale(82) : scale(50)
+          }
+        ]}>
+        {this.props.position === 'left' && (
+          <Text style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
+            {this.props.label}
+          </Text>
+        )}
+        {this.props.icon !== undefined && (
+          <SvgCss
+            xml={this.props.icon}
+            style={styles.icon}
+          />
+        )}
+        {this.props.position === 'right' && (
+          <Text style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
+            {this.props.label}
+          </Text>
+        )}
       </TouchableOpacity>
     );
   }
