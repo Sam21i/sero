@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -57,12 +57,23 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   save() {
+    const ref = this.props.userProfile.getFhirReference();
+    if (ref && this.state.prismSession) {
+      const prismBundle = this.state.prismSession.getUploadBundle(ref);
+      prismBundle.id = 'prism-bundle'; // needs a temporary id or there will be errors in midataActions
+      // upload to MIDATA
+      this.props.addResource(prismBundle);
+      console.log(prismBundle);
+      // and also add to UserProfile
+      this.props.addPrismSession(this.state.prismSession);
+    } else {
+      console.log('Entweder noch keine User Reference oder Prism Session vorhanden.');
+    }
     this.props.navigation.navigate('AssessmentSessionStackScreen', {screen: 'AssessmentEndOptions'});
   }
 
   cancel() {
     this.setState({quitBubbleVisible: true});
-    //tbd
   }
 
   onChangeText(newText: string, question: IQuestion) {
@@ -74,37 +85,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
         valueString: newText
       }
     });
-  }
-
-  _renderButtons() {
-    return (
-      <View style={{marginTop: scale(20)}}>
-        {[
-          {
-            label: 'common.save',
-            color: colors.gold,
-            icon: '<?xml version="1.0" encoding="iso-8859-1"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 305.002 305.002" style="enable-background:new 0 0 305.002 305.002;" xml:space="preserve"> <g> <g> <path fill="#FFFFFF" d="M152.502,0.001C68.412,0.001,0,68.412,0,152.501s68.412,152.5,152.502,152.5c84.089,0,152.5-68.411,152.5-152.5 S236.591,0.001,152.502,0.001z M152.502,280.001C82.197,280.001,25,222.806,25,152.501c0-70.304,57.197-127.5,127.502-127.5 c70.304,0,127.5,57.196,127.5,127.5C280.002,222.806,222.806,280.001,152.502,280.001z"/> <path fill="#FFFFFF" d="M218.473,93.97l-90.546,90.547l-41.398-41.398c-4.882-4.881-12.796-4.881-17.678,0c-4.881,4.882-4.881,12.796,0,17.678 l50.237,50.237c2.441,2.44,5.64,3.661,8.839,3.661c3.199,0,6.398-1.221,8.839-3.661l99.385-99.385 c4.881-4.882,4.881-12.796,0-17.678C231.269,89.089,223.354,89.089,218.473,93.97z"/> </g> </g></svg>',
-            onPress: this.save.bind(this)
-          },
-          {
-            label: 'common.cancel',
-            color: colors.grey,
-            icon: '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"><defs><style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style><clipPath id="clip-path" transform="translate(0 0)"><path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5"/></clipPath><clipPath id="clip-path-2" transform="translate(0 0)"><rect class="cls-1" width="37.5" height="37.5"/></clipPath></defs><g class="cls-2"><line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25"/><line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25"/></g><g class="cls-4"><circle class="cls-3" cx="18.75" cy="18.75" r="17.5"/></g></svg>',
-            onPress: this.cancel.bind(this)
-          }
-        ].map((button, index) => (
-          <AppButton
-            key={'appButton_' + index}
-            label={this.props.localesHelper.localeString(button.label)}
-            position='right'
-            icon={button.icon}
-            color={button.color}
-            onPress={button.onPress}
-            style={styles.button}
-          />
-        ))}
-      </View>
-    );
   }
 
   onCloseQuit(mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE) {
@@ -148,7 +128,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
       svgImage = this.state.prismSession?.getSVGImage() || '';
     } catch (e) {}
     return (
-      <View>
+      <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
         <View style={{height: verticalScale(55)}}></View>
         <Text
           style={{
@@ -208,16 +188,33 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   renderFooter() {
-    return this._renderButtons();
-  }
-
-  renderQuestion(listElement) {
     return (
-      <Question
-        key={listElement.id}
-        question={listElement}
-        onChangeText={this.onChangeText.bind(this)}
-      />
+      <View style={{position: 'relative', right: -scale(20), marginVertical: scale(20)}}>
+        {[
+          {
+            label: 'common.save',
+            color: colors.gold,
+            icon: '<?xml version="1.0" encoding="iso-8859-1"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 305.002 305.002" style="enable-background:new 0 0 305.002 305.002;" xml:space="preserve"> <g> <g> <path fill="#FFFFFF" d="M152.502,0.001C68.412,0.001,0,68.412,0,152.501s68.412,152.5,152.502,152.5c84.089,0,152.5-68.411,152.5-152.5 S236.591,0.001,152.502,0.001z M152.502,280.001C82.197,280.001,25,222.806,25,152.501c0-70.304,57.197-127.5,127.502-127.5 c70.304,0,127.5,57.196,127.5,127.5C280.002,222.806,222.806,280.001,152.502,280.001z"/> <path fill="#FFFFFF" d="M218.473,93.97l-90.546,90.547l-41.398-41.398c-4.882-4.881-12.796-4.881-17.678,0c-4.881,4.882-4.881,12.796,0,17.678 l50.237,50.237c2.441,2.44,5.64,3.661,8.839,3.661c3.199,0,6.398-1.221,8.839-3.661l99.385-99.385 c4.881-4.882,4.881-12.796,0-17.678C231.269,89.089,223.354,89.089,218.473,93.97z"/> </g> </g></svg>',
+            onPress: this.save.bind(this)
+          },
+          {
+            label: 'common.cancel',
+            color: colors.grey,
+            icon: '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"><defs><style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style><clipPath id="clip-path" transform="translate(0 0)"><path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5"/></clipPath><clipPath id="clip-path-2" transform="translate(0 0)"><rect class="cls-1" width="37.5" height="37.5"/></clipPath></defs><g class="cls-2"><line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25"/><line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25"/></g><g class="cls-4"><circle class="cls-3" cx="18.75" cy="18.75" r="17.5"/></g></svg>',
+            onPress: this.cancel.bind(this)
+          }
+        ].map((button, index) => (
+          <AppButton
+            key={'appButton_' + index}
+            label={this.props.localesHelper.localeString(button.label)}
+            position='right'
+            icon={button.icon}
+            color={button.color}
+            onPress={button.onPress}
+            style={styles.button}
+          />
+        ))}
+      </View>
     );
   }
 
@@ -254,16 +251,16 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <View style={styles.bottomView}>
               {!this.state.quitBubbleVisible && (
                 <KeyboardAwareFlatList
-                  enableOnAndroid={true}
-                  extraScrollHeight={Platform.OS === 'ios' ? scale(10) : scale(5)}
-                  style={{paddingLeft: scale(40), paddingRight: scale(20)}}
+                  extraScrollHeight={scale(40)}
                   ListHeaderComponent={this.renderHeader.bind(this)}
-                  data={this.state.prismSession.getQuestionnaireData().getQuestions()}
+                  data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
                   renderItem={(listElement) => (
-                    <Question
-                      question={listElement.item}
-                      onChangeText={this.onChangeText}
-                    />
+                    <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                      <Question
+                        question={listElement.item}
+                        onChangeText={this.onChangeText.bind(this)}
+                      />
+                    </View>
                   )}
                   keyExtractor={(item) => item.id}
                   ListFooterComponent={this.renderFooter.bind(this)}
@@ -350,10 +347,7 @@ const styles = StyleSheet.create({
   button: {
     height: scale(50),
     width: scale(225),
-    paddingVertical: scale(10),
-    marginBottom: 20,
-    position: 'relative',
-    right: -scale(20)
+    marginBottom: scale(20)
   }
 });
 
