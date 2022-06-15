@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PanResponder, StyleSheet, Text, View, Animated} from 'react-native';
+import {PanResponder, StyleSheet, Text, View, Animated, Easing} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -36,6 +36,13 @@ class AssessmentBoard extends Component<PropsType, State> {
         x: this.pan.x._value,
         y: this.pan.y._value
       });
+
+      Animated.timing(this.touchabelCirlceSize, {
+        useNativeDriver: false,
+        toValue: 100,
+        duration: 150,
+        easing: Easing.out(Easing.cubic)
+      }).start();
     },
     onPanResponderMove: (evt, gestureState) => {
       let newdx = gestureState.dx,
@@ -54,17 +61,26 @@ class AssessmentBoard extends Component<PropsType, State> {
     },
     onPanResponderRelease: (e, gestureState) => {
       this.pan.flattenOffset();
-      if (gestureState.moveY < 45 || gestureState.moveY > 360 || gestureState.moveX < 300 || gestureState.moveX > 800) {
+
+      if (gestureState.moveY < 45 || gestureState.moveY > 350 || gestureState.moveX < 330 || gestureState.moveX > 800) {
         Animated.spring(
           this.pan, // Auto-multiplexed
-          {toValue: {x: 0, y: 0}} // Back to zero
+          {useNativeDriver: false, toValue: {x: 0, y: 0}} // Back to zero
         ).start();
       }
+      Animated.timing(this.touchabelCirlceSize, {
+        useNativeDriver: false,
+        toValue: 80,
+        duration: 100,
+        easing: Easing.out(Easing.cubic)
+      }).start();
     }
   });
+  touchabelCirlceSize: Animated.Value;
 
   constructor(props: PropsType) {
     super(props);
+    this.touchabelCirlceSize = new Animated.Value(80);
   }
 
   componentDidMount() {
@@ -90,9 +106,20 @@ class AssessmentBoard extends Component<PropsType, State> {
   }
 
   render() {
+    const animatedStyle = {
+      height: this.touchabelCirlceSize,
+      width: this.touchabelCirlceSize
+    };
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: 'white', flexDirection: 'row'}}>
-        <View style={{flex: 5, backgroundColor: colors.gold50opac, flexDirection: 'column'}}>
+      <View style={{flex: 1, backgroundColor: 'white', flexDirection: 'row'}}>
+        <View
+          style={{
+            flex: 5,
+            backgroundColor: colors.gold50opac,
+            flexDirection: 'column',
+            borderLeftColor: '#000',
+            borderLeftWidth: 40,
+          }}>
           <View style={{flex: 1}}>
             <View style={{padding: scale(20)}}>
               <SvgCss
@@ -144,10 +171,10 @@ class AssessmentBoard extends Component<PropsType, State> {
               transform: [{translateX: this.pan.x}, {translateY: this.pan.y}]
             }}
             {...this.panResponder.panHandlers}>
-            <View style={styles.draggableCircle} />
+            <Animated.View style={[styles.draggableCircle, animatedStyle]} />
           </Animated.View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -181,10 +208,10 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     backgroundColor: '#FAB30D',
-    borderRadius: 100,
+    borderRadius: 500,
     position: 'absolute',
-    right: 10,
-    bottom: 10
+    right: 30,
+    bottom: 30
   }
 });
 
