@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -239,75 +239,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
                 <Text style={styles.topViewTextTitle}>
                   {this.props.localesHelper.localeString('assessment.addEntry')}
                 </Text>
-                {svgImage !== '' && (
-                  <SvgCss
-                    xml={svgImage}
-                    style={[
-                      styles.image,
-                      {
-                        shadowColor: colors.black,
-                        shadowOffset: {
-                          width: scale(5),
-                          height: scale(5)
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: scale(5)
-                      }
-                    ]}
-                  />
-                )}
-                {base64Image.contentType !== '' && (
-                  <Image
-                    style={[
-                      styles.image,
-                      {
-                        shadowColor: colors.black,
-                        shadowOffset: {
-                          width: scale(5),
-                          height: scale(5)
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: scale(5)
-                      }
-                    ]}
-                    source={{uri: 'data:' + base64Image.data}}
-                  />
-                )}
-                <Text
-                  style={{
-                    paddingBottom: scale(10),
-                    color: colors.black,
-                    fontFamily: AppFonts.bold,
-                    fontSize: scale(TextSize.verySmall)
-                  }}>
-                  {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
-                </Text>
-
-                {this.state.prismSession && (
-                  <View>
-                    <FlatList
-                      scrollEnabled={false}
-                      data={this.state.prismSession.getQuestionnaireData().getQuestions()}
-                      renderItem={(listElement) => (
-                        <Question
-                          question={listElement.item}
-                          onChangeText={this.onChangeText}></Question>
-                      )}
-                      keyExtractor={(item) => item.id}
-                      ListFooterComponent={
-                        <View style={{marginBottom: 20, backgroundColor: '#f5f5f5'}}>
-                          <Text
-                            onPress={() => {
-                              this.save.bind(this);
-                              this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
-                            }}>
-                            [speichern]
-                          </Text>
-                        </View>
-                      }
-                    />
-                  </View>
-                )}
               </View>
             </View>
             <View style={styles.bottomView}>
