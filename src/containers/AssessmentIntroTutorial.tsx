@@ -49,9 +49,15 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{ASSESSMENT_RESOURCES.tutorial.title}</Text>
-                  <Text style={styles.description}>{ASSESSMENT_RESOURCES.tutorial.description}</Text>
-                  <Text style={styles.description}>{ASSESSMENT_RESOURCES.tutorial.questions}</Text>
+                  <Text style={styles.title}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.tutorial.title)}
+                  </Text>
+                  <Text style={styles.description}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.tutorial.description)}
+                  </Text>
+                  <Text style={styles.description}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.tutorial.questions)}
+                  </Text>
                   <View style={styles.listContainer}>
                     {ASSESSMENT_RESOURCES.tutorial.questionList.map((item, index) => {
                       return this._renderListItem(item, index);
@@ -72,7 +78,9 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
                       }
                     ]}
                   />
-                  <Text style={styles.distance}>{ASSESSMENT_RESOURCES.tutorial.distance}</Text>
+                  <Text style={styles.distance}>
+                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.tutorial.distance)}
+                  </Text>
                 </View>
                 <AppButton
                   label={this.props.localesHelper.localeString('common.start')}
@@ -112,7 +120,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
           <Text style={styles.bulletPoint}>{'\u2022' + ' '}</Text>
         </View>
         <View style={styles.bulletTextView}>
-          <Text style={styles.bulletText}>{item}</Text>
+          <Text style={styles.bulletText}>{this.props.localesHelper.localeString(item)}</Text>
         </View>
       </View>
     );
