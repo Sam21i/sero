@@ -251,7 +251,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <View style={styles.bottomView}>
               {!this.state.quitBubbleVisible && (
                 <KeyboardAwareFlatList
-                  extraScrollHeight={scale(40)}
+                  extraScrollHeight={verticalScale(50)}
                   ListHeaderComponent={this.renderHeader.bind(this)}
                   data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
                   renderItem={(listElement) => (
@@ -294,7 +294,9 @@ class AssessmentQuestions extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    minHeight: scale(81),
+    maxHeight: scale(81)
   },
   topTextView: {
     flex: 1,
