@@ -26,7 +26,7 @@ interface PropsType {
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
-  route: {params: {prismData: PrismInitializer}}
+  route: {params: {prismData: PrismInitializer}};
 }
 
 interface State {
@@ -65,7 +65,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
     // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
   }
 
-
   save() {
     // 🛑 Test- und Beispielimplementation 🛑
     // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
@@ -77,7 +76,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
       prismBundle.id = 'prism-bundle'; // needs a temporary id or there will be errors in midataActions
       // upload to MIDATA
       this.props.addResource(prismBundle);
-      console.log(prismBundle);
       // and also add to UserProfile
       this.props.addPrismSession(this.state.prismSession);
     } else {
@@ -133,7 +131,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
                   }}>
                   {this.props.localesHelper.localeString('assessment.followUpTitle')}
                 </Text>
-                { svgImage !== '' && 
+                {svgImage !== '' && (
                   <SvgCss
                     xml={svgImage}
                     style={[
@@ -149,24 +147,24 @@ class AssessmentQuestions extends Component<PropsType, State> {
                       }
                     ]}
                   />
-                }
-                { base64Image.contentType !== '' &&
-                            <Image
-                              style={[
-                                styles.image,
-                                {
-                                  shadowColor: colors.black,
-                                  shadowOffset: {
-                                    width: scale(5),
-                                    height: scale(5)
-                                  },
-                                  shadowOpacity: 0.25,
-                                  shadowRadius: scale(5)
-                                }
-                              ]}
-                              source={{uri: 'data:' + base64Image.data}}
-                          />
-                          }
+                )}
+                {base64Image.contentType !== '' && (
+                  <Image
+                    style={[
+                      styles.image,
+                      {
+                        shadowColor: colors.black,
+                        shadowOffset: {
+                          width: scale(5),
+                          height: scale(5)
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: scale(5)
+                      }
+                    ]}
+                    source={{uri: 'data:' + base64Image.data}}
+                  />
+                )}
                 <Text
                   style={{
                     paddingBottom: scale(10),

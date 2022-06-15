@@ -13,7 +13,7 @@ import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
 import AssessmentSpeechBubble, {ASSESSMENT_SPEECH_BUBBLE_MODE} from '../components/AssessmentSpeechBubble';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import PrismSession, { PrismInitializer } from '../model/PrismSession';
+import PrismSession, {PrismInitializer} from '../model/PrismSession';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -45,7 +45,7 @@ class AssessmentImage extends Component<PropsType, State> {
       new_image: undefined
     };
   }
-  
+
   setImage(image: ImagePickerResponse) {
     if (!image.didCancel && image.assets && image.assets.length > 0) {
       const type = image.assets[0].type?.replace('jpg', 'jpeg');
@@ -68,10 +68,10 @@ class AssessmentImage extends Component<PropsType, State> {
       maxWidth: MAX_IMAGE_SIZE,
       includeBase64: true
     })
-    .then((image) => this.setImage(image))
-    .catch((e) => {
-      console.log('Error picking image', e);
-    });
+      .then((image) => this.setImage(image))
+      .catch((e) => {
+        console.log('Error picking image', e);
+      });
   }
 
   newImage() {
@@ -81,10 +81,10 @@ class AssessmentImage extends Component<PropsType, State> {
       maxWidth: MAX_IMAGE_SIZE,
       includeBase64: true
     })
-    .then((image) => this.setImage(image))
-    .catch((e) => {
-      console.log('Error taking image', e);
-    });
+      .then((image) => this.setImage(image))
+      .catch((e) => {
+        console.log('Error taking image', e);
+      });
   }
 
   async onBubbleClose(mode: ASSESSMENT_SPEECH_BUBBLE_MODE): Promise<void> {

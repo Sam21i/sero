@@ -1,12 +1,22 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+  TouchableWithoutFeedback,
+  FlatList,
+  Image
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import Question from '../components/Question';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
@@ -43,7 +53,7 @@ class AssessmentArchive extends Component<PropsType, State> {
   }
 
   renderList() {
-    return this.state.prismSessionHistory.map((item) => {
+    return this.state.prismSessionHistory.map((item: PrismSession) => {
       return (
         <TouchableWithoutFeedback
           onPress={() => {
@@ -60,7 +70,7 @@ class AssessmentArchive extends Component<PropsType, State> {
               <Text
                 numberOfLines={1}
                 style={styles.listItemSubtitleText}>
-                {'tbd'}
+                {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
               </Text>
             </View>
             <View style={styles.listItemContentIcon}>
@@ -82,21 +92,69 @@ class AssessmentArchive extends Component<PropsType, State> {
     return filteredModules.length > 1 ? filteredModules : plan.getSecurityPlanModules();
   }
 
-  renderSecurityplan() {
-    let filteredModules = this.state.selectedPrismSession.getSecurityPlanModules().filter((m) => m.entries.length > 0);
-    filteredModules =
-      filteredModules.length > 1 ? filteredModules : this.state.selectedPrismSession.getSecurityPlanModules();
-    return filteredModules.map((module) => {
-      return (
-        <SecurityPlanModuleComponent
-          localesHelper={this.props.localesHelper}
-          key={'key.' + module.title}
-          editable={false}
-          isBeingDragged={false}
-          module={module}
-        />
-      );
-    });
+  renderPrismSession() {
+    let svgImage = this.state.selectedPrismSession?.getSVGImage() || '';
+    let base64Image = this.state.selectedPrismSession?.getBase64Image() || {
+      contentType: '',
+      data: ''
+    };
+
+    return (
+      <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.primary2_60opac,
+            fontFamily: AppFonts.bold,
+            fontSize: scale(TextSize.big)
+          }}>
+          {this.props.localesHelper.localeString('assessment.followUpTitle')}
+        </Text>
+        {svgImage !== '' && (
+          <SvgCss
+            xml={svgImage}
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+          />
+        )}
+        {base64Image.contentType !== '' && (
+          <Image
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+            source={{uri: 'data:' + base64Image.data}}
+          />
+        )}
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.black,
+            fontFamily: AppFonts.bold,
+            fontSize: scale(TextSize.verySmall)
+          }}>
+          {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
+        </Text>
+      </View>
+    );
   }
 
   render() {
@@ -112,7 +170,7 @@ class AssessmentArchive extends Component<PropsType, State> {
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
-                  {this.props.localesHelper.localeString('securityplan.former')}
+                  {this.props.localesHelper.localeString('assessment.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
                   {this.state.selectedPrismSession.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
@@ -128,8 +186,10 @@ class AssessmentArchive extends Component<PropsType, State> {
           )}
           <View style={styles.bottomView}>
             <ScrollView>
-              <View style={{height: 70, width: '100%'}}></View>
-              {this.state.selectedPrismSession ? this.renderSecurityplan() : this.renderList()}
+              <View style={{height: 50, width: '100%'}}></View>
+
+              {this.state.selectedPrismSession ? this.renderPrismSession() : this.renderList()}
+
               <AppButton
                 label={this.props.localesHelper.localeString('common.back')}
                 icon={
@@ -217,6 +277,11 @@ const styles = StyleSheet.create({
     fontSize: scale(TextSize.verySmall),
     color: colors.black,
     maxWidth: scale(150)
+  },
+  image: {
+    width: scale(297 * 0.75),
+    height: scale(210 * 0.75),
+    marginVertical: scale(15)
   },
   icon: {
     flex: 1,
