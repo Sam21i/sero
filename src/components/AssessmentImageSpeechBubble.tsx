@@ -9,32 +9,32 @@ import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-export enum ASSESSMENT_SPEECH_BUBBLE_MODE {
+export enum ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE {
   new = 'NEW',
   select = 'SELECT',
   menu = 'MENU'
 }
 
 const MENU_ACTIONS = [
-  {name: 'selectImage', mode: ASSESSMENT_SPEECH_BUBBLE_MODE.select},
-  {name: 'newImage', mode: ASSESSMENT_SPEECH_BUBBLE_MODE.new}
+  {name: 'selectImage', mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.select},
+  {name: 'newImage', mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new}
 ];
 
-interface AssessmentBubbleProps {
+interface Props {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
-  onClose: (mode: ASSESSMENT_SPEECH_BUBBLE_MODE) => void;
+  onClose: (mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) => void;
 }
 
-interface AssessmentBubbleState {
-  mode: ASSESSMENT_SPEECH_BUBBLE_MODE;
+interface State {
+  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE;
 }
 
-class AssessmentSpeechBubble extends Component<AssessmentBubbleProps, AssessmentBubbleState> {
-  constructor(props: AssessmentBubbleProps) {
+class AssessmentImageSpeechBubble extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      mode: ASSESSMENT_SPEECH_BUBBLE_MODE.menu
+      mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu
     };
   }
 
@@ -56,14 +56,14 @@ class AssessmentSpeechBubble extends Component<AssessmentBubbleProps, Assessment
       <>
         {this.renderBubbleTitle('securityplan.bubbleTitle')}
         <View style={styles.actionList}>
-          {MENU_ACTIONS.map((action) => {
+          {MENU_ACTIONS.map((action, index) => {
             return (
               <TouchableWithoutFeedback
                 onPress={() => this.props.onClose(action.mode)}
-                key={'menu.' + action.name}>
+                key={'menu_' + index}>
                 <View
                   style={styles.actionMenuPoint}
-                  key={'action_' + action.name}>
+                  key={'action_' + index}>
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
                     <Text style={styles.actionText}>
@@ -174,4 +174,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(AssessmentSpeechBubble);
+export default connect(mapStateToProps, undefined)(AssessmentImageSpeechBubble);

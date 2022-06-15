@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, Vie
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import CancelButton from '../resources/images/common/cancel.svg';
 import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
@@ -168,15 +168,15 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
       <>
         {this.renderBubbleTitle('contacts.bubbleTitle')}
         <View style={styles.actionList}>
-          {MENU_ACTIONS.map((action) => {
+          {MENU_ACTIONS.map((action, index) => {
             if (!(!this.props.showImport && action.name === 'importContact')) {
               return (
                 <TouchableWithoutFeedback
                   onPress={() => this.selectMode(action.mode)}
-                  key={'menu.' + action.name}>
+                  key={'menu_' + index}>
                   <View
                     style={styles.actionMenuPoint}
-                    key={'action_' + action.name}>
+                    key={'action_' + index}>
                     <View style={styles.actionBubble}></View>
                     <View style={styles.actionTextWrapper}>
                       <Text style={styles.actionText}>
@@ -237,6 +237,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
             <NativeBaseProvider>
               <View style={styles.formWrapper}>
                 <TouchableOpacity
+                  activeOpacity={activeOpacity}
                   disabled={this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete}
                   onPress={this.pickImage.bind(this)}>
                   {this.renderProfilePictureButton()}
@@ -278,7 +279,9 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                       );
                     })}
                   </View>
-                  <TouchableOpacity onPress={handleSubmit}>
+                  <TouchableOpacity
+                    activeOpacity={activeOpacity}
+                    onPress={handleSubmit}>
                     <View style={styles.formButton}>
                       <Text style={styles.formButtonText}>
                         {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ||

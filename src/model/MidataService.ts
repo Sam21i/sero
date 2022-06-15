@@ -158,7 +158,7 @@ export default class MidataService {
     return Promise.all([
       // fetch Questionnaire (needed for rendering follow-up questions)
       new Promise((resolve, reject) => {
-        console.warn('TODO: implement fetching PRISM questionnaire from (open endpoint?) MIDATA');
+        console.log('TODO: Implement fetching PRISM questionnaire from (open endpoint?) MIDATA');
         
         return resolve(PRISM_QUESTIONNAIRE as Questionnaire);
       }),

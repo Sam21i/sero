@@ -78,7 +78,7 @@ class Main extends Component<PropsType, State> {
           this.props.setPrismSessions(sessions);
         });
       }
-    } catch (error) {
+    } catch (e) {
       console.log(e);
     }
   }

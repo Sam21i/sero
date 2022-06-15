@@ -66,6 +66,8 @@ export const colors = {
   tumbleweed: 'rgb(223, 159, 113)'
 };
 
+export const activeOpacity = 0.5;
+
 // Layout
 export const appLayout = {};
 

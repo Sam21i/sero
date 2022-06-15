@@ -6,7 +6,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LocalesHelper from '../locales';
 import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import AppButton from './AppButton';
 import TrashIcon from '../resources/images/icons/icon_trash.svg';
 import AddIcon from '../resources/images/icons/securityplan/icon_add.svg';
@@ -94,6 +94,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                               style={{backgroundColor: colors.white}}
                             />
                             <TouchableOpacity
+                              activeOpacity={activeOpacity}
                               style={{
                                 borderWidth: 1,
                                 borderColor: colors.veryLightGrey,
