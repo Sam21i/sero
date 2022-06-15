@@ -11,9 +11,11 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
-import AssessmentSpeechBubble, {ASSESSMENT_SPEECH_BUBBLE_MODE} from '../components/AssessmentSpeechBubble';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import PrismSession, {PrismInitializer} from '../model/PrismSession';
+import {PrismInitializer} from '../model/PrismSession';
+import AssessmentImageSpeechBubble, {
+  ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE
+} from '../components/AssessmentImageSpeechBubble';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -26,7 +28,7 @@ interface PropsType {
 
 interface State {
   bubbleVisible: boolean;
-  mode: ASSESSMENT_SPEECH_BUBBLE_MODE;
+  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE;
   new_image?: {
     contentType: string;
     data: string;
@@ -41,7 +43,7 @@ class AssessmentImage extends Component<PropsType, State> {
 
     this.state = {
       bubbleVisible: true,
-      mode: ASSESSMENT_SPEECH_BUBBLE_MODE.menu,
+      mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
       new_image: undefined
     };
   }
@@ -87,21 +89,19 @@ class AssessmentImage extends Component<PropsType, State> {
       });
   }
 
-  async onBubbleClose(mode: ASSESSMENT_SPEECH_BUBBLE_MODE): Promise<void> {
-    const newState = {
-      bubbleVisible: false
-    };
+  async onBubbleClose(mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE): Promise<void> {
     switch (mode) {
-      case ASSESSMENT_SPEECH_BUBBLE_MODE.new:
+      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new:
         this.newImage();
         break;
-      case ASSESSMENT_SPEECH_BUBBLE_MODE.select:
+      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.select:
         this.pickImage();
         break;
       default:
-      // nothing to do here, just close the bubble
+        this.setState({
+          bubbleVisible: false
+        });
     }
-    this.setState(newState);
   }
 
   render() {
@@ -120,7 +120,7 @@ class AssessmentImage extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
-              <AssessmentSpeechBubble
+              <AssessmentImageSpeechBubble
                 localesHelper={this.props.localesHelper}
                 navigation={this.props.navigation}
                 onClose={this.onBubbleClose.bind(this)}
