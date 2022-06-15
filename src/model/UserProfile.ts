@@ -71,7 +71,6 @@ export default class UserProfile {
     this.securityPlanHistory = [];
     this.currentSecurityPlan = new SecurityPlanModel({});
     this.prismSessions = [];
-    RNRestart.Restart();
   }
 
   getFhirId(): string {
