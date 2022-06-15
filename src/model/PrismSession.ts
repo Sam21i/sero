@@ -82,7 +82,7 @@ export interface PrismInitializer {
   blackDiscPosition?: Position;
   canvasWidth: number;
   date?: Date;
-  questionnaire?: Questionnaire;
+  questionnaire: Questionnaire;
   image?: {
     contentType: string,
     data: string
