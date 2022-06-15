@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, Image, ImageBackground, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Resource} from '@i4mi/fhir_r4';
-import PrismSession, {Position, PrismInitializer} from '../model/PrismSession';
+import PrismSession, {PrismInitializer} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -15,9 +15,13 @@ import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
 import Question from '../components/Question';
+import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '../components/AssessmentQuitSpeechBubble';
+import AssessmentEndOptions from './AssessmentEndOptions';
+import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -26,11 +30,13 @@ interface PropsType {
   localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
-  route: {params: {prismData: PrismInitializer}}
+  route: {params: {prismData: PrismInitializer}};
 }
 
 interface State {
   prismSession: PrismSession | undefined;
+  quitBubbleVisible: boolean;
+  endBubbleVisible: boolean;
 }
 
 class AssessmentQuestions extends Component<PropsType, State> {
@@ -38,7 +44,9 @@ class AssessmentQuestions extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      prismSession: new PrismSession(props.route.params.prismData)
+      prismSession: new PrismSession(props.route.params.prismData),
+      quitBubbleVisible: false,
+      endBubbleVisible: false
     };
   }
 
@@ -46,31 +54,9 @@ class AssessmentQuestions extends Component<PropsType, State> {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToPortrait();
     });
-    /** 🛑 das ist eine Test- und Beispielimplementation wie eine PRISM-Session 🛑
-    // erstellt und gespeichert wird
-    const prismSession = new PrismSession({
-      // Position der schwarzen Scheibe am Schluss des Assessments (also wie es abgespeichert wird) - in tatsächlichen Pixel
-      blackDiscPosition: new Position(100, 100),
-      // Angabe wie breit (lange Seite) das Feld auf dem Device dargestellt wird - in tatsächlichen Pixel
-      canvasWidth: 500,
-      // der Questionnaire, der die Folgefragen definiert - TODO: das muss noch so gelöst werden dass es von MIDATA geladen wird, aber fürs erste geht das so
-      questionnaire: PRISM_QUESTIONNAIRE as Questionnaire
-    });
-
-    // hier werden die Fragenobjekte aus dem Questionnaire geholt, die dann auch zum rendern verwendet werden können
-    this.setState({
-      prismSession: prismSession
-    });**/
-
-    // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
   }
 
-
   save() {
-    // 🛑 Test- und Beispielimplementation 🛑
-    // nun ist die Position der Scheibe gesetzt und die Fragen beantwortet
-    // also können wir das Upload-Bundle generieren
-    // dazu brauchen wir noch die User Referenz
     const ref = this.props.userProfile.getFhirReference();
     if (ref && this.state.prismSession) {
       const prismBundle = this.state.prismSession.getUploadBundle(ref);
@@ -83,19 +69,153 @@ class AssessmentQuestions extends Component<PropsType, State> {
     } else {
       console.log('Entweder noch keine User Reference oder Prism Session vorhanden.');
     }
-    // 🛑 hier ist das Ende der Test- und Beispielimplementation 🛑
+    this.props.navigation.navigate('AssessmentSessionStackScreen', {screen: 'AssessmentEndOptions'});
+  }
+
+  cancel() {
+    this.setState({quitBubbleVisible: true});
   }
 
   onChangeText(newText: string, question: IQuestion) {
     this.state.prismSession?.getQuestionnaireData().updateQuestionAnswers(question, {
       answer: {
-        de: newText // hier kann man den Displaystring in der jeweiligen Sprache abspeichern
+        de: newText
       },
       code: {
-        valueString: newText // bei Freitext-Fragen wie wir es hier haben,
-        // ist der code.valueString gleich wie der Displaystring
+        valueString: newText
       }
     });
+  }
+
+  onCloseQuit(mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE) {
+    switch (mode) {
+      case ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.yes:
+        this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
+        break;
+      case ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.no:
+        this.setState({quitBubbleVisible: false});
+        break;
+      default:
+        this.setState({quitBubbleVisible: false});
+    }
+  }
+
+  onCloseEnd(mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE) {
+    switch (mode) {
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.securityplan:
+        this.props.navigation.navigate('SecurityplanStackScreen', {screen: 'SecurityplanCurrent'});
+        break;
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.mainPage:
+        this.props.navigation.navigate('Main');
+        break;
+      case ASSESSMENT_END_SPEECH_BUBBLE_MODE.emergencyContact:
+        break;
+      default:
+        this.setState({endBubbleVisible: false});
+    }
+  }
+
+  renderHeader() {
+    let svgImage = '';
+    let base64Image = {
+      contentType: '',
+      data: ''
+    };
+    try {
+      base64Image = this.state.prismSession?.getBase64Image() || base64Image;
+    } catch (e) {}
+    try {
+      svgImage = this.state.prismSession?.getSVGImage() || '';
+    } catch (e) {}
+    return (
+      <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+        <View style={{height: verticalScale(55)}}></View>
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.primary2_60opac,
+            fontFamily: AppFonts.bold,
+            fontSize: scale(TextSize.big)
+          }}>
+          {this.props.localesHelper.localeString('assessment.followUpTitle')}
+        </Text>
+
+        {svgImage !== '' && (
+          <SvgCss
+            xml={svgImage}
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+          />
+        )}
+        {base64Image.contentType !== '' && (
+          <Image
+            style={[
+              styles.image,
+              {
+                shadowColor: colors.black,
+                shadowOffset: {
+                  width: scale(5),
+                  height: scale(5)
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: scale(5)
+              }
+            ]}
+            source={{uri: 'data:' + base64Image.data}}
+          />
+        )}
+        <Text
+          style={{
+            paddingBottom: scale(10),
+            color: colors.black,
+            fontFamily: AppFonts.medium,
+            fontSize: scale(TextSize.small)
+          }}>
+          {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
+        </Text>
+      </View>
+    );
+  }
+
+  renderFooter() {
+    return (
+      <View style={{position: 'relative', right: -scale(20), marginVertical: scale(20)}}>
+        {[
+          {
+            label: 'common.save',
+            color: colors.gold,
+            icon: '<?xml version="1.0" encoding="iso-8859-1"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 305.002 305.002" style="enable-background:new 0 0 305.002 305.002;" xml:space="preserve"> <g> <g> <path fill="#FFFFFF" d="M152.502,0.001C68.412,0.001,0,68.412,0,152.501s68.412,152.5,152.502,152.5c84.089,0,152.5-68.411,152.5-152.5 S236.591,0.001,152.502,0.001z M152.502,280.001C82.197,280.001,25,222.806,25,152.501c0-70.304,57.197-127.5,127.502-127.5 c70.304,0,127.5,57.196,127.5,127.5C280.002,222.806,222.806,280.001,152.502,280.001z"/> <path fill="#FFFFFF" d="M218.473,93.97l-90.546,90.547l-41.398-41.398c-4.882-4.881-12.796-4.881-17.678,0c-4.881,4.882-4.881,12.796,0,17.678 l50.237,50.237c2.441,2.44,5.64,3.661,8.839,3.661c3.199,0,6.398-1.221,8.839-3.661l99.385-99.385 c4.881-4.882,4.881-12.796,0-17.678C231.269,89.089,223.354,89.089,218.473,93.97z"/> </g> </g></svg>',
+            onPress: this.save.bind(this)
+          },
+          {
+            label: 'common.cancel',
+            color: colors.grey,
+            icon: '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"><defs><style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style><clipPath id="clip-path" transform="translate(0 0)"><path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5"/></clipPath><clipPath id="clip-path-2" transform="translate(0 0)"><rect class="cls-1" width="37.5" height="37.5"/></clipPath></defs><g class="cls-2"><line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25"/><line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25"/></g><g class="cls-4"><circle class="cls-3" cx="18.75" cy="18.75" r="17.5"/></g></svg>',
+            onPress: this.cancel.bind(this)
+          }
+        ].map((button, index) => (
+          <AppButton
+            key={'appButton_' + index}
+            label={this.props.localesHelper.localeString(button.label)}
+            position='right'
+            icon={button.icon}
+            color={button.color}
+            onPress={button.onPress}
+            style={styles.button}
+          />
+        ))}
+      </View>
+    );
   }
 
   render() {
@@ -108,107 +228,58 @@ class AssessmentQuestions extends Component<PropsType, State> {
       <SafeAreaView
         style={styles.container}
         edges={['top']}>
-        <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
-          resizeMode='cover'
-          style={styles.backgroundImage}>
-          <View style={styles.topView}>
-            <View style={styles.topTextView}>
-              <Text style={styles.topViewTextTitle}>
-                {this.props.localesHelper.localeString('assessment.addEntry')}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.bottomView}>
-            <ScrollView>
-              {/* View for PRISM-Image and Description */}
-              <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-                <View style={{height: verticalScale(55)}}></View>
-                <Text
-                  style={{
-                    paddingBottom: scale(10),
-                    color: colors.primary2_60opac,
-                    fontFamily: AppFonts.bold,
-                    fontSize: scale(TextSize.big)
-                  }}>
-                  {this.props.localesHelper.localeString('assessment.followUpTitle')}
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ImageBackground
+            source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+            resizeMode='cover'
+            style={styles.backgroundImage}>
+            <View style={styles.topView}>
+              <View style={styles.topTextView}>
+                <Text style={styles.topViewTextTitle}>
+                  {this.props.localesHelper.localeString('assessment.addEntry')}
                 </Text>
-                { svgImage !== '' && 
-                  <SvgCss
-                    xml={svgImage}
-                    style={[
-                      styles.image,
-                      {
-                        shadowColor: colors.black,
-                        shadowOffset: {
-                          width: scale(5),
-                          height: scale(5)
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: scale(5)
-                      }
-                    ]}
-                  />
-                }
-                { base64Image.contentType !== '' &&
-                            <Image
-                              style={[
-                                styles.image,
-                                {
-                                  shadowColor: colors.black,
-                                  shadowOffset: {
-                                    width: scale(5),
-                                    height: scale(5)
-                                  },
-                                  shadowOpacity: 0.25,
-                                  shadowRadius: scale(5)
-                                }
-                              ]}
-                              source={{uri: 'data:' + base64Image.data}}
-                          />
-                          }
-                <Text
-                  style={{
-                    paddingBottom: scale(10),
-                    color: colors.black,
-                    fontFamily: AppFonts.bold,
-                    fontSize: scale(TextSize.verySmall)
-                  }}>
-                  {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
-                </Text>
-
-                {this.state.prismSession && (
-                  <View>
-                    <FlatList
-                      scrollEnabled={false}
-                      data={this.state.prismSession.getQuestionnaireData().getQuestions()}
-                      renderItem={(listElement) => (
-                        <Question
-                          question={listElement.item}
-                          onChangeText={this.onChangeText}></Question>
-                      )}
-                      keyExtractor={(item) => item.id}
-                      ListFooterComponent={
-                        <View style={{marginBottom: 20, backgroundColor: '#f5f5f5'}}>
-                          <Text
-                            onPress={() => {
-                              this.save.bind(this);
-                              this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
-                            }}>
-                            [speichern]
-                          </Text>
-                        </View>
-                      }
-                    />
-                  </View>
-                )}
               </View>
-            </ScrollView>
-          </View>
-          <View style={styles.emergencyButton}>
-            <EmergencyNumberButton />
-          </View>
-        </ImageBackground>
+            </View>
+            <View style={styles.bottomView}>
+              {!this.state.quitBubbleVisible && (
+                <KeyboardAwareFlatList
+                  extraScrollHeight={verticalScale(50)}
+                  ListHeaderComponent={this.renderHeader.bind(this)}
+                  data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
+                  renderItem={(listElement) => (
+                    <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                      <Question
+                        question={listElement.item}
+                        onChangeText={this.onChangeText.bind(this)}
+                      />
+                    </View>
+                  )}
+                  keyExtractor={(item) => item.id}
+                  ListFooterComponent={this.renderFooter.bind(this)}
+                />
+              )}
+              {this.state.quitBubbleVisible && (
+                <AssessmentQuitSpeechBubble
+                  navigation={this.props.navigation}
+                  localesHelper={this.props.localesHelper}
+                  onClose={this.onCloseQuit.bind(this)}
+                />
+              )}
+              {this.state.endBubbleVisible && (
+                <AssessmentEndOptions
+                  navigation={this.props.navigation}
+                  localesHelper={this.props.localesHelper}
+                  onClose={this.onCloseEnd.bind(this)}
+                />
+              )}
+            </View>
+            <View style={styles.emergencyButton}>
+              <EmergencyNumberButton />
+            </View>
+          </ImageBackground>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -217,7 +288,9 @@ class AssessmentQuestions extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    minHeight: scale(81),
+    maxHeight: scale(81)
   },
   topTextView: {
     flex: 1,
@@ -266,6 +339,11 @@ const styles = StyleSheet.create({
   listItemContentIcon: {
     flex: 1,
     margin: 10
+  },
+  button: {
+    height: scale(50),
+    width: scale(225),
+    marginBottom: scale(20)
   }
 });
 

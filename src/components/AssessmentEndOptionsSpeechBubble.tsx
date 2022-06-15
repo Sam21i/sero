@@ -9,43 +9,49 @@ import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-export enum SECURITYPLAN_SPEECH_BUBBLE_MODE {
-  edit = 'EDIT',
-  new = 'NEW',
+export enum ASSESSMENT_END_SPEECH_BUBBLE_MODE {
+  securityplan = 'SECURITYPLAN',
+  mainPage = 'MAINPAGE',
+  emergencyContact = 'EMREGENCYCONTACT',
   menu = 'MENU'
 }
 
 const MENU_ACTIONS = [
-  {name: 'editSecurityplan', mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.edit},
-  {name: 'newSecurityplan', mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.new}
+  {name: 'goTosecurityplan', mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE.securityplan},
+  {name: 'goToMainPage', mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE.mainPage},
+  {name: 'goToEmergencyContact', mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE.emergencyContact}
 ];
 
-interface SecurityplanBubbleProps {
+interface Props {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
-  onClose: (mode: SECURITYPLAN_SPEECH_BUBBLE_MODE) => void;
+  onClose: (mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE) => void;
 }
 
-interface SecurityplanSpeechBubbleState {
-  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE;
+interface State {
+  mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE;
 }
 
-class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, SecurityplanSpeechBubbleState> {
-  constructor(props: SecurityplanBubbleProps) {
+class AssessmentEndOptionsSpeechBubble extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu
+      mode: ASSESSMENT_END_SPEECH_BUBBLE_MODE.menu
     };
   }
 
   renderBubbleTitle(_translateString: string) {
     return (
       <View style={styles.titleBar}>
-        <Text style={styles.titlebarText}>{this.props.localesHelper.localeString(_translateString)}</Text>
+        <Text
+          numberOfLines={2}
+          style={styles.titlebarText}>
+          {this.props.localesHelper.localeString(_translateString)}
+        </Text>
         <CancelButton
           width={scale(35)}
           height={scale(35)}
-          onPress={() => this.props.onClose(this.state.mode)}
+          onPress={() => this.props.navigation.navigate('AssessmentQuestions')}
         />
       </View>
     );
@@ -54,7 +60,7 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
   renderMenu() {
     return (
       <>
-        {this.renderBubbleTitle('securityplan.bubbleTitle')}
+        {this.renderBubbleTitle('assessment.bubbleTitle')}
         <View style={styles.actionList}>
           {MENU_ACTIONS.map((action, index) => {
             return (
@@ -67,7 +73,7 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
                     <Text style={styles.actionText}>
-                      {this.props.localesHelper.localeString('securityplan.' + action.name)}
+                      {this.props.localesHelper.localeString('assessment.' + action.name)}
                     </Text>
                   </View>
                 </View>
@@ -103,6 +109,9 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
       <SpeechBubble
         bubbleContent={this.renderMenu()}
         stylingOptions={{
+          bubble: {
+            padding: 20
+          },
           general: {
             position: {
               top: 100,
@@ -174,4 +183,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(SecurityplanSpeechBubble);
+export default connect(mapStateToProps, undefined)(AssessmentEndOptionsSpeechBubble);
