@@ -99,24 +99,11 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   render() {
-    let svgImage = '';
-    let base64Image = {
+    let svgImage = this.state.prismSession?.getSVGImage() || '';
+    let base64Image = this.state.prismSession?.getBase64Image() || {
       contentType: '',
       data: ''
     };
-    try {
-      base64Image = this.state.prismSession?.getBase64Image() || base64Image;
-    }
-    catch (e) {
-      console.log(e);
-    }
-    try {
-      svgImage = this.state.prismSession?.getSVGImage() || '';
-    } 
-    catch (e) {
-      console.log(e);
-    }
-
     return (
       <SafeAreaView
         style={styles.container}

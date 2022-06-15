@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Resource} from '@i4mi/fhir_r4';
-import PrismSession from '../model/PrismSession';
+import PrismSession, { Position, PrismInitializer } from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -94,7 +94,15 @@ class AssessmentBoard extends Component<PropsType, State> {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('AssessmentQuestions');
+                this.props.navigation.navigate(
+                  'AssessmentQuestions',
+                  { prismData: {
+                      blackDiscPosition: new Position(400,100),
+                      canvasWidth: 800,
+                      questionnaire: this.props.midataService.getPrismQuestionnaire(),
+                    } as PrismInitializer
+                  }
+                );
               }}
               activeOpacity={0.5}
               style={styles.button}>
