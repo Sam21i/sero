@@ -39,7 +39,7 @@ export default class SecurityPlanModel {
       // create new security plan
       this.fhirResource = JSON.parse(EMPTY_SECURITY_PLAN) as CarePlan;
       this.fhirResource.created = new Date().toISOString();
-      this.fhirResource.id = uuid();
+      this.fhirResource.id = 'emptyPlan';
     } else {
       // is Partial<SecurityPlanModel>
       Object.assign(this, _data);
@@ -235,6 +235,7 @@ export default class SecurityPlanModel {
    * @param _modules the input modules
    */
   private setModulesOnFhir(_modules: SecurityPlanModule[]): void {
+    if (this.fhirResource.id === 'emptyPlan') this.fhirResource.id = uuid();
     this.fhirResource.contained = _modules.map((module, index) => {
       return {
         resourceType: 'CarePlan',

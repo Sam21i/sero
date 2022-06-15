@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: colors.primary,
     height: scale(60),
-    width: scale(70),
+    width: scale(75),
     borderBottomRightRadius: scale(30),
     borderTopRightRadius: scale(30)
   },
