@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {PanResponder, StyleSheet, Text, View, Animated} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -28,6 +28,41 @@ interface PropsType {
 interface State {}
 
 class AssessmentBoard extends Component<PropsType, State> {
+  pan = new Animated.ValueXY();
+  panResponder = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: () => {
+      this.pan.setOffset({
+        x: this.pan.x._value,
+        y: this.pan.y._value
+      });
+    },
+    onPanResponderMove: (evt, gestureState) => {
+      let newdx = gestureState.dx,
+        newdy = gestureState.dy;
+
+      Animated.event(
+        [
+          null,
+          {
+            dx: this.pan.x,
+            dy: this.pan.y
+          }
+        ],
+        {useNativeDriver: false}
+      )(evt, {dx: newdx, dy: newdy});
+    },
+    onPanResponderRelease: (e, gestureState) => {
+      this.pan.flattenOffset();
+      if (gestureState.moveY < 45 || gestureState.moveY > 360 || gestureState.moveX < 300 || gestureState.moveX > 800) {
+        Animated.spring(
+          this.pan, // Auto-multiplexed
+          {toValue: {x: 0, y: 0}} // Back to zero
+        ).start();
+      }
+    }
+  });
+
   constructor(props: PropsType) {
     super(props);
   }
@@ -102,7 +137,16 @@ class AssessmentBoard extends Component<PropsType, State> {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{aspectRatio: Math.sqrt(2) / 1, maxHeight: windowWidth, backgroundColor: 'white'}}></View>
+        <View style={{aspectRatio: Math.sqrt(2) / 1, maxHeight: windowWidth, backgroundColor: 'white'}}>
+          <View style={styles.targetCircle} />
+          <Animated.View
+            style={{
+              transform: [{translateX: this.pan.x}, {translateY: this.pan.y}]
+            }}
+            {...this.panResponder.panHandlers}>
+            <View style={styles.draggableCircle} />
+          </Animated.View>
+        </View>
       </SafeAreaView>
     );
   }
@@ -124,6 +168,23 @@ const styles = StyleSheet.create({
     fontSize: TextSize.verySmall,
     fontFamily: AppFonts.medium,
     color: colors.white
+  },
+  draggableCircle: {
+    height: 80,
+    width: 80,
+    backgroundColor: '#000',
+    borderRadius: 100,
+    left: -120,
+    top: 80
+  },
+  targetCircle: {
+    height: 100,
+    width: 100,
+    backgroundColor: '#FAB30D',
+    borderRadius: 100,
+    position: 'absolute',
+    right: 10,
+    bottom: 10
   }
 });
 
