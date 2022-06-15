@@ -7,6 +7,7 @@ const PRISM_WIDTH = 29.4;                     // width of the real PRISM-S plate
 const SVG_WIDTH = 500;                        // width of the generated SVG image in pixel 
 const PRISM_BLACK = '#000000';                // colour of the black disc
 const PRISM_YELLOW = '#fbb300';               // colour of the yellow circle
+const PRISM_PLATE = '#FFFFFF';
 const PRISM_YELLOW_RADIUS_RATIO = 0.2381 / 2; // diameter of yellow circle is 23.81% of plate width
 const PRISM_BLACK_RADIUS_RATIO = 0.1701 / 2;  // diameter of black plate is 17,01% of plate width
 const YELLOW_DISC_MARGIN_RATIO = 0.068;       // distance of the yellow circle to bottom / right is 6.8% of plate width
@@ -232,15 +233,15 @@ export default class PrismSession {
 
   /**
    * Gets the PRISM-S board as a SVG image string
-   * @returns   the SVG as a string (NOT base64 encoded)
-   * @throws    an Error if there is no image available or type is not SVG
+   * @returns   the SVG as a string (NOT base64 encoded) or an empty string
+   *            if no SVG image is available
    */
   getSVGImage(): string {
     if (this.image && !this.image.contentType.includes('svg')) {
-      throw new Error('Available image is not SVG');
+      return '';
     }
     if (!this.image) {
-      const svgString = this.drawSVG(this.blackDiscPosition, this.yellowCirclePosition, this.canvasWidth)
+      const svgString = this.drawSVG(this.blackDiscPosition, this.yellowCirclePosition, SVG_WIDTH)
       this.image = {
         contentType: 'image/svg+xml',
         data: base64.encode(svgString)
@@ -254,14 +255,14 @@ export default class PrismSession {
    * Gets the PRISM-S board as a base64 encoded string
    * @returns   an object containing contentType (as string) 
    *            and the actual image data (as base64 encoded string)
-   * @throws    an Error if there is no image available or only an image of type SVG
+   *            or contentType and data as empty strings if no base64 image is available
    */
   getBase64Image(): {contentType: string, data: string} {
-    if (!this.image) {
-      throw new Error('No image available.');
-    }
-    if (this.image.contentType.includes('svg')) {
-      throw new Error('Available image is SVG, use getSVGImage() instead.');
+    if (!this.image || this.image.contentType.includes('svg')) {
+      return {
+        contentType: '',
+        data: ''
+      };
     }
     return this.image;
   }
@@ -454,19 +455,22 @@ export default class PrismSession {
       (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
       (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
     ) throw new Error('Invalid parameters, at least one position is outside the canvas.');
-    // TODO: something here is not quite right when RATIO is not 1
-    const image = '<svg width="' + CANVAS_WIDTH + '" height="' + CANVAS_HEIGHT + '" xmlns="http://www.w3.org/2000/svg">\n  <g>\n    ' + 
-      '<ellipse id="yellowCircle" ' + 
-                'ry="' + YELLOW_RADIUS + '" ' + 
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<svg id="prism_board" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + CANVAS_WIDTH + ' ' + CANVAS_HEIGHT + '">\n  <g>\n    ' + 
+      '<rect id="plate" ' + 
+                'fill="' + PRISM_PLATE + '" ' + 
+                'width="' + CANVAS_WIDTH + '" ' + 
+                'height="' + CANVAS_HEIGHT + '"/>\n    ' + 
+      '<circle id="yellowCircle" ' + 
+                'r="' + YELLOW_RADIUS + '" ' + 
                 'cy="' + (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO + '" ' + 
                 'cx="' + (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO + '" ' +
                 'fill="' + PRISM_YELLOW + '"/>\n    ' + 
-      '<ellipse id="blackDisc" ' + 
-                'ry="' + BLACK_RADIUS + '" ' +
+      '<circle id="blackDisc" ' + 
+                'r="' + BLACK_RADIUS + '" ' +
                 'cy="' + (blackDiscPos.vertical + BLACK_RADIUS) * RATIO + '" ' +
                 'cx="' + (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO + '" ' +
                 'fill="' + PRISM_BLACK + '"/>\n  ' + 
       '</g>\n</svg>';
-    return image;
   }
 }

@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Resource} from '@i4mi/fhir_r4';
-import PrismSession from '../model/PrismSession';
+import PrismSession, { Position, PrismInitializer } from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import {connect} from 'react-redux';
 import {AppStore} from '../store/reducers';
@@ -12,7 +12,7 @@ import LocalesHelper from '../locales';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
-import {AppFonts, colors, scale, TextSize, windowHeight, windowWidth} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize, windowHeight, windowWidth} from '../styles/App.style';
 import {SvgCss} from 'react-native-svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -110,10 +110,10 @@ class AssessmentBoard extends Component<PropsType, State> {
   _renderActionButton(item) {
     return (
       <TouchableOpacity
+        activeOpacity={activeOpacity}
         onPress={() => {
           this.props.navigation.navigate(item.navigateTo);
         }}
-        activeOpacity={0.5}
         style={styles.button}>
         <Text style={styles.buttonText}>{item.name}</Text>
       </TouchableOpacity>
@@ -151,29 +151,37 @@ class AssessmentBoard extends Component<PropsType, State> {
           </View>
           <View style={{flex: 1, backgroundColor: colors.gold50opac}}>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
                 this.props.navigation.navigate('AssessmentImage');
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Foto'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
                 this.props.navigation.navigate('AssessmentStackScreen', {
                   screen: 'AssessmentIntroStackScreen',
                   params: {screen: 'AssessmentIntroTutorial'}
                 });
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Anleitung'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
+              activeOpacity={activeOpacity}
               onPress={() => {
-                this.props.navigation.navigate('AssessmentQuestions');
+                this.props.navigation.navigate(
+                  'AssessmentQuestions',
+                  { prismData: {
+                      blackDiscPosition: new Position(400,100),
+                      canvasWidth: 800,
+                      questionnaire: this.props.midataService.getPrismQuestionnaire(),
+                    } as PrismInitializer
+                  }
+                );
               }}
-              activeOpacity={0.5}
               style={styles.button}>
               <Text style={styles.buttonText}>{'Speichern'}</Text>
             </TouchableOpacity>

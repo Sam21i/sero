@@ -29,6 +29,8 @@ import {colors} from '../styles/App.style';
 import Onboarding from './Onboarding';
 import AssessmentImage from './AssessmentImage';
 import Information from './Information';
+import AssessmentEndOptions from './AssessmentEndOptions';
+import AssessmentContacts from './AssessmentContacts';
 
 interface PropsType {}
 
@@ -225,6 +227,22 @@ function AssessmentSessionStackScreen({route}: {route: any}) {
       <AssessmentSessionStack.Screen
         name='AssessmentImage'
         component={AssessmentImage}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+      <AssessmentSessionStack.Screen
+        name='AssessmentEndOptions'
+        component={AssessmentEndOptions}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+      <AssessmentSessionStack.Screen
+        name='AssessmentContacts'
+        component={AssessmentContacts}
         options={{
           headerShown: false,
           animationEnabled: false

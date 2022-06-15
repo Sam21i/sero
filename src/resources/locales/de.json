@@ -13,7 +13,9 @@
     "phone": "Telefon",
     "save": "Speichern",
     "search": "Suchen",
-    "start": "Starten"
+    "start": "Starten",
+    "yes": "Ja",
+    "no": "Nein"
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -83,7 +85,12 @@
     "selectImage": "Foto aus Bibliothek auswählen",
     "newImage": "Neues Foto aufnehmen",
     "followUpTitle": "Folgefragen",
-    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich dsa Leben zu nehmen) an.",
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
+    "cancelQuestion": "Willst du wirklich abbrechen?",
+    "goTosecurityplan": "Sicherheitsplan einsehen",
+    "goToMainPage": "Zur Übersichtsseite gehen",
+    "goToEmergencyContact": "Jemanden anrufen",
+    "bubbleTitle": "Was möchtest du tun?",
     "resources": {
       "intro": {
         "title": "Was ist PRISM-S?",
@@ -107,6 +114,7 @@
         "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang."
       }
     }
+    
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",

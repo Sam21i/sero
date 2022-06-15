@@ -7,7 +7,7 @@ import {STORAGE} from './App';
 import {StackNavigationProp} from '@react-navigation/stack';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
@@ -137,6 +137,7 @@ class Onboarding extends Component<PropsType, State> {
           {ON_BOARDING_ITEMS.length > 1 &&
             ON_BOARDING_ITEMS.map((_, i) => (
               <TouchableOpacity
+                activeOpacity={activeOpacity}
                 key={i}
                 style={[styles.dot, i === activeIndex ? {backgroundColor: colors.grey} : {backgroundColor: 'white'}]}
                 onPress={() => this.slider?.goToSlide(i, true)}
