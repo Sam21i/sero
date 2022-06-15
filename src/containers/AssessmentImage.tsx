@@ -56,7 +56,7 @@ class AssessmentImage extends Component<PropsType, State> {
         questionnaire: this.props.midataService.getPrismQuestionnaire(),
         image: {
           contentType: type || '',
-          data: type + ';base64,' + image.assets[0].base64 || ''
+          data: image.assets[0].base64 || ''
         }
       };
       this.props.navigation.navigate('AssessmentQuestions', {prismData: prismData});

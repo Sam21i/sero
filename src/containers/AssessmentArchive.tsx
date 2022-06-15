@@ -141,7 +141,7 @@ class AssessmentArchive extends Component<PropsType, State> {
                 shadowRadius: scale(5)
               }
             ]}
-            source={{uri: 'data:' + base64Image.data}}
+            source={{uri: 'data:' + base64Image.contentType + ';base64,' + base64Image.data}}
           />
         )}
         <Text
