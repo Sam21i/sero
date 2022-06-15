@@ -47,7 +47,6 @@ class AssessmentBoard extends Component<PropsType, State> {
     onPanResponderMove: (evt, gestureState) => {
       let newdx = gestureState.dx,
         newdy = gestureState.dy;
-
       Animated.event(
         [
           null,
@@ -61,13 +60,29 @@ class AssessmentBoard extends Component<PropsType, State> {
     },
     onPanResponderRelease: (e, gestureState) => {
       this.pan.flattenOffset();
-
-      if (gestureState.moveY < 45 || gestureState.moveY > 350 || gestureState.moveX < 330 || gestureState.moveX > 800) {
-        Animated.spring(
-          this.pan, // Auto-multiplexed
-          {useNativeDriver: false, toValue: {x: 0, y: 0}} // Back to zero
-        ).start();
+      let newx = this.pan.x._value;
+      let newy = this.pan.y._value;
+      if (this.pan.y._value < -90) {
+        newy = -70;
       }
+      if (this.pan.y._value > 220) {
+        newy = 210;
+      }
+      if (this.pan.x._value < 110) {
+        newx = 130;
+      }
+      if (this.pan.x._value > 590) {
+        newx = 580;
+      }
+      if (this.pan.x._value < 110 && this.pan.y._value < 100) {
+        newx = 0;
+        newy = 0;
+      }
+      Animated.spring(
+        this.pan, // Auto-multiplexed
+        {useNativeDriver: false, toValue: {x: newx, y: newy}, bounciness: 1} // Back to zero
+      ).start();
+
       Animated.timing(this.touchabelCirlceSize, {
         useNativeDriver: false,
         toValue: 80,
