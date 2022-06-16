@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     marginBottom: scale(20),
-    marginRight: scale(90),
+    marginRight: scale(80),
     backgroundColor: colors.grey,
     height: scale(80),
     borderTopRightRadius: scale(80),
