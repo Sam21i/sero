@@ -17,6 +17,7 @@ import AppButton from '../components/AppButton';
 import {colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan} from '@i4mi/fhir_r4';
 import {PrismResources} from '../model/PrismSession';
+import Orientation from "react-native-orientation-locker";
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -46,6 +47,7 @@ class Main extends Component<PropsType, State> {
       this.loadPrismSessions();
       this.props.uploadPendingResources();
     }
+    Orientation.lockToPortrait();
   }
 
   editContacts(): void {
@@ -79,7 +81,7 @@ class Main extends Component<PropsType, State> {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.log(error);
     }
   }
 
