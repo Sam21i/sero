@@ -50,7 +50,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           <View style={styles.listItem}>
             <View style={styles.listItemContent}>
               <Text
-                numberOfLines={1}
+                numberOfLines={2}
                 style={styles.listItemTitleText}>
                 {this.props.localesHelper.localeString('securityplan.former')}
               </Text>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   listItemTitleText: {
-    marginTop: 1 * verticalScale(TextSize.verySmall),
+    marginTop: 0.5 * verticalScale(TextSize.verySmall),
     marginLeft: 2 * scale(TextSize.verySmall),
     fontFamily: AppFonts.medium,
     fontSize: scale(TextSize.small),
