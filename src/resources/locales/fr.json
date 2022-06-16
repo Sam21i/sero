@@ -1,4 +1,48 @@
 {
+  "assessment": {
+    "addEntry": "Ajouter une nouvelle entrée",
+    "assessmentFollowUpHint": "Observe maintenant la distance entre le point jaune (toi-même) et le disque noir (l'envie de se suicider).",
+    "bubbleTitle": "Que veux-tu faire?",
+    "cancelQuestion": "Tu veux vraiment annuler?",
+    "defaultHint": "Comment te sens-tu en ce moment ?",
+    "followUpTitle": "Questions de suivi",
+    "former": "Évaluation précédente",
+    "goToEmergencyContact": "Appeler quelqu'un",
+    "goToMainPage": "Aller à la page d'aperçu",
+    "goTosecurityplan": "Consulter le plan de sécurité",
+    "image": "Photo",
+    "newImage": "Prendre une nouvelle photo",
+    "permissionAndroid": {
+      "message": "",
+      "title": "\"SERO\" désire accéder à la caméra"
+    },
+    "resources": {
+      "intro": {
+        "description": "PRISM-S te permet d'évaluer l'intensité de ton envie de mettre fin à tes jours.",
+        "explanation": {
+          "item1": "La surface blanche représente ta vie ou ton espace vital.",
+          "item2": "Le point jaune, c'est toi dans ta vie.",
+          "item3": "Le disque noir représente ton envie actuelle de mettre fin à tes jours."
+        },
+        "title": "Qu'est-ce que PRISM-S ?"
+      },
+      "tutorial": {
+        "description": "Place le disque noir dans ton espace vital (surface blanche).",
+        "distance": "Plus la distance est grande, plus l'envie de se suicider est faible. Plus la distance est courte, plus l'envie de se suicider est grande.",
+        "questions": {
+          "hint": "Pose-toi les questions:",
+          "questionList": {
+            "item1": "Quelle place occupe actuellement dans ma vie mon envie de mettre fin à mes jours?",
+            "item2": "À quelle distance de moi (point jaune) se trouve cette pulsion en ce moment ?"
+          }
+        },
+        "title": "Instructions"
+      }
+    },
+    "selectImage": "Sélectionner une photo dans la bibliothèque",
+    "title": "Mon évaluation",
+    "tutorial": "Instructions"
+  },
   "common": {
     "archive": "Archives",
     "back": "Retour",
@@ -8,11 +52,14 @@
     "given": "Prénom",
     "loading": "Chargement des données",
     "next": "Suivant",
+    "no": "Non",
     "ok": "OK",
     "options": "Options",
     "phone": "Téléphone",
     "save": "Enregistrer",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "start": "Commencer",
+    "yes": "Oui"
   },
   "contacts": {
     "addContact": "Ajouter un contact",
@@ -34,6 +81,10 @@
       }
     },
     "importContact": "Importer un contact",
+    "permissionAndroid": {
+      "message": "L'accès aux contacts te permet d'importer les numéros de téléphone des personnes importantes dans l'application SERO et de pouvoir les appeler directement.",
+      "title": "\"SERO\" désire accéder à tes contacts"
+    },
     "selectContact": "Choisir un contact",
     "title": "Mes contacts"
   },
@@ -43,9 +94,10 @@
   "main": {
     "callEmergencyBottom": "urgences",
     "callEmergencyTop": "Appeler",
-    "default": "Découvre l'application SERO!\nC'est parti...",
+    "default": "Découvre l'application SERO! C'est parti...",
     "greeting": "Salut {{name}}",
-    "myEnvironmentTitle": "Appeler mes contacts"
+    "myEnvironmentTitle": "Appeler mes contacts",
+    "securityplanUpdated": "Ton plan de sécurité est-il toujours d'actualité?"
   },
   "onboarding": {
     "assessment": {
@@ -69,9 +121,6 @@
       "title": "Mon plan de sécurité"
     }
   },
-  "prismS": {
-    "title": "Mon\névaluation"
-  },
   "securityplan": {
     "addEntry": "Ajouter une entrée",
     "alertLups": {
@@ -83,6 +132,10 @@
     "defaultHint": "Ici, tu peux accéder à ton plan de sécurité actuel et le modifier, ainsi que consulter les précédents.",
     "editHint": "Tu peux réorganiser les sections en les faisant glisser vers un autre endroit de la liste.\nEn cliquant sur le crayon, tu peux modifier leur contenu.",
     "editSecurityplan": "Modifier le plan de sécurité",
+    "examples": {
+      "copingStrategies": "p. ex. dessiner, faire des exercices de relaxation, cuisiner, écouter de la musique, etc.",
+      "distractionStrategies": "p. ex. rencontrer des amis, se promener en forêt, aller au cinéma, faire du vélo, etc."
+    },
     "former": "Plan de sécurité précédent",
     "newSecurityplan": "Créer un nouveau plan de sécurité",
     "notification": {
@@ -100,7 +153,6 @@
   },
   "welcome": {
     "greetingText": "C'est bien que tu sois là!",
-    "start": "Commencer",
     "title": "Bienvenue."
   }
 }

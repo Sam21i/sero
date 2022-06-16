@@ -1,4 +1,48 @@
 {
+  "assessment": {
+    "addEntry": "Neuen Eintrag hinzufügen",
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
+    "bubbleTitle": "Was möchtest du tun?",
+    "cancelQuestion": "Willst du wirklich abbrechen?",
+    "defaultHint": "Wie fühlst du dich in diesem Moment?",
+    "followUpTitle": "Folgefragen",
+    "former": "Frühere Einschätzung",
+    "goToEmergencyContact": "Jemanden anrufen",
+    "goToMainPage": "Zur Übersichtsseite gehen",
+    "goTosecurityplan": "Sicherheitsplan einsehen",
+    "image": "Foto",
+    "newImage": "Neues Foto aufnehmen",
+    "permissionAndroid": {
+      "message": "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern.",
+      "title": "\"SERO\" möchte auf die Kamera zugreifen"
+    },
+    "resources": {
+      "intro": {
+        "description": "Mit PRISM-S kannst du einschätzen, wie stark dein Drang ist, dir das Leben zu nehmen.",
+        "explanation": {
+          "item1": "Die weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar.",
+          "item2": "Der gelbe Punkt bist du in deinem Leben.",
+          "item3": "Die schwarze Scheibe steht für deinen momentanen Drang, dir das Leben zu nehmen."
+        },
+        "title": "Was ist PRISM-S?"
+      },
+      "tutorial": {
+        "description": "Platziere die schwarze Scheibe in deinem Lebensraum (weisse Fläche).",
+        "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang.",
+        "questions": {
+          "hint": "Stelle dir dabei die Fragen:",
+          "questionList": {
+            "item1": "Welchen Platz in meinern Leben nimmt zurzeit mein Drang ein, mir das Leben zu nehmen?",
+            "item2": "Wie nah oder wie weit weg von mir (gelber Punkt) ist dieser Drang im Moment?"
+          }
+        },
+        "title": "Anleitung"
+      }
+    },
+    "selectImage": "Foto aus Bibliothek auswählen",
+    "title": "Meine Einschätzung",
+    "tutorial": "Anleitung"
+  },
   "common": {
     "archive": "Archiv",
     "back": "Zurück",
@@ -8,14 +52,14 @@
     "given": "Vorname",
     "loading": "Daten werden geladen",
     "next": "Weiter",
+    "no": "Nein",
     "ok": "OK",
     "options": "Optionen",
     "phone": "Telefon",
     "save": "Speichern",
     "search": "Suchen",
     "start": "Starten",
-    "yes": "Ja",
-    "no": "Nein"
+    "yes": "Ja"
   },
   "contacts": {
     "addContact": "Kontakt hinzufügen",
@@ -37,12 +81,12 @@
       }
     },
     "importContact": "Kontakt importieren",
-    "selectContact": "Kontakt auswählen",
-    "title": "Meine Kontakte",
     "permissionAndroid": {
-      "title": "\"SERO\" möchte auf Ihre Kontakte zugreifen",
-      "message": "Der Zugriff auf die Kontakte ermöglicht es dir, die Telefonnummern wichtiger Personen in die SERO-App zu importieren und diese direkt anrufen zu können."
-    }
+      "message": "Der Zugriff auf die Kontakte ermöglicht es dir, die Telefonnummern wichtiger Personen in die SERO-App zu importieren und diese direkt anrufen zu können.",
+      "title": "\"SERO\" möchte auf deine Kontakte zugreifen"
+    },
+    "selectContact": "Kontakt auswählen",
+    "title": "Meine Kontakte"
   },
   "info": {
     "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
@@ -77,50 +121,6 @@
       "title": "Mein Sicherheitsplan"
     }
   },
-  "assessment": {
-    "title": "Meine Einschätzung",
-    "defaultHint": "Wie fühlst du dich in diesem Moment?",
-    "addEntry": "Neuen Eintrag hinzufügen",
-    "former": "Frühere Einschätzung",
-    "selectImage": "Foto aus Bibliothek auswählen",
-    "image": "Foto",
-    "tutorial": "Anleitung",
-    "newImage": "Neues Foto aufnehmen",
-    "followUpTitle": "Folgefragen",
-    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
-    "cancelQuestion": "Willst du wirklich abbrechen?",
-    "goTosecurityplan": "Sicherheitsplan einsehen",
-    "goToMainPage": "Zur Übersichtsseite gehen",
-    "goToEmergencyContact": "Jemanden anrufen",
-    "bubbleTitle": "Was möchtest du tun?",
-    "resources": {
-      "intro": {
-        "title": "Was ist PRISM-S?",
-        "description": "Mit PRISM-S kannst du einschätzen, wie stark dein Drang ist, dir das Leben zu nehmen.",
-        "explanation": {
-          "item1": "Die weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar.",
-          "item2": "Der gelbe Punkt bist du in deinem Leben.",
-          "item3": "Die schwarze Scheibe steht für deinen momentanen Drang, dir das Leben zu nehmen."
-        }
-      },
-      "tutorial": {
-        "title": "Anleitung",
-        "description": "Platziere die schwarze Scheibe in deinem Lebensraum (weisse Fläche).",
-        "questions": {
-          "hint": "Stelle dir dabei die Fragen:",
-          "questionList": {
-            "item1": "Welchen Platz in meinern Leben nimmt zurzeit mein Drang ein, mir das Leben zu nehmen?",
-            "item2": "Wie nah oder wie weit weg von mir (gelber Punkt) ist dieser Drang im Moment?"
-          }
-        },
-        "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang."
-      }
-    },
-    "permissionAndroid": {
-      "title": "\"SERO\" möchte auf Ihre Kamera zugreifen",
-      "message": "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern."
-    }
-  },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
     "alertLups": {
@@ -132,6 +132,10 @@
     "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
     "editHint": "Du kannst die Abschnitte neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst.\nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
     "editSecurityplan": "Sicherheitsplan bearbeiten",
+    "examples": {
+      "copingStrategies": "z. B. Zeichnen, Entspannungsübungen, Kochen, Musik hören etc.",
+      "distractionStrategies": "z. B. Freunde treffen, Waldspaziergang, Kinobesuch, Biken etc."
+    },
     "former": "Früherer Sicherheitsplan",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen",
     "notification": {
@@ -139,10 +143,6 @@
       "distractionStrategies": "Etwas das dich ablenken kann:",
       "motivation": "Etwas das dich motiviert:",
       "personalBeliefs": "Ein Glaubenssatz der dir hilft:"
-    },
-    "examples": {
-      "copingStrategies": "z. B. Zeichnen, Entspannungsübungen, Kochen, Musik hören etc.",
-      "distractionStrategies": "z. B. Freunde treffen, Waldspaziergang, Kinobesuch, Biken etc."
     },
     "title": "Mein Sicherheitsplan"
   },
