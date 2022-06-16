@@ -97,9 +97,10 @@ class SecurityplanMain extends Component<PropsType, State> {
                 }}
                 isLargeButton
               />
-              <View style={{
-                paddingTop: verticalScale(15), 
-                opacity: this.props.userProfile.getSecurityPlanHistory().length === 0 ? 0 : 1 // hide archive button if nothing in archive
+              <View
+                style={{
+                  paddingTop: verticalScale(15),
+                  opacity: this.props.userProfile.getSecurityPlanHistory().length === 0 ? 0 : 1 // hide archive button if nothing in archive
                 }}>
                 <AppButton
                   label={this.props.localesHelper.localeString('common.archive')}
@@ -114,9 +115,8 @@ class SecurityplanMain extends Component<PropsType, State> {
                   isLargeButton
                   isDisabled={this.props.userProfile.getSecurityPlanHistory().length === 0}
                 />
-                </View>
+              </View>
             </View>
-            
           </View>
           <View style={styles.emergencyButton}>
             <EmergencyNumberButton />

@@ -205,8 +205,7 @@ class AssessmentArchive extends Component<PropsType, State> {
           source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          {this.state.selectedPrismSession 
-          ? (
+          {this.state.selectedPrismSession ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
