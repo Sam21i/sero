@@ -48,6 +48,21 @@ class Main extends Component<PropsType, State> {
     }
   }
 
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      this.setState({
+        emergencyContactsLoaded: false
+      });
+      if (this.props.midataService.isAuthenticated()) {
+        this.loadEmergencyContacts();
+        this.loadSecurityPlans();
+        this.loadPrismSessions();
+        this.props.uploadPendingResources();
+      }
+    });
+  }
+
   editContacts(): void {
     this.props.navigation.navigate('Contacts');
   }
