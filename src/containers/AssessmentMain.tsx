@@ -91,7 +91,7 @@ class AssessmentMain extends Component<PropsType, State> {
                   this.props.navigation.navigate('AssessmentArchive', {screen: 'AssessmentStackScreen'});
                 }}
                 isLargeButton
-                isDisabled={this.props.userProfile.getSecurityPlanHistory().length === 0}
+                isDisabled={this.props.userProfile.getPrismSessions().length === 0}
               />
             </View>
             <View style={{height: verticalScale(55)}}></View>

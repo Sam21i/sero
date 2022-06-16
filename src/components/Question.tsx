@@ -11,6 +11,7 @@ import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.st
 interface PropsType {
   onChangeText: (text: string, question: IQuestion) => void;
   question: IQuestion;
+  isArchiveMode?: boolean;
 }
 
 interface State {
@@ -26,80 +27,112 @@ export default class Question extends Component<PropsType, State> {
     super(props);
 
     this.state = {
-      expanded: false
+      expanded: this.props.isArchiveMode ? true : false
     };
+  }
+
+  hasAnswer(item: IQuestion) {
+    return item.selectedAnswers.length > 0;
+  }
+
+  hasChildrenWithContent(item: IQuestion) {
+    console.log(item.id);
+    let count = 0;
+    item.subItems?.forEach((item) => {
+      if (this.hasAnswer(item)) {
+        count++;
+      }
+    });
+    return count > 0;
+  }
+
+  renderQuestionGroup() {
+    return (
+      <View key={this.props.question.id}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.setState({expanded: !this.state.expanded});
+          }}>
+          <View
+            style={[
+              this.state.expanded
+                ? styles.viewGroup
+                : [styles.viewGroup, {borderBottomColor: colors.grey, borderBottomWidth: scale(1)}]
+            ]}>
+            <TouchableOpacity
+              activeOpacity={activeOpacity}
+              style={{paddingRight: scale(10)}}
+              onPress={() => {
+                this.setState({expanded: !this.state.expanded});
+              }}>
+              <View style={styles.toggleIcon}>
+                {this.state.expanded ? <IconOpened></IconOpened> : <IconClosed></IconClosed>}
+              </View>
+            </TouchableOpacity>
+
+            <Text style={styles.questionGroupText}>{this.props.question.label.de}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+
+        {this.props.question.subItems &&
+          this.state.expanded &&
+          this.props.question.subItems.map((si: IQuestion, i: number) => (
+            <Question
+              key={i}
+              question={si}
+              onChangeText={this.props.onChangeText}
+              isArchiveMode={this.props.isArchiveMode}
+            />
+          ))}
+      </View>
+    );
   }
 
   render() {
     switch (this.props.question.type) {
       case QuestionnaireItemType.GROUP:
-        return (
-          <View key={this.props.question.id}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                this.setState({expanded: !this.state.expanded});
-              }}>
-              <View
-                style={[
-                  this.state.expanded
-                    ? styles.viewGroup
-                    : [styles.viewGroup, {borderBottomColor: colors.grey, borderBottomWidth: scale(1)}]
-                ]}>
-                <TouchableOpacity
-                  activeOpacity={activeOpacity}
-                  style={{paddingRight: scale(10)}}
-                  onPress={() => {
-                    this.setState({expanded: !this.state.expanded});
-                  }}>
-                  <View style={styles.toggleIcon}>
-                    {this.state.expanded ? <IconOpened></IconOpened> : <IconClosed></IconClosed>}
-                  </View>
-                </TouchableOpacity>
+        if (
+          (this.props.isArchiveMode && this.hasChildrenWithContent(this.props.question)) ||
+          !this.props.isArchiveMode
+        ) {
+          return this.renderQuestionGroup();
+        } else {
+          return <></>;
+        }
 
-                <Text style={styles.questionGroupText}>{this.props.question.label.de}</Text>
+      case QuestionnaireItemType.TEXT: {
+        if (this.props.isArchiveMode && this.props.question.selectedAnswers.length === 0) {
+          return <></>;
+        } else {
+          return (
+            <NativeBaseProvider key={this.props.question.id}>
+              <View style={{paddingVertical: scale(5)}}>
+                <Text style={styles.questionText}>{this.props.question.label.de}</Text>
+                <TextArea
+                  isReadOnly={this.props.isArchiveMode}
+                  borderWidth='0'
+                  borderBottomWidth={scale(1)}
+                  borderBottomColor={colors.grey}
+                  h='auto'
+                  placeholder='...'
+                  size='lg'
+                  _focus={{borderBottomWidth: scale(1), borderBottomColor: colors.gold, backgroundColor: colors.white}}
+                  defaultValue={this.answer}
+                  keyboardType='default'
+                  autoCorrect={true}
+                  onChangeText={(text: string) => {
+                    this.props.onChangeText(text, this.props.question);
+                  }}
+                />
+                <Text>{this.props.question.label.id}</Text>
               </View>
-            </TouchableWithoutFeedback>
-
-            {this.props.question.subItems &&
-              this.state.expanded &&
-              this.props.question.subItems.map((si: IQuestion, i: number) => {
-                return (
-                  <Question
-                    key={i}
-                    question={si}
-                    onChangeText={this.props.onChangeText}
-                  />
-                );
-              })}
-          </View>
-        );
-      case QuestionnaireItemType.TEXT:
-        return (
-          <NativeBaseProvider key={this.props.question.id}>
-            <View style={{paddingVertical: scale(5)}}>
-              <Text style={styles.questionText}>{this.props.question.label.de}</Text>
-              <TextArea
-                borderWidth='0'
-                borderBottomWidth={scale(1)}
-                borderBottomColor={colors.grey}
-                h='auto'
-                placeholder='...'
-                size='lg'
-                _focus={{borderBottomWidth: scale(1), borderBottomColor: colors.gold, backgroundColor: colors.white}}
-                defaultValue={this.answer}
-                keyboardType='default'
-                autoCorrect={true}
-                onChangeText={(text: string) => {
-                  this.props.onChangeText(text, this.props.question);
-                }}
-              />
-              <Text>{this.props.question.label.id}</Text>
-            </View>
-          </NativeBaseProvider>
-        );
+            </NativeBaseProvider>
+          );
+        }
+      }
       default:
-        return (
-          <Text key={this.props.question.id}>Rendering of question type {this.props.question.id} not supported.</Text>
+        console.log(
+          this.props.question.id + ' Rendering of question type ' + this.props.question.type + ' not supported.)'
         );
     }
   }
