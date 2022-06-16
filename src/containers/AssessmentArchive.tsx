@@ -37,7 +37,7 @@ class AssessmentArchive extends Component<PropsType, State> {
 
     this.state = {
       bubbleVisible: false,
-      prismSessionHistory: this.props.userProfile.getPrismSessions().reverse(),
+      prismSessionHistory: this.props.userProfile.getPrismSessions(),
       selectedPrismSession: undefined
     };
   }
@@ -139,7 +139,7 @@ class AssessmentArchive extends Component<PropsType, State> {
             <Question
               question={listElement.item}
               onChangeText={() => {}}
-              isReadOnly={true}
+              isArchiveMode={true}
             />
           </View>
         )}
