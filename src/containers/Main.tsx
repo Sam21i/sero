@@ -45,10 +45,8 @@ class Main extends Component<PropsType, State> {
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
-      this.setState({
-        emergencyContactsLoaded: false
-      });
       if (this.props.midataService.isAuthenticated()) {
+        
         this.loadEmergencyContacts();
         this.loadSecurityPlans();
         this.loadPrismSessions();
@@ -62,20 +60,29 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-    try {
-      this.props.midataService
-        .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-        .then((contacts) => {
-          this.props.setEmergencyContacts(contacts);
-          this.setState({
-            emergencyContactsLoaded: true
+    if (this.props.userProfile.getEmergencyContacts().length <= 1) {
+      this.setState({
+        emergencyContactsLoaded: false
+      });
+      try {
+        this.props.midataService
+          .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+          .then((contacts) => {
+            this.props.setEmergencyContacts(contacts);
+            this.setState({
+              emergencyContactsLoaded: true
+            });
+          })
+          .catch((e) => {
+            console.log('could not load related persons', e);
           });
-        })
-        .catch((e) => {
-          console.log('could not load related persons', e);
-        });
-    } catch (e) {
-      console.log(e);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      this.setState({
+        emergencyContactsLoaded: true
+      });
     }
   }
 
