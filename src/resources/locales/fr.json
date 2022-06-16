@@ -13,7 +13,7 @@
     "image": "Photo",
     "newImage": "Prendre une nouvelle photo",
     "permissionAndroid": {
-      "message": "",
+      "message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
       "title": "\"SERO\" désire accéder à la caméra"
     },
     "resources": {

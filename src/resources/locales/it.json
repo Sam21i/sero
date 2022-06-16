@@ -13,7 +13,7 @@
     "image": "Foto",
     "newImage": "Scattare una nuova foto",
     "permissionAndroid": {
-      "message": "",
+      "message": "L'accesso alla camera consente di scattare una foto di una valutazione e di salvarla nell'app.",
       "title": "\"SERO\" vuole accedere alla camera"
     },
     "resources": {

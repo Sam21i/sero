@@ -13,7 +13,7 @@
     "image": "Photo",
     "newImage": "Take a new photo",
     "permissionAndroid": {
-      "message": "",
+      "message": "Access to the camera allows you to take a photo of an assessment and then save it in the app.",
       "title": "\"SERO\" wants to access the camera"
     },
     "resources": {

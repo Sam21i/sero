@@ -13,7 +13,7 @@
     "image": "Foto",
     "newImage": "Neues Foto aufnehmen",
     "permissionAndroid": {
-      "message": "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern.",
+      "message": "Der Zugriff auf die Kamera ermöglicht es dir, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern.",
       "title": "\"SERO\" möchte auf die Kamera zugreifen"
     },
     "resources": {
