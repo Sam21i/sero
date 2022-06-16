@@ -74,7 +74,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
       prismBundle.id = 'prism-bundle'; // needs a temporary id or there will be errors in midataActions
       // upload to MIDATA
       this.props.addResource(prismBundle);
-      console.log(prismBundle);
       // and also add to UserProfile
       this.props.addPrismSession(this.state.prismSession);
     } else {
@@ -195,7 +194,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
                 shadowRadius: scale(5)
               }
             ]}
-            source={{uri: 'data:' + base64Image.data}}
+            source={{uri: 'data:' + base64Image.contentType + ';base64,' + base64Image.data}}
           />
         )}
 
