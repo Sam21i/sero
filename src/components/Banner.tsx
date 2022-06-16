@@ -1,3 +1,4 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {ColorSchemeName, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -7,6 +8,7 @@ import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
+  navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   userProfile: UserProfile;
   defaultChance?: number;
@@ -25,6 +27,7 @@ export const enum BANNER_TYPE {
 const NOTIFICATION_OPTIONS = ['motivation', 'copingStrategies', 'distractionStrategies', 'personalBeliefs'];
 
 class Banner extends Component<PropsType> {
+  randomNumber = Math.random();
   static defaultProps = {
     defaultChance: 2,
     securityplanUpdatedChance: 1,
@@ -34,17 +37,20 @@ class Banner extends Component<PropsType> {
 
   constructor(props: PropsType) {
     super(props);
+    props.navigation.addListener('focus', () => {
+      this.randomNumber = Math.random();
+    });
   }
 
   renderMessage() {
     const max = this.props.defaultChance + this.props.securityplanUpdatedChance + this.props.positiveChance,
       defaultChance = this.props.defaultChance / max,
-      securityplanUpdatedChance = this.props.securityplanUpdatedChance / max,
-      randomNumber = Math.random();
+      securityplanUpdatedChance = this.props.securityplanUpdatedChance / max;
+      
 
-    if (randomNumber < defaultChance) {
+    if (this.randomNumber < defaultChance) {
       return <Text style={styles.text}>{this.props.localesHelper.localeString('main.default')}</Text>;
-    } else if (randomNumber < defaultChance + securityplanUpdatedChance) {
+    } else if (this.randomNumber < defaultChance + securityplanUpdatedChance) {
       return <Text style={styles.text}>{this.props.localesHelper.localeString('main.securityplanUpdated')}</Text>;
     } else {
       return this.renderPositive();

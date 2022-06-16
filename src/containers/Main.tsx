@@ -40,12 +40,6 @@ class Main extends Component<PropsType, State> {
     this.state = {
       emergencyContactsLoaded: false
     };
-    if (this.props.midataService.isAuthenticated()) {
-      this.loadEmergencyContacts();
-      this.loadSecurityPlans();
-      this.loadPrismSessions();
-      this.props.uploadPendingResources();
-    }
   }
 
 
@@ -154,7 +148,7 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <Banner type={BANNER_TYPE.main} />
+            <Banner type={BANNER_TYPE.main} navigation={this.props.navigation}/>
           </View>
           <View
             style={{
