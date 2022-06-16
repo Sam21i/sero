@@ -95,7 +95,7 @@ export default class SecurityPlanModel {
    */
   getLocaleDate(locale: string): string {
     if (this.fhirResource.created) {
-      return new Intl.DateTimeFormat('de-CH', {dateStyle: 'long', timeStyle: 'short'}).format(
+      return new Intl.DateTimeFormat(locale, {dateStyle: 'long', timeStyle: 'short'}).format(
         new Date(this.fhirResource.created)
       );
     } else {

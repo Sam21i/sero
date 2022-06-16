@@ -254,7 +254,7 @@ export default class PrismSession {
    */
   getLocaleDate(locale: string): string {
     if (this.date) {
-      return new Intl.DateTimeFormat('de-CH', {dateStyle: 'long', timeStyle: 'short'}).format(new Date(this.date));
+      return new Intl.DateTimeFormat(locale, {dateStyle: 'long', timeStyle: 'short'}).format(new Date(this.date));
     } else {
       return '';
     }
