@@ -158,6 +158,7 @@ class AssessmentArchive extends Component<PropsType, State> {
     };
     return (
       <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+        <View style={{height: 50, width: '100%'}}></View>
         {svgImage !== '' && (
           <SvgCss
             xml={svgImage}

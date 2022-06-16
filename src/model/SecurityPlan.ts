@@ -96,8 +96,11 @@ export default class SecurityPlanModel {
   getLocaleDate(locale: string): string {
     if (this.fhirResource.created) {
       return new Intl.DateTimeFormat(locale, {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: 'numeric', minute: 'numeric'
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       }).format(new Date(this.fhirResource.created));
     } else {
       return '';
