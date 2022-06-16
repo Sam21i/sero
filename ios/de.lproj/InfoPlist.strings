@@ -1,2 +1,3 @@
 NSContactsUsageDescription = "Der Zugriff auf die Kontakte ermöglicht es dir, die Telefonnummern wichtiger Personen in die SERO-App zu importieren und diese direkt anrufen zu können.";
 NSPhotoLibraryUsageDescription = "Der Zugriff auf die Fotos-App verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, bestimmte Bereiche der App mit den von ihm erstellten Inhalten zu personalisieren.";
+NSCameraUsageDescription = "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern.";

@@ -1,310 +1,308 @@
 {
-    "resourceType": "Questionnaire",
-    "url": "http://to.be.defined",
-    "version": "1.0",
-    "name": "PRISM-S-additional-questions",
-    "title": "PRISM-S Folgefragen",
-    "_title": {
+  "resourceType": "Questionnaire",
+  "url": "http://to.be.defined",
+  "version": "1.0",
+  "name": "PRISM-S-additional-questions",
+  "title": "PRISM-S Folgefragen",
+  "_title": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
         "extension": [
-            {
+          {
+            "url": "lang",
+            "valueCode": "de"
+          },
+          {
+            "url": "content",
+            "valueString": "PRISM-S Folgefragen"
+          }
+        ]
+      }
+    ]
+  },
+  "status": "active",
+  "subjectType": ["Patient"],
+  "publisher": "LUPS & BFH I4MI",
+  "code": [
+    {
+      "system": "http://snomed.info/sct",
+      "code": "363870007",
+      "display": "Mental state, behavior / psychosocial function observable"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "1",
+      "type": "text",
+      "repeats": false,
+      "required": false,
+      "text": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?",
+      "_text": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "linkId": "2",
+      "type": "group",
+      "repeats": false,
+      "required": false,
+      "text": "Fragen zu Gedanken",
+      "_text": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Fragen zu Gedanken"
+              }
+            ]
+          }
+        ]
+      },
+      "item": [
+        {
+          "linkId": "2.1",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?",
+          "_text": {
+            "extension": [
+              {
                 "url": "http://hl7.org/fhir/StructureDefinition/translation",
                 "extension": [
-                    {
-                        "url": "lang",
-                        "valueCode": "de"
-                    },
-                    {
-                        "url": "content",
-                        "valueString": "PRISM-S Folgefragen"
-                    }
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?"
+                  }
                 ]
-            }
-        ]
+              }
+            ]
+          }
+        },
+        {
+          "linkId": "2.2",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     },
-    "status": "active",
-    "subjectType": [
-        "Patient"
-    ],
-    "publisher": "LUPS & BFH I4MI",
-    "code": [
+    {
+      "linkId": "3",
+      "type": "group",
+      "repeats": false,
+      "required": false,
+      "text": "Fragen zur Körperwahrnehmung",
+      "_text": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Fragen zur Körperwahrnehmung"
+              }
+            ]
+          }
+        ]
+      },
+      "item": [
         {
-            "system": "http://snomed.info/sct",
-            "code": "363870007",
-            "display": "Mental state, behavior / psychosocial function observable"
+          "linkId": "3.1",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Was nehme ich jetzt gerade in meinem Körper wahr?",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Was nehme ich jetzt gerade in meinem Körper wahr?"
+                  }
+                ]
+              }
+            ]
+          }
         }
-    ],
-    "item": [
-        {
-            "linkId": "1",
-            "type": "text",
-            "repeats": false,
-            "required": false, 
-            "text": "Sehen Sie sich nun die Distanz zwischen dem gelben Punkt (Ihnen selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an. Was bedeutet es für Sie, dass Sie die schwarze Scheibe dort platziert haben?",
-            "_text": {
-                "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                        "extension": [
-                            {
-                                "url": "lang",
-                                "valueCode": "de"
-                            },
-                            {
-                                "url": "content",
-                                "valueString": "Sehen Sie sich nun die Distanz zwischen dem gelben Punkt (Ihnen selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an. Was bedeutet es für Sie, dass Sie die schwarze Scheibe dort platziert haben?"
-                            }
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "linkId": "2",
-            "type": "group",
-            "repeats": false,
-            "required": false, 
-            "text": "Fragen zu Gedanken",
-            "_text": {
-                "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                        "extension": [
-                            {
-                                "url": "lang",
-                                "valueCode": "de"
-                            },
-                            {
-                                "url": "content",
-                                "valueString": "Fragen zu Gedanken"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "item": [
-                {
-                    "linkId": "2.1",
-                    "type": "text",
-                    "repeats": false,
-                    "required": false, 
-                    "text": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "linkId": "2.2",
-                    "type": "text",
-                    "repeats": false,
-                    "required": false, 
-                    "text": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
+      ]
+    },
+    {
+      "linkId": "4",
+      "type": "group",
+      "repeats": false,
+      "required": false,
+      "text": "Fragen zu Gefühlen/Emotionen",
+      "_text": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Fragen zu Gefühlen/Emotionen"
+              }
             ]
-        },
+          }
+        ]
+      },
+      "item": [
         {
-            "linkId": "3",
-            "type": "group",
-            "repeats": false,
-            "required": false, 
-            "text": "Fragen zur Körperwahrnehmung",
-            "_text": {
+          "linkId": "4.1",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
                 "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                        "extension": [
-                            {
-                                "url": "lang",
-                                "valueCode": "de"
-                            },
-                            {
-                                "url": "content",
-                                "valueString": "Fragen zur Körperwahrnehmung"
-                            }
-                        ]
-                    }
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?"
+                  }
                 ]
-            },
-            "item": [
-                {
-                    "linkId": "3.1",
-                    "type": "text",
-                    "repeats": false,
-                    "required": false, 
-                    "text": "Was nehme ich jetzt gerade in meinem Körper wahr?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Was nehme ich jetzt gerade in meinem Körper wahr?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
+              }
             ]
-        },
-        {
-            "linkId": "4",
-            "type": "group",
-            "repeats": false,
-            "required": false, 
-            "text": "Fragen zu Gefühlen/Emotionen",
-            "_text": {
-                "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                        "extension": [
-                            {
-                                "url": "lang",
-                                "valueCode": "de"
-                            },
-                            {
-                                "url": "content",
-                                "valueString": "Fragen zu Gefühlen/Emotionen"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "item": [
-                {
-                    "linkId": "4.1",
-                    "type": "text",
-                    "repeats": false,
-                    "required": false, 
-                    "text": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "linkId": "5",
-            "type": "group",
-            "repeats": false,
-            "required": false, 
-            "text": "Fragen zur Selbstreflexion",
-            "_text": {
-                "extension": [
-                    {
-                        "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                        "extension": [
-                            {
-                                "url": "lang",
-                                "valueCode": "de"
-                            },
-                            {
-                                "url": "content",
-                                "valueString": "Fragen zur Selbstreflexion"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "item": [
-                {
-                    "linkId": "5.1",
-                    "type": "text",
-                    "repeats": false,
-                    "required": false, 
-                    "text": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "linkId": "5.2",
-                    "type": "text",
-                    "repeats": false,
-                    "required": true, 
-                    "text": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?",
-                    "_text": {
-                        "extension": [
-                            {
-                                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                                "extension": [
-                                    {
-                                        "url": "lang",
-                                        "valueCode": "de"
-                                    },
-                                    {
-                                        "url": "content",
-                                        "valueString": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
+          }
         }
-    ]
+      ]
+    },
+    {
+      "linkId": "5",
+      "type": "group",
+      "repeats": false,
+      "required": false,
+      "text": "Fragen zur Selbstreflexion",
+      "_text": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Fragen zur Selbstreflexion"
+              }
+            ]
+          }
+        ]
+      },
+      "item": [
+        {
+          "linkId": "5.1",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "linkId": "5.2",
+          "type": "text",
+          "repeats": false,
+          "required": false,
+          "text": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?",
+          "_text": {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "de"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }

@@ -12,9 +12,9 @@ interface SpeechBubbleProps {
       width?: number;
     };
     bubble?: {
-      borderWidth: number;
-      borderRadius: number;
-      padding: number;
+      borderWidth?: number;
+      borderRadius?: number;
+      padding?: number;
     };
     arrow?: {
       position?: {left: number; bottom: number};

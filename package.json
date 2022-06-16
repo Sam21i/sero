@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i && cd ios && pod install && cd .. && npm run ios"
+    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i --force && cd ios && pod install && cd .. && npm run ios"
   },
   "dependencies": {
     "@i4mi/fhir_questionnaire": "^0.0.11",
@@ -35,9 +35,9 @@
     "react-native-get-random-values": "^1.7.2",
     "react-native-i18n": "^2.0.15",
     "react-native-image-picker": "^4.7.3",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-localize": "^2.1.9",
     "react-native-orientation-locker": "^1.4.0",
-    "react-native-restart": "^0.0.24",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",
     "react-native-sensitive-info": "^5.5.8",

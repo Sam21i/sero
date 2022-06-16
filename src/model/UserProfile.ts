@@ -9,8 +9,7 @@ import {
 import EmergencyContact from './EmergencyContact';
 import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
 import SecurityPlanModel from './SecurityPlan';
-import RNRestart from 'react-native-restart';
-import PrismSession, { PrismResources } from './PrismSession';
+import PrismSession, {PrismResources} from './PrismSession';
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};
@@ -71,7 +70,6 @@ export default class UserProfile {
     this.securityPlanHistory = [];
     this.currentSecurityPlan = new SecurityPlanModel({});
     this.prismSessions = [];
-    RNRestart.Restart();
   }
 
   getFhirId(): string {
@@ -223,23 +221,25 @@ export default class UserProfile {
    * @returns The history of SecurityPlans as an array.
    */
   getSecurityPlanHistory(): SecurityPlanModel[] {
-    return this.securityPlanHistory;
+    return this.securityPlanHistory.sort(
+      (a, b) => new Date(b.fhirResource.created || 0).valueOf() - new Date(a.fhirResource.created || 0).valueOf()
+    );
   }
 
   /**
    * Creates PRISM-S Sessions from FHIR Resources and stores them to the user profile.
    * Use this to add the previous sessions loaded from MIDATA.
    * DO NOT USE OUTSIDE THE REDUCER
-   * @param _resources Array of corresponding Observation, Media, 
+   * @param _resources Array of corresponding Observation, Media,
    *                   QuestionnaireResponse and Questionnaire resources.
    */
   setPrismSessions(_resources: PrismResources[]): void {
-    this.prismSessions = _resources.map(r => new PrismSession(r));
+    this.prismSessions = _resources.map((r) => new PrismSession(r));
   }
 
   /**
    * Add a single PrismSession to the existing sessions (without overwriting previous
-   * sessions). Use this to 
+   * sessions). Use this to
    * DO NOT USE OUTSIDE THE REDUCER
    * @param _session  a PrismSession object representing the session.
    */
@@ -252,6 +252,6 @@ export default class UserProfile {
    * @returns An array of PrismSession objects.
    */
   getPrismSessions(): PrismSession[] {
-    return this.prismSessions;
+    return this.prismSessions.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
   }
 }

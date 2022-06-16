@@ -55,14 +55,18 @@ export const colors = {
   alert: 'rgb(185, 50, 100)',
 
   primary: 'rgb(201, 95, 30)',
+  primary2_60opac: 'rgba(56, 48, 25, .6)',
   primary50opac: 'rgba(201, 95, 30, .5)',
   primary25opac: 'rgba(201, 95, 30, .25)',
   petrol: 'rgb(10, 95, 108)',
   gold: 'rgb(205, 177, 65)',
+  gold50opac: 'rgba(205, 177, 65, .5)',
   linen: 'rgb(250, 239, 231)',
   manhattan: 'rgb(248, 189, 155)',
   tumbleweed: 'rgb(223, 159, 113)'
 };
+
+export const activeOpacity = 0.5;
 
 // Layout
 export const appLayout = {};

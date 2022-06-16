@@ -27,7 +27,7 @@ class Settings extends Component<PropsType, State> {
 
   logout(): void {
     this.props.logoutUser().then(() => {
-      this.props.navigation.navigate('OnBoarding');
+      this.props.navigation.navigate('OnboardingStackScreen');
     });
   }
 

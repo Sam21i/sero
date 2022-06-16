@@ -9,32 +9,32 @@ import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-export enum SECURITYPLAN_SPEECH_BUBBLE_MODE {
-  edit = 'EDIT',
+export enum ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE {
   new = 'NEW',
+  select = 'SELECT',
   menu = 'MENU'
 }
 
 const MENU_ACTIONS = [
-  {name: 'editSecurityplan', mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.edit},
-  {name: 'newSecurityplan', mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.new}
+  {name: 'selectImage', mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.select},
+  {name: 'newImage', mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new}
 ];
 
-interface SecurityplanBubbleProps {
+interface Props {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
-  onClose: (mode: SECURITYPLAN_SPEECH_BUBBLE_MODE) => void;
+  onClose: (mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) => void;
 }
 
-interface SecurityplanSpeechBubbleState {
-  mode: SECURITYPLAN_SPEECH_BUBBLE_MODE;
+interface State {
+  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE;
 }
 
-class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, SecurityplanSpeechBubbleState> {
-  constructor(props: SecurityplanBubbleProps) {
+class AssessmentImageSpeechBubble extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      mode: SECURITYPLAN_SPEECH_BUBBLE_MODE.menu
+      mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu
     };
   }
 
@@ -45,7 +45,7 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
         <CancelButton
           width={scale(35)}
           height={scale(35)}
-          onPress={() => this.props.onClose(this.state.mode)}
+          onPress={() => this.props.navigation.navigate('AssessmentBoard')}
         />
       </View>
     );
@@ -67,7 +67,7 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
                     <Text style={styles.actionText}>
-                      {this.props.localesHelper.localeString('securityplan.' + action.name)}
+                      {this.props.localesHelper.localeString('assessment.' + action.name)}
                     </Text>
                   </View>
                 </View>
@@ -174,4 +174,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(SecurityplanSpeechBubble);
+export default connect(mapStateToProps, undefined)(AssessmentImageSpeechBubble);

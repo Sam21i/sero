@@ -8,7 +8,7 @@ import ContactsIcon from '../resources/images/icons/securityplan/professionalCon
 import WarningIcon from '../resources/images/icons/securityplan/warningSigns.svg';
 import EditPencil from '../resources/images/icons/securityplan/pencil.svg';
 import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import {AppFonts, colors, scale, windowWidth} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
 import LocalesHelper from '../locales';
@@ -173,7 +173,9 @@ export default class SecurityPlanModuleComponent extends Component<
 
         {this.props.editable && this.props.module.type !== SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS && (
           <View style={styles.editPencilContainer}>
-            <TouchableOpacity onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}>
+            <TouchableOpacity
+              activeOpacity={activeOpacity}
+              onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}>
               <EditPencil
                 style={styles.editIcon}
                 width={scale(30)}
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: colors.primary,
     height: scale(60),
-    width: scale(70),
+    width: scale(75),
     borderBottomRightRadius: scale(30),
     borderTopRightRadius: scale(30)
   },
@@ -249,7 +251,7 @@ const styles = StyleSheet.create({
     marginRight: scale(10)
   },
   editIcon: {
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   editingGripPoint: {
     marginTop: scale(10),

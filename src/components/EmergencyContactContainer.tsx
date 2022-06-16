@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {scale, TextSize, colors, AppFonts} from '../styles/App.style';
+import {scale, TextSize, colors, AppFonts, activeOpacity} from '../styles/App.style';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
@@ -46,7 +46,9 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
         <View style={styles.titleView}>
           <Text style={styles.title}>{this.props.localesHelper.localeString('main.myEnvironmentTitle')}</Text>
           <View style={[styles.optionsButton, {height: this.avatarSize}]}>
-            <TouchableOpacity onPress={this.props.onPressOptionsButton}>
+            <TouchableOpacity
+              activeOpacity={activeOpacity}
+              onPress={this.props.onPressOptionsButton}>
               {this.props.emergencyContacts.length > 0 && (
                 <OptionsIcon
                   width={scale(27.5)}

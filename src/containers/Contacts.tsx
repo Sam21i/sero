@@ -29,6 +29,7 @@ import RNContacts from 'react-native-contacts';
 import RNFS from 'react-native-fs';
 import {STORAGE} from './App';
 import {Input, NativeBaseProvider} from 'native-base';
+import AppButton from '../components/AppButton';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -321,6 +322,7 @@ class Contacts extends Component<PropsType, State> {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
+          <View style={{paddingTop: verticalScale(50)}}></View>
           <Input
             autoCapitalize='none'
             autoCorrect={false}
@@ -343,6 +345,24 @@ class Contacts extends Component<PropsType, State> {
     );
   }
 
+  renderFooter() {
+    return (
+      <AppButton
+        label={this.props.localesHelper.localeString('common.back')}
+        icon={
+          '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
+        }
+        position='right'
+        color={colors.grey}
+        onPress={() => {
+          this.setState({bubbleVisible: true, listVisible: false, mode: CONTACT_SPEECH_BUBBLE_MODE.menu});
+        }}
+        style={styles.backButton}
+        isLargeButton={false}
+      />
+    );
+  }
+
   handleSearch = (text: string) => {
     this.setState({query: text});
   };
@@ -360,7 +380,9 @@ class Contacts extends Component<PropsType, State> {
   render() {
     const contacts =
       this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit || this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete
-        ? this.props.userProfile.getEmergencyContacts()
+        ? this.props.userProfile
+            .getEmergencyContacts()
+            .filter((contact: EmergencyContact) => this.contains(contact, this.state.query.toLowerCase()))
         : this.state.addressBookContacts.filter((contact: EmergencyContact) =>
             this.contains(contact, this.state.query.toLowerCase())
           );
@@ -396,14 +418,13 @@ class Contacts extends Component<PropsType, State> {
               </View>
             )}
             {this.state.listVisible && (
-              <View style={{position: 'relative', top: verticalScale(50)}}>
+              <View>
                 {this.state.loadingContacts ? (
                   <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
                 ) : (
                   <FlatList
-                    ListHeaderComponent={
-                      this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : <></>
-                    }
+                    alwaysBounceVertical={false}
+                    showsHorizontalScrollIndicator={false}
                     data={contacts.sort((a, b) => {
                       // don't show Company Entries at the top
                       if (a.given[0] === '') {
@@ -414,9 +435,11 @@ class Contacts extends Component<PropsType, State> {
                       }
                       return a.getNameString().localeCompare(b.getNameString());
                     })}
-                    alwaysBounceVertical={false}
+                    ListHeaderComponent={
+                      this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : this.renderHeader()
+                    }
                     renderItem={this.renderContactListItem.bind(this)}
-                    showsHorizontalScrollIndicator={false}
+                    ListFooterComponent={this.renderFooter()}
                   />
                 )}
               </View>
@@ -432,6 +455,12 @@ class Contacts extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
+  backButton: {
+    width: scale(200),
+    paddingVertical: scale(10),
+    marginTop: scale(20),
+    marginBottom: scale(40)
+  },
   container: {
     flex: 1
   },
@@ -444,7 +473,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginLeft: scale(50)
+    marginLeft: scale(40)
   },
   topViewText: {
     color: colors.white,

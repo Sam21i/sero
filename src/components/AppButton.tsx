@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface CategoryButtonProps {
   label: string;
-  icon: string;
+  icon?: string;
   color: string;
   position: string;
   onPress?: () => void;
@@ -20,39 +20,31 @@ export default class AppButton extends Component<CategoryButtonProps> {
       <TouchableOpacity
         onPress={this.props.onPress}
         disabled={this.props.isDisabled}
-        activeOpacity={0.5}>
-        <View
-          style={[
-            this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
-            {
-              ...this.props.style,
-              backgroundColor: this.props.color,
-              minHeight: this.props.isLargeButton ? scale(82) : scale(50)
-            }
-          ]}>
-          {this.props.position === 'left' && (
-            <Text
-              numberOfLines={2}
-              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
-              {this.props.label}
-            </Text>
-          )}
-          {this.props.icon != undefined ? (
-            <SvgCss
-              xml={this.props.icon}
-              style={styles.icon}
-            />
-          ) : (
-            <></>
-          )}
-          {this.props.position === 'right' && (
-            <Text
-              numberOfLines={2}
-              style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
-              {this.props.label}
-            </Text>
-          )}
-        </View>
+        activeOpacity={activeOpacity}
+        style={[
+          this.props.position === 'left' ? styles.buttonLeft : styles.buttonRight,
+          {
+            ...this.props.style,
+            backgroundColor: this.props.color,
+            minHeight: this.props.isLargeButton ? scale(82) : scale(50)
+          }
+        ]}>
+        {this.props.position === 'left' && (
+          <Text style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
+            {this.props.label}
+          </Text>
+        )}
+        {this.props.icon !== undefined && (
+          <SvgCss
+            xml={this.props.icon}
+            style={styles.icon}
+          />
+        )}
+        {this.props.position === 'right' && (
+          <Text style={[styles.buttonText, this.props.icon == undefined ? {textAlign: 'center'} : {}]}>
+            {this.props.label}
+          </Text>
+        )}
       </TouchableOpacity>
     );
   }
