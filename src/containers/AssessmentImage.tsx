@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View} from 'react-native';
+import {Text, StyleSheet, PermissionsAndroid, ImageBackground, View, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LocalesHelper from '../locales';
@@ -16,6 +16,8 @@ import {PrismInitializer} from '../model/PrismSession';
 import AssessmentImageSpeechBubble, {
   ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentImageSpeechBubble';
+import {STORAGE} from './App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -29,10 +31,7 @@ interface PropsType {
 interface State {
   bubbleVisible: boolean;
   mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE;
-  new_image?: {
-    contentType: string;
-    data: string;
-  };
+  showCameraButton: boolean;
 }
 
 const MAX_IMAGE_SIZE = 800;
@@ -44,8 +43,34 @@ class AssessmentImage extends Component<PropsType, State> {
     this.state = {
       bubbleVisible: true,
       mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-      new_image: undefined
+      showCameraButton: true
     };
+
+    AsyncStorage.getItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION).then((asked) => {
+      if (asked === 'true') {
+        if (Platform.OS === 'android') {
+          PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
+            if (permission) {
+              this.setState({
+                showCameraButton: true
+              });
+            } else {
+              AsyncStorage.getItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID).then((permission) => {
+                if (permission === 'denied') {
+                  this.setState({
+                    showCameraButton: true
+                  });
+                } else if (permission === 'never_ask_again') {
+                  this.setState({
+                    showCameraButton: false
+                  });
+                }
+              });
+            }
+          });
+        }
+      }
+    });
   }
 
   setImage(image: ImagePickerResponse) {
@@ -76,7 +101,7 @@ class AssessmentImage extends Component<PropsType, State> {
       });
   }
 
-  newImage() {
+  takeNewImage() {
     launchCamera({
       mediaType: 'photo',
       maxHeight: MAX_IMAGE_SIZE,
@@ -89,19 +114,45 @@ class AssessmentImage extends Component<PropsType, State> {
       });
   }
 
-  async onBubbleClose(mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE): Promise<void> {
-    switch (mode) {
-      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new:
-        this.newImage();
-        break;
-      case ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.select:
-        this.pickImage();
-        break;
-      default:
-        this.setState({
-          bubbleVisible: false
-        });
-    }
+  handleCameraPermissions() {
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
+      if (permission) {
+        this.takeNewImage();
+      } else {
+        PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+          title: this.props.localesHelper.localeString('assessment.permissionAndroid.title'),
+          message: this.props.localesHelper.localeString('assessment.permissionAndroid.message'),
+          buttonPositive: this.props.localesHelper.localeString('common.ok')
+        })
+          .then((permission) => {
+            AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
+            if (permission === PermissionsAndroid.RESULTS.GRANTED) {
+              this.takeNewImage();
+            } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
+              AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'denied');
+              this.setState({
+                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                showCameraButton: true,
+                bubbleVisible: true
+              });
+            } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+              AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'never_ask_again');
+              this.setState({
+                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                showCameraButton: false,
+                bubbleVisible: true
+              });
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    });
+  }
+
+  onBubbleClose(mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) {
+    mode === ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new ? this.takeNewImage() : this.pickImage();
   }
 
   render() {
@@ -124,6 +175,7 @@ class AssessmentImage extends Component<PropsType, State> {
                 localesHelper={this.props.localesHelper}
                 navigation={this.props.navigation}
                 onClose={this.onBubbleClose.bind(this)}
+                showNew={this.state.showCameraButton}
               />
             )}
           </View>

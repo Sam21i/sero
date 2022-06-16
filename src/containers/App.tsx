@@ -41,8 +41,10 @@ interface State {
 export enum STORAGE {
   SHOULD_DISPLAY_ONBOARDING = '@displayOnboarding',
   ASKED_FOR_CONTACT_PERMISSION = '@contactPermission',
-  PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid',
-  SHOULD_DISPLAY_ASSESSMENT_INTRO = '@displayAssessmentIntro'
+  CONTACT_PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid',
+  SHOULD_DISPLAY_ASSESSMENT_INTRO = '@displayAssessmentIntro',
+  ASKED_FOR_CAMERA_PERMISSION = '@cameraPermission',
+  CAMERA_PERMISSION_STATUS_ANDROID = '@cameraPermissionStatusAndroid'
 }
 
 const OnboardingStack = createStackNavigator();
