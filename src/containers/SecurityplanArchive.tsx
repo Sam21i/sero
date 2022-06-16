@@ -20,14 +20,12 @@ interface PropsType {
   localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
-  addResource: (r: Resource) => void;
-  synchronizeResource: (r: Resource) => void;
 }
 
 interface State {
   bubbleVisible: boolean;
   securityplanHistory: SecurityPlanModel[];
-  selectedSecurityplan: SecurityPlanModel;
+  selectedSecurityplan: SecurityPlanModel | undefined;
 }
 
 class SecurityplanArchive extends Component<PropsType, State> {
@@ -52,7 +50,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           <View style={styles.listItem}>
             <View style={styles.listItemContent}>
               <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 style={styles.listItemTitleText}>
                 {this.props.localesHelper.localeString('securityplan.former')}
               </Text>
@@ -107,7 +105,8 @@ class SecurityplanArchive extends Component<PropsType, State> {
           source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          {this.state.selectedSecurityplan ? (
+          {this.state.selectedSecurityplan 
+          ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
@@ -126,8 +125,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
             </View>
           )}
           <View style={styles.bottomView}>
-            <ScrollView>
-              <View style={{height: 70, width: '100%'}}></View>
+            <ScrollView style={{paddingTop: 50}}>
               {this.state.selectedSecurityplan ? this.renderSecurityplan() : this.renderList()}
               <AppButton
                 label={this.props.localesHelper.localeString('common.back')}
@@ -141,7 +139,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
                     ? this.setState({selectedSecurityplan: undefined})
                     : this.props.navigation.goBack();
                 }}
-                style={{width: scale(200), paddingVertical: scale(10), marginVertical: scale(20)}}
+                style={{width: scale(200), paddingVertical: scale(10), marginTop: 20, marginBottom: 70}}
                 isLargeButton={false}
               />
             </ScrollView>
@@ -193,8 +191,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white65opac
   },
   listItem: {
-    marginVertical: scale(10),
-    marginRight: scale(110),
+    marginBottom: scale(20),
+    marginRight: scale(90),
     backgroundColor: colors.grey,
     height: scale(80),
     borderTopRightRadius: scale(80),
@@ -202,12 +200,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   listItemTitleText: {
-    marginTop: 0.5 * scale(TextSize.verySmall),
+    marginTop: 1 * verticalScale(TextSize.verySmall),
     marginLeft: 2 * scale(TextSize.verySmall),
     fontFamily: AppFonts.medium,
     fontSize: scale(TextSize.small),
-    color: colors.white,
-    maxWidth: scale(150)
+    color: colors.white
   },
   listItemSubtitleText: {
     marginTop: 0.2 * scale(TextSize.verySmall),

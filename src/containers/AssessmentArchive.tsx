@@ -43,7 +43,6 @@ class AssessmentArchive extends Component<PropsType, State> {
   }
 
   renderListItem({item}) {
-    console.log(item.date.toString());
     return (
       <TouchableOpacity
         activeOpacity={activeOpacity}
@@ -54,7 +53,7 @@ class AssessmentArchive extends Component<PropsType, State> {
         <View style={styles.listItem}>
           <View style={styles.listItemContent}>
             <Text
-              numberOfLines={2}
+              numberOfLines={1}
               style={styles.listItemTitleText}>
               {this.props.localesHelper.localeString('assessment.former')}
             </Text>
@@ -91,7 +90,7 @@ class AssessmentArchive extends Component<PropsType, State> {
             ? this.setState({selectedPrismSession: undefined})
             : this.props.navigation.goBack();
         }}
-        style={{width: scale(225), marginVertical: scale(20)}}
+        style={{width: scale(200), marginVertical: scale(20), marginBottom: 70}}
         isLargeButton={false}
       />
     );
@@ -99,14 +98,12 @@ class AssessmentArchive extends Component<PropsType, State> {
 
   renderList() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{height: 50, width: '100%'}}></View>
-        <FlatList
-          data={this.state.prismSessionHistory}
-          renderItem={this.renderListItem.bind(this)}
-          ListFooterComponent={this.renderListFooter.bind(this)}
-        />
-      </View>
+      <FlatList
+        style={{paddingTop: 50}}
+        data={this.state.prismSessionHistory}
+        renderItem={this.renderListItem.bind(this)}
+        ListFooterComponent={this.renderListFooter.bind(this)}
+      />
     );
   }
 
@@ -208,7 +205,8 @@ class AssessmentArchive extends Component<PropsType, State> {
           source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          {this.state.selectedPrismSession ? (
+          {this.state.selectedPrismSession 
+          ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   listItemTitleText: {
-    marginTop: 0.5 * scale(TextSize.verySmall),
+    marginTop: 1 * verticalScale(TextSize.verySmall),
     marginLeft: 2 * scale(TextSize.verySmall),
     fontFamily: AppFonts.medium,
     fontSize: scale(TextSize.small),
@@ -312,7 +310,8 @@ const styles = StyleSheet.create({
   },
   listItemContentIcon: {
     flex: 1,
-    margin: scale(10)
+    margin: scale(10),
+    marginRight: scale(20)
   }
 });
 

@@ -81,7 +81,7 @@
     "title": "Meine Einschätzung",
     "defaultHint": "Wie fühlst du dich in diesem Moment?",
     "addEntry": "Neuen Eintrag hinzufügen",
-    "former": "Frühere Einschätzung",
+    "former": "Einschätzung vom:",
     "selectImage": "Foto aus Bibliothek auswählen",
     "newImage": "Neues Foto aufnehmen",
     "followUpTitle": "Folgefragen",
@@ -127,7 +127,7 @@
     "defaultHint": "Hier kannst du deinen aktuellen Sicherheitsplan aufrufen und bearbeiten sowie frühere einsehen.",
     "editHint": "Du kannst die Abschnitte neu anordnen, indem du sie an einen anderen Platz in der Liste ziehst.\nWenn du auf den Stift klickst, kannst du ihren Inhalt bearbeiten.",
     "editSecurityplan": "Sicherheitsplan bearbeiten",
-    "former": "Früherer Sicherheitsplan",
+    "former": "Sicherheitsplan vom:",
     "newSecurityplan": "Neuen Sicherheitsplan erstellen",
     "notification": {
       "copingStrategies": "Eine Bewältigungsstrategie die dir hilft:",
