@@ -182,15 +182,13 @@ class AssessmentImage extends Component<PropsType, State> {
                 AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'denied');
                 this.setState({
                   mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-                  showCameraButton: true,
-                  bubbleVisible: true
+                  showCameraButton: true
                 });
               } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
                 AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'never_ask_again');
                 this.setState({
                   mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-                  showCameraButton: false,
-                  bubbleVisible: true
+                  showCameraButton: false
                 });
               }
             })
