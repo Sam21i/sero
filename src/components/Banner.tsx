@@ -1,4 +1,4 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -48,7 +48,6 @@ class Banner extends Component<PropsType> {
     const max = this.props.defaultChance + this.props.securityplanUpdatedChance + this.props.positiveChance,
       defaultChance = this.props.defaultChance / max,
       securityplanUpdatedChance = this.props.securityplanUpdatedChance / max;
-      
 
     if (this.randomNumber < defaultChance) {
       return <Text style={styles.text}>{this.props.localesHelper.localeString('main.default')}</Text>;

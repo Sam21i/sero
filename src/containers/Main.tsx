@@ -42,10 +42,8 @@ class Main extends Component<PropsType, State> {
     };
   }
 
-
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
-      console.log(this.props.navigation.getParent())
       if (this.props.midataService.isAuthenticated()) {
         this.loadEmergencyContacts();
         this.loadSecurityPlans();
@@ -149,7 +147,10 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <Banner type={BANNER_TYPE.main} navigation={this.props.navigation}/>
+            <Banner
+              type={BANNER_TYPE.main}
+              navigation={this.props.navigation}
+            />
           </View>
           <View
             style={{
