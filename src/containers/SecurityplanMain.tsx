@@ -1,7 +1,7 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, Platform} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
@@ -79,13 +79,11 @@ class SecurityplanMain extends Component<PropsType, State> {
             </View>
           </View>
           <View style={styles.bottomView}>
-            <View style={{height: verticalScale(55)}}></View>
-            <Banner
-              type={BANNER_TYPE.securityplan}
-            />
+            <Banner type={BANNER_TYPE.securityplan} />
             <View
               style={{
-                position: 'relative'
+                position: 'relative',
+                paddingBottom: verticalScale(55)
               }}>
               <AppButton
                 label={this.props.localesHelper.localeString('securityplan.current')}
@@ -99,22 +97,26 @@ class SecurityplanMain extends Component<PropsType, State> {
                 }}
                 isLargeButton
               />
-              <View style={{height: verticalScale(15)}}></View>
-              <AppButton
-                label={this.props.localesHelper.localeString('common.archive')}
-                icon={
-                  '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
-                }
-                position='right'
-                color={colors.grey}
-                onPress={() => {
-                  this.props.navigation.navigate('SecurityplanArchive');
-                }}
-                isLargeButton
-                isDisabled={this.props.userProfile.getSecurityPlanHistory().length === 0}
-              />
+              <View
+                style={{
+                  paddingTop: verticalScale(15),
+                  opacity: this.props.userProfile.getSecurityPlanHistory().length === 0 ? 0 : 1 // hide archive button if nothing in archive
+                }}>
+                <AppButton
+                  label={this.props.localesHelper.localeString('common.archive')}
+                  icon={
+                    '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
+                  }
+                  position='right'
+                  color={colors.grey}
+                  onPress={() => {
+                    this.props.navigation.navigate('SecurityplanArchive');
+                  }}
+                  isLargeButton
+                  isDisabled={this.props.userProfile.getSecurityPlanHistory().length === 0}
+                />
+              </View>
             </View>
-            <View style={{height: verticalScale(55)}}></View>
           </View>
           <View style={styles.emergencyButton}>
             <EmergencyNumberButton />
@@ -155,6 +157,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bottomView: {
+    paddingTop: verticalScale(60),
     flex: 7,
     backgroundColor: colors.white65opac
   }
