@@ -24,6 +24,7 @@ interface Props {
   localesHelper: LocalesHelper;
   navigation: StackNavigationProp<any>;
   onClose: (mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) => void;
+  showNew: boolean;
 }
 
 interface State {
@@ -57,22 +58,26 @@ class AssessmentImageSpeechBubble extends Component<Props, State> {
         {this.renderBubbleTitle('securityplan.bubbleTitle')}
         <View style={styles.actionList}>
           {MENU_ACTIONS.map((action, index) => {
-            return (
-              <TouchableWithoutFeedback
-                onPress={() => this.props.onClose(action.mode)}
-                key={'menu_' + index}>
-                <View
-                  style={styles.actionMenuPoint}
-                  key={'action_' + index}>
-                  <View style={styles.actionBubble}></View>
-                  <View style={styles.actionTextWrapper}>
-                    <Text style={styles.actionText}>
-                      {this.props.localesHelper.localeString('assessment.' + action.name)}
-                    </Text>
+            if (!(!this.props.showNew && action.name === 'newImage')) {
+              return (
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    this.props.onClose(action.mode);
+                  }}
+                  key={'menu_' + index}>
+                  <View
+                    style={styles.actionMenuPoint}
+                    key={'action_' + index}>
+                    <View style={styles.actionBubble}></View>
+                    <View style={styles.actionTextWrapper}>
+                      <Text style={styles.actionText}>
+                        {this.props.localesHelper.localeString('assessment.' + action.name)}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableWithoutFeedback>
-            );
+                </TouchableWithoutFeedback>
+              );
+            }
           })}
         </View>
       </>
