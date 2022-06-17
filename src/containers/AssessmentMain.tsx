@@ -53,7 +53,6 @@ class AssessmentMain extends Component<PropsType, State> {
           </View>
 
           <View style={styles.bottomView}>
-            
             <Banner
               type={BANNER_TYPE.assessment}
               titleColor={colors.gold}
@@ -80,9 +79,10 @@ class AssessmentMain extends Component<PropsType, State> {
                 }}
                 isLargeButton
               />
-              <View style={{
-                paddingTop: verticalScale(15), 
-                opacity: this.props.userProfile.getPrismSessions().length === 0 ? 0 : 1 // hide archive button if nothing in archive
+              <View
+                style={{
+                  paddingTop: verticalScale(15),
+                  opacity: this.props.userProfile.getPrismSessions().length === 0 ? 0 : 1 // hide archive button if nothing in archive
                 }}>
                 <AppButton
                   label={this.props.localesHelper.localeString('common.archive')}

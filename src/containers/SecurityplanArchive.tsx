@@ -105,8 +105,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          {this.state.selectedSecurityplan 
-          ? (
+          {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
