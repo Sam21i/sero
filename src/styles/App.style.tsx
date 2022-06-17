@@ -72,4 +72,39 @@ export const activeOpacity = 0.5;
 export const appLayout = {};
 
 // Styles
-export const appStyles = StyleSheet.create({});
+export const appStyles = StyleSheet.create({
+  listItem: {
+    marginBottom: verticalScale(20),
+    marginRight: scale(80),
+    minHeight: scale(80),
+    backgroundColor: colors.grey,
+    borderTopRightRadius: scale(80),
+    borderBottomRightRadius: scale(80),
+    flexDirection: 'row'
+  },
+  listItemTitleText: {
+    marginLeft: scale(40),
+    fontFamily: AppFonts.medium,
+    fontSize: scale(TextSize.small),
+    color: colors.white
+  },
+  listItemSubtitleText: {
+    marginLeft: scale(40),
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.verySmall),
+    color: colors.black
+  },
+  listItemIcon: {
+    flex: 1,
+    height: '100%'
+  },
+  listItemContent: {
+    flex: 3,
+    justifyContent: 'space-evenly'
+  },
+  listItemContentIcon: {
+    flex: 1,
+    margin: scale(10),
+    marginRight: scale(10)
+  }
+});
