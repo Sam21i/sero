@@ -14,15 +14,15 @@ import {
   Reference
 } from '@i4mi/fhir_r4';
 
-const PRISM_RATIO = Math.SQRT2; // aspec ratio of the PRISM-S plate
-const PRISM_WIDTH = 29.4; // width of the real PRISM-S plate in cm
+export const PRISM_RATIO = Math.SQRT2; // aspec ratio of the PRISM-S plate
+export const PRISM_WIDTH = 29.4; // width of the real PRISM-S plate in cm
 const SVG_WIDTH = 500; // width of the generated SVG image in pixel
-const PRISM_BLACK = '#000000'; // colour of the black disc
-const PRISM_YELLOW = '#fbb300'; // colour of the yellow circle
-const PRISM_PLATE = '#FFFFFF';
-const PRISM_YELLOW_RADIUS_RATIO = 0.2381 / 2; // diameter of yellow circle is 23.81% of plate width
-const PRISM_BLACK_RADIUS_RATIO = 0.1701 / 2; // diameter of black plate is 17,01% of plate width
-const YELLOW_DISC_MARGIN_RATIO = 0.068; // distance of the yellow circle to bottom / right is 6.8% of plate width
+export const PRISM_BLACK = '#000000'; // colour of the black disc
+export const PRISM_YELLOW = '#fbb300'; // colour of the yellow circle
+export const PRISM_PLATE = '#FFFFFF';
+export const PRISM_YELLOW_RADIUS_RATIO = 0.2381 / 2; // diameter of yellow circle is 23.81% of plate width
+export const PRISM_BLACK_RADIUS_RATIO = 0.1701 / 2; // diameter of black plate is 17,01% of plate width
+export const YELLOW_DISC_MARGIN_RATIO = 0.068; // distance of the yellow circle to bottom / right is 6.8% of plate width
 
 export const PRISM_OBSERVATION_CODE = {
   system: 'http://midata.coop/prisms',
@@ -95,7 +95,7 @@ export interface PrismInitializer {
   blackDiscPosition?: Position;
   canvasWidth: number;
   date?: Date;
-  questionnaire?: Questionnaire;
+  questionnaire: Questionnaire;
   image?: {
     contentType: string;
     data: string;
@@ -453,8 +453,8 @@ export default class PrismSession {
    */
   private getDefaultYellowPosition(_canvasWidth: number): Position {
     return new Position(
-      _canvasWidth - (YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth,
-      _canvasWidth / PRISM_RATIO - (YELLOW_DISC_MARGIN_RATIO + 2 * PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth
+      _canvasWidth - (YELLOW_DISC_MARGIN_RATIO +  PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth,
+      _canvasWidth / PRISM_RATIO - (YELLOW_DISC_MARGIN_RATIO +  PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth
     );
   }
 
@@ -476,7 +476,6 @@ export default class PrismSession {
    * @param width?            specify width of the drawn image. optional, default is the given
    *                          with of the PRISM-S session (depending on screen size)
    * @returns                 the SVG as a string
-   * @throws                  an Error if any of the positions is outside the canvas
    */
   private drawSVG(blackDiscPos: Position, yellowCirclePos: Position, width?: number): string {
     const RATIO = width ? width / this.canvasWidth : 1;
@@ -484,17 +483,7 @@ export default class PrismSession {
     const CANVAS_HEIGHT = CANVAS_WIDTH / PRISM_RATIO;
     const YELLOW_RADIUS = CANVAS_WIDTH * PRISM_YELLOW_RADIUS_RATIO;
     const BLACK_RADIUS = CANVAS_WIDTH * PRISM_BLACK_RADIUS_RATIO;
-    if (
-      (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (blackDiscPos.horizontal - BLACK_RADIUS) * RATIO < 0 ||
-      (blackDiscPos.vertical + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (blackDiscPos.vertical - BLACK_RADIUS) * RATIO < 0 ||
-      (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (yellowCirclePos.horizontal - YELLOW_RADIUS) * RATIO < 0 ||
-      (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
-    )
-      throw new Error('Invalid parameters, at least one position is outside the canvas.');
+
     return (
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<svg id="prism_board" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' +
@@ -517,10 +506,10 @@ export default class PrismSession {
       YELLOW_RADIUS +
       '" ' +
       'cy="' +
-      (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO +
+      (yellowCirclePos.vertical) * RATIO +
       '" ' +
       'cx="' +
-      (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO +
+      (yellowCirclePos.horizontal) * RATIO +
       '" ' +
       'fill="' +
       PRISM_YELLOW +
@@ -530,10 +519,10 @@ export default class PrismSession {
       BLACK_RADIUS +
       '" ' +
       'cy="' +
-      (blackDiscPos.vertical + BLACK_RADIUS) * RATIO +
+      (blackDiscPos.vertical) * RATIO +
       '" ' +
       'cx="' +
-      (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO +
+      (blackDiscPos.horizontal) * RATIO +
       '" ' +
       'fill="' +
       PRISM_BLACK +

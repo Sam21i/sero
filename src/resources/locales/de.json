@@ -84,6 +84,8 @@
     "former": "Frühere Einschätzung",
     "selectImage": "Foto aus Bibliothek auswählen",
     "newImage": "Neues Foto aufnehmen",
+    "image": "Foto",
+    "tutorial": "Anleitung",
     "followUpTitle": "Folgefragen",
     "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
     "cancelQuestion": "Willst du wirklich abbrechen?",
@@ -113,8 +115,11 @@
         },
         "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang."
       }
+    },
+    "permissionAndroid": {
+      "title": "\"SERO\" möchte auf Ihre Kamera zugreifen",
+      "message": "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern."
     }
-    
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",

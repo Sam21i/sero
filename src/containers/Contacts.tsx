@@ -82,7 +82,7 @@ class Contacts extends Component<PropsType, State> {
                 showImportButton: true
               });
             } else {
-              AsyncStorage.getItem(STORAGE.PERMISSION_STATUS_ANDROID).then((permission) => {
+              AsyncStorage.getItem(STORAGE.CONTACT_PERMISSION_STATUS_ANDROID).then((permission) => {
                 if (permission === 'denied') {
                   this.setState({
                     showImportButton: true
@@ -261,14 +261,14 @@ class Contacts extends Component<PropsType, State> {
                     // is 'granted' or 'denied'
                     this.getAllAddressBookContacts();
                   } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
-                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'denied');
+                    AsyncStorage.setItem(STORAGE.CONTACT_PERMISSION_STATUS_ANDROID, 'denied');
                     this.setState({
                       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
                       showImportButton: true,
                       bubbleVisible: true
                     });
                   } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-                    AsyncStorage.setItem(STORAGE.PERMISSION_STATUS_ANDROID, 'never_ask_again');
+                    AsyncStorage.setItem(STORAGE.CONTACT_PERMISSION_STATUS_ANDROID, 'never_ask_again');
                     this.setState({
                       mode: CONTACT_SPEECH_BUBBLE_MODE.menu,
                       showImportButton: false,
