@@ -60,7 +60,10 @@ const INITIAL_Y = scale(110);
 
 class AssessmentBoard extends Component<PropsType, State> {
   pan = new Animated.ValueXY({x: INITIAL_X, y: INITIAL_Y});
-  touchableCircleSize: Animated.Value;
+
+  /**
+   * Reference to the prism board layout object.
+   */
   prismBoard: any;
 
   panResponder = PanResponder.create({
@@ -117,6 +120,25 @@ class AssessmentBoard extends Component<PropsType, State> {
     }
   });
 
+  /**
+   * Used because when using the back button on the next page the scaling
+   * will be applied from the previous height of the portrait view and not the
+   * landscape view. Saving the scale in the constructor prevents this from happening.
+   */
+  boardBorderRightWidth: number;
+
+  constructor(props: PropsType) {
+    super(props);
+    this.prismBoard = React.createRef();
+    this.state = {isValid: false, width: 500, height: 200};
+    this.boardBorderRightWidth = scale(20)
+  }
+
+  /**
+   * Needed to keep track of the board width, which is used to
+   * calculate the position and size of the circles inside the board.
+   * @param event
+   */
   onLayout(event) {
     const {x, y, height, width} = event.nativeEvent.layout;
     if (this?.state) {
@@ -125,13 +147,6 @@ class AssessmentBoard extends Component<PropsType, State> {
       newstate.height = height;
       this.setState(newstate);
     }
-  }
-
-  constructor(props: PropsType) {
-    super(props);
-    this.touchableCircleSize = new Animated.Value(80);
-    this.prismBoard = React.createRef();
-    this.state = {isValid: false, width: 500, height: 200};
   }
 
   componentDidMount() {
@@ -231,7 +246,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                   </View>
                 </View>
               </View>
-              <View style={{paddingTop: scale(10), flex: 6, paddingBottom: scale(10)}}>
+              <View style={{paddingTop: this.boardBorderRightWidth/2, flex: 6, paddingBottom: this.boardBorderRightWidth/2, paddingRight: this.boardBorderRightWidth}}>
                 <View
                   onLayout={this.onLayout.bind(this)}
                   ref={this.prismBoard}
