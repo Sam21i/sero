@@ -476,7 +476,6 @@ export default class PrismSession {
    * @param width?            specify width of the drawn image. optional, default is the given
    *                          with of the PRISM-S session (depending on screen size)
    * @returns                 the SVG as a string
-   * @throws                  an Error if any of the positions is outside the canvas
    */
   private drawSVG(blackDiscPos: Position, yellowCirclePos: Position, width?: number): string {
     const RATIO = width ? width / this.canvasWidth : 1;
@@ -484,18 +483,7 @@ export default class PrismSession {
     const CANVAS_HEIGHT = CANVAS_WIDTH / PRISM_RATIO;
     const YELLOW_RADIUS = CANVAS_WIDTH * PRISM_YELLOW_RADIUS_RATIO;
     const BLACK_RADIUS = CANVAS_WIDTH * PRISM_BLACK_RADIUS_RATIO;
-    if (
-      (blackDiscPos.horizontal + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-      blackDiscPos.horizontal * RATIO - BLACK_RADIUS < 0 ||
-      (blackDiscPos.vertical + BLACK_RADIUS) * RATIO > CANVAS_WIDTH ||
-      blackDiscPos.vertical * RATIO - BLACK_RADIUS < 0 ||
-      (yellowCirclePos.horizontal + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (yellowCirclePos.horizontal - YELLOW_RADIUS) * RATIO < 0 ||
-      (yellowCirclePos.vertical + YELLOW_RADIUS) * RATIO > CANVAS_WIDTH ||
-      (yellowCirclePos.vertical - YELLOW_RADIUS) * RATIO < 0
-    ) {
-      throw new Error('Invalid parameters, at least one position is outside the canvas.');
-    }
+
     return (
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<svg id="prism_board" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' +
