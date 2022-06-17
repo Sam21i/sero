@@ -82,7 +82,6 @@ class SecurityplanMain extends Component<PropsType, State> {
             <View style={{height: verticalScale(55)}}></View>
             <Banner
               type={BANNER_TYPE.securityplan}
-              navigation={this.props.navigation}
             />
             <View
               style={{

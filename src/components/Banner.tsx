@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {ColorSchemeName, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
@@ -8,7 +8,7 @@ import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
-  navigation: StackNavigationProp<any>;
+  navigation?: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   userProfile: UserProfile;
   defaultChance?: number;
@@ -37,9 +37,11 @@ class Banner extends Component<PropsType> {
 
   constructor(props: PropsType) {
     super(props);
-    props.navigation.addListener('focus', () => {
-      this.randomNumber = Math.random();
-    });
+    if (props.navigation) {
+      props.navigation.addListener('focus', () => {
+        this.randomNumber = Math.random();
+      });
+    }
   }
 
   renderMessage() {
