@@ -239,13 +239,10 @@ class AssessmentBoard extends Component<PropsType, State> {
                   <View style={[{opacity: this.state.isValid ? 1 : 0.5}]}>
                     <TouchableOpacity
                       onPress={() => {
-                        if (!this.isCirlceOutsideBox()) {
-                          return;
-                        }
                         this.props.navigation.navigate('AssessmentQuestions', {prismData: this.createPrismSession()});
                       }}
                       activeOpacity={0.5}
-                      disabled={!this.state.isValid || this.isCirlceOutsideBox()}
+                      disabled={!this.state.isValid}
                       style={[styles.button]}>
                       <Text style={[styles.buttonText]}>{this.props.localesHelper.localeString('common.save')}</Text>
                     </TouchableOpacity>
