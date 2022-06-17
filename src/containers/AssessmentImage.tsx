@@ -18,6 +18,7 @@ import AssessmentImageSpeechBubble, {
 } from '../components/AssessmentImageSpeechBubble';
 import {STORAGE} from './App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {request, check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -68,6 +69,12 @@ class AssessmentImage extends Component<PropsType, State> {
               });
             }
           });
+        } else if (Platform.OS == 'ios') {
+          check(PERMISSIONS.IOS.CAMERA).then((permission) => {
+            this.setState({
+              showCameraButton: !(permission === 'blocked' || permission === 'unavailable' || permission === 'denied')
+            });
+          });
         }
       }
     });
@@ -108,7 +115,9 @@ class AssessmentImage extends Component<PropsType, State> {
       maxWidth: MAX_IMAGE_SIZE,
       includeBase64: true
     })
-      .then((image) => this.setImage(image))
+      .then((image) => {
+        this.setImage(image);
+      })
       .catch((e) => {
         console.log('Error taking image', e);
       });
@@ -116,7 +125,45 @@ class AssessmentImage extends Component<PropsType, State> {
 
   handleCameraPermissions() {
     if (Platform.OS === 'ios') {
-      this.takeNewImage();
+      request(PERMISSIONS.IOS.CAMERA)
+        .then((result) => {
+          switch (result) {
+            case RESULTS.UNAVAILABLE:
+              this.setState({
+                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                showCameraButton: false,
+                bubbleVisible: true
+              });
+              break;
+            case RESULTS.DENIED:
+              this.setState({
+                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                showCameraButton: false,
+                bubbleVisible: true
+              });
+              break;
+            case RESULTS.LIMITED:
+              {
+                this.takeNewImage();
+              }
+              break;
+            case RESULTS.GRANTED:
+              {
+                this.takeNewImage();
+              }
+              break;
+            case RESULTS.BLOCKED:
+              this.setState({
+                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                showCameraButton: false,
+                bubbleVisible: true
+              });
+              break;
+          }
+        })
+        .catch((error) => {
+          // …
+        });
     } else if (Platform.OS === 'android') {
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
         if (permission) {
