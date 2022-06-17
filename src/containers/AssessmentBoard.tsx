@@ -75,6 +75,10 @@ class AssessmentBoard extends Component<PropsType, State> {
       });
     },
     onPanResponderMove: (evt, gestureState) => {
+      /**
+       * Prevents user from pressing save when dragging the circle.
+       */
+      this.setState({isValid: false});
       let newdx = gestureState.dx,
         newdy = gestureState.dy;
       Animated.event(
@@ -115,7 +119,7 @@ class AssessmentBoard extends Component<PropsType, State> {
       }
       Animated.spring(
         this.pan, // Auto-multiplexed
-        {useNativeDriver: false, toValue: {x: newx, y: newy}, bounciness: 1} // Back to zero
+        {useNativeDriver: false, toValue: {x: newx, y: newy}, bounciness: 0, speed: 1} // Back to zero
       ).start();
     }
   });
@@ -235,11 +239,13 @@ class AssessmentBoard extends Component<PropsType, State> {
                   <View style={[{opacity: this.state.isValid ? 1 : 0.5}]}>
                     <TouchableOpacity
                       onPress={() => {
-                        //this.createPrismSession();
+                        if (!this.isCirlceOutsideBox()) {
+                          return;
+                        }
                         this.props.navigation.navigate('AssessmentQuestions', {prismData: this.createPrismSession()});
                       }}
                       activeOpacity={0.5}
-                      disabled={!this.state.isValid}
+                      disabled={!this.state.isValid || this.isCirlceOutsideBox()}
                       style={[styles.button]}>
                       <Text style={[styles.buttonText]}>{this.props.localesHelper.localeString('common.save')}</Text>
                     </TouchableOpacity>
@@ -271,6 +277,23 @@ class AssessmentBoard extends Component<PropsType, State> {
         </ImageBackground>
       </SafeAreaView>
     );
+  }
+
+
+  private isCirlceOutsideBox() {
+    if (this.pan.x._value < this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
+      return false;
+    }
+    if (this.pan.y._value < this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
+      return false;
+    }
+    if (this.pan.y._value > this.state.width * Math.sqrt(2)  - this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
+      return false;
+    }
+    if (this.pan.x._value > this.state.width - this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
+      return false;
+    }
+    return true;
   }
 
   private createPrismSession(): PrismInitializer {
