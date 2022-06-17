@@ -52,8 +52,6 @@ interface State {
 class AssessmentQuestions extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    console.log(props.route.params);
-
     this.state = {
       prismSession: new PrismSession(props.route.params.prismData),
       quitBubbleVisible: false,
