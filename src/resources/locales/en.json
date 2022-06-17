@@ -1,4 +1,48 @@
 {
+  "assessment": {
+    "addEntry": "Add a new entry",
+    "assessmentFollowUpHint": "Now look at the distance between the yellow dot (yourself) and the black disc (the urge to take your own life).",
+    "bubbleTitle": "What do you like to do?",
+    "cancelQuestion": "Do you really want to cancel?",
+    "defaultHint": "How do you feel at the moment?",
+    "followUpTitle": " Follow-up questions",
+    "former": "Previous assessment",
+    "goToEmergencyContact": "Call someone",
+    "goToMainPage": "Go to the overview page",
+    "goTosecurityplan": "View safety plan",
+    "image": "Photo",
+    "newImage": "Take a new photo",
+    "permissionAndroid": {
+      "message": "Access to the camera allows you to take a photo of an assessment and then save it in the app.",
+      "title": "\"SERO\" wants to access the camera"
+    },
+    "resources": {
+      "intro": {
+        "description": "With PRISM-S you can assess how strong your urge is to take your life.",
+        "explanation": {
+          "item1": "The white area represents your life or living space.",
+          "item2": "The yellow dot is you in your life.",
+          "item3": "The black disc represents your current urge to take your life."
+        },
+        "title": "What is PRISM-S?"
+      },
+      "tutorial": {
+        "description": "Place the black disk in your living space (white area).",
+        "distance": "The greater the distance, the smaller the urge to take one's own life. The smaller the distance, the greater the urge.",
+        "questions": {
+          "hint": "Ask yourself the questions:",
+          "questionList": {
+            "item1": "What place in my life is currently occupied by my urge to take my life?",
+            "item2": "How close or how far away from me (yellow dot) is this urge right now?"
+          }
+        },
+        "title": "Instructions"
+      }
+    },
+    "selectImage": "Select a photo from library",
+    "title": "My assessment",
+    "tutorial": "Instructions"
+  },
   "common": {
     "archive": "Archive",
     "back": "Back",
@@ -8,11 +52,14 @@
     "given": "First name",
     "loading": "Loading data",
     "next": "Next",
+    "no": "No",
     "ok": "OK",
     "options": "Options",
     "phone": "Telephone",
     "save": "Save",
-    "search": "Search"
+    "search": "Search",
+    "start": "Start",
+    "yes": "Yes"
   },
   "contacts": {
     "addContact": "Add contact",
@@ -34,6 +81,10 @@
       }
     },
     "importContact": "Import contact",
+    "permissionAndroid": {
+      "message": "Access to contacts allows you to import the phone numbers of important people into the SERO app and call them directly.",
+      "title": "\"SERO\" wants to access your contacts"
+    },
     "selectContact": "Select contact",
     "title": "My contacts"
   },
@@ -43,9 +94,10 @@
   "main": {
     "callEmergencyBottom": "call",
     "callEmergencyTop": "Emergency",
-    "default": "Discover the SERO app now!\nGet started...",
+    "default": "Discover the SERO app now! Get started...",
     "greeting": "Hello {{name}}",
-    "myEnvironmentTitle": "Call my contacts"
+    "myEnvironmentTitle": "Call my contacts",
+    "securityplanUpdated": "Is your safety plan still up to date?"
   },
   "onboarding": {
     "assessment": {
@@ -69,9 +121,6 @@
       "title": "My safety plan"
     }
   },
-  "prismS": {
-    "title": "My\nassessment"
-  },
   "securityplan": {
     "addEntry": "Add entry",
     "alertLups": {
@@ -83,6 +132,10 @@
     "defaultHint": "Here you can access and edit your current safety plan and view previous ones.",
     "editHint": "You can rearrange the sections by dragging them to another place in the list.\nIf you click on the pencil, you can edit their content.",
     "editSecurityplan": "Edit safety plan",
+    "examples": {
+      "copingStrategies": "e.g. drawing, relaxation exercises, cooking, listening to music, etc.",
+      "distractionStrategies": "e.g. meeting friends, walking in the forest, going to the cinema, biking, etc."
+    },
     "former": "Previous safety plan",
     "newSecurityplan": "Create new safety plan",
     "notification": {
@@ -100,7 +153,6 @@
   },
   "welcome": {
     "greetingText": "Glad to have you here!",
-    "start": "Start",
     "title": "Welcome."
   }
 }
