@@ -1,5 +1,14 @@
 import React, {Component} from 'react';
-import {FlatList, Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,6 +31,7 @@ import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '..
 import AssessmentEndOptions from './AssessmentEndOptions';
 import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import EditPencil from '../resources/images/icons/securityplan/pencil.svg';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -42,7 +52,6 @@ interface State {
 class AssessmentQuestions extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-
     this.state = {
       prismSession: new PrismSession(props.route.params.prismData),
       quitBubbleVisible: false,
@@ -128,7 +137,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
     } catch (e) {}
     return (
       <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-        <View style={{height: verticalScale(55)}}></View>
+        <View style={{height: verticalScale(55)}} />
         <Text
           style={{
             paddingBottom: scale(10),
@@ -140,21 +149,34 @@ class AssessmentQuestions extends Component<PropsType, State> {
         </Text>
 
         {svgImage !== '' && (
-          <SvgCss
-            xml={svgImage}
-            style={[
-              styles.image,
-              {
-                shadowColor: colors.black,
-                shadowOffset: {
-                  width: scale(5),
-                  height: scale(5)
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: scale(5)
-              }
-            ]}
-          />
+          <View style={{flexDirection:'row', alignItems: 'flex-end'}}>
+            <SvgCss
+              xml={svgImage}
+              style={[
+                styles.image,
+                {
+                  shadowColor: colors.black,
+                  shadowOffset: {
+                    width: scale(5),
+                    height: scale(5)
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: scale(5)
+                }
+              ]}
+            />
+            <TouchableOpacity
+                style={{marginLeft: scale(10), marginBottom: scale(5)}}
+              onPress={() => {
+                this.props.navigation.pop(1);
+              }}>
+              <EditPencil
+                  style={styles.editIcon}
+                  width={scale(30)}
+                  height={scale(50)}
+              />
+            </TouchableOpacity>
+          </View>
         )}
         {base64Image.contentType !== '' && (
           <Image
@@ -173,6 +195,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             source={{uri: 'data:' + base64Image.contentType + ';base64,' + base64Image.data}}
           />
         )}
+
         <Text
           style={{
             paddingBottom: scale(10),
@@ -343,7 +366,10 @@ const styles = StyleSheet.create({
     height: scale(50),
     width: scale(225),
     marginBottom: scale(20)
-  }
+  },
+  editIcon: {
+    alignSelf: 'center'
+  },
 });
 
 function mapStateToProps(state: AppStore) {
