@@ -64,6 +64,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
       <FlatList
         data={this.state.securityplanHistory}
         renderItem={this.renderListItem.bind(this)}
+        alwaysBounceVertical={false}
         ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
@@ -127,6 +128,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
       <FlatList
         data={filteredModules}
         renderItem={this.renderSecurityplanItem.bind(this)}
+        alwaysBounceVertical={false}
         ListHeaderComponent={this.renderListHeaderComponent}
         ListFooterComponent={this.renderFooterComponent.bind(this)}
       />
