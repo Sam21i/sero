@@ -83,7 +83,7 @@
     "defaultHint": "Qui puoi accedere e modificare il tuo attuale piano di sicurezza e visualizzare quelli precedenti.",
     "editHint": "Puoi riorganizzare le sezioni trascinandole in un altro posto della lista.\nSe clicchi sulla matita, puoi modificare il loro contenuto.",
     "editSecurityplan": "Modifica il piano di sicurezza",
-    "former": "Piano di sicurezza del",
+    "former": "Piano di sicurezza precedente",
     "newSecurityplan": "Creare un nuovo piano di sicurezza",
     "notification": {
       "copingStrategies": "Una strategia di risposta che ti aiuta:",
