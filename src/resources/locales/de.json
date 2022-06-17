@@ -121,6 +121,50 @@
       "title": "Mein Sicherheitsplan"
     }
   },
+  "assessment": {
+    "title": "Meine Einschätzung",
+    "defaultHint": "Wie fühlst du dich in diesem Moment?",
+    "addEntry": "Neuen Eintrag hinzufügen",
+    "former": "Frühere Einschätzung",
+    "selectImage": "Foto aus Bibliothek auswählen",
+    "newImage": "Neues Foto aufnehmen",
+    "image": "Foto",
+    "tutorial": "Anleitung",
+    "followUpTitle": "Folgefragen",
+    "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
+    "cancelQuestion": "Willst du wirklich abbrechen?",
+    "goTosecurityplan": "Sicherheitsplan einsehen",
+    "goToMainPage": "Zur Übersichtsseite gehen",
+    "goToEmergencyContact": "Jemanden anrufen",
+    "bubbleTitle": "Was möchtest du tun?",
+    "resources": {
+      "intro": {
+        "title": "Was ist PRISM-S?",
+        "description": "Mit PRISM-S kannst du einschätzen, wie stark dein Drang ist, dir das Leben zu nehmen.",
+        "explanation": {
+          "item1": "Die weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar.",
+          "item2": "Der gelbe Punkt bist du in deinem Leben.",
+          "item3": "Die schwarze Scheibe steht für deinen momentanen Drang, dir das Leben zu nehmen."
+        }
+      },
+      "tutorial": {
+        "title": "Anleitung",
+        "description": "Platziere die schwarze Scheibe in deinem Lebensraum (weisse Fläche).",
+        "questions": {
+          "hint": "Stelle dir dabei die Fragen:",
+          "questionList": {
+            "item1": "Welchen Platz in meinern Leben nimmt zurzeit mein Drang ein, mir das Leben zu nehmen?",
+            "item2": "Wie nah oder wie weit weg von mir (gelber Punkt) ist dieser Drang im Moment?"
+          }
+        },
+        "distance": "Je grösser die Distanz, desto kleiner der Drang sich das Leben zu nehmen. Je kleiner die Distanz desto grösser der Drang."
+      }
+    },
+    "permissionAndroid": {
+      "title": "\"SERO\" möchte auf Ihre Kamera zugreifen",
+      "message": "Der Zugriff auf die Kamera verbessert die Benutzerfreundlichkeit, indem er dem Benutzer die Möglichkeit gibt, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern."
+    }
+  },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
     "alertLups": {

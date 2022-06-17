@@ -17,6 +17,7 @@ import AppButton from '../components/AppButton';
 import {colors, scale, verticalScale} from '../styles/App.style';
 import {CarePlan} from '@i4mi/fhir_r4';
 import {PrismResources} from '../model/PrismSession';
+import Orientation from "react-native-orientation-locker";
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -40,12 +41,18 @@ class Main extends Component<PropsType, State> {
     this.state = {
       emergencyContactsLoaded: false
     };
-    if (this.props.midataService.isAuthenticated()) {
-      this.loadEmergencyContacts();
-      this.loadSecurityPlans();
-      this.loadPrismSessions();
-      this.props.uploadPendingResources();
-    }
+    Orientation.lockToPortrait();
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      if (this.props.midataService.isAuthenticated()) {
+        this.loadEmergencyContacts();
+        this.loadSecurityPlans();
+        this.loadPrismSessions();
+        this.props.uploadPendingResources();
+      }
+    });
   }
 
   editContacts(): void {
@@ -53,6 +60,9 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
+    this.setState({
+      emergencyContactsLoaded: this.props.userProfile.getEmergencyContacts().length > 1
+    });
     try {
       this.props.midataService
         .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
@@ -79,7 +89,7 @@ class Main extends Component<PropsType, State> {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.log(error);
     }
   }
 
@@ -139,7 +149,10 @@ class Main extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <Banner type={BANNER_TYPE.main} />
+            <Banner
+              type={BANNER_TYPE.main}
+              navigation={this.props.navigation}
+            />
           </View>
           <View
             style={{
