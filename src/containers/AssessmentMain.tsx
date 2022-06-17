@@ -57,6 +57,7 @@ class AssessmentMain extends Component<PropsType, State> {
             <Banner
               type={BANNER_TYPE.assessment}
               titleColor={colors.gold}
+              navigation={this.props.navigation}
             />
             <View
               style={{

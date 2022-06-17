@@ -80,7 +80,10 @@ class SecurityplanMain extends Component<PropsType, State> {
           </View>
           <View style={styles.bottomView}>
             <View style={{height: verticalScale(55)}}></View>
-            <Banner type={BANNER_TYPE.securityplan} />
+            <Banner
+              type={BANNER_TYPE.securityplan}
+              navigation={this.props.navigation}
+            />
             <View
               style={{
                 position: 'relative'
