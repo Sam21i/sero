@@ -45,8 +45,8 @@ class Main extends Component<PropsType, State> {
 
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
+      console.log(this.props.navigation.getParent())
       if (this.props.midataService.isAuthenticated()) {
-        
         this.loadEmergencyContacts();
         this.loadSecurityPlans();
         this.loadPrismSessions();
@@ -60,29 +60,23 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-    if (this.props.userProfile.getEmergencyContacts().length <= 1) {
-      this.setState({
-        emergencyContactsLoaded: false
-      });
-      try {
-        this.props.midataService
-          .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-          .then((contacts) => {
-            this.props.setEmergencyContacts(contacts);
-            this.setState({
-              emergencyContactsLoaded: true
-            });
-          })
-          .catch((e) => {
-            console.log('could not load related persons', e);
+    this.setState({
+      emergencyContactsLoaded: this.props.userProfile.getEmergencyContacts().length > 1
+    });
+    try {
+      this.props.midataService
+        .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+        .then((contacts) => {
+          this.props.setEmergencyContacts(contacts);
+          this.setState({
+            emergencyContactsLoaded: true
           });
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      this.setState({
-        emergencyContactsLoaded: true
-      });
+        })
+        .catch((e) => {
+          console.log('could not load related persons', e);
+        });
+    } catch (e) {
+      console.log(e);
     }
   }
 
