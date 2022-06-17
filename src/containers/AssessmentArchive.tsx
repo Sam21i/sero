@@ -81,6 +81,7 @@ class AssessmentArchive extends Component<PropsType, State> {
       <FlatList
         data={this.state.prismSessionHistory}
         renderItem={this.renderListItem.bind(this)}
+        alwaysBounceVertical={false}
         ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
@@ -116,6 +117,7 @@ class AssessmentArchive extends Component<PropsType, State> {
       <FlatList
         data={this.state.selectedPrismSession?.getQuestionnaireData().getQuestions()}
         ListHeaderComponent={this.renderPrismSessionHeader.bind(this)}
+        alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
         ListFooterComponent={this.renderFooterComponent.bind(this)}
         keyExtractor={(item) => item.id}
