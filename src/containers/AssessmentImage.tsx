@@ -115,44 +115,48 @@ class AssessmentImage extends Component<PropsType, State> {
   }
 
   handleCameraPermissions() {
-    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
-      if (permission) {
-        this.takeNewImage();
-      } else {
-        PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-          title: this.props.localesHelper.localeString('assessment.permissionAndroid.title'),
-          message: this.props.localesHelper.localeString('assessment.permissionAndroid.message'),
-          buttonPositive: this.props.localesHelper.localeString('common.ok')
-        })
-          .then((permission) => {
-            AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
-            if (permission === PermissionsAndroid.RESULTS.GRANTED) {
-              this.takeNewImage();
-            } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
-              AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'denied');
-              this.setState({
-                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-                showCameraButton: true,
-                bubbleVisible: true
-              });
-            } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-              AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'never_ask_again');
-              this.setState({
-                mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
-                showCameraButton: false,
-                bubbleVisible: true
-              });
-            }
+    if (Platform.OS === 'ios') {
+      this.takeNewImage();
+    } else if (Platform.OS === 'android') {
+      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
+        if (permission) {
+          this.takeNewImage();
+        } else {
+          PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+            title: this.props.localesHelper.localeString('assessment.permissionAndroid.title'),
+            message: this.props.localesHelper.localeString('assessment.permissionAndroid.message'),
+            buttonPositive: this.props.localesHelper.localeString('common.ok')
           })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
-    });
+            .then((permission) => {
+              AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
+              if (permission === PermissionsAndroid.RESULTS.GRANTED) {
+                this.takeNewImage();
+              } else if (permission === PermissionsAndroid.RESULTS.DENIED) {
+                AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'denied');
+                this.setState({
+                  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                  showCameraButton: true,
+                  bubbleVisible: true
+                });
+              } else if (permission === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+                AsyncStorage.setItem(STORAGE.CAMERA_PERMISSION_STATUS_ANDROID, 'never_ask_again');
+                this.setState({
+                  mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.menu,
+                  showCameraButton: false,
+                  bubbleVisible: true
+                });
+              }
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      });
+    }
   }
 
   onBubbleClose(mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) {
-    mode === ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new ? this.takeNewImage() : this.pickImage();
+    mode === ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new ? this.handleCameraPermissions() : this.pickImage();
   }
 
   render() {
