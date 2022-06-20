@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  FlatList,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -250,9 +251,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
       <SafeAreaView
         style={styles.container}
         edges={['top']}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+       
           <ImageBackground
             source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
             resizeMode='cover'
@@ -301,7 +300,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
               <EmergencyNumberButton />
             </View>
           </ImageBackground>
-        </KeyboardAvoidingView>
+     
       </SafeAreaView>
     );
   }
