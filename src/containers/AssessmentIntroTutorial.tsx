@@ -91,10 +91,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
                   color={colors.gold}
                   onPress={() => {
                     AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'false').then(() => {
-                      this.props.navigation.reset({
-                        index: 0,
-                        routes: [{name: 'AssessmentSessionStackScreen'}]
-                      });
+                      this.props.navigation.navigate('AssessmentSessionStackScreen');
                     });
                   }}
                   isLargeButton
