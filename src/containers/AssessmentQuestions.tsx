@@ -266,6 +266,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <View style={styles.bottomView}>
               {!this.state.quitBubbleVisible && (
                 <KeyboardAwareFlatList
+                  removeClippedSubviews={false}
                   extraScrollHeight={verticalScale(50)}
                   ListHeaderComponent={this.renderHeader.bind(this)}
                   data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
