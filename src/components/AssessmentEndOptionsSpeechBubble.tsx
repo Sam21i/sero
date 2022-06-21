@@ -51,7 +51,7 @@ class AssessmentEndOptionsSpeechBubble extends Component<Props, State> {
         <CancelButton
           width={scale(35)}
           height={scale(35)}
-          onPress={() => this.props.navigation.navigate('AssessmentQuestions')}
+          onPress={() => this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'})}
         />
       </View>
     );
