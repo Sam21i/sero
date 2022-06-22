@@ -1,14 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Image,
-  ImageBackground,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Orientation from 'react-native-orientation-locker';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -149,7 +140,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
         </Text>
 
         {svgImage !== '' && (
-          <View style={{flexDirection:'row', alignItems: 'flex-end'}}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
             <SvgCss
               xml={svgImage}
               style={[
@@ -166,14 +157,14 @@ class AssessmentQuestions extends Component<PropsType, State> {
               ]}
             />
             <TouchableOpacity
-                style={{marginLeft: scale(10), marginBottom: scale(5)}}
+              style={{marginLeft: scale(10), marginBottom: scale(5)}}
               onPress={() => {
                 this.props.navigation.pop(1);
               }}>
               <EditPencil
-                  style={styles.editIcon}
-                  width={scale(30)}
-                  height={scale(50)}
+                style={styles.editIcon}
+                width={scale(30)}
+                height={scale(50)}
               />
             </TouchableOpacity>
           </View>
@@ -250,58 +241,55 @@ class AssessmentQuestions extends Component<PropsType, State> {
       <SafeAreaView
         style={styles.container}
         edges={['top']}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <ImageBackground
-            source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
-            resizeMode='cover'
-            style={styles.backgroundImage}>
-            <View style={styles.topView}>
-              <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>
-                  {this.props.localesHelper.localeString('assessment.addEntry')}
-                </Text>
-              </View>
+        <ImageBackground
+          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          resizeMode='cover'
+          style={styles.backgroundImage}>
+          <View style={styles.topView}>
+            <View style={styles.topTextView}>
+              <Text style={styles.topViewTextTitle}>
+                {this.props.localesHelper.localeString('assessment.addEntry')}
+              </Text>
             </View>
-            <View style={styles.bottomView}>
-              {!this.state.quitBubbleVisible && (
-                <KeyboardAwareFlatList
-                  extraScrollHeight={verticalScale(50)}
-                  ListHeaderComponent={this.renderHeader.bind(this)}
-                  data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
-                  renderItem={(listElement) => (
-                    <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-                      <Question
-                        question={listElement.item}
-                        onChangeText={this.onChangeText.bind(this)}
-                      />
-                    </View>
-                  )}
-                  keyExtractor={(item) => item.id}
-                  ListFooterComponent={this.renderFooter.bind(this)}
-                />
-              )}
-              {this.state.quitBubbleVisible && (
-                <AssessmentQuitSpeechBubble
-                  navigation={this.props.navigation}
-                  localesHelper={this.props.localesHelper}
-                  onClose={this.onCloseQuit.bind(this)}
-                />
-              )}
-              {this.state.endBubbleVisible && (
-                <AssessmentEndOptions
-                  navigation={this.props.navigation}
-                  localesHelper={this.props.localesHelper}
-                  onClose={this.onCloseEnd.bind(this)}
-                />
-              )}
-            </View>
-            <View style={styles.emergencyButton}>
-              <EmergencyNumberButton />
-            </View>
-          </ImageBackground>
-        </KeyboardAvoidingView>
+          </View>
+          <View style={styles.bottomView}>
+            {!this.state.quitBubbleVisible && (
+              <KeyboardAwareFlatList
+                removeClippedSubviews={false}
+                extraScrollHeight={verticalScale(50)}
+                ListHeaderComponent={this.renderHeader.bind(this)}
+                data={this.state.prismSession?.getQuestionnaireData().getQuestions()}
+                renderItem={(listElement) => (
+                  <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                    <Question
+                      question={listElement.item}
+                      onChangeText={this.onChangeText.bind(this)}
+                    />
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+                ListFooterComponent={this.renderFooter.bind(this)}
+              />
+            )}
+            {this.state.quitBubbleVisible && (
+              <AssessmentQuitSpeechBubble
+                navigation={this.props.navigation}
+                localesHelper={this.props.localesHelper}
+                onClose={this.onCloseQuit.bind(this)}
+              />
+            )}
+            {this.state.endBubbleVisible && (
+              <AssessmentEndOptions
+                navigation={this.props.navigation}
+                localesHelper={this.props.localesHelper}
+                onClose={this.onCloseEnd.bind(this)}
+              />
+            )}
+          </View>
+          <View style={styles.emergencyButton}>
+            <EmergencyNumberButton />
+          </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
@@ -369,7 +357,7 @@ const styles = StyleSheet.create({
   },
   editIcon: {
     alignSelf: 'center'
-  },
+  }
 });
 
 function mapStateToProps(state: AppStore) {
