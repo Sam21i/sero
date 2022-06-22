@@ -144,7 +144,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <SvgCss
               xml={svgImage}
               style={[
-                styles.image,
+                styles.imageSvg,
                 {
                   shadowColor: colors.black,
                   shadowOffset: {
@@ -172,7 +172,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
         {base64Image.contentType !== '' && (
           <Image
             style={[
-              styles.image,
+              styles.imageBase64,
               {
                 shadowColor: colors.black,
                 shadowOffset: {
@@ -334,9 +334,16 @@ const styles = StyleSheet.create({
     flex: 7,
     backgroundColor: colors.white65opac
   },
-  image: {
-    width: scale(297 * 0.75),
-    height: scale(210 * 0.75),
+  imageBase64: {
+    width: '100%',
+    maxHeight: scale(300),
+    minHeight: scale(225),
+    resizeMode: 'contain',
+    marginVertical: scale(15)
+  },
+  imageSvg: {
+    width: scale(297 * 0.9),
+    height: scale(210 * 0.9),
     marginVertical: scale(15)
   },
   icon: {

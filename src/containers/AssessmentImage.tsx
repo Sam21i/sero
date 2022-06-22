@@ -69,7 +69,7 @@ class AssessmentImage extends Component<PropsType, State> {
               });
             }
           });
-        } else if (Platform.OS == 'ios') {
+        } else if (Platform.OS === 'ios') {
           check(PERMISSIONS.IOS.CAMERA).then((permission) => {
             this.setState({
               showCameraButton: !(permission === 'blocked' || permission === 'unavailable' || permission === 'denied')
@@ -160,9 +160,10 @@ class AssessmentImage extends Component<PropsType, State> {
               });
               break;
           }
+          AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
         })
-        .catch((error) => {
-          // …
+        .catch((e) => {
+          console.log(e);
         });
     } else if (Platform.OS === 'android') {
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {

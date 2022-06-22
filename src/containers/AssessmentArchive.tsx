@@ -263,8 +263,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white65opac
   },
   image: {
-    width: scale(297 * 0.75),
-    height: verticalScale(210 * 0.75),
+    width: '100%',
+    height: scale(300),
+    resizeMode: 'contain',
     marginVertical: scale(15)
   },
   icon: {
