@@ -160,9 +160,10 @@ class AssessmentImage extends Component<PropsType, State> {
               });
               break;
           }
+          AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
         })
-        .catch((error) => {
-          // …
+        .catch((e) => {
+          console.log(e);
         });
     } else if (Platform.OS === 'android') {
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA).then((permission) => {
