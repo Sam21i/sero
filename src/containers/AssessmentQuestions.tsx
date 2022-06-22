@@ -23,7 +23,7 @@ import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
-import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   imageBase64: {
     width: '100%',
     maxHeight: scale(300),
-    minHeight: scale(200),
+    minHeight: scale(225),
     resizeMode: 'contain',
     marginVertical: scale(15)
   },
