@@ -69,7 +69,7 @@ class AssessmentImage extends Component<PropsType, State> {
               });
             }
           });
-        } else if (Platform.OS == 'ios') {
+        } else if (Platform.OS === 'ios') {
           check(PERMISSIONS.IOS.CAMERA).then((permission) => {
             this.setState({
               showCameraButton: !(permission === 'blocked' || permission === 'unavailable' || permission === 'denied')

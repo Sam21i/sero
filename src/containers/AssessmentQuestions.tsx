@@ -23,7 +23,7 @@ import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
 import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {SvgCss} from 'react-native-svg';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
@@ -149,7 +149,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
         </Text>
 
         {svgImage !== '' && (
-          <View style={{flexDirection:'row', alignItems: 'flex-end'}}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
             <SvgCss
               xml={svgImage}
               style={[
@@ -166,14 +166,14 @@ class AssessmentQuestions extends Component<PropsType, State> {
               ]}
             />
             <TouchableOpacity
-                style={{marginLeft: scale(10), marginBottom: scale(5)}}
+              style={{marginLeft: scale(10), marginBottom: scale(5)}}
               onPress={() => {
                 this.props.navigation.pop(1);
               }}>
               <EditPencil
-                  style={styles.editIcon}
-                  width={scale(30)}
-                  height={scale(50)}
+                style={styles.editIcon}
+                width={scale(30)}
+                height={scale(50)}
               />
             </TouchableOpacity>
           </View>
@@ -347,9 +347,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white65opac
   },
   image: {
-    width: scale(297 * 0.75),
-    height: scale(210 * 0.75),
-    marginVertical: scale(15)
+    width: '100%',
+    height: scale(300),
+    resizeMode: 'contain',
+    marginVertical: scale(15),
   },
   icon: {
     flex: 1,
@@ -369,7 +370,7 @@ const styles = StyleSheet.create({
   },
   editIcon: {
     alignSelf: 'center'
-  },
+  }
 });
 
 function mapStateToProps(state: AppStore) {
