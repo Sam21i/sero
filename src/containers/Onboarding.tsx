@@ -96,7 +96,7 @@ class Onboarding extends Component<PropsType, State> {
     this.props.navigation.navigate('MainStackScreen');
   }
 
-  _renderItem = ({item}) => {
+  renderItem = ({item}) => {
     return (
       <SafeAreaView
         style={{flex: 1}}
@@ -132,7 +132,7 @@ class Onboarding extends Component<PropsType, State> {
     );
   };
 
-  _renderPagination = (activeIndex: number) => {
+  renderPagination = (activeIndex: number) => {
     return (
       <SafeAreaView style={styles.paginationContainer}>
         <View style={styles.paginationDots}>
@@ -167,9 +167,9 @@ class Onboarding extends Component<PropsType, State> {
     return (
       <AppIntroSlider
         ref={(ref: AppIntroSlider) => (this.slider = ref)}
-        renderItem={this._renderItem}
+        renderItem={this.renderItem}
         data={ON_BOARDING_ITEMS}
-        renderPagination={this._renderPagination}
+        renderPagination={this.renderPagination}
       />
     );
   }

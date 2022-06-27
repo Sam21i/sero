@@ -138,7 +138,7 @@ class Contacts extends Component<PropsType, State> {
     );
   };
 
-  _renderListFooter() {
+  renderListFooter() {
     return (
       <AppButton
         label={this.props.localesHelper.localeString('common.back')}
@@ -192,7 +192,7 @@ class Contacts extends Component<PropsType, State> {
               alwaysBounceVertical={false}
               renderItem={this.renderContactListItem.bind(this)}
               showsHorizontalScrollIndicator={false}
-              ListFooterComponent={this._renderListFooter.bind(this)}
+              ListFooterComponent={this.renderListFooter.bind(this)}
             />
           </View>
 

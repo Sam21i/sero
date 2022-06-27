@@ -27,7 +27,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     Linking.openURL('tel:' + _number.replace(/\s/g, ''));
   }
 
-  _renderEmergencyContacts({item}): JSX.Element {
+  renderEmergencyContacts({item}): JSX.Element {
     return (
       <EmergencyContactTile
         contact={item}
@@ -36,7 +36,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     );
   }
 
-  _renderItemSeparator() {
+  renderItemSeparator() {
     return <View style={styles.itemSeparator}></View>;
   }
 
@@ -67,8 +67,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
             showsVerticalScrollIndicator={false}
             horizontal
             data={this.props.emergencyContacts}
-            renderItem={this._renderEmergencyContacts.bind(this)}
-            ItemSeparatorComponent={this._renderItemSeparator.bind(this)}
+            renderItem={this.renderEmergencyContacts.bind(this)}
+            ItemSeparatorComponent={this.renderItemSeparator.bind(this)}
             onContentSizeChange={() => {
               this.flatListRef.scrollToEnd();
               this.flatListRef.flashScrollIndicators();
