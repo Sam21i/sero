@@ -12,23 +12,17 @@ import * as it from '../resources/locales/it.json';
 const DEFAULT_LOCALE = 'de';
 let translationKey: {[index: string]: any} = {de: de, fr: fr, it: it};
 
-/**
- * Initialisation of languages :
- */
-
+// Initialisation of languages:
 // Should the app fallback to Deutsh if user locale doesn't exists
 I18n.defaultLocale = DEFAULT_LOCALE;
 I18n.fallbacks = true;
 
 const translate = memoize(
-  (key: string, config: any) => I18n.t(key, config), // memoized function
-  (key: string, config: any) => (config ? key + JSON.stringify(config) : key) // index resolver
+  (key: string, config: any) => I18n.t(key, config),
+  (key: string, config: any) => (config ? key + JSON.stringify(config) : key)
 );
 
-/**
- * Store object :
- */
-
+//Store object:
 export default class LocalesHelper {
   currentLang: string | undefined;
   private static isAppLocalesLoaded = false;

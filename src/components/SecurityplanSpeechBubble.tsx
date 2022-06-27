@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import CancelButton from '../resources/images/common/cancel.svg';
-import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 export enum SECURITYPLAN_SPEECH_BUBBLE_MODE {
   edit = 'EDIT',
@@ -42,7 +42,8 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
     return (
       <View style={styles.titleBar}>
         <Text style={styles.titlebarText}>{this.props.localesHelper.localeString(_translateString)}</Text>
-        <CancelButton
+        <SvgCss
+          xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
           height={scale(35)}
           onPress={() => this.props.onClose(this.state.mode)}
@@ -89,7 +90,8 @@ class SecurityplanSpeechBubble extends Component<SecurityplanBubbleProps, Securi
           width: '100%',
           marginLeft: scale(57.5)
         }}>
-        <PersonIcon
+        <SvgCss
+          xml={images.imagesSVG.common.person}
           width={80}
           height={80}
           style={{position: 'absolute', top: 315, alignSelf: 'center'}}

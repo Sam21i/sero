@@ -255,8 +255,11 @@ export default class PrismSession {
   getLocaleDate(locale: string): string {
     if (this.date) {
       return new Intl.DateTimeFormat(locale, {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: 'numeric', minute: 'numeric'
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
       }).format(new Date(this.date));
     } else {
       return '';
@@ -453,8 +456,8 @@ export default class PrismSession {
    */
   private getDefaultYellowPosition(_canvasWidth: number): Position {
     return new Position(
-      _canvasWidth - (YELLOW_DISC_MARGIN_RATIO +  PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth,
-      _canvasWidth / PRISM_RATIO - (YELLOW_DISC_MARGIN_RATIO +  PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth
+      _canvasWidth - (YELLOW_DISC_MARGIN_RATIO + PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth,
+      _canvasWidth / PRISM_RATIO - (YELLOW_DISC_MARGIN_RATIO + PRISM_YELLOW_RADIUS_RATIO) * _canvasWidth
     );
   }
 
@@ -506,10 +509,10 @@ export default class PrismSession {
       YELLOW_RADIUS +
       '" ' +
       'cy="' +
-      (yellowCirclePos.vertical) * RATIO +
+      yellowCirclePos.vertical * RATIO +
       '" ' +
       'cx="' +
-      (yellowCirclePos.horizontal) * RATIO +
+      yellowCirclePos.horizontal * RATIO +
       '" ' +
       'fill="' +
       PRISM_YELLOW +
@@ -519,10 +522,10 @@ export default class PrismSession {
       BLACK_RADIUS +
       '" ' +
       'cy="' +
-      (blackDiscPos.vertical) * RATIO +
+      blackDiscPos.vertical * RATIO +
       '" ' +
       'cx="' +
-      (blackDiscPos.horizontal) * RATIO +
+      blackDiscPos.horizontal * RATIO +
       '" ' +
       'fill="' +
       PRISM_BLACK +

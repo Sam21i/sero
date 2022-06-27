@@ -20,16 +20,10 @@ import LocalesHelper from '../locales';
 import * as midataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import MidataService from '../model/MidataService';
-import {
-  activeOpacity,
-  AppFonts,
-  colors,
-  scale,
-  TextSize,
-  verticalScale
-} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {SvgCss} from 'react-native-svg';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -135,7 +129,7 @@ class AssessmentBoard extends Component<PropsType, State> {
     super(props);
     this.prismBoard = React.createRef();
     this.state = {isValid: false, width: 500, height: 200};
-    this.boardBorderRightWidth = scale(20)
+    this.boardBorderRightWidth = scale(20);
   }
 
   /**
@@ -171,7 +165,7 @@ class AssessmentBoard extends Component<PropsType, State> {
       position: 'absolute',
       transform: [
         {translateX: -this.state.width * PRISM_BLACK_RADIUS_RATIO},
-        {translateY: -this.state.width * PRISM_BLACK_RADIUS_RATIO},
+        {translateY: -this.state.width * PRISM_BLACK_RADIUS_RATIO}
       ]
     };
     const targetCircle = {
@@ -187,7 +181,7 @@ class AssessmentBoard extends Component<PropsType, State> {
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <SafeAreaView
@@ -206,9 +200,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       onPress={() => {
                         this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
                       }}
-                      xml={
-                        '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"> <defs> <style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#888375;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style> <clipPath id="clip-path" transform="translate(0 0)"> <path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5" /> </clipPath> <clipPath id="clip-path-2" transform="translate(0 0)"> <rect class="cls-1" width="37.5" height="37.5" /> </clipPath> </defs> <g class="cls-2"> <line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25" /> <line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25" /> </g> <g class="cls-4"> <circle class="cls-3" cx="18.75" cy="18.75" r="17.5" /> </g> </svg>'
-                      }
+                      xml={images.imagesSVG.common.cancelBrown}
                       width={scale(40)}
                       height={scale(40)}
                     />
@@ -233,7 +225,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                     }}
                     style={styles.button}>
                     <Text style={styles.buttonText}>
-                      {this.props.localesHelper.localeString('assessment.tutorial')}
+                      {this.props.localesHelper.localeString('assessment.tutorial.title')}
                     </Text>
                   </TouchableOpacity>
                   <View style={[{opacity: this.state.isValid ? 1 : 0.5}]}>
@@ -249,7 +241,13 @@ class AssessmentBoard extends Component<PropsType, State> {
                   </View>
                 </View>
               </View>
-              <View style={{paddingTop: this.boardBorderRightWidth/2, flex: 6, paddingBottom: this.boardBorderRightWidth/2, paddingRight: this.boardBorderRightWidth}}>
+              <View
+                style={{
+                  paddingTop: this.boardBorderRightWidth / 2,
+                  flex: 6,
+                  paddingBottom: this.boardBorderRightWidth / 2,
+                  paddingRight: this.boardBorderRightWidth
+                }}>
                 <View
                   onLayout={this.onLayout.bind(this)}
                   ref={this.prismBoard}
@@ -257,7 +255,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                     flex: 1,
                     aspectRatio: Math.sqrt(2) / 1,
                     alignSelf: 'center',
-                    backgroundColor: 'white',
+                    backgroundColor: 'white'
                   }}>
                   <View style={targetCircle} />
                   <Animated.View
@@ -276,7 +274,6 @@ class AssessmentBoard extends Component<PropsType, State> {
     );
   }
 
-
   private isCirlceOutsideBox() {
     if (this.pan.x._value < this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
       return false;
@@ -284,7 +281,7 @@ class AssessmentBoard extends Component<PropsType, State> {
     if (this.pan.y._value < this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
       return false;
     }
-    if (this.pan.y._value > this.state.width * Math.sqrt(2)  - this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
+    if (this.pan.y._value > this.state.width * Math.sqrt(2) - this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
       return false;
     }
     if (this.pan.x._value > this.state.width - this.state.width * PRISM_YELLOW_RADIUS_RATIO) {
@@ -322,7 +319,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     justifyContent: 'center'
-  },
+  }
 });
 
 function mapStateToProps(state: AppStore) {

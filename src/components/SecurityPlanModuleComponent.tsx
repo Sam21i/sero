@@ -1,17 +1,12 @@
 import React, {Component} from 'react';
 import {Alert, Linking, StyleSheet, Text, View} from 'react-native';
-import CopingIcon from '../resources/images/icons/securityplan/copingStrategies.svg';
-import DistractionIcon from '../resources/images/icons/securityplan/distractionStrategies.svg';
-import MotivationIcon from '../resources/images/icons/securityplan/motivation.svg';
-import BeliefsIcon from '../resources/images/icons/securityplan/personalBeliefs.svg';
-import ContactsIcon from '../resources/images/icons/securityplan/professionalContacts.svg';
-import WarningIcon from '../resources/images/icons/securityplan/warningSigns.svg';
-import EditPencil from '../resources/images/icons/securityplan/pencil.svg';
 import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
 import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
 import LocalesHelper from '../locales';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.']);
 
 interface SecurityPlanModuleComponentProps {
@@ -103,7 +98,8 @@ export default class SecurityPlanModuleComponent extends Component<
     switch (type) {
       case SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES:
         return (
-          <CopingIcon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.copingStrategies}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -111,7 +107,8 @@ export default class SecurityPlanModuleComponent extends Component<
         );
       case SECURITY_PLAN_MODULE_TYPE.DISTRACTION_STRATIES:
         return (
-          <DistractionIcon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.distractionStrategies}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -119,7 +116,8 @@ export default class SecurityPlanModuleComponent extends Component<
         );
       case SECURITY_PLAN_MODULE_TYPE.MOTIVATION:
         return (
-          <MotivationIcon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.mymotivation}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -127,7 +125,8 @@ export default class SecurityPlanModuleComponent extends Component<
         );
       case SECURITY_PLAN_MODULE_TYPE.PERSONAL_BELIEFS:
         return (
-          <BeliefsIcon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.personalBeliefs}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -135,8 +134,8 @@ export default class SecurityPlanModuleComponent extends Component<
         );
       case SECURITY_PLAN_MODULE_TYPE.PROFESSIONAL_CONTACTS:
         return (
-          <ContactsIcon
-            Icon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.professionalContacts}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -144,8 +143,8 @@ export default class SecurityPlanModuleComponent extends Component<
         );
       case SECURITY_PLAN_MODULE_TYPE.WARNING_SIGNS:
         return (
-          <WarningIcon
-            Icon
+          <SvgCss
+            xml={images.imagesSVG.securityplan.warningSigns}
             style={styles.icon}
             width={scale(40)}
             height={scale(40)}
@@ -176,7 +175,8 @@ export default class SecurityPlanModuleComponent extends Component<
             <TouchableOpacity
               activeOpacity={activeOpacity}
               onPress={() => (this.props.onEdit ? this.props.onEdit(this.props.module) : {})}>
-              <EditPencil
+              <SvgCss
+                xml={images.imagesSVG.common.pencil}
                 style={styles.editIcon}
                 width={scale(30)}
                 height={scale(50)}

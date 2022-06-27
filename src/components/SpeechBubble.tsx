@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Platform, View} from 'react-native';
 import {colors, scale} from '../styles/App.style';
-import DialogPerson from '../resources/images/common/person.svg';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 interface SpeechBubbleProps {
   bubbleContent: any;
@@ -72,7 +73,8 @@ export default class SpeechBubble extends Component<SpeechBubbleProps> {
           marginTop: this.props.stylingOptions?.arrow?.size + 30 || 40,
           paddingLeft: this.props.stylingOptions?.icon?.position?.left || '50%'
         }}>
-        <DialogPerson
+        <SvgCss
+          xml={images.imagesSVG.common.person}
           width={size}
           height={size}
         />

@@ -19,6 +19,7 @@ import AssessmentImageSpeechBubble, {
 import {STORAGE} from './App';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {request, check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -211,7 +212,7 @@ class AssessmentImage extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>

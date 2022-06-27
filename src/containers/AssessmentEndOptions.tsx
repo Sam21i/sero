@@ -10,6 +10,7 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import AssessmentEndOptionsSpeechBubble, {
   ASSESSMENT_END_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentEndOptionsSpeechBubble';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -55,7 +56,7 @@ class AssessmentEndOptions extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>

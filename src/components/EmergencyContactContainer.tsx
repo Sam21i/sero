@@ -4,10 +4,10 @@ import {scale, TextSize, colors, AppFonts, activeOpacity} from '../styles/App.st
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import OptionsIcon from '../resources/images/icons/icon_options.svg';
-
 import EmergencyContact from '../model/EmergencyContact';
 import EmergencyContactTile from './EmergencyContactTile';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 interface EmergencyContactContainerProps {
   localesHelper: LocalesHelper;
@@ -50,7 +50,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
               activeOpacity={activeOpacity}
               onPress={this.props.onPressOptionsButton}>
               {this.props.emergencyContacts.length > 0 && (
-                <OptionsIcon
+                <SvgCss
+                  xml={images.imagesSVG.common.options}
                   width={scale(27.5)}
                   height={scale(27.5)}
                 />

@@ -18,6 +18,7 @@ import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
 import * as userProfileActions from '../store/userProfile/actions';
 import * as midataServiceActions from '../store/midataService/actions';
 import {Reference, Resource} from '@i4mi/fhir_r4';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -191,9 +192,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
         ) : (
           <AppButton
             label={this.props.localesHelper.localeString('common.options')}
-            icon={
-              '<?xml version="1.0" encoding="iso-8859-1"?> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"> <g> <g> <g> <path fill="#FFFFFF" d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,480 C132.288,480,32,379.712,32,256S132.288,32,256,32s224,100.288,224,224S379.712,480,256,480z" /> <circle fill="#FFFFFF" cx="256" cy="256" r="32" /> <circle fill="#FFFFFF" cx="368" cy="256" r="32" /> <circle fill="#FFFFFF" cx="144" cy="256" r="32" /> </g> </g> </g> </svg>'
-            }
+            icon={images.imagesSVG.common.options}
             position='left'
             color={colors.tumbleweed}
             onPress={() => {
@@ -207,35 +206,35 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   renderListFooter() {
-    const buttons = new Array<{label: string, icon: string, onPress: () => void}>()
+    const buttons = new Array<{label: string; icon: string; onPress: () => void}>();
     const saveButton = {
       label: 'common.save',
-      icon: '<?xml version="1.0" encoding="iso-8859-1"?> <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 305.002 305.002" style="enable-background:new 0 0 305.002 305.002;" xml:space="preserve"> <g> <g> <path fill="#FFFFFF" d="M152.502,0.001C68.412,0.001,0,68.412,0,152.501s68.412,152.5,152.502,152.5c84.089,0,152.5-68.411,152.5-152.5 S236.591,0.001,152.502,0.001z M152.502,280.001C82.197,280.001,25,222.806,25,152.501c0-70.304,57.197-127.5,127.502-127.5 c70.304,0,127.5,57.196,127.5,127.5C280.002,222.806,222.806,280.001,152.502,280.001z"/> <path fill="#FFFFFF" d="M218.473,93.97l-90.546,90.547l-41.398-41.398c-4.882-4.881-12.796-4.881-17.678,0c-4.881,4.882-4.881,12.796,0,17.678 l50.237,50.237c2.441,2.44,5.64,3.661,8.839,3.661c3.199,0,6.398-1.221,8.839-3.661l99.385-99.385 c4.881-4.882,4.881-12.796,0-17.678C231.269,89.089,223.354,89.089,218.473,93.97z"/> </g> </g></svg>',
+      icon: images.imagesSVG.common.save,
       onPress: this.save.bind(this)
     };
-    const cancelButton =  {
+    const cancelButton = {
       label: 'common.cancel',
-      icon: '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.5 37.5"><defs><style>.cls-1,.cls-3{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-4{clip-path:url(#clip-path-2);}</style><clipPath id="clip-path" transform="translate(0 0)"><path class="cls-1" d="M1.25,18.75a17.5,17.5,0,1,0,17.5-17.5,17.51,17.51,0,0,0-17.5,17.5"/></clipPath><clipPath id="clip-path-2" transform="translate(0 0)"><rect class="cls-1" width="37.5" height="37.5"/></clipPath></defs><g class="cls-2"><line class="cls-3" x1="11.25" y1="11.25" x2="26.25" y2="26.25"/><line class="cls-3" x1="26.25" y1="11.25" x2="11.25" y2="26.25"/></g><g class="cls-4"><circle class="cls-3" cx="18.75" cy="18.75" r="17.5"/></g></svg>',
+      icon: images.imagesSVG.common.cancel,
       onPress: this.reset.bind(this)
     };
     const backButton = {
       label: 'common.back',
-      icon: '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>',
+      icon: images.imagesSVG.common.back,
       onPress: () => {
         this.props.navigation.goBack();
       }
-    }
+    };
     if (this.state.isEditMode) {
       buttons.push(saveButton);
       if (this.state.isFirstPlan) {
-        buttons.push(backButton)
+        buttons.push(backButton);
       } else {
-        buttons.push(cancelButton)
+        buttons.push(cancelButton);
       }
     } else {
-      buttons.push(backButton)
+      buttons.push(backButton);
     }
- 
+
     return (
       <View style={{flexDirection: 'column'}}>
         {buttons.map((button, index) => (
@@ -259,7 +258,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_lightOrange.png')}
+          source={images.imagesPNG.backgrounds.moodLightOrange}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>

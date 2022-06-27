@@ -14,7 +14,7 @@ import EmergencyContact from '../../model/EmergencyContact';
 import SecurityPlanModel from '../../model/SecurityPlan';
 import {CarePlan, Reference} from '@i4mi/fhir_r4';
 import {addResource, synchronizeResource} from '../midataService/actions';
-import PrismSession, { PrismResources } from '../../model/PrismSession';
+import PrismSession, {PrismResources} from '../../model/PrismSession';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
   dispatch(new Action(UPDATE_USER_PROFILE, userProfileInfo).getObjectAction());
@@ -56,7 +56,6 @@ export function setPrismSessionsFromMIDATA(dispatch, sessions: PrismResources[])
 export function addNewPrismSession(dispatch, session: PrismSession) {
   dispatch(new Action(ADD_PRISM_SESSION, session).getObjectAction());
 }
-
 
 export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {
   dispatch(new Action(SET_SECURITY_PLAN_HISTORY, plans).getObjectAction());
