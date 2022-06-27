@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import CancelButton from '../resources/images/common/cancel.svg';
-import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 export enum ASSESSMENT_END_SPEECH_BUBBLE_MODE {
   securityplan = 'SECURITYPLAN',
@@ -48,7 +48,8 @@ class AssessmentEndOptionsSpeechBubble extends Component<Props, State> {
           style={styles.titlebarText}>
           {this.props.localesHelper.localeString(_translateString)}
         </Text>
-        <CancelButton
+        <SvgCss
+          xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
           height={scale(35)}
           onPress={() => this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'})}
@@ -95,7 +96,8 @@ class AssessmentEndOptionsSpeechBubble extends Component<Props, State> {
           width: '100%',
           marginLeft: scale(57.5)
         }}>
-        <PersonIcon
+        <SvgCss
+          xml={images.imagesSVG.common.person}
           width={80}
           height={80}
           style={{position: 'absolute', top: 315, alignSelf: 'center'}}

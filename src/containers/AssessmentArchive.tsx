@@ -13,6 +13,7 @@ import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
@@ -65,9 +66,7 @@ class AssessmentArchive extends Component<PropsType, State> {
           </View>
           <View style={appStyles.listItemContentIcon}>
             <SvgCss
-              xml={
-                '<?xml version="1.0" encoding="utf-8"?> <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 146.7 146.7" style="enable-background:new 0 0 146.7 146.7;" xml:space="preserve"> <style type="text/css"> .st0{fill:#FFFFFF;} .st1{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-miterlimit:10;} .st2{fill:none;stroke:#FFFFFF;stroke-width:2.4;stroke-linejoin:round;} </style> <g> <path class="st0" d="M45,89.7c14.3,0,25.9-11.6,25.9-25.9S59.2,38,45,38S19.1,49.6,19.1,63.8l0,0l0,0C19.1,78.1,30.7,89.7,45,89.7" /> <circle class="st1" cx="107.9" cy="88.9" r="17.7"/> <rect x="10.8" y="29.8" class="st2" width="125" height="87.1"/> </g> </svg>'
-              }
+              xml={images.imagesSVG.common.assessment}
               style={appStyles.listItemIcon}
             />
           </View>
@@ -96,9 +95,7 @@ class AssessmentArchive extends Component<PropsType, State> {
     return (
       <AppButton
         label={this.props.localesHelper.localeString('common.back')}
-        icon={
-          '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
-        }
+        icon={images.imagesSVG.common.back}
         position='right'
         color={colors.gold}
         onPress={() => {
@@ -192,7 +189,7 @@ class AssessmentArchive extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           {this.state.selectedPrismSession ? (

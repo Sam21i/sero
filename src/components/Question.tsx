@@ -4,8 +4,8 @@ import {NativeBaseProvider, TextArea} from 'native-base';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import IconClosed from '../resources/images/icons/icon_toggle_closed';
-import IconOpened from '../resources/images/icons/icon_toggle_opened';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
@@ -66,7 +66,11 @@ export default class Question extends Component<PropsType, State> {
                 this.setState({expanded: !this.state.expanded});
               }}>
               <View style={styles.toggleIcon}>
-                {this.state.expanded ? <IconOpened></IconOpened> : <IconClosed></IconClosed>}
+                {this.state.expanded ? (
+                  <SvgCss xml={images.imagesSVG.common.toggleOpened} />
+                ) : (
+                  <SvgCss xml={images.imagesSVG.common.toggleClosed} />
+                )}
               </View>
             </TouchableOpacity>
 

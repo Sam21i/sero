@@ -79,16 +79,16 @@ export function logoutUser(dispatch: Function): Promise<void> {
     // do not completely clear async storage, because
     // STORAGE.ASKED_FOR_CONTACT_PERMISSION needs to be persisted
     // over logout
-    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_ONBOARDING).then(() => {
-      dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
-      return resolve();
-    })
-    .catch(e => {
-      console.log('could not clear AsyncStorage', e);
-      return reject();
-    });
+    AsyncStorage.removeItem(STORAGE.SHOULD_DISPLAY_ONBOARDING)
+      .then(() => {
+        dispatch(new Action(LOGOUT_AUTHENTICATE_USER).getObjectAction());
+        return resolve();
+      })
+      .catch((e) => {
+        console.log('could not clear AsyncStorage', e);
+        return reject();
+      });
   });
-  
 }
 
 export async function uploadPendingResources(dispatch: Function): Promise<void> {
@@ -142,7 +142,7 @@ export function uploadResource(
             for (const i in response.entry) {
               if (response.entry[i].response.status.includes('created')) {
                 const type = request.entry[i].resource.resourceType;
-                const idPart = response.entry[i].response.location.split(type + '/')[1]
+                const idPart = response.entry[i].response.location.split(type + '/')[1];
                 const id = idPart.split('/')[0];
                 request.entry[i].resource.id = id;
               }
@@ -198,7 +198,7 @@ export function uploadResource(
               endPoint = '/fhir/CarePlan?status=active';
             } else {
               endPoint = '/fhir/CarePlan/' + carePlan.id;
-            } 
+            }
           } else {
             // syncing RelatedPerson without the acual ID doesn't make sense
             console.log('Could not sync resource, ', _jobItem);

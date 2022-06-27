@@ -25,6 +25,7 @@ import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
 import {Input, NativeBaseProvider} from 'native-base';
 import AppButton from '../components/AppButton';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -137,13 +138,11 @@ class Contacts extends Component<PropsType, State> {
     );
   };
 
-  _renderListFooter() {
+  renderListFooter() {
     return (
       <AppButton
         label={this.props.localesHelper.localeString('common.back')}
-        icon={
-          '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
-        }
+        icon={images.imagesSVG.common.back}
         position='right'
         color={colors.gold}
         onPress={() => {
@@ -164,7 +163,7 @@ class Contacts extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
@@ -193,7 +192,7 @@ class Contacts extends Component<PropsType, State> {
               alwaysBounceVertical={false}
               renderItem={this.renderContactListItem.bind(this)}
               showsHorizontalScrollIndicator={false}
-              ListFooterComponent={this._renderListFooter.bind(this)}
+              ListFooterComponent={this.renderListFooter.bind(this)}
             />
           </View>
 

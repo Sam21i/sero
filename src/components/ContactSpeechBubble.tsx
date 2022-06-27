@@ -4,15 +4,14 @@ import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import CancelButton from '../resources/images/common/cancel.svg';
-import CameraButton from '../resources/images/common/camera.svg';
 import EmergencyContact from '../model/EmergencyContact';
 import {launchImageLibrary} from 'react-native-image-picker';
-import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import {VStack, FormControl, Input, NativeBaseProvider} from 'native-base';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   import = 'IMPORT',
@@ -154,7 +153,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
     return (
       <View style={styles.titleBar}>
         <Text style={styles.titlebarText}>{this.props.localesHelper.localeString(_translateString)}</Text>
-        <CancelButton
+        <SvgCss
+          xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
           height={scale(35)}
           onPress={() => this.props.onClose({mode: this.state.mode})}
@@ -310,7 +310,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
               style={styles.cameraButton}
               source={{uri: 'data:' + this.state.new_image?.data}}
             />
-            <CameraButton
+            <SvgCss
+              xml={images.imagesSVG.common.camera}
               width={scale(20)}
               height={scale(20)}
               style={{position: 'absolute', bottom: 0, right: scale(-2)}}
@@ -318,7 +319,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           </View>
         ) : (
           <View style={[styles.listItemInitials, {backgroundColor: this.props.contact?.getUniqueColor()}]}>
-            <CameraButton
+            <SvgCss
+              xml={images.imagesSVG.common.camera}
               width={scale(20)}
               height={scale(20)}
               style={{position: 'absolute', bottom: 0, right: scale(-2)}}
@@ -335,7 +337,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           />
         ) : (
           <View style={styles.cameraButton}>
-            <CameraButton
+            <SvgCss
+              xml={images.imagesSVG.common.camera}
               width='100%'
               height='100%'
               style={{alignSelf: 'center'}}
@@ -350,7 +353,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
               style={styles.cameraButton}
               source={{uri: 'data:' + this.state.new_image?.data}}
             />
-            <CameraButton
+            <SvgCss
+              xml={images.imagesSVG.common.camera}
               width={scale(20)}
               height={scale(20)}
               style={{position: 'absolute', bottom: 0, right: scale(-2)}}
@@ -358,7 +362,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           </View>
         ) : (
           <View style={styles.cameraButton}>
-            <CameraButton
+            <SvgCss
+              xml={images.imagesSVG.common.camera}
               width='100%'
               height='100%'
               style={{alignSelf: 'center'}}
@@ -395,7 +400,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
           width: '100%',
           marginLeft: scale(57.5)
         }}>
-        <PersonIcon
+        <SvgCss
+          xml={images.imagesSVG.common.person}
           width={80}
           height={80}
           style={{position: 'absolute', top: 315, alignSelf: 'center'}}

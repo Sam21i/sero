@@ -19,6 +19,7 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import * as userProfileActions from '../store/userProfile/actions';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -95,7 +96,7 @@ class Onboarding extends Component<PropsType, State> {
     this.props.navigation.navigate('MainStackScreen');
   }
 
-  _renderItem = ({item}) => {
+  renderItem = ({item}) => {
     return (
       <SafeAreaView
         style={{flex: 1}}
@@ -123,14 +124,15 @@ class Onboarding extends Component<PropsType, State> {
             <Image
               source={item.image}
               resizeMode='contain'
-              style={{width: '100%', height: '100%'}}></Image>
+              style={{width: '100%', height: '100%'}}
+            />
           </View>
         </ImageBackground>
       </SafeAreaView>
     );
   };
 
-  _renderPagination = (activeIndex: number) => {
+  renderPagination = (activeIndex: number) => {
     return (
       <SafeAreaView style={styles.paginationContainer}>
         <View style={styles.paginationDots}>
@@ -146,9 +148,7 @@ class Onboarding extends Component<PropsType, State> {
         </View>
         <AppButton
           label={this.props.localesHelper.localeString('common.next')}
-          icon={
-            '<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.cls-1,.cls-3,.cls-4{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3,.cls-4{stroke:#fff;stroke-width:2.5px;}.cls-3{stroke-linecap:round;stroke-linejoin:round;}</style><clipPath id="clip-path" transform="translate(-11.25 -11.25)"><circle class="cls-1" cx="37.5" cy="37.5" r="37.5"/></clipPath></defs><g class="cls-2"><polygon class="cls-3" points="21.25 11.75 21.25 40.03 40.39 25.89 21.25 11.75"/><circle class="cls-4" cx="26.25" cy="26.25" r="25"/></g></svg>'
-          }
+          icon={images.imagesSVG.common.continue}
           position='left'
           color={colors.grey}
           style={{
@@ -167,9 +167,9 @@ class Onboarding extends Component<PropsType, State> {
     return (
       <AppIntroSlider
         ref={(ref: AppIntroSlider) => (this.slider = ref)}
-        renderItem={this._renderItem}
+        renderItem={this.renderItem}
         data={ON_BOARDING_ITEMS}
-        renderPagination={this._renderPagination}
+        renderPagination={this.renderPagination}
       />
     );
   }
