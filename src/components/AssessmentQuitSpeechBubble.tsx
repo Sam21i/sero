@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform,StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 

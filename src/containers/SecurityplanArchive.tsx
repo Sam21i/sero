@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback,View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';

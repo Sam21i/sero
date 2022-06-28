@@ -1,7 +1,7 @@
 import {Formik} from 'formik';
-import {FormControl, Input, NativeBaseProvider,VStack} from 'native-base';
+import {FormControl, Input, NativeBaseProvider, VStack} from 'native-base';
 import React, {Component} from 'react';
-import {Image, Platform,StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {Image, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';

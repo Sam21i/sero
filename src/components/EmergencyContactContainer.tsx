@@ -7,7 +7,7 @@ import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
-import {activeOpacity,AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import EmergencyContactTile from './EmergencyContactTile';
 
 interface EmergencyContactContainerProps {

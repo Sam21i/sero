@@ -2,7 +2,7 @@ import {Resource} from '@i4mi/fhir_r4';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {ImageBackground, PermissionsAndroid, Platform,StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, PermissionsAndroid, Platform, StyleSheet, Text, View} from 'react-native';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import {SafeAreaView} from 'react-native-safe-area-context';

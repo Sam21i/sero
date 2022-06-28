@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity,View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import EmergencyContact from '../model/EmergencyContact';
 import {activeOpacity, AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
