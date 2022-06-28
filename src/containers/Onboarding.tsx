@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {Image, ImageBackground, ScrollView,StyleSheet, Text, TouchableOpacity,View} from 'react-native';
+import {Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {authorize} from 'react-native-app-auth';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Config from 'react-native-config';
@@ -53,7 +53,7 @@ class Onboarding extends Component<PropsType, State> {
 
   authenthicate(): Promise<void> {
     this.setState({isLoggingIn: true});
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       OAUTH_CONFIG.additionalParameters = {
         ...{
           language: this.props.localesHelper.getCurrentLanguage()

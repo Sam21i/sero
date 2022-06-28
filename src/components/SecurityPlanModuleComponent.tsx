@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Alert, Linking, LogBox,StyleSheet, Text, View} from 'react-native';
+import {Alert, Linking, LogBox, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
 
 import LocalesHelper from '../locales';
-import {SECURITY_PLAN_MODULE_TYPE,SecurityPlanModule} from '../model/SecurityPlan';
+import {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
 
@@ -18,12 +18,7 @@ interface SecurityPlanModuleComponentProps {
   onEdit?: (m: SecurityPlanModule) => void;
 }
 
-interface SecurityPlanModuleState {}
-
-export default class SecurityPlanModuleComponent extends Component<
-  SecurityPlanModuleComponentProps,
-  SecurityPlanModuleState
-> {
+export default class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps> {
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
     this.state = {};

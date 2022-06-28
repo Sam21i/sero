@@ -13,7 +13,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 
 import images from '../resources/images/images';
-import {persistor,store} from '../store';
+import {persistor, store} from '../store';
 import {colors} from '../styles/App.style';
 import AssessmentArchive from './AssessmentArchive';
 import AssessmentBoard from './AssessmentBoard';

@@ -1,7 +1,7 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {Animated, ImageBackground,PanResponder, StyleSheet, Text, View} from 'react-native';
+import {Animated, ImageBackground, PanResponder, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -59,7 +59,7 @@ class AssessmentBoard extends Component<PropsType, State> {
   /**
    * Reference to the prism board layout object.
    */
-  prismBoard: any;
+  prismBoard;
 
   panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,

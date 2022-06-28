@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {ImageBackground,StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -13,7 +13,7 @@ import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -22,9 +22,7 @@ interface PropsType {
   prismSession: PrismSession;
 }
 
-interface State {}
-
-class AssessmentIntroDescription extends Component<PropsType, State> {
+class AssessmentIntroDescription extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }

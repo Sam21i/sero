@@ -1,6 +1,5 @@
 import {QuestionnaireData} from '@i4mi/fhir_questionnaire';
 import {
-  Bundle,
   BundleHTTPVerb,
   BundleType,
   I4MIBundle,
@@ -127,10 +126,10 @@ export default class PrismSession {
   };
 
   constructor(_data: PrismSession | PrismResources | PrismInitializer) {
-    if (_data.hasOwnProperty('questionnaireData')) {
+    if (Object.prototype.hasOwnProperty.call(_data, 'questionnaireData')) {
       // it's of type PrismSession
       Object.assign(this, _data);
-    } else if (_data.hasOwnProperty('observation')) {
+    } else if (Object.prototype.hasOwnProperty.call(_data, 'observation')) {
       // it's of typ PrismResources
       const resources = _data as PrismResources;
       this.fillFromFHIR(

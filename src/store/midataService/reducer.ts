@@ -9,20 +9,20 @@ import {
   LOGOUT_AUTHENTICATE_USER,
   RESOURCE_SENT,
   UPDATE_USER_AUTHENTICATION,
-  UserAuthenticationData} from '../definitions';
+  UserAuthenticationData
+} from '../definitions';
 import {createReducer} from '../helpers/reducerCreator';
 
 // Definition of actions listeners
 const MiDataServiceStore = createReducer(new MidataService(), {
   [REHYDRATE](state: MidataService, action) {
     if (action.payload && action.payload.MiDataServiceStore) {
-      if (action.payload.MiDataServiceStore.hasOwnProperty('pendingResources')) {
+      if (Object.prototype.hasOwnProperty.call(action.payload.MiDataServiceStore, 'pendingResources')) {
         action.payload.MiDataServiceStore.pendingResources.forEach((item) => {
           item.isUploading = false;
         });
       }
-
-      if (!action.payload.MiDataServiceStore.currentSession.hasOwnProperty('server')) {
+      if (!Object.prototype.hasOwnProperty.call(action.payload.MiDataServiceStore.currentSession, 'server')) {
         action.payload.MiDataServiceStore.currentSession.server = Config.host;
       }
 

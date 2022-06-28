@@ -10,7 +10,7 @@ interface CategoryButtonProps {
   color: string;
   position: string;
   onPress?: () => void;
-  style?: {};
+  style?: Record<string, unknown>;
   isLargeButton?: boolean;
   isDisabled?: boolean;
 }

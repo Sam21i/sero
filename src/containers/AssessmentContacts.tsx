@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View} from 'react-native';
+  View
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -44,8 +45,6 @@ interface State {
 }
 
 class Contacts extends Component<PropsType, State> {
-  slider: any;
-
   constructor(props: PropsType) {
     super(props);
     this.state = {

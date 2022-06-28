@@ -1,8 +1,8 @@
 import 'react-native-get-random-values';
 
-import {applyMiddleware, compose,createStore} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import logger from 'redux-logger';
-import {persistReducer,persistStore} from 'redux-persist';
+import {persistReducer, persistStore} from 'redux-persist';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
 
 import reducers from './reducers';
@@ -23,12 +23,12 @@ const persistConfig = {
 const persistedReducers = persistReducer(persistConfig, reducers);
 
 // Middleware configuration :
-const middlewares: any = [
+const middlewares = [
   __DEV__ && logger // add logger only on dev mode.
 ].filter(Boolean);
 
 const enhancer = compose(applyMiddleware(...middlewares));
 
 // Instanciation of store :
-export const store: any = createStore(persistedReducers, enhancer);
+export const store = createStore(persistedReducers, enhancer);
 export const persistor = persistStore(store);

@@ -13,7 +13,8 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View} from 'react-native';
+  View
+} from 'react-native';
 import RNContacts from 'react-native-contacts';
 import RNFS from 'react-native-fs';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -46,15 +47,13 @@ interface State {
   listVisible: boolean;
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   selectedContact?: EmergencyContact;
-  addressBookContacts: any[];
+  addressBookContacts: [];
   query: string;
   showImportButton: boolean;
   loadingContacts: boolean;
 }
 
 class Contacts extends Component<PropsType, State> {
-  slider: any;
-
   constructor(props: PropsType) {
     super(props);
     this.state = {

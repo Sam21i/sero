@@ -1,4 +1,4 @@
-import {Bundle, CarePlan,CarePlanStatus, Resource} from '@i4mi/fhir_r4';
+import {Bundle, CarePlan, CarePlanStatus, Resource} from '@i4mi/fhir_r4';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Guid} from 'guid-typescript';
 
@@ -12,7 +12,8 @@ import {
   LOGOUT_AUTHENTICATE_USER,
   RESOURCE_SENT,
   UPDATE_USER_AUTHENTICATION,
-  UserAuthenticationData} from '../definitions';
+  UserAuthenticationData
+} from '../definitions';
 import Action from '../helpers/Action';
 
 export function authenticateUser(
@@ -348,7 +349,8 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
           }
         }
       } else {
-        switch (
+        /**
+         *         switch (
           _resource.resourceType
           // case 'Observation':         const observation = _resource as Observation
           //                             observation.status = ObservationStatus.ENTERED_IN_ERROR;
@@ -357,7 +359,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
           //                             allergyIntolerance.verificationStatus = ALLERGY_STATUS.enteredInError;
         ) {
         }
-
+         */
         store
           .getState()
           .MiDataServiceStore.deleteResource(_resource)

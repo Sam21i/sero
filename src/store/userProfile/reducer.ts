@@ -1,4 +1,4 @@
-import {Bundle, CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
+import {CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import {REHYDRATE} from 'redux-persist';
 
 import EmergencyContact from '../../model/EmergencyContact';

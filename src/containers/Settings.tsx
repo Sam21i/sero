@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {Button,Text,View} from 'react-native';
+import {Button, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -17,9 +17,7 @@ interface PropsType {
   logoutUser: () => Promise<void>;
 }
 
-interface State {}
-
-class Settings extends Component<PropsType, State> {
+class Settings extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
     this.state = {};

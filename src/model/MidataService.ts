@@ -17,7 +17,7 @@ import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
 import {store} from '../store';
 import {logoutUser} from '../store/midataService/actions';
 import EmergencyContact from './EmergencyContact';
-import {PRISM_OBSERVATION_CODE,PrismResources} from './PrismSession';
+import {PRISM_OBSERVATION_CODE, PrismResources} from './PrismSession';
 import UserProfile from './UserProfile';
 import UserSession from './UserSession';
 
@@ -41,7 +41,7 @@ export default class MidataService {
     if (miDataServiceStore) {
       this.currentSession = new UserSession(miDataServiceStore.currentSession);
 
-      if (miDataServiceStore.hasOwnProperty('pendingResources')) {
+      if (Object.prototype.hasOwnProperty.call(miDataServiceStore, 'pendingResources')) {
         this.setPendingResources(miDataServiceStore.pendingResources);
       }
     }
@@ -168,7 +168,7 @@ export default class MidataService {
 
     return Promise.all([
       // fetch Questionnaire (needed for rendering follow-up questions)
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         console.log('TODO: Implement fetching PRISM questionnaire from (open endpoint?) MIDATA');
 
         return resolve(PRISM_QUESTIONNAIRE as Questionnaire);

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {ImageBackground,StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -24,9 +24,7 @@ interface PropsType {
   prismSession: PrismSession;
 }
 
-interface State {}
-
-class AssessmentIntroTutorial extends Component<PropsType, State> {
+class AssessmentIntroTutorial extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }

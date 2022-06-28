@@ -123,10 +123,14 @@ class AssessmentQuestions extends Component<PropsType, State> {
     };
     try {
       base64Image = this.state.prismSession?.getBase64Image() || base64Image;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
     try {
       svgImage = this.state.prismSession?.getSVGImage() || '';
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
     return (
       <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
         <View style={{height: verticalScale(55)}} />
@@ -234,11 +238,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   render() {
-    const svgImage = this.state.prismSession?.getSVGImage() || '';
-    const base64Image = this.state.prismSession?.getBase64Image() || {
-      contentType: '',
-      data: ''
-    };
     return (
       <SafeAreaView
         style={styles.container}
