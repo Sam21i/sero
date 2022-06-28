@@ -12,9 +12,12 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react', '@typescript-eslint', 'react-native', 'simple-import-sort'],
+  plugins: ['react', '@typescript-eslint', 'react-native', 'simple-import-sort', 'import'],
   rules: {
     'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error'
+    'simple-import-sort/exports': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error'
   }
 };
