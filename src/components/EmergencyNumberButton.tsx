@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {activeOpacity, colors, scale, verticalScale} from '../styles/App.style';
-import EmergencyContactIcon from '../resources/images/icons/icon_emergencyContact.svg';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 export default class EmergencyNumberButton extends Component {
   callEmergency() {
@@ -17,7 +18,8 @@ export default class EmergencyNumberButton extends Component {
           this.callEmergency();
         }}>
         <View style={[styles.button]}>
-          <EmergencyContactIcon
+          <SvgCss
+            xml={images.imagesSVG.common.emergencyContact}
             width='100%'
             height='100%'
           />

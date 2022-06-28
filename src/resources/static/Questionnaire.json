@@ -85,7 +85,7 @@
           "type": "text",
           "repeats": false,
           "required": false,
-          "text": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?",
+          "text": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert habe?",
           "_text": {
             "extension": [
               {
@@ -97,7 +97,7 @@
                   },
                   {
                     "url": "content",
-                    "valueString": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert haben?"
+                    "valueString": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert habe?"
                   }
                 ]
               }

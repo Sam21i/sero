@@ -1,6 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
@@ -9,10 +9,10 @@ import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
-import {ASSESSMENT_RESOURCES} from '../resources/static/assessmentIntroResources';
 import {ScrollView} from 'react-native-gesture-handler';
 import PrismSession from '../model/PrismSession';
 import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -34,7 +34,7 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
@@ -47,14 +47,12 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>
-                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.intro.title)}
-                  </Text>
+                  <Text style={styles.title}>{this.props.localesHelper.localeString('assessment.intro.title')}</Text>
                   <Text style={styles.description}>
-                    {this.props.localesHelper.localeString(ASSESSMENT_RESOURCES.intro.description)}
+                    {this.props.localesHelper.localeString('assessment.intro.description')}
                   </Text>
                   <SvgCss
-                    xml={ASSESSMENT_RESOURCES.intro.prismImage}
+                    xml={images.imagesSVG.prism.example}
                     style={[
                       styles.image,
                       {
@@ -69,16 +67,14 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
                     ]}
                   />
                   <View style={styles.listContainer}>
-                    {ASSESSMENT_RESOURCES.intro.explanation.map((item, index) => {
-                      return this._renderListItem(item, index);
-                    })}
+                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item1'))}
+                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item2'))}
+                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item3'))}
                   </View>
                 </View>
                 <AppButton
                   label={this.props.localesHelper.localeString('common.next')}
-                  icon={
-                    '<?xml version="1.0" encoding="UTF-8"?> <svg id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50.12 50.12"> <defs> <style>.cls-1,.cls-2,.cls-3{fill:none;}.cls-4{clip-path:url(#clippath);}.cls-2{stroke-linecap:round;stroke-linejoin:round;}.cls-2,.cls-3{stroke:#fff;stroke-width:2.5px;}.cls-5{clip-path:url(#clippath-1);}</style> <clipPath id="clippath"> <rect class="cls-1" x=".06" y=".06" width="50" height="50" /> </clipPath> <clipPath id="clippath-1"> <rect class="cls-1" x=".06" y=".06" width="50" height="50" /> </clipPath> </defs> <g class="cls-4"> <circle class="cls-3" cx="25.06" cy="25.06" r="23.81" /> </g> <polyline class="cls-2" points="23.63 39.35 37.92 25.06 23.63 10.77" /> <g class="cls-5"> <line class="cls-2" x1="36.01" y1="25.06" x2="2.68" y2="25.06" /> </g> </svg>'
-                  }
+                  icon={images.imagesSVG.common.continue}
                   position='right'
                   color={colors.gold}
                   onPress={() => {
@@ -98,16 +94,14 @@ class AssessmentIntroDescription extends Component<PropsType, State> {
     );
   }
 
-  _renderListItem(item: string, key: number) {
+  renderListItem(item: string) {
     return (
-      <View
-        style={styles.row}
-        key={key}>
+      <View style={styles.row}>
         <View style={styles.bulletView}>
           <Text style={styles.bulletPoint}>{'\u2022' + ' '}</Text>
         </View>
         <View style={styles.bulletTextView}>
-          <Text style={styles.bulletText}>{this.props.localesHelper.localeString(item)}</Text>
+          <Text style={styles.bulletText}>{item}</Text>
         </View>
       </View>
     );

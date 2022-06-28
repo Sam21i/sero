@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableWithoutFeedback, View, Platform} from 'react-native';
+import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 import LocalesHelper from '../locales';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import CancelButton from '../resources/images/common/cancel.svg';
-import PersonIcon from '../resources/images/common/person.svg';
 import SpeechBubble from './SpeechBubble';
 
 export enum ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE {
@@ -36,15 +36,16 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
     };
   }
 
-  renderBubbleTitle(_translateString: string) {
+  renderBubbleTitle(translateString: string) {
     return (
       <View style={styles.titleBar}>
         <Text
           numberOfLines={2}
           style={styles.titlebarText}>
-          {this.props.localesHelper.localeString(_translateString)}
+          {this.props.localesHelper.localeString(translateString)}
         </Text>
-        <CancelButton
+        <SvgCss
+          xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
           height={scale(35)}
           onPress={() => this.props.onClose(this.state.mode)}
@@ -91,7 +92,8 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
           width: '100%',
           marginLeft: scale(57.5)
         }}>
-        <PersonIcon
+        <SvgCss
+          xml={images.imagesSVG.common.person}
           width={80}
           height={80}
           style={{position: 'absolute', top: 315, alignSelf: 'center'}}

@@ -12,6 +12,7 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE} from './App';
+import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -43,7 +44,7 @@ class AssessmentMain extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={require('../resources/images/backgrounds/mood_bg_yellow.png')}
+          source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
@@ -64,9 +65,7 @@ class AssessmentMain extends Component<PropsType, State> {
               }}>
               <AppButton
                 label={this.props.localesHelper.localeString('assessment.addEntry')}
-                icon={
-                  '<?xml version="1.0" encoding="UTF-8"?> <svg id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50.12 50.12"> <defs> <style>.cls-1,.cls-2{fill:none;}.cls-3{clip-path:url(#clippath);}.cls-2{stroke:#fff;stroke-width:2.5px;}</style> <clipPath id="clippath"> <rect class="cls-1" x=".06" y=".06" width="50" height="50" /> </clipPath> </defs> <g class="cls-3"> <circle class="cls-2" cx="25.06" cy="25.06" r="23.81" /> </g> <line class="cls-2" x1="25.06" y1="13.15" x2="25.06" y2="36.96" /> <line class="cls-2" x1="13.15" y1="25.06" x2="36.96" y2="25.06" /> </svg>'
-                }
+                icon={images.imagesSVG.common.add}
                 position='right'
                 color={colors.gold}
                 onPress={() => {
@@ -86,9 +85,7 @@ class AssessmentMain extends Component<PropsType, State> {
                 }}>
                 <AppButton
                   label={this.props.localesHelper.localeString('common.archive')}
-                  icon={
-                    '<?xml version="1.0" encoding="UTF-8"?><svg id="a" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 52.5 52.5"><defs><style>.c,.d,.e{fill:none;}.d{stroke-linecap:round;stroke-linejoin:round;}.d,.e{stroke:#fff;stroke-width:2.5px;}.f{clip-path:url(#b);}</style><clipPath id="b"><rect class="c" width="52.5" height="52.5"/></clipPath></defs><polygon class="d" points="31.25 11.75 31.25 40.03 12.11 25.89 31.25 11.75"/><g class="f"><circle class="e" cx="26.25" cy="26.25" r="25"/></g></svg>'
-                  }
+                  icon={images.imagesSVG.common.archive}
                   position='right'
                   color={colors.grey}
                   onPress={() => {

@@ -4,10 +4,10 @@ import {scale, TextSize, colors, AppFonts, activeOpacity} from '../styles/App.st
 import LocalesHelper from '../locales';
 import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import OptionsIcon from '../resources/images/icons/icon_options.svg';
-
 import EmergencyContact from '../model/EmergencyContact';
 import EmergencyContactTile from './EmergencyContactTile';
+import {SvgCss} from 'react-native-svg';
+import images from '../resources/images/images';
 
 interface EmergencyContactContainerProps {
   localesHelper: LocalesHelper;
@@ -27,7 +27,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     Linking.openURL('tel:' + _number.replace(/\s/g, ''));
   }
 
-  _renderEmergencyContacts({item}): JSX.Element {
+  renderEmergencyContacts({item}): JSX.Element {
     return (
       <EmergencyContactTile
         contact={item}
@@ -36,7 +36,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     );
   }
 
-  _renderItemSeparator() {
+  renderItemSeparator() {
     return <View style={styles.itemSeparator}></View>;
   }
 
@@ -50,7 +50,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
               activeOpacity={activeOpacity}
               onPress={this.props.onPressOptionsButton}>
               {this.props.emergencyContacts.length > 0 && (
-                <OptionsIcon
+                <SvgCss
+                  xml={images.imagesSVG.common.options}
                   width={scale(27.5)}
                   height={scale(27.5)}
                 />
@@ -66,8 +67,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
             showsVerticalScrollIndicator={false}
             horizontal
             data={this.props.emergencyContacts}
-            renderItem={this._renderEmergencyContacts.bind(this)}
-            ItemSeparatorComponent={this._renderItemSeparator.bind(this)}
+            renderItem={this.renderEmergencyContacts.bind(this)}
+            ItemSeparatorComponent={this.renderItemSeparator.bind(this)}
             onContentSizeChange={() => {
               this.flatListRef.scrollToEnd();
               this.flatListRef.flashScrollIndicators();

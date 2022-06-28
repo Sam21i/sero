@@ -16,7 +16,7 @@ import {
 import EmergencyContact from '../../model/EmergencyContact';
 import {Bundle, CarePlan, CarePlanStatus, RelatedPerson, Resource} from '@i4mi/fhir_r4';
 import SecurityPlanModel from '../../model/SecurityPlan';
-import PrismSession, { PrismResources } from '../../model/PrismSession';
+import PrismSession, {PrismResources} from '../../model/PrismSession';
 
 export type UserProfileData = Partial<UserProfile>;
 
