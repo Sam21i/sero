@@ -8,8 +8,8 @@ interface EmergencyContactProps {
   size: number;
   contact: EmergencyContact;
   onPress?: () => void;
-  textStyle?: any;
-  style?: any;
+  textStyle?: Record<string, unknown>;
+  style?: Record<string, unknown>;
 }
 
 const HORIZONTAL_MARGIN = 10;

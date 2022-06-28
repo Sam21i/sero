@@ -21,5 +21,10 @@ module.exports = {
     'import/no-duplicates': 'error',
     '@typescript-eslint/ban-types': 'warn',
     'prettier/prettier': ['error']
+  },
+  settings: {
+    react: {
+      version: 'detect'
+    }
   }
 };

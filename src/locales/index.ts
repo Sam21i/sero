@@ -70,7 +70,7 @@ export default class LocalesHelper {
 
   getDevicePreferedLanguage(): string {
     const fallback = {languageTag: DEFAULT_LOCALE, isRTL: false};
-    const {languageTag, isRTL} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
+    const {languageTag} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
     return languageTag;
   }
 
