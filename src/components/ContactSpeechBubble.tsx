@@ -1,17 +1,18 @@
+import {Formik} from 'formik';
+import {FormControl, Input, NativeBaseProvider,VStack} from 'native-base';
 import React, {Component} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Platform} from 'react-native';
+import {Image, Platform,StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
+import * as yup from 'yup';
+
 import LocalesHelper from '../locales';
+import EmergencyContact from '../model/EmergencyContact';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import EmergencyContact from '../model/EmergencyContact';
-import {launchImageLibrary} from 'react-native-image-picker';
 import SpeechBubble from './SpeechBubble';
-import {Formik} from 'formik';
-import * as yup from 'yup';
-import {VStack, FormControl, Input, NativeBaseProvider} from 'native-base';
-import {SvgCss} from 'react-native-svg';
-import images from '../resources/images/images';
 
 export enum CONTACT_SPEECH_BUBBLE_MODE {
   import = 'IMPORT',

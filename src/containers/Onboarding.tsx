@@ -1,25 +1,26 @@
-import React, {Component} from 'react';
-import {Text, Image, StyleSheet, ImageBackground, TouchableOpacity, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {View} from 'react-native';
-import {STORAGE} from './App';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React, {Component} from 'react';
+import {Image, ImageBackground, ScrollView,StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
+import {authorize} from 'react-native-app-auth';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
-import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import Config from 'react-native-config';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+
+import AppButton from '../components/AppButton';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
 import {OAUTH_CONFIG} from '../model/UserSession';
-import {authorize} from 'react-native-app-auth';
-import Config from 'react-native-config';
-import {AppStore} from '../store/reducers';
-import * as miDataServiceActions from '../store/midataService/actions';
-import * as userProfileActions from '../store/userProfile/actions';
-import {connect} from 'react-redux';
-import AppButton from '../components/AppButton';
 import images from '../resources/images/images';
+import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
+import * as miDataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
+import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {STORAGE} from './App';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

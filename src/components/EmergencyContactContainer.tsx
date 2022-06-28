@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {scale, TextSize, colors, AppFonts, activeOpacity} from '../styles/App.style';
-import LocalesHelper from '../locales';
-import {AppStore} from '../store/reducers';
-import {connect} from 'react-redux';
-import EmergencyContact from '../model/EmergencyContact';
-import EmergencyContactTile from './EmergencyContactTile';
 import {SvgCss} from 'react-native-svg';
+import {connect} from 'react-redux';
+
+import LocalesHelper from '../locales';
+import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
+import {AppStore} from '../store/reducers';
+import {activeOpacity,AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import EmergencyContactTile from './EmergencyContactTile';
 
 interface EmergencyContactContainerProps {
   localesHelper: LocalesHelper;

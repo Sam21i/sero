@@ -1,28 +1,29 @@
+import {IQuestion} from '@i4mi/fhir_questionnaire';
+import {Resource} from '@i4mi/fhir_r4';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import Orientation from 'react-native-orientation-locker';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {Resource} from '@i4mi/fhir_r4';
-import PrismSession, {PrismInitializer} from '../model/PrismSession';
-import UserProfile from '../model/UserProfile';
-import {connect} from 'react-redux';
-import {AppStore} from '../store/reducers';
-import LocalesHelper from '../locales';
-import * as midataServiceActions from '../store/midataService/actions';
-import * as userProfileActions from '../store/userProfile/actions';
-import MidataService from '../model/MidataService';
-import {IQuestion} from '@i4mi/fhir_questionnaire';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
+import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
+import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '../components/AssessmentQuitSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
-import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '../components/AssessmentQuitSpeechBubble';
-import AssessmentEndOptions from './AssessmentEndOptions';
-import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
-import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
+import LocalesHelper from '../locales';
+import MidataService from '../model/MidataService';
+import PrismSession, {PrismInitializer} from '../model/PrismSession';
+import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import AssessmentEndOptions from './AssessmentEndOptions';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -233,8 +234,8 @@ class AssessmentQuestions extends Component<PropsType, State> {
   }
 
   render() {
-    let svgImage = this.state.prismSession?.getSVGImage() || '';
-    let base64Image = this.state.prismSession?.getBase64Image() || {
+    const svgImage = this.state.prismSession?.getSVGImage() || '';
+    const base64Image = this.state.prismSession?.getBase64Image() || {
       contentType: '',
       data: ''
     };

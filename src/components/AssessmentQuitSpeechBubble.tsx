@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View, Platform} from 'react-native';
+import {Platform,StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
+
 import LocalesHelper from '../locales';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';

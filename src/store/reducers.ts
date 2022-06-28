@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+
 import LocalesHelperStore from './localesHelper/reducer';
 import MiDataServiceStore from './midataService/reducer';
 import UserProfileStore from './userProfile/reducer';

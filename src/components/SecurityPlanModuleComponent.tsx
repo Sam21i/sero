@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Alert, Linking, StyleSheet, Text, View} from 'react-native';
-import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
-import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {LogBox} from 'react-native';
-import LocalesHelper from '../locales';
+import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
+
+import LocalesHelper from '../locales';
+import {SECURITY_PLAN_MODULE_TYPE,SecurityPlanModule} from '../model/SecurityPlan';
 import images from '../resources/images/images';
+import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
 LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.']);
 
 interface SecurityPlanModuleComponentProps {

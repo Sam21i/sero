@@ -1,9 +1,11 @@
 import 'react-native-get-random-values';
-import {createStore, applyMiddleware, compose} from 'redux';
+
+import {applyMiddleware, compose,createStore} from 'redux';
 import logger from 'redux-logger';
-import {persistStore, persistReducer} from 'redux-persist';
-import reducers from './reducers';
+import {persistReducer,persistStore} from 'redux-persist';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
+
+import reducers from './reducers';
 
 // Storage configuraiton :
 const storage = createSensitiveStorage({

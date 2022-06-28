@@ -2,6 +2,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
+
 import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
@@ -63,7 +64,7 @@ class Banner extends Component<PropsType> {
   }
 
   renderPositive() {
-    let currentSecurityplan = this.props.userProfile.getCurrentSecurityPlan();
+    const currentSecurityplan = this.props.userProfile.getCurrentSecurityPlan();
     const filteredModules = currentSecurityplan
       .getSecurityPlanModules()
       .filter((m) => m.entries.length > 0 && m.type !== 'professionalContacts' && m.type !== 'warningSigns');

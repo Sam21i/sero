@@ -1,8 +1,15 @@
-import React, {Component} from 'react';
-import {PanResponder, StyleSheet, Text, View, Animated, ImageBackground} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Orientation from 'react-native-orientation-locker';
+import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React, {Component} from 'react';
+import {Animated, ImageBackground,PanResponder, StyleSheet, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Orientation from 'react-native-orientation-locker';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {SvgCss} from 'react-native-svg';
+import {connect} from 'react-redux';
+
+import LocalesHelper from '../locales';
+import MidataService from '../model/MidataService';
 import PrismSession, {
   Position,
   PRISM_BLACK,
@@ -12,18 +19,12 @@ import PrismSession, {
   PrismInitializer,
   YELLOW_DISC_MARGIN_RATIO
 } from '../model/PrismSession';
-import {Resource} from '@i4mi/fhir_r4';
 import UserProfile from '../model/UserProfile';
-import {connect} from 'react-redux';
-import {AppStore} from '../store/reducers';
-import LocalesHelper from '../locales';
-import * as midataServiceActions from '../store/midataService/actions';
-import * as userProfileActions from '../store/userProfile/actions';
-import MidataService from '../model/MidataService';
-import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import {SvgCss} from 'react-native-svg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
+import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -73,7 +74,7 @@ class AssessmentBoard extends Component<PropsType, State> {
        * Prevents user from pressing save when dragging the circle.
        */
       this.setState({isValid: false});
-      let newdx = gestureState.dx,
+      const newdx = gestureState.dx,
         newdy = gestureState.dy;
       Animated.event(
         [
@@ -140,7 +141,7 @@ class AssessmentBoard extends Component<PropsType, State> {
   onLayout(event) {
     const {x, y, height, width} = event.nativeEvent.layout;
     if (this?.state) {
-      let newstate = this.state;
+      const newstate = this.state;
       newstate.width = width;
       newstate.height = height;
       this.setState(newstate);

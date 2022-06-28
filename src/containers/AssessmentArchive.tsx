@@ -1,11 +1,12 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, FlatList, Image} from 'react-native';
+import {FlatList, Image,ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
@@ -135,8 +136,8 @@ class AssessmentArchive extends Component<PropsType, State> {
   }
 
   renderPrismSessionHeader() {
-    let svgImage = this.state.selectedPrismSession?.getSVGImage() || '';
-    let base64Image = this.state.selectedPrismSession?.getBase64Image() || {
+    const svgImage = this.state.selectedPrismSession?.getSVGImage() || '';
+    const base64Image = this.state.selectedPrismSession?.getBase64Image() || {
       contentType: '',
       data: ''
     };

@@ -1,25 +1,26 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, PermissionsAndroid, ImageBackground, View, Platform} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackNavigationProp} from '@react-navigation/stack';
-import LocalesHelper from '../locales';
-import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
-import {connect} from 'react-redux';
-import * as midataServiceActions from '../store/midataService/actions';
-import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import UserProfile from '../model/UserProfile';
 import {Resource} from '@i4mi/fhir_r4';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {Component} from 'react';
+import {ImageBackground, PermissionsAndroid, Platform,StyleSheet, Text, View} from 'react-native';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {PrismInitializer} from '../model/PrismSession';
+import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+
 import AssessmentImageSpeechBubble, {
   ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentImageSpeechBubble';
-import {STORAGE} from './App';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {request, check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import LocalesHelper from '../locales';
+import MidataService from '../model/MidataService';
+import {PrismInitializer} from '../model/PrismSession';
+import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {STORAGE} from './App';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

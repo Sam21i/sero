@@ -3,8 +3,8 @@ import {v4 as uuidv4} from 'uuid';
 
 export default class EmergencyContact {
   given: string[] = [];
-  family: string = '';
-  phone: string = '';
+  family = '';
+  phone = '';
   image?: {
     contentType: string;
     data: string;
@@ -91,7 +91,7 @@ export default class EmergencyContact {
   }
 
   getUniqueColor(): string {
-    let stringUniqueHash = [...this.getNameString()].reduce((acc, char) => {
+    const stringUniqueHash = [...this.getNameString()].reduce((acc, char) => {
       return char.charCodeAt(0) + ((acc << 5) - acc);
     }, 0);
     return `hsl(${stringUniqueHash % 360}, 40%, 45%)`;

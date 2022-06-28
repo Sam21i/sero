@@ -1,36 +1,36 @@
+import {Resource} from '@i4mi/fhir_r4';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
 import {
-  Text,
-  StyleSheet,
-  ImageBackground,
-  View,
   FlatList,
-  TouchableWithoutFeedback,
   Image,
+  ImageBackground,
   ListRenderItemInfo,
+  PermissionsAndroid,
   Platform,
-  PermissionsAndroid
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackNavigationProp} from '@react-navigation/stack';
-import LocalesHelper from '../locales';
-import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
-import {connect} from 'react-redux';
-import * as midataServiceActions from '../store/midataService/actions';
-import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
-import EmergencyContact from '../model/EmergencyContact';
-import UserProfile from '../model/UserProfile';
-import {Resource} from '@i4mi/fhir_r4';
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View} from 'react-native';
 import RNContacts from 'react-native-contacts';
 import RNFS from 'react-native-fs';
-import {STORAGE} from './App';
-import {Input, NativeBaseProvider} from 'native-base';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
+import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import LocalesHelper from '../locales';
+import EmergencyContact from '../model/EmergencyContact';
+import MidataService from '../model/MidataService';
+import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {STORAGE} from './App';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -107,7 +107,7 @@ class Contacts extends Component<PropsType, State> {
       loadingContacts: true
     });
     RNContacts.getAll().then((result) => {
-      let abContacts = new Array<EmergencyContact>();
+      const abContacts = new Array<EmergencyContact>();
       const waitForContactsWithImages = new Array<Promise<any>>();
       result.forEach((contact) => {
         let given = contact.givenName || '';

@@ -6,10 +6,11 @@ import {
   PatientCommunication,
   Reference
 } from '@i4mi/fhir_r4';
-import EmergencyContact from './EmergencyContact';
+
 import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
-import SecurityPlanModel from './SecurityPlan';
+import EmergencyContact from './EmergencyContact';
 import PrismSession, {PrismResources} from './PrismSession';
+import SecurityPlanModel from './SecurityPlan';
 
 export default class UserProfile {
   patientResource: Patient = {id: ''};

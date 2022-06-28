@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
+
 import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 

@@ -1,31 +1,31 @@
+import {Resource} from '@i4mi/fhir_r4';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
 import {
-  Text,
-  StyleSheet,
-  ImageBackground,
-  View,
   FlatList,
-  TouchableWithoutFeedback,
   Image,
+  ImageBackground,
+  Linking,
   ListRenderItemInfo,
-  Linking
-} from 'react-native';
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackNavigationProp} from '@react-navigation/stack';
-import LocalesHelper from '../locales';
-import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
 import {connect} from 'react-redux';
-import * as midataServiceActions from '../store/midataService/actions';
-import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
-import EmergencyContact from '../model/EmergencyContact';
-import UserProfile from '../model/UserProfile';
-import {Resource} from '@i4mi/fhir_r4';
-import {Input, NativeBaseProvider} from 'native-base';
+
 import AppButton from '../components/AppButton';
+import {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import LocalesHelper from '../locales';
+import EmergencyContact from '../model/EmergencyContact';
+import MidataService from '../model/MidataService';
+import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

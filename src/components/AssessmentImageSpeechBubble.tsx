@@ -1,13 +1,14 @@
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View, Platform} from 'react-native';
+import {Platform,StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
+
 import LocalesHelper from '../locales';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import SpeechBubble from './SpeechBubble';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {SvgCss} from 'react-native-svg';
-import images from '../resources/images/images';
 
 export enum ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE {
   new = 'NEW',

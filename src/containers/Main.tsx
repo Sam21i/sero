@@ -1,24 +1,25 @@
+import {CarePlan} from '@i4mi/fhir_r4';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {connect} from 'react-redux';
+
+import AppButton from '../components/AppButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
-import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
-import {connect} from 'react-redux';
-import * as userProfileActions from '../store/userProfile/actions';
-import * as midataServiceActions from '../store/midataService/actions';
-import UserProfile from '../model/UserProfile';
-import EmergencyContact from '../model/EmergencyContact';
 import LocalesHelper from '../locales';
-import AppButton from '../components/AppButton';
-import {colors, scale, verticalScale} from '../styles/App.style';
-import {CarePlan} from '@i4mi/fhir_r4';
+import EmergencyContact from '../model/EmergencyContact';
+import MidataService from '../model/MidataService';
 import {PrismResources} from '../model/PrismSession';
-import Orientation from 'react-native-orientation-locker';
+import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
+import {colors, scale, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

@@ -1,20 +1,21 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {ImageBackground,StyleSheet, Text, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
+import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import {ScrollView} from 'react-native-gesture-handler';
-import PrismSession from '../model/PrismSession';
-import {SvgCss} from 'react-native-svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE} from './App';
-import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

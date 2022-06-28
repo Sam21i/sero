@@ -1,5 +1,6 @@
-import Config from 'react-native-config';
 import {refresh} from 'react-native-app-auth';
+import Config from 'react-native-config';
+
 import {store} from '../store';
 import {authenticateUser, logoutUser} from '../store/midataService/actions';
 

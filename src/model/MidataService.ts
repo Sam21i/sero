@@ -1,5 +1,3 @@
-import Config from 'react-native-config';
-import UserProfile from './UserProfile';
 import {
   Bundle,
   CarePlan,
@@ -12,13 +10,16 @@ import {
   RelatedPerson,
   Resource
 } from '@i4mi/fhir_r4';
-import UserSession from './UserSession';
+import Config from 'react-native-config';
+import RNFetchBlob from 'rn-fetch-blob';
+
+import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
 import {store} from '../store';
 import {logoutUser} from '../store/midataService/actions';
 import EmergencyContact from './EmergencyContact';
-import RNFetchBlob from 'rn-fetch-blob';
-import {PrismResources, PRISM_OBSERVATION_CODE} from './PrismSession';
-import PRISM_QUESTIONNAIRE from '../resources/static/Questionnaire.json';
+import {PRISM_OBSERVATION_CODE,PrismResources} from './PrismSession';
+import UserProfile from './UserProfile';
+import UserSession from './UserSession';
 
 export default class MidataService {
   currentSession: UserSession = new UserSession();
@@ -367,7 +368,7 @@ export default class MidataService {
    */
   public fetch(endpoint: string, method = 'GET', body: string | undefined = undefined): Promise<Resource> {
     return new Promise((resolve, reject) => {
-      let headersContent = {
+      const headersContent = {
         Accept: 'application/json',
         'Content-Type': 'application/fhir+json; fhirVersion=4.0',
         Authorization: ''

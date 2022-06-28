@@ -1,19 +1,19 @@
-import Action from '../helpers/Action';
+import {Bundle, CarePlan,CarePlanStatus, Resource} from '@i4mi/fhir_r4';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Guid} from 'guid-typescript';
+
+import {STORAGE} from '../../containers/App';
+import {store} from '..';
 import {
-  UserAuthenticationData,
-  UPDATE_USER_AUTHENTICATION,
-  LOGOUT_AUTHENTICATE_USER,
   ADD_RESOURCE,
   ADD_RESOURCE_TO_SYNCHRONIZE,
-  RESOURCE_SENT,
+  ADD_TO_USER_PROFILE,
   ALL_RESOURCES_SENT,
-  ADD_TO_USER_PROFILE
-} from '../definitions';
-import {Resource, Bundle, CarePlanStatus, CarePlan} from '@i4mi/fhir_r4';
-import {store} from '..';
-import {Guid} from 'guid-typescript';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {STORAGE} from '../../containers/App';
+  LOGOUT_AUTHENTICATE_USER,
+  RESOURCE_SENT,
+  UPDATE_USER_AUTHENTICATION,
+  UserAuthenticationData} from '../definitions';
+import Action from '../helpers/Action';
 
 export function authenticateUser(
   dispatch: Function,
@@ -22,7 +22,7 @@ export function authenticateUser(
   refreshToken: string,
   server: string
 ) {
-  var actionData: UserAuthenticationData = {
+  const actionData: UserAuthenticationData = {
     accessToken,
     accessTokenExpirationDate,
     refreshToken,
@@ -57,7 +57,7 @@ export function synchronizeResource(dispatch: Function, resource: Resource) {
   dispatch(new Action(ADD_TO_USER_PROFILE, resource).getObjectAction());
   if (resource.id?.indexOf('temp') === 0) {
     // when resource has temp id, it has not been uploaded before it was edited and synced again
-    let uploadJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
+    const uploadJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
     const index = uploadJobs.findIndex((job) => job.resource.id === resource.id);
     if (index > -1) {
       dispatch(new Action(ADD_RESOURCE_TO_SYNCHRONIZE, resource).getObjectAction());
@@ -92,13 +92,13 @@ export function logoutUser(dispatch: Function): Promise<void> {
 }
 
 export async function uploadPendingResources(dispatch: Function): Promise<void> {
-  let uploadJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
+  const uploadJobs = (store.getState() as any).MiDataServiceStore.pendingResources;
 
   if (uploadJobs.length === 0) {
     return Promise.resolve();
   }
 
-  let resourcesToUpload = new Array();
+  const resourcesToUpload = [];
   uploadJobs.forEach(
     (uploadJob: {resource: Resource; isUploading: boolean; mustBeSynchronized: boolean; timestamp: Date}) => {
       if (!uploadJob.isUploading) {
@@ -129,7 +129,7 @@ export function uploadResource(
       endPoint += '/' + _jobItem.resource.resourceType;
     }
 
-    let MIDATAStore = (store.getState() as any).MiDataServiceStore;
+    const MIDATAStore = (store.getState() as any).MiDataServiceStore;
 
     if (!_jobItem.mustBeSynchronized || !_jobItem.resource.id) {
       // TODO : try/catch when user's token no more valid!
@@ -172,7 +172,7 @@ export function uploadResource(
           if (pendingJob.resource.resourceType === 'Bundle') {
             const bundle = pendingJob.resource as Bundle;
 
-            for (let i in bundle.entry) {
+            for (const i in bundle.entry) {
               if (bundle.entry[i].resource.id === _jobItem.resource.id) {
                 bundle.entry[i].resource = _jobItem.resource;
                 foundResourceInPendingJobs = true;
@@ -290,7 +290,7 @@ export function deleteResource(dispatch: Function, _mustBeSynchronized: boolean,
         pendingJobs.forEach((pendingJob: {resource: Resource}) => {
           if (pendingJob.resource.resourceType === 'Bundle') {
             const bundle = pendingJob.resource as Bundle;
-            for (let i in bundle.entry) {
+            for (const i in bundle.entry) {
               if (bundle.entry[i].resource.id === _resource.id) {
                 bundle.entry.splice(Number(i), 1);
                 foundResourceInPendingJobs = true;

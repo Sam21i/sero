@@ -1,6 +1,7 @@
 import {CarePlan, CarePlanIntent, CarePlanStatus, Reference} from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
 import {v4 as uuid} from 'uuid';
+
 import {EMPTY_SECURITY_PLAN} from '../resources/static/emptySecurityplan';
 
 const CODE_SYSTEM = 'http://midata.coop/sero/securityplan';
