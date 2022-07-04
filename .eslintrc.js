@@ -20,7 +20,8 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     '@typescript-eslint/ban-types': 'warn',
-    'prettier/prettier': ['error']
+    'prettier/prettier': ['error'],
+    '@typescript-eslint/no-var-requires': 'warn'
   },
   settings: {
     react: {

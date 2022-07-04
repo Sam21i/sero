@@ -34,7 +34,6 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
           [
             {
               text: this.props.localesHelper.localeString('common.cancel'),
-              onPress: () => {},
               style: 'cancel'
             },
             {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}

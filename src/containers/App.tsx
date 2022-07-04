@@ -34,6 +34,7 @@ import SecurityplanMain from './SecurityplanMain';
 import Settings from './Settings';
 import Welcome from './Welcome';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface PropsType {}
 
 interface State {
@@ -51,7 +52,7 @@ export enum STORAGE {
 
 const OnboardingStack = createStackNavigator();
 
-function OnboardingStackScreen({route}: {route: any}) {
+function OnboardingStackScreen() {
   return (
     <OnboardingStack.Navigator>
       <OnboardingStack.Screen
@@ -70,7 +71,7 @@ function OnboardingStackScreen({route}: {route: any}) {
 
 const MainStack = createStackNavigator();
 
-function MainStackScreen({route}: {route: any}) {
+function MainStackScreen() {
   return (
     <MainStack.Navigator screenOptions={{headerShown: false}}>
       <MainStack.Screen
@@ -89,7 +90,7 @@ function MainStackScreen({route}: {route: any}) {
 
 const InformationStack = createStackNavigator();
 
-function InformationStackScreen({route}: {route: any}) {
+function InformationStackScreen() {
   return (
     <InformationStack.Navigator>
       <InformationStack.Screen
@@ -102,7 +103,7 @@ function InformationStackScreen({route}: {route: any}) {
 
 const SettingsStack = createStackNavigator();
 
-function SettingsStackScreen({route}: {route: any}) {
+function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
@@ -115,7 +116,7 @@ function SettingsStackScreen({route}: {route: any}) {
 
 const SecurityplanStack = createStackNavigator();
 
-function SecurityplanStackScreen({route}: {route: any}) {
+function SecurityplanStackScreen() {
   return (
     <SecurityplanStack.Navigator>
       <SecurityplanStack.Screen
@@ -150,7 +151,7 @@ function SecurityplanStackScreen({route}: {route: any}) {
 
 const AssessmentIntroStack = createStackNavigator();
 
-function AssessmentIntroStackScreen({route}: {route: any}) {
+function AssessmentIntroStackScreen() {
   return (
     <AssessmentIntroStack.Navigator>
       <AssessmentIntroStack.Screen
@@ -176,7 +177,7 @@ function AssessmentIntroStackScreen({route}: {route: any}) {
 
 const AssessmentStack = createStackNavigator();
 
-function AssessmentStackScreen({route}: {route: any}) {
+function AssessmentStackScreen() {
   return (
     <AssessmentStack.Navigator>
       <AssessmentStack.Screen
@@ -209,7 +210,7 @@ function AssessmentStackScreen({route}: {route: any}) {
 
 const AssessmentSessionStack = createStackNavigator();
 
-function AssessmentSessionStackScreen({route}: {route: any}) {
+function AssessmentSessionStackScreen() {
   return (
     <AssessmentSessionStack.Navigator>
       <AssessmentSessionStack.Screen

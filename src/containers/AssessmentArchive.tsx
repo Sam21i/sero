@@ -128,7 +128,6 @@ class AssessmentArchive extends Component<PropsType, State> {
       <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
         <Question
           question={item}
-          onChangeText={() => {}}
           isArchiveMode={true}
         />
       </View>

@@ -197,6 +197,7 @@ class Contacts extends Component<PropsType, State> {
           case CONTACT_SPEECH_BUBBLE_MODE.delete:
             relatedPersonResource.active = false;
           // no break, because we also have to synchronize the resource
+          // eslint-disable-next-line no-fallthrough
           case CONTACT_SPEECH_BUBBLE_MODE.edit:
             this.props.synchronizeResource(relatedPersonResource);
             break;
