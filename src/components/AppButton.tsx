@@ -2,15 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {SvgCss} from 'react-native-svg';
 
-import {activeOpacity,
-  AppFonts,
-  
-  
-  colors,
-  
-  scale,
-  
-  TextSize} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface CategoryButtonProps {
   label: string;
