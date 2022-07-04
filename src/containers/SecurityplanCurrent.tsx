@@ -1,24 +1,24 @@
+import {Reference, Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import SortableList from 'react-native-sortable-list';
 import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
+import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
 import LocalesHelper from '../locales';
-import SecurityPlanModel, {SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import {SecurityPlanModule} from '../model/SecurityPlan';
-import SortableList from 'react-native-sortable-list';
+import SecurityPlanModel, {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
-import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
-import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
-import * as userProfileActions from '../store/userProfile/actions';
-import * as midataServiceActions from '../store/midataService/actions';
-import {Reference, Resource} from '@i4mi/fhir_r4';
 import images from '../resources/images/images';
+import * as midataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -88,7 +88,8 @@ class SecurityplanCurrent extends Component<PropsType, State> {
         break;
       case SECURITYPLAN_SPEECH_BUBBLE_MODE.edit:
         newState.isEditMode = true;
-      default: // nothing to do here, just close the bubble
+        break;
+      default:
     }
     this.setState(newState);
   }
@@ -113,7 +114,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   onEditedModule(editedModule: SecurityPlanModule): void {
     const index = this.state.modules.findIndex((m) => m.type === editedModule.type);
     if (index > -1) {
-      let modules = [...this.state.modules];
+      const modules = [...this.state.modules];
       modules[index] = editedModule;
       // make sure state gets updated
       this.setState({
@@ -146,7 +147,9 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     const userReference = this.props.userProfile.getFhirReference();
     // sync order of modules in table and model
     this.state.moduleOrder.forEach((orderEntry, index) => {
-      this.state.modules[parseInt(orderEntry)].order = index;
+      const newModules = this.state.modules.slice(0);
+      newModules[parseInt(orderEntry)].order = index;
+      this.setState({modules: newModules});
     });
     this.state.currentSecurityplan.setModulesWithOrder(this.state.modules);
 
@@ -238,15 +241,16 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     return (
       <View style={{flexDirection: 'column'}}>
         {buttons.map((button, index) => (
-          <AppButton
-            key={button.label}
-            label={this.props.localesHelper.localeString(button.label)}
-            position='right'
-            icon={button.icon}
-            color={colors.tumbleweed}
-            onPress={button.onPress}
-            style={styles.backButton}
-          />
+          <View key={index}>
+            <AppButton
+              label={this.props.localesHelper.localeString(button.label)}
+              position='right'
+              icon={button.icon}
+              color={colors.tumbleweed}
+              onPress={button.onPress}
+              style={styles.backButton}
+            />
+          </View>
         ))}
       </View>
     );

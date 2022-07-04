@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
-import {Text, Image, StyleSheet, View, ImageBackground} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import React, {Component} from 'react';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {AppFonts, TextSize, scale, verticalScale, colors} from '../styles/App.style';
-import AppButton from '../components/AppButton';
-import LocalesHelper from '../locales';
-import {AppStore} from '../store/reducers';
-import {connect} from 'react-redux';
-import SpeechBubble from '../components/SpeechBubble';
-import images from '../resources/images/images';
 import {SvgCss} from 'react-native-svg';
+import {connect} from 'react-redux';
+
+import AppButton from '../components/AppButton';
+import SpeechBubble from '../components/SpeechBubble';
+import LocalesHelper from '../locales';
+import images from '../resources/images/images';
+import {AppStore} from '../store/reducers';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

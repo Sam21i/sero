@@ -1,6 +1,7 @@
 import {CarePlan, CarePlanIntent, CarePlanStatus, Reference} from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
 import {v4 as uuid} from 'uuid';
+
 import {EMPTY_SECURITY_PLAN} from '../resources/static/emptySecurityplan';
 
 const CODE_SYSTEM = 'http://midata.coop/sero/securityplan';
@@ -223,24 +224,13 @@ export default class SecurityPlanModel {
     return this.fhirResource;
   }
 
-  private findModuleByType(_type: SECURITY_PLAN_MODULE_TYPE): CarePlan {
-    return fhirpath.evaluate(
-      this.fhirResource,
-      'CarePlan.contained' +
-        ".where(category.coding.system='" +
-        CODE_SYSTEM +
-        "')" +
-        ".where(category.coding.code='+ _type + ')"
-    )[0];
-  }
-
   /**
    * Maps SecurityPlanModules to contained FHIR resources
    * @param _modules the input modules
    */
   private setModulesOnFhir(_modules: SecurityPlanModule[]): void {
     if (this.fhirResource.id === 'emptyPlan') this.fhirResource.id = uuid();
-    this.fhirResource.contained = _modules.map((module, index) => {
+    this.fhirResource.contained = _modules.map((module) => {
       return {
         resourceType: 'CarePlan',
         id: module.type,

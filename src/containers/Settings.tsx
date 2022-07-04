@@ -1,14 +1,14 @@
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {Text, Button} from 'react-native';
+import {Button, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import MidataService from '../model/MidataService';
-import {AppStore} from '../store/reducers';
-import * as miDataServiceActions from '../store/midataService/actions';
+
 import LocalesHelper from '../locales';
-import {View} from 'react-native';
+import MidataService from '../model/MidataService';
+import * as miDataServiceActions from '../store/midataService/actions';
+import {AppStore} from '../store/reducers';
 import {AppFonts, scale, TextSize} from '../styles/App.style';
-import {StackNavigationProp} from '@react-navigation/stack';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;
@@ -17,9 +17,7 @@ interface PropsType {
   logoutUser: () => Promise<void>;
 }
 
-interface State {}
-
-class Settings extends Component<PropsType, State> {
+class Settings extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
     this.state = {};

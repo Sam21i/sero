@@ -1,5 +1,6 @@
-import Config from 'react-native-config';
 import {refresh} from 'react-native-app-auth';
+import Config from 'react-native-config';
+
 import {store} from '../store';
 import {authenticateUser, logoutUser} from '../store/midataService/actions';
 
@@ -53,7 +54,7 @@ export default class UserSession {
    * Returns the valid token if it's valid, or undefined if its not
    */
   public getValidAccessToken(): Promise<string | undefined> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (this.isAccessTokenExpired()) {
         if (this.refreshToken !== undefined) {
           if (this.isCurrentlyRefreshingToken) {

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {activeOpacity, colors, scale, verticalScale} from '../styles/App.style';
 import {SvgCss} from 'react-native-svg';
+
 import images from '../resources/images/images';
+import {activeOpacity, colors, scale, verticalScale} from '../styles/App.style';
 
 export default class EmergencyNumberButton extends Component {
   callEmergency() {

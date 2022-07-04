@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Platform, View} from 'react-native';
-import {colors, scale} from '../styles/App.style';
 import {SvgCss} from 'react-native-svg';
+
 import images from '../resources/images/images';
+import {colors, scale} from '../styles/App.style';
 
 interface SpeechBubbleProps {
   bubbleContent: any;
@@ -66,7 +67,7 @@ export default class SpeechBubble extends Component<SpeechBubbleProps> {
   }
 
   renderIcon() {
-    let size = this.props.stylingOptions?.icon?.size || 80;
+    const size = this.props.stylingOptions?.icon?.size || 80;
     return (
       <View
         style={{

@@ -1,37 +1,40 @@
 import 'react-native-gesture-handler';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
-import Main from './Main';
-import Settings from './Settings';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createStackNavigator} from '@react-navigation/stack';
 import RNBootSplash from 'react-native-bootsplash';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Welcome from './Welcome';
-import {store, persistor} from '../store';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import SecurityplanMain from './SecurityplanMain';
-import Contacts from './Contacts';
-import SecurityplanCurrent from './SecurityplanCurrent';
-import SecurityplanArchive from './SecurityplanArchive';
-import AssessmentMain from './AssessmentMain';
-import AssessmentBoard from './AssessmentBoard';
+
+import images from '../resources/images/images';
+import {persistor, store} from '../store';
+import {colors} from '../styles/App.style';
 import AssessmentArchive from './AssessmentArchive';
+import AssessmentBoard from './AssessmentBoard';
+import AssessmentContacts from './AssessmentContacts';
+import AssessmentEndOptions from './AssessmentEndOptions';
+import AssessmentImage from './AssessmentImage';
 import AssessmentIntroDescription from './AssessmentIntroDescription';
 import AssessmentIntroTutorial from './AssessmentIntroTutorial';
+import AssessmentMain from './AssessmentMain';
 import AssessmentQuestions from './AssessmentQuestions';
-import {colors} from '../styles/App.style';
-import Onboarding from './Onboarding';
-import AssessmentImage from './AssessmentImage';
+import Contacts from './Contacts';
 import Information from './Information';
-import AssessmentEndOptions from './AssessmentEndOptions';
-import AssessmentContacts from './AssessmentContacts';
-import images from '../resources/images/images';
+import Main from './Main';
+import Onboarding from './Onboarding';
+import SecurityplanArchive from './SecurityplanArchive';
+import SecurityplanCurrent from './SecurityplanCurrent';
+import SecurityplanMain from './SecurityplanMain';
+import Settings from './Settings';
+import Welcome from './Welcome';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface PropsType {}
 
 interface State {
@@ -49,7 +52,7 @@ export enum STORAGE {
 
 const OnboardingStack = createStackNavigator();
 
-function OnboardingStackScreen({route}: {route: any}) {
+function OnboardingStackScreen() {
   return (
     <OnboardingStack.Navigator>
       <OnboardingStack.Screen
@@ -68,7 +71,7 @@ function OnboardingStackScreen({route}: {route: any}) {
 
 const MainStack = createStackNavigator();
 
-function MainStackScreen({route}: {route: any}) {
+function MainStackScreen() {
   return (
     <MainStack.Navigator screenOptions={{headerShown: false}}>
       <MainStack.Screen
@@ -87,7 +90,7 @@ function MainStackScreen({route}: {route: any}) {
 
 const InformationStack = createStackNavigator();
 
-function InformationStackScreen({route}: {route: any}) {
+function InformationStackScreen() {
   return (
     <InformationStack.Navigator>
       <InformationStack.Screen
@@ -100,7 +103,7 @@ function InformationStackScreen({route}: {route: any}) {
 
 const SettingsStack = createStackNavigator();
 
-function SettingsStackScreen({route}: {route: any}) {
+function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
@@ -113,7 +116,7 @@ function SettingsStackScreen({route}: {route: any}) {
 
 const SecurityplanStack = createStackNavigator();
 
-function SecurityplanStackScreen({route}: {route: any}) {
+function SecurityplanStackScreen() {
   return (
     <SecurityplanStack.Navigator>
       <SecurityplanStack.Screen
@@ -148,7 +151,7 @@ function SecurityplanStackScreen({route}: {route: any}) {
 
 const AssessmentIntroStack = createStackNavigator();
 
-function AssessmentIntroStackScreen({route}: {route: any}) {
+function AssessmentIntroStackScreen() {
   return (
     <AssessmentIntroStack.Navigator>
       <AssessmentIntroStack.Screen
@@ -174,7 +177,7 @@ function AssessmentIntroStackScreen({route}: {route: any}) {
 
 const AssessmentStack = createStackNavigator();
 
-function AssessmentStackScreen({route}: {route: any}) {
+function AssessmentStackScreen() {
   return (
     <AssessmentStack.Navigator>
       <AssessmentStack.Screen
@@ -207,7 +210,7 @@ function AssessmentStackScreen({route}: {route: any}) {
 
 const AssessmentSessionStack = createStackNavigator();
 
-function AssessmentSessionStackScreen({route}: {route: any}) {
+function AssessmentSessionStackScreen() {
   return (
     <AssessmentSessionStack.Navigator>
       <AssessmentSessionStack.Screen

@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import {AppStore} from '../store/reducers';
+
 import LocalesHelper from '../locales';
+import {AppStore} from '../store/reducers';
 import {AppFonts, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   localesHelper: LocalesHelper;
 }
 
-interface State {}
-
-class Info extends Component<PropsType, State> {
+class Info extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
 

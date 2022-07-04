@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 // Screen size
 //   iPhone 5: w320/h568/r1.78

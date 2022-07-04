@@ -1,16 +1,17 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, ImageBackground, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
-import LocalesHelper from '../locales';
-import {AppStore} from '../store/reducers';
+import React, {Component} from 'react';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+
 import AssessmentEndOptionsSpeechBubble, {
   ASSESSMENT_END_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentEndOptionsSpeechBubble';
+import EmergencyNumberButton from '../components/EmergencyNumberButton';
+import LocalesHelper from '../locales';
 import images from '../resources/images/images';
+import {AppStore} from '../store/reducers';
+import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

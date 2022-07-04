@@ -1,4 +1,8 @@
-import Action from '../helpers/Action';
+import {CarePlan, Reference} from '@i4mi/fhir_r4';
+
+import EmergencyContact from '../../model/EmergencyContact';
+import PrismSession, {PrismResources} from '../../model/PrismSession';
+import SecurityPlanModel from '../../model/SecurityPlan';
 import {
   ADD_PRISM_SESSION,
   ADD_SECURITY_PLAN,
@@ -9,12 +13,9 @@ import {
   SET_SECURITY_PLAN_HISTORY,
   UPDATE_USER_PROFILE
 } from '../definitions';
-import {UserProfileData} from './reducer';
-import EmergencyContact from '../../model/EmergencyContact';
-import SecurityPlanModel from '../../model/SecurityPlan';
-import {CarePlan, Reference} from '@i4mi/fhir_r4';
+import Action from '../helpers/Action';
 import {addResource, synchronizeResource} from '../midataService/actions';
-import PrismSession, {PrismResources} from '../../model/PrismSession';
+import {UserProfileData} from './reducer';
 
 export function updateUserProfile(dispatch, userProfileInfo: UserProfileData) {
   dispatch(new Action(UPDATE_USER_PROFILE, userProfileInfo).getObjectAction());

@@ -1,28 +1,28 @@
-import {createReducer} from '../helpers/reducerCreator';
-import MidataService from '../../model/MidataService';
-import {REHYDRATE} from 'redux-persist';
 import {Resource} from '@i4mi/fhir_r4';
+import Config from 'react-native-config';
+import {REHYDRATE} from 'redux-persist';
+
+import MidataService from '../../model/MidataService';
 import {
-  UserAuthenticationData,
-  UPDATE_USER_AUTHENTICATION,
-  LOGOUT_AUTHENTICATE_USER,
   ADD_RESOURCE,
   ADD_RESOURCE_TO_SYNCHRONIZE,
-  RESOURCE_SENT
+  LOGOUT_AUTHENTICATE_USER,
+  RESOURCE_SENT,
+  UPDATE_USER_AUTHENTICATION,
+  UserAuthenticationData
 } from '../definitions';
-import Config from 'react-native-config';
+import {createReducer} from '../helpers/reducerCreator';
 
 // Definition of actions listeners
 const MiDataServiceStore = createReducer(new MidataService(), {
   [REHYDRATE](state: MidataService, action) {
     if (action.payload && action.payload.MiDataServiceStore) {
-      if (action.payload.MiDataServiceStore.hasOwnProperty('pendingResources')) {
+      if (Object.prototype.hasOwnProperty.call(action.payload.MiDataServiceStore, 'pendingResources')) {
         action.payload.MiDataServiceStore.pendingResources.forEach((item) => {
           item.isUploading = false;
         });
       }
-
-      if (!action.payload.MiDataServiceStore.currentSession.hasOwnProperty('server')) {
+      if (!Object.prototype.hasOwnProperty.call(action.payload.MiDataServiceStore.currentSession, 'server')) {
         action.payload.MiDataServiceStore.currentSession.server = Config.host;
       }
 
@@ -31,8 +31,8 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     return state;
   },
   [UPDATE_USER_AUTHENTICATION](state: MidataService, action) {
-    let newState = new MidataService(state);
-    let newValues: UserAuthenticationData = action.data;
+    const newState = new MidataService(state);
+    const newValues: UserAuthenticationData = action.data;
     newState.authenticateUser(
       newValues.accessToken,
       newValues.accessTokenExpirationDate,
@@ -42,7 +42,7 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     return newState;
   },
   [ADD_RESOURCE](state: MidataService, action) {
-    let newState = new MidataService(state);
+    const newState = new MidataService(state);
     const index = newState.pendingResources.findIndex((resource) => resource.resource === action.data);
     if (index === -1) {
       // only add, when exact same resource is not already in queue
@@ -51,8 +51,8 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     return newState;
   },
   [ADD_RESOURCE_TO_SYNCHRONIZE](state: MidataService, action) {
-    let newState = new MidataService(state);
-    let index = newState.pendingResources.findIndex((resource) => resource.resource.id === action.data.id);
+    const newState = new MidataService(state);
+    const index = newState.pendingResources.findIndex((resource) => resource.resource.id === action.data.id);
     if (index === -1) {
       // only add, when exact same resource is not already in queue
       newState.pendingResources.push({
@@ -71,11 +71,11 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     return newState;
   },
   [RESOURCE_SENT](state: MidataService, action) {
-    let newState = new MidataService(state);
-    let resource = action.resource.resource as Resource;
+    const newState = new MidataService(state);
+    const resource = action.resource.resource as Resource;
 
     // remove from pending resources
-    let resourceIndex = newState.pendingResources.findIndex((item) => {
+    const resourceIndex = newState.pendingResources.findIndex((item) => {
       return item.resource == resource;
     });
 
@@ -86,7 +86,7 @@ const MiDataServiceStore = createReducer(new MidataService(), {
     return newState;
   },
   [LOGOUT_AUTHENTICATE_USER](state: MidataService) {
-    let newState = new MidataService(state);
+    const newState = new MidataService(state);
     newState.logoutUser();
     return newState;
   }

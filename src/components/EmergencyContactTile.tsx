@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
 import EmergencyContact from '../model/EmergencyContact';
 import {activeOpacity, AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
 
@@ -7,8 +8,8 @@ interface EmergencyContactProps {
   size: number;
   contact: EmergencyContact;
   onPress?: () => void;
-  textStyle?: any;
-  style?: any;
+  textStyle?: Record<string, unknown>;
+  style?: Record<string, unknown>;
 }
 
 const HORIZONTAL_MARGIN = 10;

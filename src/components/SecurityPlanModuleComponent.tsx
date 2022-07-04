@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {Alert, Linking, StyleSheet, Text, View} from 'react-native';
-import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
-import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
+import {Alert, Linking, LogBox, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {LogBox} from 'react-native';
-import LocalesHelper from '../locales';
 import {SvgCss} from 'react-native-svg';
+
+import LocalesHelper from '../locales';
+import {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import images from '../resources/images/images';
+import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
+
 LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.']);
 
 interface SecurityPlanModuleComponentProps {
@@ -17,12 +18,7 @@ interface SecurityPlanModuleComponentProps {
   onEdit?: (m: SecurityPlanModule) => void;
 }
 
-interface SecurityPlanModuleState {}
-
-export default class SecurityPlanModuleComponent extends Component<
-  SecurityPlanModuleComponentProps,
-  SecurityPlanModuleState
-> {
+export default class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps> {
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
     this.state = {};
@@ -38,7 +34,6 @@ export default class SecurityPlanModuleComponent extends Component<
           [
             {
               text: this.props.localesHelper.localeString('common.cancel'),
-              onPress: () => {},
               style: 'cancel'
             },
             {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}

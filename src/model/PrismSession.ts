@@ -1,7 +1,5 @@
-import base64 from 'react-native-base64';
 import {QuestionnaireData} from '@i4mi/fhir_questionnaire';
 import {
-  Bundle,
   BundleHTTPVerb,
   BundleType,
   I4MIBundle,
@@ -13,6 +11,7 @@ import {
   QuestionnaireResponse,
   Reference
 } from '@i4mi/fhir_r4';
+import base64 from 'react-native-base64';
 
 export const PRISM_RATIO = Math.SQRT2; // aspec ratio of the PRISM-S plate
 export const PRISM_WIDTH = 29.4; // width of the real PRISM-S plate in cm
@@ -117,7 +116,7 @@ export default class PrismSession {
   // the date when the PRISM-S was done
   date: Date = new Date();
   // the width of the virtual PRISM-S
-  canvasWidth: number = 1;
+  canvasWidth = 1;
   private questionnaireData?: QuestionnaireData;
   private observation?: Observation;
   private media?: Media;
@@ -127,10 +126,10 @@ export default class PrismSession {
   };
 
   constructor(_data: PrismSession | PrismResources | PrismInitializer) {
-    if (_data.hasOwnProperty('questionnaireData')) {
+    if (Object.prototype.hasOwnProperty.call(_data, 'questionnaireData')) {
       // it's of type PrismSession
       Object.assign(this, _data);
-    } else if (_data.hasOwnProperty('observation')) {
+    } else if (Object.prototype.hasOwnProperty.call(_data, 'observation')) {
       // it's of typ PrismResources
       const resources = _data as PrismResources;
       this.fillFromFHIR(

@@ -1,19 +1,20 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
+import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
+import {SecurityPlanModule} from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
+import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
-import {SecurityPlanModule} from '../model/SecurityPlan';
-import Banner, {BANNER_TYPE} from '../components/Banner';
-import images from '../resources/images/images';
 
 interface PropsType {
   navigation: StackNavigationProp<any>;

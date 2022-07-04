@@ -5,11 +5,12 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
+
 import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
-  onChangeText: (text: string, question: IQuestion) => void;
+  onChangeText?: (text: string, question: IQuestion) => void;
   question: IQuestion;
   isArchiveMode?: boolean;
 }
@@ -36,7 +37,6 @@ export default class Question extends Component<PropsType, State> {
   }
 
   hasChildrenWithContent(item: IQuestion) {
-    console.log(item.id);
     let count = 0;
     item.subItems?.forEach((item) => {
       if (this.hasAnswer(item)) {

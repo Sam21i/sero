@@ -1,15 +1,16 @@
 import {Formik} from 'formik';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
-import {StyleSheet, Modal, Text, View, ImageBackground, TouchableOpacity} from 'react-native';
+import {ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {SvgCss} from 'react-native-svg';
+
 import LocalesHelper from '../locales';
-import {SecurityPlanModule, SECURITY_PLAN_MODULE_TYPE} from '../model/SecurityPlan';
+import {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
+import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import AppButton from './AppButton';
-import {SvgCss} from 'react-native-svg';
-import images from '../resources/images/images';
 
 interface SecurityPlanEditModalProps {
   localesHelper: LocalesHelper;

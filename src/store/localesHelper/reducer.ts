@@ -1,7 +1,8 @@
-import {createReducer} from '../helpers/reducerCreator';
-import LocalesHelper from '../../locales';
 import {REHYDRATE} from 'redux-persist';
+
+import LocalesHelper from '../../locales';
 import {UPDATE_LOCALE_LANGUAGE} from '../definitions';
+import {createReducer} from '../helpers/reducerCreator';
 
 export type LocalHelperData = string;
 
@@ -14,8 +15,8 @@ const LocalesHelperStore = createReducer(new LocalesHelper(), {
     return state;
   },
   [UPDATE_LOCALE_LANGUAGE](state: LocalesHelper, action) {
-    let newState = new LocalesHelper(state);
-    let newLang: string = action.data;
+    const newState = new LocalesHelper(state);
+    const newLang: string = action.data;
     newState.updateLanguage(newLang);
     return newState;
   }

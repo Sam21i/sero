@@ -1,8 +1,9 @@
+import 'intl';
+
+import memoize from 'lodash.memoize';
+import {I18nManager} from 'react-native';
 import I18n from 'react-native-i18n';
 import * as RNLocalize from 'react-native-localize';
-import {I18nManager} from 'react-native';
-import memoize from 'lodash.memoize';
-import 'intl';
 
 // Import all locales
 import * as de from '../resources/locales/de.json';
@@ -10,7 +11,7 @@ import * as fr from '../resources/locales/fr.json';
 import * as it from '../resources/locales/it.json';
 
 const DEFAULT_LOCALE = 'de';
-let translationKey: {[index: string]: any} = {de: de, fr: fr, it: it};
+const translationKey: {[index: string]: any} = {de: de, fr: fr, it: it};
 
 // Initialisation of languages:
 // Should the app fallback to Deutsh if user locale doesn't exists
@@ -69,7 +70,7 @@ export default class LocalesHelper {
 
   getDevicePreferedLanguage(): string {
     const fallback = {languageTag: DEFAULT_LOCALE, isRTL: false};
-    const {languageTag, isRTL} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
+    const {languageTag} = RNLocalize.findBestAvailableLanguage(Object.keys(translationKey)) || fallback;
     return languageTag;
   }
 
