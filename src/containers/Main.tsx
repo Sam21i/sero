@@ -43,7 +43,6 @@ class Main extends Component<PropsType, State> {
     this.state = {
       emergencyContactsLoaded: false
     };
-    Orientation.lockToPortrait();
   }
 
   componentDidMount() {

@@ -1,7 +1,7 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {Animated, ImageBackground, PanResponder, StyleSheet, Text, View} from 'react-native';
+import {Animated, ImageBackground, NativeModules, PanResponder, Platform, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -151,9 +151,11 @@ class AssessmentBoard extends Component<PropsType, State> {
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToLandscape();
+      if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterLeanBackMode();
     });
     this.props.navigation.addListener('blur', () => {
       Orientation.lockToPortrait();
+      if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterStickyImmersiveMode();
     });
   }
 
