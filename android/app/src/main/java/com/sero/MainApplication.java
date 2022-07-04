@@ -27,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+            packages.add(new ImmersiveModePackage());
           return packages;
         }
 
@@ -48,6 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     registerActivityLifecycleCallbacks(OrientationActivityLifecycle.getInstance());
   }
+
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like
