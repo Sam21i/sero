@@ -7,6 +7,7 @@ import SortableList from 'react-native-sortable-list';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
@@ -220,22 +221,12 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       icon: images.imagesSVG.common.cancel,
       onPress: this.reset.bind(this)
     };
-    const backButton = {
-      label: 'common.back',
-      icon: images.imagesSVG.common.back,
-      onPress: () => {
-        this.props.navigation.goBack();
-      }
-    };
+
     if (this.state.isEditMode) {
       buttons.push(saveButton);
-      if (this.state.isFirstPlan) {
-        buttons.push(backButton);
-      } else {
+      if (!this.state.isFirstPlan) {
         buttons.push(cancelButton);
       }
-    } else {
-      buttons.push(backButton);
     }
 
     return (
@@ -266,6 +257,17 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                if (this.state.bubbleVisible) {
+                  this.setState({bubbleVisible: false});
+                } else if (this.state.isEditMode || this.state.isReplaceMode) {
+                  this.reset();
+                } else {
+                  this.props.navigation.pop();
+                }
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewTextTitle}>
                 {this.props.localesHelper.localeString('securityplan.current')}
@@ -329,14 +331,12 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.primary50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   topTextView: {
     flex: 1,
-    paddingLeft: scale(50),
-    paddingVertical: scale(20),
-    alignSelf: 'flex-start',
-    justifyContent: 'space-between'
+    alignSelf: 'center'
   },
   topViewTextTitle: {
     color: colors.white,

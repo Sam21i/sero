@@ -16,7 +16,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
@@ -137,22 +137,6 @@ class Contacts extends Component<PropsType, State> {
     );
   };
 
-  renderListFooter() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.gold}
-        onPress={() => {
-          this.props.navigation.navigate('AssessmentEndOptions');
-        }}
-        style={styles.backButton}
-        isLargeButton={false}
-      />
-    );
-  }
-
   render() {
     const contacts = this.props.userProfile
       .getEmergencyContacts()
@@ -166,6 +150,11 @@ class Contacts extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                this.props.navigation.navigate('AssessmentEndOptions');
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>
                 {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit ||
@@ -191,7 +180,6 @@ class Contacts extends Component<PropsType, State> {
               alwaysBounceVertical={false}
               renderItem={this.renderContactListItem.bind(this)}
               showsHorizontalScrollIndicator={false}
-              ListFooterComponent={this.renderListFooter.bind(this)}
             />
           </View>
 

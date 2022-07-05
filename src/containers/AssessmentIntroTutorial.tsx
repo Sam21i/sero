@@ -8,6 +8,7 @@ import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
 import PrismSession from '../model/PrismSession';
@@ -18,15 +19,22 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import {STORAGE} from './App';
 
 interface PropsType {
+  route: {params: {test: boolean}};
   navigation: StackNavigationProp<any>;
   localesHelper: LocalesHelper;
   userProfile: UserProfile;
   prismSession: PrismSession;
 }
 
-class AssessmentIntroTutorial extends Component<PropsType> {
+interface State {
+  test: boolean;
+}
+
+class AssessmentIntroTutorial extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
+    console.log(props.route);
+    this.state = {test: props.route.params.test};
   }
 
   render() {
@@ -39,6 +47,19 @@ class AssessmentIntroTutorial extends Component<PropsType> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            {this.state.test ? (
+              <BackButton
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+              />
+            ) : (
+              <BackButton
+                onPress={() => {
+                  this.props.navigation.navigate('AssessmentSessionStackScreen');
+                }}
+              />
+            )}
             <View style={styles.pageTitleView}>
               <Text style={styles.pageTitleText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
             </View>
@@ -82,21 +103,23 @@ class AssessmentIntroTutorial extends Component<PropsType> {
                     {this.props.localesHelper.localeString('assessment.tutorial.distance')}
                   </Text>
                 </View>
-                <AppButton
-                  label={this.props.localesHelper.localeString('common.start')}
-                  icon={images.imagesSVG.common.start}
-                  position='right'
-                  color={colors.gold}
-                  onPress={() => {
-                    AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'false').then(() => {
-                      this.props.navigation.reset({
-                        index: 0,
-                        routes: [{name: 'AssessmentSessionStackScreen'}]
+                {this.state.test && (
+                  <AppButton
+                    label={this.props.localesHelper.localeString('common.start')}
+                    icon={images.imagesSVG.common.start}
+                    position='right'
+                    color={colors.gold}
+                    onPress={() => {
+                      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'false').then(() => {
+                        this.props.navigation.reset({
+                          index: 0,
+                          routes: [{name: 'AssessmentSessionStackScreen'}]
+                        });
                       });
-                    });
-                  }}
-                  isLargeButton
-                />
+                    }}
+                    isLargeButton
+                  />
+                )}
                 <View style={{height: verticalScale(55)}}></View>
               </ScrollView>
             </View>
@@ -138,14 +161,13 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   pageTitleView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(40)
+    alignItems: 'center'
   },
   pageTitleText: {
     color: colors.white,

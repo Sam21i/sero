@@ -6,7 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import LocalesHelper from '../locales';
@@ -41,31 +41,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
     };
   }
 
-  renderFooterComponent() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.tumbleweed}
-        onPress={() => {
-          this.state.selectedSecurityplan
-            ? this.setState({selectedSecurityplan: undefined})
-            : this.props.navigation.goBack();
-        }}
-        style={{width: scale(225), marginVertical: scale(20)}}
-        isLargeButton={false}
-      />
-    );
-  }
-
   renderList() {
     return (
       <FlatList
         data={this.state.securityplanHistory}
         renderItem={this.renderListItem.bind(this)}
         alwaysBounceVertical={false}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
     );
@@ -128,7 +109,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
         renderItem={this.renderSecurityplanItem.bind(this)}
         alwaysBounceVertical={false}
         ListHeaderComponent={this.renderListHeaderComponent}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
       />
     );
   }
@@ -144,17 +124,29 @@ class SecurityplanArchive extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
+              <BackButton
+                onPress={() => {
+                  this.state.selectedSecurityplan
+                    ? this.setState({selectedSecurityplan: undefined})
+                    : this.props.navigation.goBack();
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
                   {this.props.localesHelper.localeString('securityplan.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
-                  {this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
+                  {this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
                 </Text>
               </View>
             </View>
           ) : (
             <View style={styles.topView}>
+              <BackButton
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
               </View>
@@ -175,12 +167,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.primary50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   topTextView: {
     flex: 1,
-    paddingLeft: scale(50),
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   topViewTextTitle: {

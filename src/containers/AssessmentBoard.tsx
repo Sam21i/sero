@@ -223,7 +223,12 @@ class AssessmentBoard extends Component<PropsType, State> {
                     onPress={() => {
                       this.props.navigation.navigate('AssessmentStackScreen', {
                         screen: 'AssessmentIntroStackScreen',
-                        params: {screen: 'AssessmentIntroTutorial'}
+                        params: {
+                          screen: 'AssessmentIntroTutorial',
+                          params: {
+                            test: false
+                          }
+                        }
                       });
                     }}
                     style={styles.button}>

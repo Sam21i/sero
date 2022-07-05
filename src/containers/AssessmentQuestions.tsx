@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import {ASSESSMENT_END_SPEECH_BUBBLE_MODE} from '../components/AssessmentEndOptionsSpeechBubble';
 import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '../components/AssessmentQuitSpeechBubble';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
 import LocalesHelper from '../locales';
@@ -164,7 +165,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             <TouchableOpacity
               style={{marginLeft: scale(10), marginBottom: scale(5)}}
               onPress={() => {
-                this.props.navigation.pop(1);
+                this.props.navigation.pop();
               }}>
               <SvgCss
                 xml={images.imagesSVG.common.pencil}
@@ -247,6 +248,11 @@ class AssessmentQuestions extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                this.props.navigation.pop();
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewTextTitle}>
                 {this.props.localesHelper.localeString('assessment.addEntry')}
@@ -300,13 +306,10 @@ const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.gold50opac,
     flex: 1,
-    minHeight: scale(81),
-    maxHeight: scale(81)
+    flexDirection: 'row'
   },
   topTextView: {
-    flex: 1,
-    paddingLeft: scale(50),
-    alignSelf: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center'
   },
   topViewTextTitle: {
@@ -332,7 +335,7 @@ const styles = StyleSheet.create({
     top: verticalScale(45)
   },
   bottomView: {
-    flex: 7,
+    flex: 7.9,
     backgroundColor: colors.white65opac
   },
   imageBase64: {

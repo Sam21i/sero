@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   bottomView: {
-    flex: 7,
+    flex: 7.9,
     backgroundColor: colors.white65opac
   }
 });

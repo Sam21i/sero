@@ -7,7 +7,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
 import LocalesHelper from '../locales';
@@ -82,7 +82,6 @@ class AssessmentArchive extends Component<PropsType, State> {
         data={this.state.prismSessionHistory}
         renderItem={this.renderListItem.bind(this)}
         alwaysBounceVertical={false}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
     );
@@ -92,24 +91,6 @@ class AssessmentArchive extends Component<PropsType, State> {
     return <View style={{height: scale(50)}}></View>;
   }
 
-  renderFooterComponent() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.gold}
-        onPress={() => {
-          this.state.selectedPrismSession
-            ? this.setState({selectedPrismSession: undefined})
-            : this.props.navigation.goBack();
-        }}
-        style={{width: scale(225), marginVertical: scale(20)}}
-        isLargeButton={false}
-      />
-    );
-  }
-
   renderPrismSession() {
     return (
       <FlatList
@@ -117,7 +98,6 @@ class AssessmentArchive extends Component<PropsType, State> {
         ListHeaderComponent={this.renderPrismSessionHeader.bind(this)}
         alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         keyExtractor={(item) => item.id}
       />
     );
@@ -194,6 +174,11 @@ class AssessmentArchive extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           {this.state.selectedPrismSession ? (
             <View style={styles.topView}>
+              <BackButton
+                onPress={() => {
+                  this.setState({selectedPrismSession: undefined});
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
                   {this.props.localesHelper.localeString('assessment.former')}
@@ -205,6 +190,11 @@ class AssessmentArchive extends Component<PropsType, State> {
             </View>
           ) : (
             <View style={styles.topView}>
+              <BackButton
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
               </View>
@@ -225,12 +215,11 @@ class AssessmentArchive extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   topTextView: {
     flex: 1,
-    paddingLeft: scale(50),
-    alignSelf: 'flex-start',
     justifyContent: 'center'
   },
   topViewTextTitle: {

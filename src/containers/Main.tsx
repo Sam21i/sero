@@ -2,7 +2,6 @@ import {CarePlan} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 

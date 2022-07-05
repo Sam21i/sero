@@ -20,7 +20,7 @@ import RNFS from 'react-native-fs';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
@@ -346,22 +346,6 @@ class Contacts extends Component<PropsType, State> {
     );
   }
 
-  renderFooter() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.grey}
-        onPress={() => {
-          this.setState({bubbleVisible: true, listVisible: false, mode: CONTACT_SPEECH_BUBBLE_MODE.menu});
-        }}
-        style={styles.backButton}
-        isLargeButton={false}
-      />
-    );
-  }
-
   handleSearch = (text: string) => {
     this.setState({query: text});
   };
@@ -394,6 +378,15 @@ class Contacts extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                if (this.state.bubbleVisible) {
+                  this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
+                } else {
+                  this.setState({bubbleVisible: true, listVisible: false, mode: CONTACT_SPEECH_BUBBLE_MODE.menu});
+                }
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>
                 {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit ||
@@ -438,7 +431,6 @@ class Contacts extends Component<PropsType, State> {
                       this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ? this.renderHeader() : this.renderHeader()
                     }
                     renderItem={this.renderContactListItem.bind(this)}
-                    ListFooterComponent={this.renderFooter()}
                   />
                 )}
               </View>
@@ -454,12 +446,6 @@ class Contacts extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  backButton: {
-    width: scale(200),
-    paddingVertical: scale(10),
-    marginTop: scale(20),
-    marginBottom: scale(40)
-  },
   container: {
     flex: 1
   },
@@ -468,11 +454,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   topTextView: {
-    flex: 1,
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(40)
+    alignSelf: 'center'
   },
   topViewText: {
     color: colors.white,
@@ -490,8 +473,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   bottomView: {
-    flex: 7,
-    backgroundColor: colors.white65opac
+    backgroundColor: colors.white65opac,
+    flex: 7
   },
   listItem: {
     marginVertical: scale(10),

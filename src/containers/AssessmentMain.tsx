@@ -6,6 +6,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
@@ -49,12 +50,18 @@ class AssessmentMain extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
             </View>
           </View>
 
           <View style={styles.bottomView}>
+            <View style={{height: verticalScale(55)}}></View>
             <Banner
               type={BANNER_TYPE.assessment}
               titleColor={colors.gold}
@@ -112,9 +119,7 @@ const styles = StyleSheet.create({
   topTextView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(40)
+    alignItems: 'center'
   },
   topViewText: {
     color: colors.white,
@@ -135,10 +140,10 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   bottomView: {
-    paddingTop: verticalScale(60),
     flex: 7,
     backgroundColor: colors.white65opac
   }

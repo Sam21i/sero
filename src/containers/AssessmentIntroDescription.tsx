@@ -7,6 +7,7 @@ import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import LocalesHelper from '../locales';
 import PrismSession from '../model/PrismSession';
@@ -37,6 +38,11 @@ class AssessmentIntroDescription extends Component<PropsType> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              onPress={() => {
+                this.props.navigation.pop();
+              }}
+            />
             <View style={styles.pageTitleView}>
               <Text style={styles.pageTitleText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
             </View>
@@ -77,7 +83,7 @@ class AssessmentIntroDescription extends Component<PropsType> {
                   position='right'
                   color={colors.gold}
                   onPress={() => {
-                    this.props.navigation.navigate('AssessmentIntroTutorial');
+                    this.props.navigation.navigate('AssessmentIntroTutorial', {test: true});
                   }}
                   isLargeButton
                 />
@@ -122,14 +128,13 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   pageTitleView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(40)
+    alignItems: 'center'
   },
   pageTitleText: {
     color: colors.white,
