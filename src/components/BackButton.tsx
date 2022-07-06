@@ -7,6 +7,7 @@ import {scale} from '../styles/App.style';
 
 interface PropsType {
   onPress?: () => void;
+  color?: string;
 }
 
 const SIZE = scale(20);
@@ -21,6 +22,7 @@ export default class BackButton extends Component<PropsType> {
           xml={images.imagesSVG.common.chevronBack}
           width={SIZE}
           height={SIZE}
+          fill={this.props.color}
         />
       </TouchableOpacity>
     );

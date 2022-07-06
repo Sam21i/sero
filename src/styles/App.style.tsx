@@ -63,7 +63,9 @@ export const colors = {
   gold50opac: 'rgba(205, 177, 65, .5)',
   linen: 'rgb(250, 239, 231)',
   manhattan: 'rgb(248, 189, 155)',
-  tumbleweed: 'rgb(223, 159, 113)'
+  tumbleweed: 'rgb(223, 159, 113)',
+
+  link: 'rgb(0, 0, 238)'
 };
 
 export const activeOpacity = 0.5;

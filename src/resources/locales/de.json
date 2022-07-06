@@ -85,8 +85,11 @@
     "selectContact": "Kontakt auswählen",
     "title": "Meine Kontakte"
   },
-  "info": {
-    "later": "Hinweis: Informationen zur SERO App werden in einer späteren Version eingebaut."
+  "information": {
+    "title": "Informationen",
+    "about": "Über die App",
+    "legal": "Rechtliches",
+    "imprint": "Impressum"
   },
   "main": {
     "callEmergencyBottom": "anrufen",

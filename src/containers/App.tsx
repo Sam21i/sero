@@ -96,6 +96,10 @@ function InformationStackScreen() {
       <InformationStack.Screen
         name='Information'
         component={Information}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
       />
     </InformationStack.Navigator>
   );
