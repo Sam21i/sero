@@ -1,46 +1,22 @@
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
+import {SvgCss} from 'react-native-svg';
+import {v4 as uuidv4} from 'uuid';
 
+import {LANGUAGES} from '../../i18n';
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import InformationItem from '../components/InformationItem';
-import LocalesHelper from '../locales';
+import InformationItem, {Iitem} from '../components/InformationItem';
 import images from '../resources/images/images';
-import {ABOUT, IMPRINT, LEGAL} from '../resources/static/informations';
-import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
-}
-
-enum itemType {
-  GROUP = 'group',
-  SUB_GROUP = 'subgroup',
-  QUESTION = 'question',
-  QUESTION_TEXT = 'questiontext',
-  LIST_ITEM = 'listitem',
-  TEXT = 'text',
-  HYPER = 'hypertext'
-}
-
-interface Iitem {
-  id: string;
-  type: itemType;
-  label: {
-    [language: string]: string;
-  };
-  prefix?: string;
-  required?: boolean;
-  item?: Iitem[];
-  relatedResourceId?: string;
-  isInvalid?: boolean;
 }
 
 interface State {
@@ -55,6 +31,8 @@ export enum INFORMATION_MODE {
 }
 
 class Info extends Component<PropsType, State> {
+  langFile = this.chooseLanguageFile();
+
   constructor(props: PropsType) {
     super(props);
 
@@ -63,47 +41,61 @@ class Info extends Component<PropsType, State> {
     };
   }
 
-  renderHeader() {
-    return <View style={{height: verticalScale(55)}} />;
+  chooseLanguageFile() {
+    const currentLang = this.props.i18n.language;
+    switch (currentLang) {
+      case 'de':
+        return LANGUAGES.de;
+      case 'fr':
+        return LANGUAGES.fr;
+      case 'it':
+        return LANGUAGES.it;
+    }
   }
 
-  renderAbout() {
+  renderFooterLogos() {
     return (
-      <FlatList
-        removeClippedSubviews={false}
-        data={ABOUT as Iitem[]}
-        ListHeaderComponent={this.renderHeader.bind(this)}
-        renderItem={(listElement) => (
-          <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              item={listElement.item}
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+      <Fragment>
+        <View style={styles.footerLogos}>
+          {Object.values(images.imagesSVG.logo).map((logo) => {
+            return (
+              <SvgCss
+                xml={logo}
+                width={windowWidth / 3}
+                height={verticalScale(60)}
+                key={uuidv4()}
+              />
+            );
+          })}
+        </View>
+        <View style={{height: scale(25)}}></View>
+      </Fragment>
     );
+  }
+
+  renderSpace(space: number) {
+    return <View style={{height: scale(space)}}></View>;
   }
 
   renderMenu() {
     return (
-      <View style={{paddingTop: scale(55)}}>
+      <View>
+        {this.renderSpace(55)}
         {[
           {
-            label: 'information.about',
+            label: 'information.about.title',
             onPress: () => {
               this.setState({mode: INFORMATION_MODE.about});
             }
           },
           {
-            label: 'information.legal',
+            label: 'information.legal.title',
             onPress: () => {
               this.setState({mode: INFORMATION_MODE.legal});
             }
           },
           {
-            label: 'information.imprint',
+            label: 'information.imprint.title',
             onPress: () => {
               this.setState({mode: INFORMATION_MODE.imprint});
             }
@@ -111,7 +103,7 @@ class Info extends Component<PropsType, State> {
         ].map((button, index) => (
           <AppButton
             key={'appButton_' + index}
-            label={this.props.localesHelper.localeString(button.label)}
+            label={this.props.t(button.label)}
             position='left'
             icon={images.imagesSVG.common.archive}
             color={colors.primary}
@@ -124,43 +116,71 @@ class Info extends Component<PropsType, State> {
     );
   }
 
-  renderLegal() {
-    return (
-      <FlatList
-        removeClippedSubviews={false}
-        data={LEGAL as Iitem[]}
-        ListHeaderComponent={this.renderHeader.bind(this)}
-        renderItem={(listElement) => (
-          <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              item={listElement.item}
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    );
+  getContent() {
+    switch (this.state.mode) {
+      case INFORMATION_MODE.about:
+        return this.langFile.information.about.content as Iitem[];
+      case INFORMATION_MODE.legal:
+        return this.langFile.information.legal.content as Iitem[];
+      case INFORMATION_MODE.imprint:
+        return this.langFile.information.imprint.content as Iitem[];
+      default:
+        break;
+    }
   }
 
-  renderImprint() {
-    return <Text>tbd</Text>;
+  renderContentList() {
+    return (
+      <View>
+        <FlatList
+          overScrollMode='always'
+          style={{height: '100%'}}
+          removeClippedSubviews={false}
+          data={this.getContent()}
+          renderItem={(listElement) => (
+            <View
+              style={{paddingLeft: scale(40), paddingRight: scale(20)}}
+              key={uuidv4()}>
+              <InformationItem
+                key={uuidv4()}
+                item={listElement.item}
+                isExpanded={this.state.mode === INFORMATION_MODE.imprint ? true : false}
+              />
+            </View>
+          )}
+          ListHeaderComponent={this.renderSpace(55)}
+          ListFooterComponent={
+            this.state.mode === INFORMATION_MODE.imprint ? this.renderFooterLogos : this.renderSpace(25)
+          }
+        />
+      </View>
+    );
   }
 
   renderContent() {
     switch (this.state.mode) {
       case INFORMATION_MODE.about:
-        return this.renderAbout();
+        return this.renderContentList();
       case INFORMATION_MODE.legal:
-        return this.renderLegal();
+        return this.renderContentList();
       case INFORMATION_MODE.imprint:
-        return this.renderImprint();
+        return this.renderContentList();
       default:
         return this.renderMenu();
     }
   }
 
   render() {
+    let pageTitle = '';
+    if (this.state.mode === INFORMATION_MODE.about) {
+      pageTitle = this.props.t('information.about.title');
+    } else if (this.state.mode === INFORMATION_MODE.legal) {
+      pageTitle = this.props.t('information.legal.title');
+    } else if (this.state.mode === INFORMATION_MODE.imprint) {
+      pageTitle = this.props.t('information.imprint.title');
+    } else {
+      pageTitle = this.props.t('information.title');
+    }
     return (
       <SafeAreaView
         style={styles.container}
@@ -171,13 +191,15 @@ class Info extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
-              color={this.state.mode !== INFORMATION_MODE.menu ? colors.primary : undefined}
+              color={colors.primary}
               onPress={() => {
-                this.state.mode !== INFORMATION_MODE.menu ? this.setState({mode: INFORMATION_MODE.menu}) : undefined;
+                this.state.mode !== INFORMATION_MODE.menu
+                  ? this.setState({mode: INFORMATION_MODE.menu})
+                  : this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
               }}
             />
             <View style={styles.topTextView}>
-              <Text style={styles.topViewText}>{this.props.localesHelper.localeString('information.title')}</Text>
+              <Text style={styles.topViewText}>{pageTitle}</Text>
             </View>
           </View>
           <View style={styles.bottomView}>{this.renderContent()}</View>
@@ -224,13 +246,15 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 7,
     backgroundColor: colors.white65opac
+  },
+  footerLogos: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginLeft: scale(40),
+    marginRight: scale(20)
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(Info);
+export default withTranslation()(Info);

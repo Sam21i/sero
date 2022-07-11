@@ -42,6 +42,7 @@ interface State {
 }
 
 export enum STORAGE {
+  LANGUAGE = '@userLanguage',
   SHOULD_DISPLAY_ONBOARDING = '@displayOnboarding',
   ASKED_FOR_CONTACT_PERMISSION = '@contactPermission',
   CONTACT_PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid',
@@ -113,6 +114,10 @@ function SettingsStackScreen() {
       <SettingsStack.Screen
         name='Settings'
         component={Settings}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
       />
     </SettingsStack.Navigator>
   );
@@ -337,24 +342,21 @@ export default class App extends Component<PropsType, State> {
                   name='MainStackScreen'
                   component={MainStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.home, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.home, focused, color)
                   }}
                 />
                 <Tab.Screen
                   name='InformationStackScreen'
                   component={InformationStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.info, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.info, focused, color)
                   }}
                 />
                 <Tab.Screen
                   name='SettingsStackScreen'
                   component={SettingsStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.settings, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.settings, focused, color)
                   }}
                 />
                 <Tab.Screen

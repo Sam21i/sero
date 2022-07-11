@@ -17,7 +17,7 @@ const persistConfig = {
   timeout: 0,
   key: 'root',
   storage: storage,
-  whitelist: ['LocalesHelperStore', 'ServiceDataStore', 'MiDataServiceStore', 'UserProfileStore']
+  whitelist: ['ServiceDataStore', 'MiDataServiceStore', 'UserProfileStore']
   // debug: true
 };
 const persistedReducers = persistReducer(persistConfig, reducers);

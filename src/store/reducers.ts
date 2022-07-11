@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 
-import LocalesHelperStore from './localesHelper/reducer';
 import MiDataServiceStore from './midataService/reducer';
 import UserProfileStore from './userProfile/reducer';
 
@@ -8,7 +7,6 @@ import UserProfileStore from './userProfile/reducer';
 const store = Object.assign(
   {},
   {
-    LocalesHelperStore,
     MiDataServiceStore,
     UserProfileStore
   }

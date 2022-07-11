@@ -1,19 +1,18 @@
 import {Formik} from 'formik';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 
-import LocalesHelper from '../locales';
 import {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import AppButton from './AppButton';
 
-interface SecurityPlanEditModalProps {
-  localesHelper: LocalesHelper;
+interface SecurityPlanEditModalProps extends WithTranslation {
   onSave: (module?: SecurityPlanModule) => void;
   module: SecurityPlanModule;
 }
@@ -22,7 +21,7 @@ interface SecurityPlanEditModalState {
   entries: Array<string>;
 }
 
-export default class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, SecurityPlanEditModalState> {
+class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, SecurityPlanEditModalState> {
   constructor(props: SecurityPlanEditModalProps) {
     super(props);
 
@@ -65,14 +64,14 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                         {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES && (
                           <View style={styles.exampleView}>
                             <Text style={styles.exampleViewText}>
-                              {this.props.localesHelper.localeString('securityplan.examples.copingStrategies')}
+                              {this.props.t('securityplan.examples.copingStrategies')}
                             </Text>
                           </View>
                         )}
                         {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.DISTRACTION_STRATIES && (
                           <View style={styles.exampleView}>
                             <Text style={styles.exampleViewText}>
-                              {this.props.localesHelper.localeString('securityplan.examples.distractionStrategies')}
+                              {this.props.t('securityplan.examples.distractionStrategies')}
                             </Text>
                           </View>
                         )}
@@ -122,7 +121,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                         <AppButton
                           icon={images.imagesSVG.common.plus}
                           onPress={() => setFieldValue('entries', [...values.entries, ''])}
-                          label={this.props.localesHelper.localeString('securityplan.addEntry')}
+                          label={this.props.t('securityplan.addEntry')}
                           position='left'
                           color={colors.grey}
                           style={styles.addButton}
@@ -131,7 +130,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                     </View>
                     <View style={{flex: 3, borderTopColor: colors.linen, borderTopWidth: 10}}>
                       <AppButton
-                        label={this.props.localesHelper.localeString('common.ok')}
+                        label={this.props.t('common.ok')}
                         icon={images.imagesSVG.common.ok}
                         position='right'
                         color={colors.tumbleweed}
@@ -139,7 +138,7 @@ export default class SecurityPlanEditModal extends Component<SecurityPlanEditMod
                         style={styles.backButton}
                       />
                       <AppButton
-                        label={this.props.localesHelper.localeString('common.cancel')}
+                        label={this.props.t('common.cancel')}
                         icon={images.imagesSVG.common.cancel}
                         position='right'
                         color={colors.tumbleweed}
@@ -217,3 +216,5 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+export default withTranslation()(SecurityPlanEditModal);

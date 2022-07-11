@@ -1,21 +1,18 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {connect} from 'react-redux';
 
 import AssessmentEndOptionsSpeechBubble, {
   ASSESSMENT_END_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentEndOptionsSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
 }
 
 interface State {
@@ -62,13 +59,12 @@ class AssessmentEndOptions extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <View style={styles.topTextView}>
-              <Text style={styles.topViewText}>{this.props.localesHelper.localeString('assessment.addEntry')}</Text>
+              <Text style={styles.topViewText}>{this.props.t('assessment.addEntry')}</Text>
             </View>
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
               <AssessmentEndOptionsSpeechBubble
-                localesHelper={this.props.localesHelper}
                 navigation={this.props.navigation}
                 onClose={this.onBubbleClose.bind(this)}
               />
@@ -119,10 +115,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(AssessmentEndOptions);
+export default withTranslation()(AssessmentEndOptions);

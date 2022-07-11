@@ -1,16 +1,15 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation?: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   userProfile: UserProfile;
   defaultChance?: number;
   securityplanUpdatedChance?: number;
@@ -51,9 +50,9 @@ class Banner extends Component<PropsType> {
       securityplanUpdatedChance = this.props.securityplanUpdatedChance / max;
 
     if (this.randomNumber < defaultChance) {
-      return <Text style={styles.text}>{this.props.localesHelper.localeString('main.default')}</Text>;
+      return <Text style={styles.text}>{this.props.t('main.default')}</Text>;
     } else if (this.randomNumber < defaultChance + securityplanUpdatedChance) {
-      return <Text style={styles.text}>{this.props.localesHelper.localeString('main.securityplanUpdated')}</Text>;
+      return <Text style={styles.text}>{this.props.t('main.securityplanUpdated')}</Text>;
     } else {
       return this.renderPositive();
     }
@@ -72,7 +71,7 @@ class Banner extends Component<PropsType> {
       const selectedModule = filteredModules[this.getRandomInt(filteredModules.length)];
       const selectedEntry = selectedModule.entries[this.getRandomInt(selectedModule.entries.length)];
       const messageParts = (
-        this.props.localesHelper.localeString(
+        this.props.t(
           'securityplan.notification.' +
             NOTIFICATION_OPTIONS[NOTIFICATION_OPTIONS.findIndex((item) => item === selectedModule.type)]
         ) + selectedEntry
@@ -93,7 +92,7 @@ class Banner extends Component<PropsType> {
         </View>
       );
     } else {
-      return <Text style={styles.text}>{this.props.localesHelper.localeString('main.default')}</Text>;
+      return <Text style={styles.text}>{this.props.t('main.default')}</Text>;
     }
   }
 
@@ -103,18 +102,18 @@ class Banner extends Component<PropsType> {
       return (
         <View style={styles.view}>
           <Text style={[styles.title, {color: this.props.titleColor}]}>
-            {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+            {userName ? this.props.t('main.greeting', {name: userName}) : ' '}
           </Text>
-          <Text style={styles.text}>{this.props.localesHelper.localeString('securityplan.defaultHint')}</Text>
+          <Text style={styles.text}>{this.props.t('securityplan.defaultHint')}</Text>
         </View>
       );
     } else if (this.props.type === BANNER_TYPE.assessment) {
       return (
         <View style={styles.view}>
           <Text style={[styles.title, {color: this.props.titleColor}]}>
-            {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+            {userName ? this.props.t('main.greeting', {name: userName}) : ' '}
           </Text>
-          <Text style={styles.text}>{this.props.localesHelper.localeString('assessment.defaultHint')}</Text>
+          <Text style={styles.text}>{this.props.t('assessment.defaultHint')}</Text>
         </View>
       );
     } else {
@@ -123,7 +122,7 @@ class Banner extends Component<PropsType> {
           key={this.props.userProfile.getCurrentSecurityPlan().fhirResource.id}
           style={styles.view}>
           <Text style={[styles.title, {color: this.props.titleColor}]}>
-            {userName ? this.props.localesHelper.localeString('main.greeting', {name: userName}) : ' '}
+            {userName ? this.props.t('main.greeting', {name: userName}) : ' '}
           </Text>
           {this.props.userProfile.getCurrentSecurityPlan().fhirResource.id !== undefined ? this.renderMessage() : ''}
         </View>
@@ -152,9 +151,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps)(Banner);
+export default connect(mapStateToProps, undefined)(withTranslation()(Banner));

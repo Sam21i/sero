@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {
   FlatList,
   Image,
@@ -23,7 +24,6 @@ import {connect} from 'react-redux';
 import BackButton from '../components/BackButton';
 import ContactSpeechBubble, {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
@@ -33,9 +33,8 @@ import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
@@ -252,9 +251,9 @@ class Contacts extends Component<PropsType, State> {
               this.getAllAddressBookContacts();
             } else {
               PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
-                title: this.props.localesHelper.localeString('contacts.permissionAndroid.title'),
-                message: this.props.localesHelper.localeString('contacts.permissionAndroid.message'),
-                buttonPositive: this.props.localesHelper.localeString('common.ok')
+                title: this.props.t('contacts.permissionAndroid.title'),
+                message: this.props.t('contacts.permissionAndroid.message'),
+                buttonPositive: this.props.t('common.ok')
               })
                 .then((permission) => {
                   AsyncStorage.setItem(STORAGE.ASKED_FOR_CONTACT_PERMISSION, 'true');
@@ -328,7 +327,7 @@ class Contacts extends Component<PropsType, State> {
             autoCapitalize='none'
             autoCorrect={false}
             onChangeText={this.handleSearch}
-            placeholder={this.props.localesHelper.localeString('common.search') + '...'}
+            placeholder={this.props.t('common.search') + '...'}
             style={{
               borderColor: colors.grey,
               backgroundColor: colors.white
@@ -379,6 +378,7 @@ class Contacts extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
+              color={colors.white}
               onPress={() => {
                 if (this.state.bubbleVisible) {
                   this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
@@ -391,8 +391,8 @@ class Contacts extends Component<PropsType, State> {
               <Text style={styles.topViewText}>
                 {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit ||
                 this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete
-                  ? this.props.localesHelper.localeString('contacts.selectContact')
-                  : this.props.localesHelper.localeString('contacts.title')}
+                  ? this.props.t('contacts.selectContact')
+                  : this.props.t('contacts.title')}
               </Text>
             </View>
           </View>
@@ -401,7 +401,6 @@ class Contacts extends Component<PropsType, State> {
               <View style={{position: 'relative', top: verticalScale(80)}}>
                 <ContactSpeechBubble
                   mode={this.state.mode}
-                  localesHelper={this.props.localesHelper}
                   contact={this.state.selectedContact}
                   onClose={this.onBubbleClose.bind(this)}
                   showImport={this.state.showImportButton}
@@ -412,9 +411,10 @@ class Contacts extends Component<PropsType, State> {
             {this.state.listVisible && (
               <View>
                 {this.state.loadingContacts ? (
-                  <Text style={styles.loading}>{this.props.localesHelper.localeString('common.loading')}...</Text>
+                  <Text style={styles.loading}>{this.props.t('common.loading')}...</Text>
                 ) : (
                   <FlatList
+                    style={{height: '100%'}}
                     alwaysBounceVertical={false}
                     showsHorizontalScrollIndicator={false}
                     data={contacts.sort((a, b) => {
@@ -522,7 +522,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
@@ -535,4 +534,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Contacts));

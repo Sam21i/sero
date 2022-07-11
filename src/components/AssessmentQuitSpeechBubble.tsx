@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import SpeechBubble from './SpeechBubble';
 
@@ -20,8 +18,7 @@ const MENU_ACTIONS = [
   {name: 'no', mode: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE.no}
 ];
 
-interface Props {
-  localesHelper: LocalesHelper;
+interface Props extends WithTranslation {
   onClose: (mode?: ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE) => void;
 }
 
@@ -43,7 +40,7 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
         <Text
           numberOfLines={2}
           style={styles.titlebarText}>
-          {this.props.localesHelper.localeString(translateString)}
+          {this.props.t(translateString)}
         </Text>
         <SvgCss
           xml={images.imagesSVG.common.cancelGrey}
@@ -70,9 +67,7 @@ class AssessmentQuitSpeechBubble extends Component<Props, State> {
                   key={'action_' + index}>
                   <View style={styles.actionBubble}></View>
                   <View style={styles.actionTextWrapper}>
-                    <Text style={styles.actionText}>
-                      {this.props.localesHelper.localeString('common.' + action.name)}
-                    </Text>
+                    <Text style={styles.actionText}>{this.props.t('common.' + action.name)}</Text>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
@@ -176,10 +171,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(AssessmentQuitSpeechBubble);
+export default withTranslation()(AssessmentQuitSpeechBubble);

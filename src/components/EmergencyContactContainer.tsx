@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import EmergencyContactTile from './EmergencyContactTile';
 
-interface EmergencyContactContainerProps {
-  localesHelper: LocalesHelper;
+interface EmergencyContactContainerProps extends WithTranslation {
   onPressOptionsButton?: () => void;
   emergencyContacts: EmergencyContact[];
 }
@@ -45,7 +42,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     return (
       <View style={styles.container}>
         <View style={styles.titleView}>
-          <Text style={styles.title}>{this.props.localesHelper.localeString('main.myEnvironmentTitle')}</Text>
+          <Text style={styles.title}>{this.props.t('main.myEnvironmentTitle')}</Text>
           <View style={[styles.optionsButton, {height: this.avatarSize}]}>
             <TouchableOpacity
               activeOpacity={activeOpacity}
@@ -62,6 +59,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
         </View>
         <View style={styles.emergencyContactsView}>
           <FlatList
+            style={{height: '100%'}}
             ref={(ref) => {
               this.flatListRef = ref;
             }}
@@ -113,10 +111,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(EmergencyContactContainer);
+export default withTranslation()(EmergencyContactContainer);

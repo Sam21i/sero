@@ -2,6 +2,7 @@ import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import Orientation from 'react-native-orientation-locker';
@@ -15,7 +16,6 @@ import AssessmentQuitSpeechBubble, {ASSESSMENT_QUIT_SPEECH_BUBBLE_MODE} from '..
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import PrismSession, {PrismInitializer} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
@@ -26,11 +26,11 @@ import * as userProfileActions from '../store/userProfile/actions';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import AssessmentEndOptions from './AssessmentEndOptions';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
-  localesHelper: LocalesHelper;
+
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
   route: {params: {prismData: PrismInitializer}};
@@ -142,7 +142,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             fontFamily: AppFonts.bold,
             fontSize: scale(TextSize.big)
           }}>
-          {this.props.localesHelper.localeString('assessment.followUpTitle')}
+          {this.props.t('assessment.followUpTitle')}
         </Text>
 
         {svgImage !== '' && (
@@ -201,7 +201,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
             fontFamily: AppFonts.medium,
             fontSize: scale(TextSize.small)
           }}>
-          {this.props.localesHelper.localeString('assessment.assessmentFollowUpHint')}
+          {this.props.t('assessment.assessmentFollowUpHint')}
         </Text>
       </View>
     );
@@ -226,7 +226,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
         ].map((button, index) => (
           <AppButton
             key={'appButton_' + index}
-            label={this.props.localesHelper.localeString(button.label)}
+            label={this.props.t(button.label)}
             position='right'
             icon={button.icon}
             color={button.color}
@@ -249,14 +249,13 @@ class AssessmentQuestions extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
+              color={colors.white}
               onPress={() => {
                 this.props.navigation.pop();
               }}
             />
             <View style={styles.topTextView}>
-              <Text style={styles.topViewTextTitle}>
-                {this.props.localesHelper.localeString('assessment.addEntry')}
-              </Text>
+              <Text style={styles.topViewTextTitle}>{this.props.t('assessment.addEntry')}</Text>
             </View>
           </View>
           <View style={styles.bottomView}>
@@ -281,14 +280,12 @@ class AssessmentQuestions extends Component<PropsType, State> {
             {this.state.quitBubbleVisible && (
               <AssessmentQuitSpeechBubble
                 navigation={this.props.navigation}
-                localesHelper={this.props.localesHelper}
                 onClose={this.onCloseQuit.bind(this)}
               />
             )}
             {this.state.endBubbleVisible && (
               <AssessmentEndOptions
                 navigation={this.props.navigation}
-                localesHelper={this.props.localesHelper}
                 onClose={this.onCloseEnd.bind(this)}
               />
             )}
@@ -374,8 +371,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state: AppStore) {
   return {
     midataService: state.MiDataServiceStore,
-    userProfile: state.UserProfileStore,
-    localesHelper: state.LocalesHelperStore
+    userProfile: state.UserProfileStore
   };
 }
 
@@ -386,4 +382,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentQuestions);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AssessmentQuestions));

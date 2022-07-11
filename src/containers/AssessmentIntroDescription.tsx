@@ -1,5 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -9,16 +10,14 @@ import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   userProfile: UserProfile;
   prismSession: PrismSession;
 }
@@ -39,12 +38,13 @@ class AssessmentIntroDescription extends Component<PropsType> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
+              color={colors.white}
               onPress={() => {
                 this.props.navigation.pop();
               }}
             />
             <View style={styles.pageTitleView}>
-              <Text style={styles.pageTitleText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
+              <Text style={styles.pageTitleText}>{this.props.t('assessment.title')}</Text>
             </View>
           </View>
           {
@@ -52,10 +52,8 @@ class AssessmentIntroDescription extends Component<PropsType> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.localesHelper.localeString('assessment.intro.title')}</Text>
-                  <Text style={styles.description}>
-                    {this.props.localesHelper.localeString('assessment.intro.description')}
-                  </Text>
+                  <Text style={styles.title}>{this.props.t('assessment.intro.title')}</Text>
+                  <Text style={styles.description}>{this.props.t('assessment.intro.description')}</Text>
                   <SvgCss
                     xml={images.imagesSVG.prism.example}
                     style={[
@@ -72,13 +70,13 @@ class AssessmentIntroDescription extends Component<PropsType> {
                     ]}
                   />
                   <View style={styles.listContainer}>
-                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item1'))}
-                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item2'))}
-                    {this.renderListItem(this.props.localesHelper.localeString('assessment.intro.explanation.item3'))}
+                    {this.renderListItem(this.props.t('assessment.intro.explanation.item1'))}
+                    {this.renderListItem(this.props.t('assessment.intro.explanation.item2'))}
+                    {this.renderListItem(this.props.t('assessment.intro.explanation.item3'))}
                   </View>
                 </View>
                 <AppButton
-                  label={this.props.localesHelper.localeString('common.next')}
+                  label={this.props.t('common.next')}
                   icon={images.imagesSVG.common.continue}
                   position='right'
                   color={colors.gold}
@@ -198,10 +196,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(AssessmentIntroDescription);
+export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentIntroDescription));

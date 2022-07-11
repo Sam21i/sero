@@ -2,6 +2,7 @@ import {Resource} from '@i4mi/fhir_r4';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, PermissionsAndroid, Platform, StyleSheet, Text, View} from 'react-native';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
@@ -12,7 +13,6 @@ import AssessmentImageSpeechBubble, {
   ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE
 } from '../components/AssessmentImageSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import {PrismInitializer} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
@@ -22,9 +22,8 @@ import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
@@ -173,9 +172,9 @@ class AssessmentImage extends Component<PropsType, State> {
           this.takeNewImage();
         } else {
           PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-            title: this.props.localesHelper.localeString('assessment.permissionAndroid.title'),
-            message: this.props.localesHelper.localeString('assessment.permissionAndroid.message'),
-            buttonPositive: this.props.localesHelper.localeString('common.ok')
+            title: this.props.t('assessment.permissionAndroid.title'),
+            message: this.props.t('assessment.permissionAndroid.message'),
+            buttonPositive: this.props.t('common.ok')
           })
             .then((permission) => {
               AsyncStorage.setItem(STORAGE.ASKED_FOR_CAMERA_PERMISSION, 'true');
@@ -218,13 +217,12 @@ class AssessmentImage extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <View style={styles.topTextView}>
-              <Text style={styles.topViewText}>{this.props.localesHelper.localeString('assessment.addEntry')}</Text>
+              <Text style={styles.topViewText}>{this.props.t('assessment.addEntry')}</Text>
             </View>
           </View>
           <View style={styles.bottomView}>
             {this.state.bubbleVisible && (
               <AssessmentImageSpeechBubble
-                localesHelper={this.props.localesHelper}
                 navigation={this.props.navigation}
                 onClose={this.onBubbleClose.bind(this)}
                 showNew={this.state.showCameraButton}
@@ -320,7 +318,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
@@ -333,4 +330,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentImage);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AssessmentImage));

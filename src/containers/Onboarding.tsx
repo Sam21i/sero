@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {authorize} from 'react-native-app-auth';
 import AppIntroSlider from 'react-native-app-intro-slider';
@@ -9,21 +10,20 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
 import {OAUTH_CONFIG} from '../model/UserSession';
 import images from '../resources/images/images';
-import {ON_BOARDING_ITEMS} from '../resources/static/onBoardingItems';
+import ON_BOARDING_ITEMS from '../resources/static/onBoardingItems';
 import * as miDataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   midataService: MidataService;
   updateUserProfile: (userProfile: Partial<UserProfile>) => void;
   authenticateUser: (
@@ -56,7 +56,7 @@ class Onboarding extends Component<PropsType, State> {
     return new Promise((resolve) => {
       OAUTH_CONFIG.additionalParameters = {
         ...{
-          language: this.props.localesHelper.getCurrentLanguage()
+          language: this.props.i18n.language
         }
       };
       authorize(OAUTH_CONFIG)
@@ -108,15 +108,13 @@ class Onboarding extends Component<PropsType, State> {
           <View style={styles.bottomView}>
             <View style={styles.content}>
               <View style={styles.titleView}>
-                <Text style={[styles.title, {color: item.titleColor}]}>
-                  {this.props.localesHelper.localeString(item.title)}
-                </Text>
+                <Text style={[styles.title, {color: item.titleColor}]}>{this.props.t(item.title)}</Text>
               </View>
               <ScrollView
                 bounces={false}
                 showsVerticalScrollIndicator={true}
                 persistentScrollbar={true}>
-                <Text style={styles.text}>{this.props.localesHelper.localeString(item.text)}</Text>
+                <Text style={styles.text}>{this.props.t(item.text)}</Text>
               </ScrollView>
             </View>
           </View>
@@ -147,7 +145,7 @@ class Onboarding extends Component<PropsType, State> {
             ))}
         </View>
         <AppButton
-          label={this.props.localesHelper.localeString('common.next')}
+          label={this.props.t('common.next')}
           icon={images.imagesSVG.common.continue}
           position='left'
           color={colors.grey}
@@ -166,6 +164,7 @@ class Onboarding extends Component<PropsType, State> {
   render() {
     return (
       <AppIntroSlider
+        key={ON_BOARDING_ITEMS[0].title}
         ref={(ref: AppIntroSlider) => (this.slider = ref)}
         renderItem={this.renderItem}
         data={ON_BOARDING_ITEMS}
@@ -236,7 +235,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore
   };
 }
@@ -250,4 +248,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Onboarding);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Onboarding));

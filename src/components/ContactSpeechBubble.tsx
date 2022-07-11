@@ -1,16 +1,14 @@
 import {Formik} from 'formik';
 import {FormControl, Input, NativeBaseProvider, VStack} from 'native-base';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Image, Platform, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
 import * as yup from 'yup';
 
-import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import SpeechBubble from './SpeechBubble';
 
@@ -42,10 +40,10 @@ const MENU_ACTIONS = [
 
 const FORM_FIELDS = ['given', 'family', 'phone'];
 
-interface ContactSpeechBubbleProps {
+interface ContactSpeechBubbleProps extends WithTranslation {
   mode: CONTACT_SPEECH_BUBBLE_MODE;
   onClose: (arg: {mode: CONTACT_SPEECH_BUBBLE_MODE; data?: EmergencyContact}) => void;
-  localesHelper: LocalesHelper;
+
   onModeSelect?: (mode: CONTACT_SPEECH_BUBBLE_MODE) => void;
   showImport?: boolean;
   contact?: EmergencyContact;
@@ -153,7 +151,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
   renderBubbleTitle(_translateString: string) {
     return (
       <View style={styles.titleBar}>
-        <Text style={styles.titlebarText}>{this.props.localesHelper.localeString(_translateString)}</Text>
+        <Text style={styles.titlebarText}>{this.props.t(_translateString)}</Text>
         <SvgCss
           xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
@@ -180,9 +178,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                     key={'action_' + index}>
                     <View style={styles.actionBubble}></View>
                     <View style={styles.actionTextWrapper}>
-                      <Text style={styles.actionText}>
-                        {this.props.localesHelper.localeString('contacts.' + action.name)}
-                      </Text>
+                      <Text style={styles.actionText}>{this.props.t('contacts.' + action.name)}</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -211,26 +207,22 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                 is: (family) => !family || family.length === 0,
                 then: yup
                   .string()
-                  .matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid'))
-                  .required(this.props.localesHelper.localeString('contacts.err.given.required')),
-                otherwise: yup
-                  .string()
-                  .matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.given.invalid'))
+                  .matches(REGEX.given, this.props.t('contacts.err.given.invalid'))
+                  .required(this.props.t('contacts.err.given.required')),
+                otherwise: yup.string().matches(REGEX.given, this.props.t('contacts.err.given.invalid'))
               }),
               family: yup.string().when('given', {
                 is: (given) => !given || given.length === 0,
                 then: yup
                   .string()
-                  .matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.family.invalid'))
-                  .required(this.props.localesHelper.localeString('contacts.err.family.required')),
-                otherwise: yup
-                  .string()
-                  .matches(REGEX.given, this.props.localesHelper.localeString('contacts.err.family.invalid'))
+                  .matches(REGEX.given, this.props.t('contacts.err.family.invalid'))
+                  .required(this.props.t('contacts.err.family.required')),
+                otherwise: yup.string().matches(REGEX.given, this.props.t('contacts.err.family.invalid'))
               }),
               phone: yup
                 .string()
-                .matches(REGEX.phone, this.props.localesHelper.localeString('contacts.err.phone.invalid'))
-                .required(this.props.localesHelper.localeString('contacts.err.phone.required'))
+                .matches(REGEX.phone, this.props.t('contacts.err.phone.invalid'))
+                .required(this.props.t('contacts.err.phone.required'))
             },
             ['family', 'given']
           )}>
@@ -258,7 +250,7 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                             variant='underlined'
                             size='xl'
                             onBlur={handleBlur(field)}
-                            placeholder={this.props.localesHelper.localeString('common.' + field)}
+                            placeholder={this.props.t('common.' + field)}
                             onChangeText={handleChange(field)}
                             value={values[field]}
                             keyboardType={field === 'phone' ? 'phone-pad' : 'default'}
@@ -288,8 +280,8 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
                         {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.import ||
                         this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.add ||
                         this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit
-                          ? this.props.localesHelper.localeString('common.save')
-                          : this.props.localesHelper.localeString('common.delete')}
+                          ? this.props.t('common.save')
+                          : this.props.t('common.delete')}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -529,10 +521,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(ContactSpeechBubble);
+export default withTranslation()(ContactSpeechBubble);

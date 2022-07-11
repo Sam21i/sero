@@ -15,8 +15,6 @@ export const SET_SECURITY_PLAN_HISTORY = 'userProfile/SET_SECURITY_PLAN_HISTORY'
 export const SET_PRISM_SESSIONS = 'userProfile/SET_PRISM_SESSIONS';
 export const ADD_PRISM_SESSION = 'userProfile/ADD_PRISM_SESSION';
 
-export const UPDATE_LOCALE_LANGUAGE = 'localesHelper/UPDATE_LOCALE_LANGUAGE';
-
 export type UserAuthenticationData = {
   accessToken: string;
   accessTokenExpirationDate: string;

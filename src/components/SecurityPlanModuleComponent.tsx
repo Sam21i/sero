@@ -1,24 +1,23 @@
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Alert, Linking, LogBox, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
 
-import LocalesHelper from '../locales';
 import {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import images from '../resources/images/images';
 import {activeOpacity, AppFonts, colors, scale, windowWidth} from '../styles/App.style';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver` was not specified.']);
 
-interface SecurityPlanModuleComponentProps {
-  localesHelper: LocalesHelper;
+interface SecurityPlanModuleComponentProps extends WithTranslation {
   module: SecurityPlanModule;
   editable: boolean;
   isBeingDragged: boolean;
   onEdit?: (m: SecurityPlanModule) => void;
 }
 
-export default class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps> {
+class SecurityPlanModuleComponent extends Component<SecurityPlanModuleComponentProps> {
   constructor(props: SecurityPlanModuleComponentProps) {
     super(props);
     this.state = {};
@@ -28,17 +27,13 @@ export default class SecurityPlanModuleComponent extends Component<SecurityPlanM
     if (!this.props.isBeingDragged) {
       const phone = 'tel:' + _number.replace(/\s/g, '');
       if (phone === 'tel:0900856565') {
-        Alert.alert(
-          this.props.localesHelper.localeString('securityplan.alertLups.title'),
-          this.props.localesHelper.localeString('securityplan.alertLups.description'),
-          [
-            {
-              text: this.props.localesHelper.localeString('common.cancel'),
-              style: 'cancel'
-            },
-            {text: this.props.localesHelper.localeString('common.ok'), onPress: () => Linking.openURL(phone)}
-          ]
-        );
+        Alert.alert(this.props.t('securityplan.alertLups.title'), this.props.t('securityplan.alertLups.description'), [
+          {
+            text: this.props.t('common.cancel'),
+            style: 'cancel'
+          },
+          {text: this.props.t('common.ok'), onPress: () => Linking.openURL(phone)}
+        ]);
       } else {
         Linking.openURL(phone);
       }
@@ -258,3 +253,5 @@ const styles = StyleSheet.create({
     borderRadius: scale(2)
   }
 });
+
+export default withTranslation()(SecurityPlanModuleComponent);

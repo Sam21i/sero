@@ -1,20 +1,17 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
 import SpeechBubble from '../components/SpeechBubble';
-import LocalesHelper from '../locales';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
 }
 
 class Welcome extends Component<PropsType> {
@@ -29,7 +26,7 @@ class Welcome extends Component<PropsType> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <SvgCss
-              xml={images.imagesSVG.common.logoLups}
+              xml={images.imagesSVG.common.logoSero}
               width={scale(300)}
               height={'100%'}
             />
@@ -46,7 +43,7 @@ class Welcome extends Component<PropsType> {
                 bottom: verticalScale(50)
               }}>
               <AppButton
-                label={this.props.localesHelper.localeString('common.start')}
+                label={this.props.t('common.next')}
                 icon={images.imagesSVG.common.start}
                 position={'left'}
                 color={colors.grey}
@@ -58,8 +55,8 @@ class Welcome extends Component<PropsType> {
             <SpeechBubble
               bubbleContent={
                 <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.localesHelper.localeString('welcome.title')}</Text>
-                  <Text style={styles.text}>{this.props.localesHelper.localeString('welcome.greetingText')}</Text>
+                  <Text style={styles.title}>{this.props.t('welcome.title')}</Text>
+                  <Text style={styles.text}>{this.props.t('welcome.greetingText')}</Text>
                 </View>
               }
               stylingOptions={{
@@ -134,10 +131,5 @@ const styles = StyleSheet.create({
 });
 
 // Link store data to component
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
 
-export default connect(mapStateToProps, undefined)(Welcome);
+export default withTranslation()(Welcome);

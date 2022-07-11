@@ -1,6 +1,7 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Animated, ImageBackground, NativeModules, PanResponder, Platform, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Orientation from 'react-native-orientation-locker';
@@ -8,7 +9,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import PrismSession, {
   Position,
@@ -26,11 +26,10 @@ import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {activeOpacity, AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
-  localesHelper: LocalesHelper;
   addResource: (r: Resource) => void;
   addPrismSession: (s: PrismSession) => void;
 }
@@ -216,7 +215,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       this.props.navigation.navigate('AssessmentImage');
                     }}
                     style={styles.button}>
-                    <Text style={styles.buttonText}>{this.props.localesHelper.localeString('assessment.image')}</Text>
+                    <Text style={styles.buttonText}>{this.props.t('assessment.image')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={activeOpacity}
@@ -232,9 +231,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       });
                     }}
                     style={styles.button}>
-                    <Text style={styles.buttonText}>
-                      {this.props.localesHelper.localeString('assessment.tutorial.title')}
-                    </Text>
+                    <Text style={styles.buttonText}>{this.props.t('assessment.tutorial.title')}</Text>
                   </TouchableOpacity>
                   <View style={[{opacity: this.state.isValid ? 1 : 0.5}]}>
                     <TouchableOpacity
@@ -244,7 +241,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       activeOpacity={0.5}
                       disabled={!this.state.isValid}
                       style={[styles.button]}>
-                      <Text style={[styles.buttonText]}>{this.props.localesHelper.localeString('common.save')}</Text>
+                      <Text style={[styles.buttonText]}>{this.props.t('common.save')}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -333,8 +330,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state: AppStore) {
   return {
     midataService: state.MiDataServiceStore,
-    userProfile: state.UserProfileStore,
-    localesHelper: state.LocalesHelperStore
+    userProfile: state.UserProfileStore
   };
 }
 
@@ -345,4 +341,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AssessmentBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AssessmentBoard));

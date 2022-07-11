@@ -1,40 +1,33 @@
 import React, {Component} from 'react';
-import {Linking, StyleSheet, Text, View} from 'react-native';
+import {WithTranslation, withTranslation} from 'react-i18next';
+import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
 
-import LocalesHelper from '../locales';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import Translate from './Translate';
 
-enum itemType {
+export enum ITEM_TYPE {
   GROUP = 'group',
   SUB_GROUP = 'subgroup',
-  QUESTION = 'question',
-  QUESTION_TEXT = 'questiontext',
+  TITLE = 'title',
   LIST_ITEM = 'listitem',
-  TEXT = 'text',
-  HYPER = 'hypertext'
+  TEXT = 'text'
 }
 
-interface Iitem {
-  id: string;
-  type: itemType;
-  label: {
-    [language: string]: string;
-  };
-  prefix?: string;
-  required?: boolean;
+export interface Iitem {
+  type: ITEM_TYPE;
+  label: string;
+  links?: string[];
+  linkNames?: string[];
   item?: Iitem[];
-  relatedResourceId?: string;
-  isInvalid?: boolean;
 }
 
-interface PropsType {
-  localesHelper: LocalesHelper;
+interface PropsType extends WithTranslation {
   item: Iitem;
+  isExpanded?: boolean;
 }
 
 interface State {
@@ -45,66 +38,47 @@ class InformationItem extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: this.props.isExpanded || false
     };
+  }
+
+  returnLinks(links): string[] {
+    const newLinks: string[] = [];
+    links.forEach((link: {address: string}) => {
+      newLinks.push(link.address);
+    });
+    return newLinks;
+  }
+
+  returnLinkNames(links): string[] {
+    const newLinkNames: string[] = [];
+    links.forEach((link: {name: string}) => {
+      newLinkNames.push(link.name);
+    });
+    return newLinkNames;
   }
 
   renderTypeGroup() {
     return (
       <View
-        key={this.props.item.id}
-        style={this.state.expanded ? {paddingBottom: scale(30)} : {}}>
+        key={uuidv4()}
+        style={[
+          this.props.item.type === ITEM_TYPE.GROUP && this.state.expanded ? {paddingBottom: scale(25)} : {},
+          this.props.item.type === ITEM_TYPE.SUB_GROUP && this.state.expanded ? {paddingBottom: scale(10)} : {},
+          {paddingTop: scale(2.5)}
+        ]}>
         <TouchableWithoutFeedback
           onPress={() => {
             this.setState({expanded: !this.state.expanded});
           }}>
           <View style={styles.groupView}>
-            <Text style={styles.groupText}>{this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}</Text>
-
-            <TouchableOpacity
-              activeOpacity={activeOpacity}
-              onPress={() => {
-                this.setState({expanded: !this.state.expanded});
-              }}>
-              <View style={styles.toggleIcon}>
-                {this.state.expanded ? (
-                  <SvgCss xml={images.imagesSVG.common.toggleOpened} />
-                ) : (
-                  <SvgCss xml={images.imagesSVG.common.toggleClosedPrimary} />
-                )}
-              </View>
-            </TouchableOpacity>
-          </View>
-        </TouchableWithoutFeedback>
-
-        {this.props.item.item &&
-          this.state.expanded &&
-          this.props.item.item.map((si: Iitem, i: number) => (
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
-            />
-          ))}
-      </View>
-    );
-  }
-
-  renderTypeSubGroup() {
-    return (
-      <View key={this.props.item.id}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            this.setState({expanded: !this.state.expanded});
-          }}>
-          <View
-            style={[
-              this.state.expanded
-                ? styles.subgroupView
-                : [styles.subgroupView, {borderBottomColor: colors.grey, borderBottomWidth: scale(1)}]
-            ]}>
-            <Text style={styles.subgroupText}>
-              {this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}
+            <Text
+              style={
+                this.props.item.type === ITEM_TYPE.SUB_GROUP
+                  ? [styles.groupText, {fontFamily: AppFonts.condensedRegular, fontSize: TextSize.small}]
+                  : styles.groupText
+              }>
+              {this.props.item.label}
             </Text>
 
             <TouchableOpacity
@@ -122,14 +96,38 @@ class InformationItem extends Component<PropsType, State> {
             </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
+        <View
+          style={[this.props.item.type === ITEM_TYPE.SUB_GROUP && this.state.expanded ? {paddingTop: scale(10)} : {}]}>
+          {this.props.item.item &&
+            this.state.expanded &&
+            this.props.item.item.map((item: Iitem) => (
+              <InformationItem
+                t={this.props.t}
+                i18n={this.props.i18n}
+                tReady={this.props.tReady}
+                key={uuidv4()}
+                item={item}
+              />
+            ))}
+        </View>
+      </View>
+    );
+  }
 
+  renderTypeTitle() {
+    return (
+      <View
+        style={{paddingTop: scale(10)}}
+        key={uuidv4()}>
+        <Text style={styles.title}>{this.props.item.label}</Text>
         {this.props.item.item &&
-          this.state.expanded &&
-          this.props.item.item.map((si: Iitem, i: number) => (
+          this.props.item.item.map((item: Iitem) => (
             <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
+              t={this.props.t}
+              i18n={this.props.i18n}
+              tReady={this.props.tReady}
+              key={uuidv4()}
+              item={item}
             />
           ))}
       </View>
@@ -138,133 +136,61 @@ class InformationItem extends Component<PropsType, State> {
 
   renderTypeText() {
     return (
-      <View style={styles.textText}>
-        <Text>{this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}</Text>
+      <View
+        style={{paddingTop: scale(5)}}
+        key={uuidv4()}>
+        <Translate
+          stringToTranslate={this.props.item.label}
+          links={this.returnLinks(this.props.item.links || [])}
+          linkNames={this.returnLinkNames(this.props.item.links || [])}
+          textOptions={styles.text}
+        />
         {this.props.item.item &&
-          this.props.item.item.map((si: Iitem, i: number) => (
+          this.props.item.item.map((item: Iitem) => (
             <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
+              t={this.props.t}
+              i18n={this.props.i18n}
+              tReady={this.props.tReady}
+              key={uuidv4()}
+              item={item}
             />
           ))}
       </View>
     );
   }
 
-  renderTypeQuestion() {
-    return (
-      <View style={styles.questionQuestionText}>
-        <Text style={{color: colors.primary, fontFamily: AppFonts.medium, paddingVertical: scale(5)}}>
-          {this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}
-        </Text>
-        {this.props.item.item &&
-          this.props.item.item.map((si: Iitem, i: number) => (
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
-            />
-          ))}
-      </View>
-    );
-  }
-
-  renderTypeQuestionText() {
-    return (
-      <View style={styles.questionText}>
-        <Text>{this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}</Text>
-        {this.props.item.item &&
-          this.props.item.item.map((si: Iitem, i: number) => (
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
-            />
-          ))}
-      </View>
-    );
-  }
-
-  renderTypeHyperLink() {
-    return (
-      <View style={styles.hyperlinkText}>
-        <Text
-          onPress={() => Linking.openURL(this.props.item.label[this.props.localesHelper.getCurrentLanguage()])}
-          style={{color: colors.link}}>
-          {this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}
-        </Text>
-        {this.props.item.item &&
-          this.props.item.item.map((si: Iitem, i: number) => (
-            <InformationItem
-              localesHelper={this.props.localesHelper}
-              key={i}
-              item={si}
-            />
-          ))}
-      </View>
-    );
-  }
   renderTypeListItem() {
     return (
-      <View style={styles.row}>
-        <View style={styles.bulletView}>
-          <Text style={styles.bulletPoint}>{'\u2022' + ' '}</Text>
-        </View>
-        <View style={styles.bulletTextView}>
-          <Text style={styles.bulletText}>{this.props.item.label[this.props.localesHelper.getCurrentLanguage()]}</Text>
-        </View>
-      </View>
+      <Text
+        key={uuidv4()}
+        style={styles.text}>
+        {'\u2022' + ' ' + this.props.item.label}
+      </Text>
     );
   }
 
   render() {
     switch (this.props.item.type) {
-      case itemType.GROUP:
+      case ITEM_TYPE.GROUP:
+      case ITEM_TYPE.SUB_GROUP:
         return this.renderTypeGroup();
-      case itemType.SUB_GROUP:
-        return this.renderTypeSubGroup();
-      case itemType.QUESTION:
-        return this.renderTypeQuestion();
-      case itemType.QUESTION_TEXT:
-        return this.renderTypeQuestionText();
-      case itemType.LIST_ITEM:
-        return this.renderTypeListItem();
-      case itemType.TEXT:
+      case ITEM_TYPE.TITLE:
+        return this.renderTypeTitle();
+      case ITEM_TYPE.TEXT:
         return this.renderTypeText();
-      case itemType.HYPER:
-        return this.renderTypeHyperLink();
-      default:
-        console.log(this.props.item.id + ' Rendering of question type ' + this.props.item.type + ' not supported.)');
+      case ITEM_TYPE.LIST_ITEM:
+        return this.renderTypeListItem();
+      default: {
+        console.log('Rendering of question type ' + this.props.item.type + ' not supported.)');
+        return <></>;
+      }
     }
   }
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    paddingVertical: scale(5)
-  },
-  bulletView: {
-    width: scale(10)
-  },
-  bulletPoint: {
-    color: colors.gold,
-    fontSize: scale(TextSize.verySmall)
-  },
-  bulletTextView: {
-    flex: 1
-  },
-  bulletText: {
-    fontFamily: AppFonts.regular,
-    fontSize: scale(TextSize.verySmall)
-  },
   groupView: {
-    paddingTop: scale(10),
-    paddingBottom: scale(5),
+    paddingVertical: scale(5),
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
@@ -272,54 +198,27 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.grey,
     borderBottomWidth: scale(1)
   },
-  subgroupView: {
-    paddingTop: scale(10),
-    paddingBottom: scale(5),
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
   toggleIcon: {
     width: scale(TextSize.veryBig),
     height: scale(TextSize.veryBig),
     flex: 1
   },
   groupText: {
-    fontFamily: AppFonts.bold,
+    fontFamily: AppFonts.condensedBold,
+    fontSize: scale(TextSize.normal),
+    flex: 1
+  },
+  title: {
+    fontFamily: AppFonts.condensedBold,
+    paddingVertical: scale(2.5),
     fontSize: scale(TextSize.small),
-    flex: 1,
-    flexShrink: 1
+    color: colors.primary
   },
-  subgroupText: {
-    fontFamily: AppFonts.regular,
-    fontSize: scale(TextSize.verySmall),
-    flex: 1,
-    flexShrink: 1
-  },
-  textText: {
-    paddingVertical: scale(5),
-    fontSize: scale(TextSize.verySmall)
-  },
-  questionText: {
-    paddingVertical: scale(5),
-    fontSize: scale(TextSize.small)
-  },
-  hyperlinkText: {
-    paddingVertical: scale(10),
-    fontSize: scale(TextSize.small)
-  },
-  questionQuestionText: {
-    paddingTop: scale(5),
-    paddingBottom: scale(5),
-    fontSize: scale(TextSize.verySmall)
+  text: {
+    fontFamily: AppFonts.condensedRegular,
+    paddingVertical: scale(2.5),
+    fontSize: scale(TextSize.small - 1)
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(InformationItem);
+export default withTranslation()(InformationItem);

@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -10,7 +11,6 @@ import {connect} from 'react-redux';
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
@@ -18,10 +18,10 @@ import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   route: {params: {test: boolean}};
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   userProfile: UserProfile;
   prismSession: PrismSession;
 }
@@ -49,19 +49,21 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
           <View style={styles.topView}>
             {this.state.test ? (
               <BackButton
+                color={colors.white}
                 onPress={() => {
                   this.props.navigation.pop();
                 }}
               />
             ) : (
               <BackButton
+                color={colors.white}
                 onPress={() => {
                   this.props.navigation.navigate('AssessmentSessionStackScreen');
                 }}
               />
             )}
             <View style={styles.pageTitleView}>
-              <Text style={styles.pageTitleText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
+              <Text style={styles.pageTitleText}>{this.props.t('assessment.title')}</Text>
             </View>
           </View>
           {
@@ -69,20 +71,12 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.localesHelper.localeString('assessment.tutorial.title')}</Text>
-                  <Text style={styles.description}>
-                    {this.props.localesHelper.localeString('assessment.tutorial.description')}
-                  </Text>
-                  <Text style={styles.description}>
-                    {this.props.localesHelper.localeString('assessment.tutorial.questions.hint')}
-                  </Text>
+                  <Text style={styles.title}>{this.props.t('assessment.tutorial.title')}</Text>
+                  <Text style={styles.description}>{this.props.t('assessment.tutorial.description')}</Text>
+                  <Text style={styles.description}>{this.props.t('assessment.tutorial.questions.hint')}</Text>
                   <View style={styles.listContainer}>
-                    {this.renderListItem(
-                      this.props.localesHelper.localeString('assessment.tutorial.questions.questionList.item1')
-                    )}
-                    {this.renderListItem(
-                      this.props.localesHelper.localeString('assessment.tutorial.questions.questionList.item2')
-                    )}
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item1'))}
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item2'))}
                   </View>
                   <SvgCss
                     xml={images.imagesSVG.prism.distanceCenter}
@@ -99,13 +93,11 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
                       }
                     ]}
                   />
-                  <Text style={styles.distance}>
-                    {this.props.localesHelper.localeString('assessment.tutorial.distance')}
-                  </Text>
+                  <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
                 </View>
                 {this.state.test && (
                   <AppButton
-                    label={this.props.localesHelper.localeString('common.start')}
+                    label={this.props.t('common.start')}
                     icon={images.imagesSVG.common.start}
                     position='right'
                     color={colors.gold}
@@ -237,10 +229,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(AssessmentIntroTutorial);
+export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentIntroTutorial));

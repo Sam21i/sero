@@ -1,6 +1,7 @@
 import {Reference, Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SortableList from 'react-native-sortable-list';
@@ -12,7 +13,6 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanEditModal from '../components/SecurityPlanEditModal';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
 import SecurityplanSpeechBubble, {SECURITYPLAN_SPEECH_BUBBLE_MODE} from '../components/SecurityplanSpeechBubble';
-import LocalesHelper from '../locales';
 import SecurityPlanModel, {SECURITY_PLAN_MODULE_TYPE, SecurityPlanModule} from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
@@ -21,9 +21,9 @@ import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   userProfile: UserProfile;
   synchronizeResource: (r: Resource) => void;
   replaceSecurityPlan: (newPlan: SecurityPlanModel, oldPlan: SecurityPlanModel, u: Reference) => void;
@@ -192,10 +192,10 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     return (
       <View style={styles.listHeader}>
         {this.state.isEditMode ? (
-          <Text style={styles.editHint}>{this.props.localesHelper.localeString('securityplan.editHint')}</Text>
+          <Text style={styles.editHint}>{this.props.t('securityplan.editHint')}</Text>
         ) : (
           <AppButton
-            label={this.props.localesHelper.localeString('common.options')}
+            label={this.props.t('common.options')}
             icon={images.imagesSVG.common.options}
             position='left'
             color={colors.tumbleweed}
@@ -234,7 +234,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
         {buttons.map((button, index) => (
           <View key={index}>
             <AppButton
-              label={this.props.localesHelper.localeString(button.label)}
+              label={this.props.t(button.label)}
               position='right'
               icon={button.icon}
               color={colors.tumbleweed}
@@ -258,6 +258,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
+              color={colors.white}
               onPress={() => {
                 if (this.state.bubbleVisible) {
                   this.setState({bubbleVisible: false});
@@ -269,11 +270,9 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               }}
             />
             <View style={styles.topTextView}>
-              <Text style={styles.topViewTextTitle}>
-                {this.props.localesHelper.localeString('securityplan.current')}
-              </Text>
+              <Text style={styles.topViewTextTitle}>{this.props.t('securityplan.current')}</Text>
               <Text style={styles.topViewTextDescr}>
-                {this.state.currentSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
+                {this.state.currentSecurityplan.getLocaleDate(this.props.i18n.language || 'de-CH')}
               </Text>
             </View>
           </View>
@@ -281,7 +280,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             {this.state.bubbleVisible ? (
               <SecurityplanSpeechBubble
                 navigation={this.props.navigation}
-                localesHelper={this.props.localesHelper}
                 onClose={this.onBubbleClose.bind(this)}
               />
             ) : (
@@ -298,7 +296,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   renderRow={(row: {data: SecurityPlanModule; key: string}) => {
                     return (
                       <SecurityPlanModuleComponent
-                        localesHelper={this.props.localesHelper}
                         key={row.key}
                         editable={this.state.isEditMode}
                         isBeingDragged={row.data.type === this.state.draggedModule}
@@ -316,7 +313,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           </View>
           {this.state.modalVisible && (
             <SecurityPlanEditModal
-              localesHelper={this.props.localesHelper}
               module={this.state.currentEditModule}
               onSave={(module) => {
                 this.onEditedModule(module);
@@ -389,7 +385,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
@@ -403,4 +398,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SecurityplanCurrent);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SecurityplanCurrent));

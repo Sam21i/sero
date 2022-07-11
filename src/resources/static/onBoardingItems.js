@@ -1,11 +1,14 @@
+import i18n from '../../../i18n';
 import {colors} from '../../styles/App.style';
 import images from '../images/images';
 
-export const ON_BOARDING_ITEMS = [
+let CONTENTS = ['emergency', 'contacts', 'assessment', 'securityplan', 'midata'];
+
+let ON_BOARDING_ITEMS = [
   {
     key: 1,
-    title: 'onboarding.emergency.title',
-    text: 'onboarding.emergency.text',
+    title: i18n.t('onboarding.emergency.title'),
+    text: i18n.t('onboarding.emergency.text'),
     background: images.imagesPNG.backgrounds.moodBlue,
     image: images.imagesPNG.onboarding.emergencyContactIcon,
     themeColor: colors.petrol,
@@ -13,8 +16,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 2,
-    title: 'onboarding.contacts.title',
-    text: 'onboarding.contacts.text',
+    title: i18n.t('onboarding.contacts.title'),
+    text: i18n.t('onboarding.contacts.text'),
     background: images.imagesPNG.backgrounds.moodBlue,
     image: images.imagesPNG.onboarding.myEnvironmentIcon,
     themeColor: colors.petrol,
@@ -22,8 +25,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 3,
-    title: 'onboarding.assessment.title',
-    text: 'onboarding.assessment.text',
+    title: i18n.t('onboarding.assessment.title'),
+    text: i18n.t('onboarding.assessment.text'),
     background: images.imagesPNG.backgrounds.moodYellow,
     image: images.imagesPNG.onboarding.assessmentIcon,
     themeColor: colors.gold,
@@ -31,8 +34,8 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 4,
-    title: 'onboarding.securityplan.title',
-    text: 'onboarding.securityplan.text',
+    title: i18n.t('onboarding.securityplan.title'),
+    text: i18n.t('onboarding.securityplan.text'),
     background: images.imagesPNG.backgrounds.moodLightOrange,
     image: images.imagesPNG.onboarding.securityplanIcon,
     themeColor: colors.primary,
@@ -40,11 +43,20 @@ export const ON_BOARDING_ITEMS = [
   },
   {
     key: 5,
-    title: 'onboarding.midata.title',
-    text: 'onboarding.midata.text',
+    title: i18n.t('onboarding.midata.title'),
+    text: i18n.t('onboarding.midata.text'),
     background: images.imagesPNG.backgrounds.moodGrey,
     image: images.imagesPNG.onboarding.midata,
     themeColor: colors.white,
     titleColor: colors.black
   }
 ];
+
+i18n.on('languageChanged', function (lng) {
+  ON_BOARDING_ITEMS.forEach((item, index) => {
+    ON_BOARDING_ITEMS[index].title = i18n.t('onboarding.' + CONTENTS[index] + '.title');
+    ON_BOARDING_ITEMS[index].text = i18n.t('onboarding.' + CONTENTS[index] + '.text');
+  });
+});
+
+export default ON_BOARDING_ITEMS;

@@ -1,28 +1,22 @@
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
-import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
-import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import EmergencyNumberButton from './EmergencyNumberButton';
 
-interface EmergencyNumberContainerProps {
-  localesHelper: LocalesHelper;
-}
-
-class EmergencyContact extends Component<EmergencyNumberContainerProps> {
+class EmergencyContact extends Component<WithTranslation> {
   render() {
     return (
       <View style={styles.view}>
         <View style={styles.topTextView}>
-          <Text style={styles.topText}>{this.props.localesHelper.localeString('main.callEmergencyTop')}</Text>
+          <Text style={styles.topText}>{this.props.t('main.callEmergencyTop')}</Text>
         </View>
         <View style={styles.iconView}>
           <EmergencyNumberButton />
         </View>
         <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>{this.props.localesHelper.localeString('main.callEmergencyBottom')}</Text>
+          <Text style={styles.bottomText}>{this.props.t('main.callEmergencyBottom')}</Text>
         </View>
       </View>
     );
@@ -65,10 +59,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps)(EmergencyContact);
+export default withTranslation()(EmergencyContact);

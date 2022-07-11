@@ -1,5 +1,6 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -9,7 +10,6 @@ import {connect} from 'react-redux';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import SecurityPlanModel from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
@@ -17,9 +17,9 @@ import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   midataService: MidataService;
   userProfile: UserProfile;
 }
@@ -68,12 +68,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
             <Text
               numberOfLines={2}
               style={appStyles.listItemTitleText}>
-              {this.props.localesHelper.localeString('securityplan.former')}
+              {this.props.t('securityplan.former')}
             </Text>
             <Text
               numberOfLines={1}
               style={appStyles.listItemSubtitleText}>
-              {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
+              {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
           </View>
           <View style={appStyles.listItemContentIcon}>
@@ -90,7 +90,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderSecurityplanItem({item}) {
     return (
       <SecurityPlanModuleComponent
-        localesHelper={this.props.localesHelper}
         key={'key.' + item.title}
         editable={false}
         isBeingDragged={false}
@@ -125,6 +124,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
               <BackButton
+                color={colors.white}
                 onPress={() => {
                   this.state.selectedSecurityplan
                     ? this.setState({selectedSecurityplan: undefined})
@@ -133,22 +133,23 @@ class SecurityplanArchive extends Component<PropsType, State> {
               />
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
-                  {this.props.localesHelper.localeString('securityplan.former')}
+                  {this.props.t('securityplan.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
-                  {this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
+                  {this.state.selectedSecurityplan.getLocaleDate(this.props.i18n.language || 'de-CH')}
                 </Text>
               </View>
             </View>
           ) : (
             <View style={styles.topView}>
               <BackButton
+                color={colors.white}
                 onPress={() => {
                   this.props.navigation.pop();
                 }}
               />
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
+                <Text style={styles.topViewTextTitle}>{this.props.t('common.archive')}</Text>
               </View>
             </View>
           )}
@@ -209,10 +210,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(SecurityplanArchive);
+export default connect(mapStateToProps, undefined)(withTranslation()(SecurityplanArchive));
