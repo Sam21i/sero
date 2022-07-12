@@ -1,8 +1,8 @@
 import {CarePlan} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -10,7 +10,6 @@ import AppButton from '../components/AppButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
 import EmergencyNumberContainer from '../components/EmergencyNumberContainer';
-import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import MidataService from '../model/MidataService';
 import {PrismResources} from '../model/PrismSession';
@@ -21,11 +20,11 @@ import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {colors, scale, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
-  localesHelper: LocalesHelper;
+
   uploadPendingResources: () => void;
   setEmergencyContacts: (e: EmergencyContact[]) => void;
   setSecurityPlan: (plan: CarePlan) => void;
@@ -43,7 +42,6 @@ class Main extends Component<PropsType, State> {
     this.state = {
       emergencyContactsLoaded: false
     };
-    Orientation.lockToPortrait();
   }
 
   componentDidMount() {
@@ -135,7 +133,6 @@ class Main extends Component<PropsType, State> {
             {this.state.emergencyContactsLoaded && (
               <EmergencyContactContainer
                 emergencyContacts={this.props.userProfile.getEmergencyContacts()}
-                localesHelper={this.props.localesHelper}
                 onPressOptionsButton={this.editContacts.bind(this)}
               />
             )}
@@ -163,7 +160,7 @@ class Main extends Component<PropsType, State> {
               backgroundColor: colors.white65opac
             }}>
             <AppButton
-              label={this.props.localesHelper.localeString('securityplan.title')}
+              label={this.props.t('securityplan.title')}
               icon={images.imagesSVG.common.securityplan}
               position='right'
               color={colors.primary}
@@ -174,7 +171,7 @@ class Main extends Component<PropsType, State> {
             />
             <View style={{height: verticalScale(15)}}></View>
             <AppButton
-              label={this.props.localesHelper.localeString('assessment.title')}
+              label={this.props.t('assessment.title')}
               icon={images.imagesSVG.common.assessment}
               position='right'
               color={colors.gold}
@@ -214,8 +211,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state: AppStore) {
   return {
     midataService: state.MiDataServiceStore,
-    userProfile: state.UserProfileStore,
-    localesHelper: state.LocalesHelperStore
+    userProfile: state.UserProfileStore
   };
 }
 
@@ -229,4 +225,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Main));

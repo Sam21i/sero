@@ -1,12 +1,10 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {Platform, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import {connect} from 'react-redux';
 
-import LocalesHelper from '../locales';
 import images from '../resources/images/images';
-import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import SpeechBubble from './SpeechBubble';
 
@@ -21,8 +19,7 @@ const MENU_ACTIONS = [
   {name: 'newImage', mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE.new}
 ];
 
-interface Props {
-  localesHelper: LocalesHelper;
+interface Props extends WithTranslation {
   navigation: StackNavigationProp<any>;
   onClose: (mode: ASSESSMENT_IMAGE_SPEECH_BUBBLE_MODE) => void;
   showNew: boolean;
@@ -43,7 +40,7 @@ class AssessmentImageSpeechBubble extends Component<Props, State> {
   renderBubbleTitle(_translateString: string) {
     return (
       <View style={styles.titleBar}>
-        <Text style={styles.titlebarText}>{this.props.localesHelper.localeString(_translateString)}</Text>
+        <Text style={styles.titlebarText}>{this.props.t(_translateString)}</Text>
         <SvgCss
           xml={images.imagesSVG.common.cancelGrey}
           width={scale(35)}
@@ -72,9 +69,7 @@ class AssessmentImageSpeechBubble extends Component<Props, State> {
                     key={'action_' + index}>
                     <View style={styles.actionBubble}></View>
                     <View style={styles.actionTextWrapper}>
-                      <Text style={styles.actionText}>
-                        {this.props.localesHelper.localeString('assessment.' + action.name)}
-                      </Text>
+                      <Text style={styles.actionText}> {this.props.t('assessment.' + action.name)}</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -176,10 +171,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function mapStateToProps(state: AppStore) {
-  return {
-    localesHelper: state.LocalesHelperStore
-  };
-}
-
-export default connect(mapStateToProps, undefined)(AssessmentImageSpeechBubble);
+export default withTranslation()(AssessmentImageSpeechBubble);

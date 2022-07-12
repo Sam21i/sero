@@ -59,7 +59,9 @@
     "save": "Enregistrer",
     "search": "Rechercher",
     "start": "Commencer",
-    "yes": "Oui"
+    "yes": "Oui",
+    "nameTitle": "<0>{{name}}</0> Je vous souhaiter bonjour. Go here: <1>Google</1>",
+    "nameTitleLink": "https://www.google.fr"
   },
   "contacts": {
     "addContact": "Ajouter un contact",

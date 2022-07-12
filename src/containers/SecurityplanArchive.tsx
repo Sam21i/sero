@@ -1,15 +1,15 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import SecurityPlanModel from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
@@ -17,9 +17,9 @@ import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   midataService: MidataService;
   userProfile: UserProfile;
 }
@@ -41,31 +41,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
     };
   }
 
-  renderFooterComponent() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.tumbleweed}
-        onPress={() => {
-          this.state.selectedSecurityplan
-            ? this.setState({selectedSecurityplan: undefined})
-            : this.props.navigation.goBack();
-        }}
-        style={{width: scale(225), marginVertical: scale(20)}}
-        isLargeButton={false}
-      />
-    );
-  }
-
   renderList() {
     return (
       <FlatList
         data={this.state.securityplanHistory}
         renderItem={this.renderListItem.bind(this)}
         alwaysBounceVertical={false}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
     );
@@ -87,12 +68,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
             <Text
               numberOfLines={2}
               style={appStyles.listItemTitleText}>
-              {this.props.localesHelper.localeString('securityplan.former')}
+              {this.props.t('securityplan.former')}
             </Text>
             <Text
               numberOfLines={1}
               style={appStyles.listItemSubtitleText}>
-              {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
+              {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
           </View>
           <View style={appStyles.listItemContentIcon}>
@@ -109,7 +90,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderSecurityplanItem({item}) {
     return (
       <SecurityPlanModuleComponent
-        localesHelper={this.props.localesHelper}
         key={'key.' + item.title}
         editable={false}
         isBeingDragged={false}
@@ -128,7 +108,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
         renderItem={this.renderSecurityplanItem.bind(this)}
         alwaysBounceVertical={false}
         ListHeaderComponent={this.renderListHeaderComponent}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
       />
     );
   }
@@ -144,19 +123,33 @@ class SecurityplanArchive extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           {this.state.selectedSecurityplan ? (
             <View style={styles.topView}>
+              <BackButton
+                color={colors.white}
+                onPress={() => {
+                  this.state.selectedSecurityplan
+                    ? this.setState({selectedSecurityplan: undefined})
+                    : this.props.navigation.goBack();
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
-                  {this.props.localesHelper.localeString('securityplan.former')}
+                  {this.props.t('securityplan.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
-                  {this.state.selectedSecurityplan.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
+                  {this.state.selectedSecurityplan.getLocaleDate(this.props.i18n.language || 'de-CH')}
                 </Text>
               </View>
             </View>
           ) : (
             <View style={styles.topView}>
+              <BackButton
+                color={colors.white}
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+              />
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
+                <Text style={styles.topViewTextTitle}>{this.props.t('common.archive')}</Text>
               </View>
             </View>
           )}
@@ -175,12 +168,12 @@ class SecurityplanArchive extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.primary50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   topTextView: {
     flex: 1,
-    paddingLeft: scale(50),
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     justifyContent: 'center'
   },
   topViewTextTitle: {
@@ -217,10 +210,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(SecurityplanArchive);
+export default connect(mapStateToProps, undefined)(withTranslation()(SecurityplanArchive));

@@ -1,23 +1,24 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
+
   userProfile: UserProfile;
 }
 
@@ -49,12 +50,19 @@ class AssessmentMain extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              color={colors.white}
+              onPress={() => {
+                this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
+              }}
+            />
             <View style={styles.topTextView}>
-              <Text style={styles.topViewText}>{this.props.localesHelper.localeString('assessment.title')}</Text>
+              <Text style={styles.topViewText}>{this.props.t('assessment.title')}</Text>
             </View>
           </View>
 
           <View style={styles.bottomView}>
+            <View style={{height: verticalScale(55)}}></View>
             <Banner
               type={BANNER_TYPE.assessment}
               titleColor={colors.gold}
@@ -65,7 +73,7 @@ class AssessmentMain extends Component<PropsType, State> {
                 paddingBottom: verticalScale(55)
               }}>
               <AppButton
-                label={this.props.localesHelper.localeString('assessment.addEntry')}
+                label={this.props.t('assessment.addEntry')}
                 icon={images.imagesSVG.common.add}
                 position='right'
                 color={colors.gold}
@@ -85,7 +93,7 @@ class AssessmentMain extends Component<PropsType, State> {
                   opacity: this.props.userProfile.getPrismSessions().length === 0 ? 0 : 1 // hide archive button if nothing in archive
                 }}>
                 <AppButton
-                  label={this.props.localesHelper.localeString('common.archive')}
+                  label={this.props.t('common.archive')}
                   icon={images.imagesSVG.common.archive}
                   position='right'
                   color={colors.grey}
@@ -112,9 +120,7 @@ const styles = StyleSheet.create({
   topTextView: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginLeft: scale(40)
+    alignItems: 'center'
   },
   topViewText: {
     color: colors.white,
@@ -135,10 +141,10 @@ const styles = StyleSheet.create({
   },
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   bottomView: {
-    paddingTop: verticalScale(60),
     flex: 7,
     backgroundColor: colors.white65opac
   }
@@ -146,10 +152,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(AssessmentMain);
+export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentMain));

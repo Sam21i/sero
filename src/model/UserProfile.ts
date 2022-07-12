@@ -7,7 +7,7 @@ import {
   Reference
 } from '@i4mi/fhir_r4';
 
-import {DEFAULT_CONTACTS} from '../resources/static/defaultContacts';
+import DEFAULT_CONTACTS from '../resources/static/defaultContacts';
 import EmergencyContact from './EmergencyContact';
 import PrismSession, {PrismResources} from './PrismSession';
 import SecurityPlanModel from './SecurityPlan';

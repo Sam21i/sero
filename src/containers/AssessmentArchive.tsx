@@ -1,16 +1,16 @@
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {FlatList, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
-import LocalesHelper from '../locales';
 import MidataService from '../model/MidataService';
 import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
@@ -18,9 +18,8 @@ import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {activeOpacity, AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
@@ -57,12 +56,12 @@ class AssessmentArchive extends Component<PropsType, State> {
             <Text
               numberOfLines={2}
               style={appStyles.listItemTitleText}>
-              {this.props.localesHelper.localeString('assessment.former')}
+              {this.props.t('assessment.former')}
             </Text>
             <Text
               numberOfLines={1}
               style={appStyles.listItemSubtitleText}>
-              {item.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}
+              {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
           </View>
           <View style={appStyles.listItemContentIcon}>
@@ -79,10 +78,10 @@ class AssessmentArchive extends Component<PropsType, State> {
   renderList() {
     return (
       <FlatList
+        style={{height: '100%'}}
         data={this.state.prismSessionHistory}
         renderItem={this.renderListItem.bind(this)}
         alwaysBounceVertical={false}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         ListHeaderComponent={this.renderListHeaderComponent}
       />
     );
@@ -92,24 +91,6 @@ class AssessmentArchive extends Component<PropsType, State> {
     return <View style={{height: scale(50)}}></View>;
   }
 
-  renderFooterComponent() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.gold}
-        onPress={() => {
-          this.state.selectedPrismSession
-            ? this.setState({selectedPrismSession: undefined})
-            : this.props.navigation.goBack();
-        }}
-        style={{width: scale(225), marginVertical: scale(20)}}
-        isLargeButton={false}
-      />
-    );
-  }
-
   renderPrismSession() {
     return (
       <FlatList
@@ -117,7 +98,6 @@ class AssessmentArchive extends Component<PropsType, State> {
         ListHeaderComponent={this.renderPrismSessionHeader.bind(this)}
         alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
-        ListFooterComponent={this.renderFooterComponent.bind(this)}
         keyExtractor={(item) => item.id}
       />
     );
@@ -194,19 +174,31 @@ class AssessmentArchive extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           {this.state.selectedPrismSession ? (
             <View style={styles.topView}>
+              <BackButton
+                color={colors.white}
+                onPress={() => {
+                  this.setState({selectedPrismSession: undefined});
+                }}
+              />
               <View style={styles.topTextView}>
                 <Text style={[styles.topViewTextTitle, {fontSize: TextSize.normal}]}>
-                  {this.props.localesHelper.localeString('assessment.former')}
+                  {this.props.t('assessment.former')}
                 </Text>
                 <Text style={styles.topViewTextDescr}>
-                  {this.state.selectedPrismSession.getLocaleDate(this.props.localesHelper.currentLang || 'de-CH')}{' '}
+                  {this.state.selectedPrismSession.getLocaleDate(this.props.i18n.language || 'de-CH')}
                 </Text>
               </View>
             </View>
           ) : (
             <View style={styles.topView}>
+              <BackButton
+                color={colors.white}
+                onPress={() => {
+                  this.props.navigation.pop();
+                }}
+              />
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.localesHelper.localeString('common.archive')}</Text>
+                <Text style={styles.topViewTextTitle}>{this.props.t('common.archive')}</Text>
               </View>
             </View>
           )}
@@ -225,12 +217,11 @@ class AssessmentArchive extends Component<PropsType, State> {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.gold50opac,
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   topTextView: {
     flex: 1,
-    paddingLeft: scale(50),
-    alignSelf: 'flex-start',
     justifyContent: 'center'
   },
   topViewTextTitle: {
@@ -273,10 +264,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
 }
 
-export default connect(mapStateToProps, undefined)(AssessmentArchive);
+export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentArchive));

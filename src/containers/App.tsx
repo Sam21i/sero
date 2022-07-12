@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {StatusBar} from 'react-native';
+import {NativeModules, Platform, StatusBar} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -42,6 +42,7 @@ interface State {
 }
 
 export enum STORAGE {
+  LANGUAGE = '@userLanguage',
   SHOULD_DISPLAY_ONBOARDING = '@displayOnboarding',
   ASKED_FOR_CONTACT_PERMISSION = '@contactPermission',
   CONTACT_PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid',
@@ -96,6 +97,10 @@ function InformationStackScreen() {
       <InformationStack.Screen
         name='Information'
         component={Information}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
       />
     </InformationStack.Navigator>
   );
@@ -109,6 +114,10 @@ function SettingsStackScreen() {
       <SettingsStack.Screen
         name='Settings'
         component={Settings}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
       />
     </SettingsStack.Navigator>
   );
@@ -271,6 +280,7 @@ export default class App extends Component<PropsType, State> {
       showIntro: true
     };
     this.checkContentToDisplay();
+    if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterStickyImmersiveMode();
   }
 
   async checkContentToDisplay() {
@@ -304,7 +314,10 @@ export default class App extends Component<PropsType, State> {
                   }
                 }
               }}>
-              <StatusBar />
+              <StatusBar
+                backgroundColor={colors.white}
+                barStyle='dark-content'
+              />
               <Tab.Navigator
                 initialRouteName={this.state.showIntro ? 'OnboardingStackScreen' : 'MainStackScreen'}
                 screenOptions={({route}) => ({
@@ -313,7 +326,6 @@ export default class App extends Component<PropsType, State> {
                   tabBarStyle: {backgroundColor: colors.lightGrey},
                   tabBarActiveTintColor: colors.primary,
                   tabBarInactiveTintColor: colors.grey,
-
                   tabBarButton: [
                     'OnboardingStackScreen',
                     'SecurityplanStackScreen',
@@ -334,24 +346,21 @@ export default class App extends Component<PropsType, State> {
                   name='MainStackScreen'
                   component={MainStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.home, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.home, focused, color)
                   }}
                 />
                 <Tab.Screen
                   name='InformationStackScreen'
                   component={InformationStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.info, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.info, focused, color)
                   }}
                 />
                 <Tab.Screen
                   name='SettingsStackScreen'
                   component={SettingsStackScreen}
                   options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                      generateTabIcon(images.imagesSVG.tabBar.settings, focused, color)
+                    tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.settings, focused, color)
                   }}
                 />
                 <Tab.Screen

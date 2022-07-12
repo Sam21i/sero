@@ -2,6 +2,7 @@ import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Input, NativeBaseProvider} from 'native-base';
 import React, {Component} from 'react';
+import {WithTranslation, withTranslation} from 'react-i18next';
 import {
   FlatList,
   Image,
@@ -16,10 +17,9 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
-import AppButton from '../components/AppButton';
+import BackButton from '../components/BackButton';
 import {CONTACT_SPEECH_BUBBLE_MODE} from '../components/ContactSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
-import LocalesHelper from '../locales';
 import EmergencyContact from '../model/EmergencyContact';
 import MidataService from '../model/MidataService';
 import UserProfile from '../model/UserProfile';
@@ -28,9 +28,8 @@ import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
-interface PropsType {
+interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-  localesHelper: LocalesHelper;
   midataService: MidataService;
   userProfile: UserProfile;
   addResource: (r: Resource) => void;
@@ -105,7 +104,7 @@ class Contacts extends Component<PropsType, State> {
             autoCapitalize='none'
             autoCorrect={false}
             onChangeText={this.handleSearch}
-            placeholder={this.props.localesHelper.localeString('common.search') + '...'}
+            placeholder={this.props.t('common.search') + '...'}
             style={{
               borderColor: colors.grey,
               backgroundColor: colors.white
@@ -137,22 +136,6 @@ class Contacts extends Component<PropsType, State> {
     );
   };
 
-  renderListFooter() {
-    return (
-      <AppButton
-        label={this.props.localesHelper.localeString('common.back')}
-        icon={images.imagesSVG.common.back}
-        position='right'
-        color={colors.gold}
-        onPress={() => {
-          this.props.navigation.navigate('AssessmentEndOptions');
-        }}
-        style={styles.backButton}
-        isLargeButton={false}
-      />
-    );
-  }
-
   render() {
     const contacts = this.props.userProfile
       .getEmergencyContacts()
@@ -166,17 +149,24 @@ class Contacts extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
+            <BackButton
+              color={colors.white}
+              onPress={() => {
+                this.props.navigation.navigate('AssessmentEndOptions');
+              }}
+            />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>
                 {this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.edit ||
                 this.state.mode === CONTACT_SPEECH_BUBBLE_MODE.delete
-                  ? this.props.localesHelper.localeString('contacts.selectContact')
-                  : this.props.localesHelper.localeString('contacts.title')}
+                  ? this.props.t('contacts.selectContact')
+                  : this.props.t('contacts.title')}
               </Text>
             </View>
           </View>
           <View style={styles.bottomView}>
             <FlatList
+              style={{height: '100%'}}
               ListHeaderComponent={this.renderHeader()}
               data={contacts.sort((a, b) => {
                 // don't show Company Entries at the top
@@ -191,7 +181,6 @@ class Contacts extends Component<PropsType, State> {
               alwaysBounceVertical={false}
               renderItem={this.renderContactListItem.bind(this)}
               showsHorizontalScrollIndicator={false}
-              ListFooterComponent={this.renderListFooter.bind(this)}
             />
           </View>
 
@@ -283,7 +272,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state: AppStore) {
   return {
-    localesHelper: state.LocalesHelperStore,
     midataService: state.MiDataServiceStore,
     userProfile: state.UserProfileStore
   };
@@ -296,4 +284,4 @@ function mapDispatchToProps(dispatch: Function) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Contacts));

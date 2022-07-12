@@ -1,7 +1,9 @@
-export const DEFAULT_CONTACTS = [
+import i18n from '../../../i18n';
+
+let DEFAULT_CONTACTS = [
   {
-    given: ['Dargebotene'],
-    family: 'Hand',
+    given: [i18n.t('contacts.defaultContacts.helpingHand.given')],
+    family: i18n.t('contacts.defaultContacts.helpingHand.family'),
     phone: '143',
     image: {
       contentType: 'image/png',
@@ -16,3 +18,10 @@ export const DEFAULT_CONTACTS = [
     }
   }
 ];
+
+i18n.on('languageChanged', function (lng) {
+  DEFAULT_CONTACTS[0].given = [i18n.t('contacts.defaultContacts.helpingHand.given')];
+  DEFAULT_CONTACTS[0].family = i18n.t('contacts.defaultContacts.helpingHand.family');
+});
+
+export default DEFAULT_CONTACTS;
