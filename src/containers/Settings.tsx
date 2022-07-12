@@ -47,7 +47,6 @@ class Settings extends Component<PropsType, State> {
   setLanguageSelect(lang: string) {
     this.setState({currentLang: lang}, () => {
       AsyncStorage.setItem(STORAGE.LANGUAGE, lang);
-      console.log(lang);
       this.props.i18n.changeLanguage(lang);
     });
   }

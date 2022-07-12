@@ -36,7 +36,6 @@ class Translate extends Component<PropsType> {
 
     this.props.linkNames.forEach((linkName, index) => {
       const keyName = 'address' + index;
-      console.log(keyName);
       this.values[keyName] = linkName;
     });
   }

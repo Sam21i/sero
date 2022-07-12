@@ -33,7 +33,6 @@ interface State {
 class AssessmentIntroTutorial extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    console.log(props.route);
     this.state = {test: props.route.params.test};
   }
 

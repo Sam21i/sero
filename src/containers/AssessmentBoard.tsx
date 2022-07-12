@@ -2,7 +2,7 @@ import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {Animated, ImageBackground, NativeModules, PanResponder, Platform, StyleSheet, Text, View} from 'react-native';
+import {Animated, ImageBackground, PanResponder, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -150,11 +150,9 @@ class AssessmentBoard extends Component<PropsType, State> {
   componentDidMount() {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToLandscape();
-      if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterLeanBackMode();
     });
     this.props.navigation.addListener('blur', () => {
       Orientation.lockToPortrait();
-      if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterStickyImmersiveMode();
     });
   }
 
@@ -181,7 +179,7 @@ class AssessmentBoard extends Component<PropsType, State> {
     };
 
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
         <ImageBackground
           source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
@@ -260,7 +258,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                     flex: 1,
                     aspectRatio: Math.sqrt(2) / 1,
                     alignSelf: 'center',
-                    backgroundColor: 'white'
+                    backgroundColor: colors.white
                   }}>
                   <View style={targetCircle} />
                   <Animated.View

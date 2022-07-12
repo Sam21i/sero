@@ -31,26 +31,11 @@ export enum INFORMATION_MODE {
 }
 
 class Info extends Component<PropsType, State> {
-  langFile = this.chooseLanguageFile();
-
   constructor(props: PropsType) {
     super(props);
-
     this.state = {
       mode: INFORMATION_MODE.menu
     };
-  }
-
-  chooseLanguageFile() {
-    const currentLang = this.props.i18n.language;
-    switch (currentLang) {
-      case 'de':
-        return LANGUAGES.de;
-      case 'fr':
-        return LANGUAGES.fr;
-      case 'it':
-        return LANGUAGES.it;
-    }
   }
 
   renderFooterLogos() {
@@ -105,7 +90,7 @@ class Info extends Component<PropsType, State> {
             key={'appButton_' + index}
             label={this.props.t(button.label)}
             position='left'
-            icon={images.imagesSVG.common.archive}
+            icon={images.imagesSVG.common.start}
             color={colors.primary}
             style={styles.button}
             onPress={button.onPress}
@@ -116,19 +101,6 @@ class Info extends Component<PropsType, State> {
     );
   }
 
-  getContent() {
-    switch (this.state.mode) {
-      case INFORMATION_MODE.about:
-        return this.langFile.information.about.content as Iitem[];
-      case INFORMATION_MODE.legal:
-        return this.langFile.information.legal.content as Iitem[];
-      case INFORMATION_MODE.imprint:
-        return this.langFile.information.imprint.content as Iitem[];
-      default:
-        break;
-    }
-  }
-
   renderContentList() {
     return (
       <View>
@@ -136,7 +108,7 @@ class Info extends Component<PropsType, State> {
           overScrollMode='always'
           style={{height: '100%'}}
           removeClippedSubviews={false}
-          data={this.getContent()}
+          data={LANGUAGES[this.props.i18n.language].information[this.state.mode.toLowerCase()].content as Iitem[]}
           renderItem={(listElement) => (
             <View
               style={{paddingLeft: scale(40), paddingRight: scale(20)}}
@@ -160,9 +132,7 @@ class Info extends Component<PropsType, State> {
   renderContent() {
     switch (this.state.mode) {
       case INFORMATION_MODE.about:
-        return this.renderContentList();
       case INFORMATION_MODE.legal:
-        return this.renderContentList();
       case INFORMATION_MODE.imprint:
         return this.renderContentList();
       default:
