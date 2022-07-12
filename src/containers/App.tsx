@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {NativeModules, Platform} from 'react-native';
+import {NativeModules, Platform, StatusBar} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -314,6 +314,10 @@ export default class App extends Component<PropsType, State> {
                   }
                 }
               }}>
+              <StatusBar
+                backgroundColor={colors.white}
+                barStyle='dark-content'
+              />
               <Tab.Navigator
                 initialRouteName={this.state.showIntro ? 'OnboardingStackScreen' : 'MainStackScreen'}
                 screenOptions={({route}) => ({
