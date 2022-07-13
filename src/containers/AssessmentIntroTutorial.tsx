@@ -19,7 +19,7 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import {STORAGE} from './App';
 
 interface PropsType extends WithTranslation {
-  route: {params: {test: boolean}};
+  route: {params: {canGoBack: boolean}};
   navigation: StackNavigationProp<any>;
 
   userProfile: UserProfile;
@@ -27,13 +27,13 @@ interface PropsType extends WithTranslation {
 }
 
 interface State {
-  test: boolean;
+  canGoBack: boolean;
 }
 
 class AssessmentIntroTutorial extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
-    this.state = {test: props.route.params.test};
+    this.state = {canGoBack: props.route.params.canGoBack};
   }
 
   render() {
@@ -46,21 +46,14 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            {this.state.test ? (
-              <BackButton
-                color={colors.white}
-                onPress={() => {
-                  this.props.navigation.pop();
-                }}
-              />
-            ) : (
-              <BackButton
-                color={colors.white}
-                onPress={() => {
-                  this.props.navigation.navigate('AssessmentSessionStackScreen');
-                }}
-              />
-            )}
+            <BackButton
+              color={colors.white}
+              onPress={() => {
+                this.state.canGoBack
+                  ? this.props.navigation.pop()
+                  : this.props.navigation.navigate('AssessmentSessionStackScreen');
+              }}
+            />
             <View style={styles.pageTitleView}>
               <Text style={styles.pageTitleText}>{this.props.t('assessment.title')}</Text>
             </View>
@@ -94,7 +87,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
                   />
                   <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
                 </View>
-                {this.state.test && (
+                {this.state.canGoBack && (
                   <AppButton
                     label={this.props.t('common.start')}
                     icon={images.imagesSVG.common.start}
