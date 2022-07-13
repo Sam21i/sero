@@ -329,11 +329,6 @@ export default class App extends Component<PropsType, State> {
                   }}
                 />
                 <Tab.Screen
-                  name='OnboardingStackScreen'
-                  component={OnboardingStackScreen}
-                  options={{tabBarStyle: {display: 'none'}}}
-                />
-                <Tab.Screen
                   name='InformationStackScreen'
                   component={InformationStackScreen}
                   options={{
@@ -346,6 +341,11 @@ export default class App extends Component<PropsType, State> {
                   options={{
                     tabBarIcon: ({focused, color}) => generateTabIcon(images.imagesSVG.tabBar.settings, focused, color)
                   }}
+                />
+                <Tab.Screen
+                  name='OnboardingStackScreen'
+                  component={OnboardingStackScreen}
+                  options={{tabBarStyle: {display: 'none'}}}
                 />
                 <Tab.Screen
                   name='SecurityplanStackScreen'
