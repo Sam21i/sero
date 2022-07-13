@@ -61,7 +61,7 @@ class Settings extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <BackButton/>
+            <BackButton />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>{this.props.t('settings.title')}</Text>
             </View>
