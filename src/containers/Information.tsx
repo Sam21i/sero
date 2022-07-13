@@ -161,11 +161,9 @@ class Info extends Component<PropsType, State> {
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <BackButton
-              color={colors.primary}
+              color={this.state.mode !== INFORMATION_MODE.menu ? colors.primary : undefined}
               onPress={() => {
-                this.state.mode !== INFORMATION_MODE.menu
-                  ? this.setState({mode: INFORMATION_MODE.menu})
-                  : this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
+                this.state.mode !== INFORMATION_MODE.menu ? this.setState({mode: INFORMATION_MODE.menu}) : undefined;
               }}
             />
             <View style={styles.topTextView}>

@@ -61,12 +61,7 @@ class Settings extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
-            <BackButton
-              color={colors.primary}
-              onPress={() => {
-                this.props.navigation.navigate('MainStackScreen', {screen: 'Main'});
-              }}
-            />
+            <BackButton />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>{this.props.t('settings.title')}</Text>
             </View>

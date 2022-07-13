@@ -2,7 +2,7 @@ import {CarePlan} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {ActivityIndicator, ImageBackground, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, ImageBackground, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -125,6 +125,10 @@ class Main extends Component<PropsType, State> {
       <SafeAreaView
         style={styles.container}
         edges={['top']}>
+        <StatusBar
+          backgroundColor={colors.white}
+          barStyle='dark-content'
+        />
         <ImageBackground
           source={images.imagesPNG.backgrounds.moodLightOrange}
           resizeMode='cover'

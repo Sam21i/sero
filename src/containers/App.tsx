@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {Component} from 'react';
-import {NativeModules, Platform, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -280,7 +280,6 @@ export default class App extends Component<PropsType, State> {
       showIntro: true
     };
     this.checkContentToDisplay();
-    if (Platform.OS === 'android') NativeModules.ImmersiveMode.enterStickyImmersiveMode();
   }
 
   async checkContentToDisplay() {
@@ -298,22 +297,7 @@ export default class App extends Component<PropsType, State> {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <SafeAreaProvider>
-            <NavigationContainer
-              onStateChange={(state) => {
-                const mainScreenHistoryIndex =
-                  state?.history?.findIndex((historyEntry) => historyEntry.key.indexOf('MainStackScreen') > -1) || -1;
-                if (mainScreenHistoryIndex > 0) {
-                  if (
-                    state?.history &&
-                    (state.history[mainScreenHistoryIndex - 1].key as string).indexOf('OnboardingStackScreen') > -1
-                  ) {
-                    // we just navigated from OnBoarding to MainScreen
-                    // now we clear everything in the history before the MainScreen
-                    // (I feel like there must be an easier way of doing this, but I couldn't find it)
-                    state?.history?.splice(0, mainScreenHistoryIndex);
-                  }
-                }
-              }}>
+            <NavigationContainer>
               <StatusBar
                 backgroundColor={colors.white}
                 barStyle='dark-content'
@@ -338,11 +322,6 @@ export default class App extends Component<PropsType, State> {
                     : undefined
                 })}>
                 <Tab.Screen
-                  name='OnboardingStackScreen'
-                  component={OnboardingStackScreen}
-                  options={{tabBarStyle: {display: 'none'}}}
-                />
-                <Tab.Screen
                   name='MainStackScreen'
                   component={MainStackScreen}
                   options={{
@@ -364,18 +343,25 @@ export default class App extends Component<PropsType, State> {
                   }}
                 />
                 <Tab.Screen
+                  name='OnboardingStackScreen'
+                  component={OnboardingStackScreen}
+                  options={{tabBarStyle: {display: 'none'}}}
+                />
+                <Tab.Screen
                   name='SecurityplanStackScreen'
                   component={SecurityplanStackScreen}
                 />
                 <Tab.Screen
                   name='AssessmentStackScreen'
-                  component={AssessmentStackScreen}></Tab.Screen>
+                  component={AssessmentStackScreen}
+                />
                 <Tab.Screen
                   name='AssessmentSessionStackScreen'
                   component={AssessmentSessionStackScreen}
                   options={{
                     tabBarStyle: {display: 'none'}
-                  }}></Tab.Screen>
+                  }}
+                />
               </Tab.Navigator>
             </NavigationContainer>
           </SafeAreaProvider>
