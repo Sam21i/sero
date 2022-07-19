@@ -89,7 +89,7 @@ class Main extends Component<PropsType, State> {
         });
       }
     } catch (e) {
-      console.log(error);
+      console.log(e);
     }
   }
 
@@ -169,7 +169,10 @@ class Main extends Component<PropsType, State> {
               position='right'
               color={colors.primary}
               onPress={() => {
-                this.props.navigation.navigate('SecurityplanStackScreen');
+                this.props.navigation.reset({
+                  index: 0,
+                  routes: [{name: 'SecurityplanStackScreen'}]
+                });
               }}
               isLargeButton
             />

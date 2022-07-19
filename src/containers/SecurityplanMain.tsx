@@ -1,4 +1,5 @@
 import {Resource} from '@i4mi/fhir_r4';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
@@ -16,6 +17,7 @@ import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {STORAGE} from './App';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -30,6 +32,7 @@ interface State {
   bubbleVisible: boolean;
   listVisible: boolean;
   modules: SecurityPlanModule[];
+  shouldShowSecurityplanIntro: boolean;
 }
 
 const NOTIFICATION_OPTIONS = ['motivation', 'copingStrategies', 'distractionStrategies', 'personalBeliefs'];
@@ -41,8 +44,15 @@ class SecurityplanMain extends Component<PropsType, State> {
     this.state = {
       bubbleVisible: true,
       listVisible: false,
-      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules()
+      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules(),
+      shouldShowSecurityplanIntro: true
     };
+
+    AsyncStorage.getItem(STORAGE.SHOULD_DISPLAY_SECURITYPLAN_INTRO).then((viewed) => {
+      this.setState({
+        shouldShowSecurityplanIntro: viewed === 'true'
+      });
+    });
   }
 
   getRandomInt(max: number) {
@@ -101,7 +111,12 @@ class SecurityplanMain extends Component<PropsType, State> {
                 position='right'
                 color={colors.primary}
                 onPress={() => {
-                  this.props.navigation.navigate('SecurityplanCurrent');
+                  this.state.shouldShowSecurityplanIntro
+                    ? this.props.navigation.navigate('SecurityplanIntroStackScreen')
+                    : this.props.navigation.reset({
+                        index: 0,
+                        routes: [{name: 'SecurityplanSessionStackScreen'}]
+                      });
                 }}
                 isLargeButton
               />

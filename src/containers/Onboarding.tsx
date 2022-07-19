@@ -90,8 +90,9 @@ class Onboarding extends Component<PropsType, State> {
     try {
       AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ONBOARDING, 'false');
       AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'true');
+      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_SECURITYPLAN_INTRO, 'true');
     } catch (e) {
-      // saving error
+      console.log(e);
     }
     this.props.navigation.navigate('MainStackScreen');
   }
