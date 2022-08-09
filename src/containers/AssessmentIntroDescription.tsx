@@ -81,7 +81,7 @@ class AssessmentIntroDescription extends Component<PropsType> {
                   position='right'
                   color={colors.gold}
                   onPress={() => {
-                    this.props.navigation.navigate('AssessmentIntroTutorial', {test: true});
+                    this.props.navigation.navigate('AssessmentIntroTutorial', {canGoBack: true});
                   }}
                   isLargeButton
                 />
