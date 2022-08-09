@@ -30,6 +30,8 @@ import Main from './Main';
 import Onboarding from './Onboarding';
 import SecurityplanArchive from './SecurityplanArchive';
 import SecurityplanCurrent from './SecurityplanCurrent';
+import SecurityplanIntroDescription from './SecurityplanIntroDescription';
+import SecurityplanIntroTutorial from './SecurityplanIntroTutorial';
 import SecurityplanMain from './SecurityplanMain';
 import Settings from './Settings';
 import Welcome from './Welcome';
@@ -46,7 +48,8 @@ export enum STORAGE {
   SHOULD_DISPLAY_ONBOARDING = '@displayOnboarding',
   ASKED_FOR_CONTACT_PERMISSION = '@contactPermission',
   CONTACT_PERMISSION_STATUS_ANDROID = '@contactPermissionStatusAndroid',
-  SHOULD_DISPLAY_ASSESSMENT_INTRO = '@displayAssessmentIntro',
+  SHOULD_DISPLAY_SECURITYPLAN_INTRO = '@displayAssessmentIntro',
+  SHOULD_DISPLAY_ASSESSMENT_INTRO = '@displaySecurityplanIntro',
   ASKED_FOR_CAMERA_PERMISSION = '@cameraPermission',
   CAMERA_PERMISSION_STATUS_ANDROID = '@cameraPermissionStatusAndroid'
 }
@@ -123,6 +126,31 @@ function SettingsStackScreen() {
   );
 }
 
+const SecurityplanIntroStack = createStackNavigator();
+
+function SecurityplanIntroStackScreen() {
+  return (
+    <SecurityplanIntroStack.Navigator>
+      <SecurityplanIntroStack.Screen
+        name='SecurityplanIntroDescription'
+        component={SecurityplanIntroDescription}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+      <SecurityplanIntroStack.Screen
+        name='SecurityplanIntroTutorial'
+        component={SecurityplanIntroTutorial}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+    </SecurityplanIntroStack.Navigator>
+  );
+}
+
 const SecurityplanStack = createStackNavigator();
 
 function SecurityplanStackScreen() {
@@ -136,16 +164,14 @@ function SecurityplanStackScreen() {
           animationEnabled: false
         }}
       />
-
-      <SecurityplanStack.Screen
-        name='SecurityplanCurrent'
-        component={SecurityplanCurrent}
+      <SecurityplanIntroStack.Screen
+        name='SecurityplanIntroStackScreen'
+        component={SecurityplanIntroStackScreen}
         options={{
           headerShown: false,
           animationEnabled: false
         }}
       />
-
       <SecurityplanStack.Screen
         name='SecurityplanArchive'
         component={SecurityplanArchive}
@@ -155,6 +181,23 @@ function SecurityplanStackScreen() {
         }}
       />
     </SecurityplanStack.Navigator>
+  );
+}
+
+const SecurityplanSessionStack = createStackNavigator();
+
+function SecurityplanSessionStackScreen() {
+  return (
+    <SecurityplanSessionStack.Navigator>
+      <SecurityplanStack.Screen
+        name='SecurityplanCurrent'
+        component={SecurityplanCurrent}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+    </SecurityplanSessionStack.Navigator>
   );
 }
 
@@ -313,6 +356,7 @@ export default class App extends Component<PropsType, State> {
                   tabBarButton: [
                     'OnboardingStackScreen',
                     'SecurityplanStackScreen',
+                    'SecurityplanSessionStackScreen',
                     'AssessmentStackScreen',
                     'AssessmentSessionStackScreen'
                   ].includes(route.name)
@@ -345,11 +389,20 @@ export default class App extends Component<PropsType, State> {
                 <Tab.Screen
                   name='OnboardingStackScreen'
                   component={OnboardingStackScreen}
-                  options={{tabBarStyle: {display: 'none'}}}
+                  options={{
+                    tabBarStyle: {display: 'none'}
+                  }}
                 />
                 <Tab.Screen
                   name='SecurityplanStackScreen'
                   component={SecurityplanStackScreen}
+                />
+                <Tab.Screen
+                  name='SecurityplanSessionStackScreen'
+                  component={SecurityplanSessionStackScreen}
+                  options={{
+                    tabBarStyle: {display: 'none'}
+                  }}
                 />
                 <Tab.Screen
                   name='AssessmentStackScreen'
