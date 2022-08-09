@@ -14,6 +14,7 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import InformationItem, {Iitem} from '../components/InformationItem';
 import images from '../resources/images/images';
 import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
+import Orientation from "react-native-orientation-locker";
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -139,6 +140,14 @@ class Info extends Component<PropsType, State> {
         return this.renderMenu();
     }
   }
+
+  componentDidMount() {
+    Orientation.lockToPortrait();
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
+    });
+  }
+
 
   render() {
     let pageTitle = '';

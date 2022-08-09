@@ -19,6 +19,7 @@ import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {colors, scale, verticalScale} from '../styles/App.style';
+import Orientation from "react-native-orientation-locker";
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -45,6 +46,9 @@ class Main extends Component<PropsType, State> {
   }
 
   componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
+    });
     this.props.navigation.addListener('focus', () => {
       if (this.props.midataService.isAuthenticated()) {
         this.loadEmergencyContacts();
