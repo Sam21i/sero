@@ -13,6 +13,10 @@
     "clean-ios": "rm package-lock.json || true && rm ios/Podfile.lock  || true && rm -rf node_modules/  || true && npm i && cd ios && pod install && cd .. && npm run ios",
     "prepare": "husky install"
   },
+  "engines": {
+    "npm": ">=8.14.0",
+    "node": ">=16.16.0"
+  },
   "dependencies": {
     "@i4mi/fhir_questionnaire": "^0.0.11",
     "@i4mi/fhir_r4": "^1.1.0",
