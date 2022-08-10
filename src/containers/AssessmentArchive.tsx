@@ -87,29 +87,7 @@ class AssessmentArchive extends Component<PropsType, State> {
     return <View style={{height: scale(50)}}></View>;
   }
 
-  isQuestionnaireEmpty() {
-    let count = 0;
-    this.state.selectedPrismSession
-      ?.getQuestionnaireData()
-      .getQuestions()
-      .forEach((question) => {
-        if (question.selectedAnswers.length > 0) {
-          count = count + 1;
-        }
-      });
-    return count === 0;
-  }
-
-  renderEmptyHint() {
-    return (
-      <View style={styles.hintContainer}>
-        <Text style={styles.hintText}>Für diese Einschätzung wurden keine Folgefragen beantwortet.</Text>
-      </View>
-    );
-  }
-
   renderPrismSession() {
-    console.log(this.isQuestionnaireEmpty());
     return (
       <FlatList
         data={this.state.selectedPrismSession?.getQuestionnaireData().getQuestions()}
@@ -117,7 +95,6 @@ class AssessmentArchive extends Component<PropsType, State> {
         alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
         keyExtractor={(item) => item.id}
-        ListFooterComponent={this.isQuestionnaireEmpty() ? this.renderEmptyHint : <></>}
       />
     );
   }
@@ -278,13 +255,6 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     height: '100%'
-  },
-  hintContainer: {
-    paddingLeft: scale(40),
-    paddingRight: scale(20)
-  },
-  hintText: {
-    fontSize: scale(TextSize.small)
   }
 });
 
