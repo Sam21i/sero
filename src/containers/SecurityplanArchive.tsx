@@ -62,18 +62,18 @@ class SecurityplanArchive extends Component<PropsType, State> {
     if (!this.state.selectedSecurityplan) return <></>;
     return (
       <AppButton
-          label={this.props.t('common.delete')}
-          position='right'
-          color={colors.tumbleweed}
-          onPress={() => {
-            if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
-            this.setState({
-              selectedSecurityplan: undefined,
-              securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
-            });
-          }}
-          style={styles.deleteButton}
-        />
+        label={this.props.t('common.delete')}
+        position='right'
+        color={colors.tumbleweed}
+        onPress={() => {
+          if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
+          this.setState({
+            selectedSecurityplan: undefined,
+            securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
+          });
+        }}
+        style={styles.deleteButton}
+      />
     );
   }
 
@@ -232,9 +232,8 @@ const styles = StyleSheet.create({
     height: scale(50),
     width: scale(225),
     paddingVertical: scale(10),
-    marginVertical: 0,
-    marginBottom: 20
-  },
+    marginVertical: 20
+  }
 });
 
 function mapStateToProps(state: AppStore) {
