@@ -5,7 +5,6 @@ import {WithTranslation, withTranslation} from 'react-i18next';
 import {ActivityIndicator, ImageBackground, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-
 import AppButton from '../components/AppButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
@@ -19,6 +18,7 @@ import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {colors, scale, verticalScale} from '../styles/App.style';
+import DEFAULT_CONTACTS from '../resources/static/defaultContacts';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -60,23 +60,28 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-    this.setState({
-      emergencyContactsLoaded: this.props.userProfile.getEmergencyContacts().length > 1
-    });
-    try {
-      this.props.midataService
-        .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-        .then((contacts) => {
-          this.props.setEmergencyContacts(contacts);
-          this.setState({
-            emergencyContactsLoaded: true
-          });
-        })
-        .catch((e) => {
-          console.log('could not load related persons', e);
-        });
-    } catch (e) {
-      console.log(e);
+    if (this.props.userProfile.getEmergencyContacts().length <= DEFAULT_CONTACTS.length) {
+      try {
+        if (this.props.midataService.isAuthenticated()) {
+          this.props.midataService
+            .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+            .then((contacts) => {
+              this.props.setEmergencyContacts(contacts);
+              this.setState({
+                emergencyContactsLoaded: true
+              });
+            })
+            .catch((e) => {
+              console.log('could not load related persons', e);
+            });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      this.setState({
+        emergencyContactsLoaded: true
+      });
     }
   }
 
@@ -89,7 +94,7 @@ class Main extends Component<PropsType, State> {
         });
       }
     } catch (e) {
-      console.log(error);
+      console.log(e);
     }
   }
 
