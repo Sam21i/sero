@@ -4,8 +4,8 @@ import {NativeBaseProvider, TextArea} from 'native-base';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 import i18n from '../../i18n';
+import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
 
 interface PropsType {
   onChangeText?: (text: string, question: IQuestion) => void;
