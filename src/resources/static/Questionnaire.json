@@ -37,7 +37,7 @@
       "type": "text",
       "repeats": false,
       "required": false,
-      "text": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?",
+      "text": "Was bedeutet es für dich, dass du die schwarze Scheibe gerade dort platziert hast? Was hat damit zu tun?",
       "_text": {
         "extension": [
           {
@@ -49,7 +49,7 @@
               },
               {
                 "url": "content",
-                "valueString": "Was bedeutet es für dich, dass du die schwarze Scheibe dort platziert hast?"
+                "valueString": "Was bedeutet es für dich, dass du die schwarze Scheibe gerade dort platziert hast? Was hat damit zu tun?"
               }
             ]
           }
@@ -61,7 +61,7 @@
       "type": "group",
       "repeats": false,
       "required": false,
-      "text": "Fragen zu Gedanken",
+      "text": "Gedanken",
       "_text": {
         "extension": [
           {
@@ -73,7 +73,7 @@
               },
               {
                 "url": "content",
-                "valueString": "Fragen zu Gedanken"
+                "valueString": "Gedanken"
               }
             ]
           }
@@ -85,7 +85,7 @@
           "type": "text",
           "repeats": false,
           "required": false,
-          "text": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert habe?",
+          "text": "Was geht dir durch den Kopf, wenn du die Scheibe dort platzierst?",
           "_text": {
             "extension": [
               {
@@ -103,30 +103,6 @@
               }
             ]
           }
-        },
-        {
-          "linkId": "2.2",
-          "type": "text",
-          "repeats": false,
-          "required": false,
-          "text": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?",
-          "_text": {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                "extension": [
-                  {
-                    "url": "lang",
-                    "valueCode": "de"
-                  },
-                  {
-                    "url": "content",
-                    "valueString": "Welche Gedanken habe ich jetzt, wenn ich die Scheibe dort liegen sehe?"
-                  }
-                ]
-              }
-            ]
-          }
         }
       ]
     },
@@ -135,7 +111,7 @@
       "type": "group",
       "repeats": false,
       "required": false,
-      "text": "Fragen zur Körperwahrnehmung",
+      "text": "Körperwahrnehmung",
       "_text": {
         "extension": [
           {
@@ -147,7 +123,7 @@
               },
               {
                 "url": "content",
-                "valueString": "Fragen zur Körperwahrnehmung"
+                "valueString": "Körperwahrnehmung"
               }
             ]
           }
@@ -159,7 +135,7 @@
           "type": "text",
           "repeats": false,
           "required": false,
-          "text": "Was nehme ich jetzt gerade in meinem Körper wahr?",
+          "text": "Was nimmst du gerade im Körper wahr?",
           "_text": {
             "extension": [
               {
@@ -171,7 +147,7 @@
                   },
                   {
                     "url": "content",
-                    "valueString": "Was nehme ich jetzt gerade in meinem Körper wahr?"
+                    "valueString": "Was nimmst du gerade im Körper wahr?"
                   }
                 ]
               }
@@ -185,7 +161,7 @@
       "type": "group",
       "repeats": false,
       "required": false,
-      "text": "Fragen zu Gefühlen/Emotionen",
+      "text": "Gefühle",
       "_text": {
         "extension": [
           {
@@ -197,7 +173,7 @@
               },
               {
                 "url": "content",
-                "valueString": "Fragen zu Gefühlen/Emotionen"
+                "valueString": "Gefühle"
               }
             ]
           }
@@ -209,7 +185,7 @@
           "type": "text",
           "repeats": false,
           "required": false,
-          "text": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?",
+          "text": "Welche Gefühle spürst du, wenn du den Drang, dir das Leben zu nehmen, dort siehst?",
           "_text": {
             "extension": [
               {
@@ -221,7 +197,7 @@
                   },
                   {
                     "url": "content",
-                    "valueString": "Welche Gefühle tauchen in mir auf, wenn ich den Drang, mir das Leben zu nehmen, an diesem Platz sehe?"
+                    "valueString": "Welche Gefühle spürst du, wenn du den Drang, dir das Leben zu nehmen, dort siehst?"
                   }
                 ]
               }
@@ -235,7 +211,7 @@
       "type": "group",
       "repeats": false,
       "required": false,
-      "text": "Fragen zur Selbstreflexion",
+      "text": "Widerstandsvermögen",
       "_text": {
         "extension": [
           {
@@ -247,7 +223,7 @@
               },
               {
                 "url": "content",
-                "valueString": "Fragen zur Selbstreflexion"
+                "valueString": "Widerstandsvermögen"
               }
             ]
           }
@@ -259,7 +235,7 @@
           "type": "text",
           "repeats": false,
           "required": false,
-          "text": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?",
+          "text": "Was hält den Suizid-Drang (schwarze Scheibe) gerade von dir weg?",
           "_text": {
             "extension": [
               {
@@ -271,31 +247,7 @@
                   },
                   {
                     "url": "content",
-                    "valueString": "Gab es in den letzten 24 Stunden Momente, in denen sich die schwarze Scheibe nach aussen bewegte? Wo lag die Scheibe in dieser Zeit?"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "linkId": "5.2",
-          "type": "text",
-          "repeats": false,
-          "required": false,
-          "text": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?",
-          "_text": {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/translation",
-                "extension": [
-                  {
-                    "url": "lang",
-                    "valueCode": "de"
-                  },
-                  {
-                    "url": "content",
-                    "valueString": "Was habe ich diesem Moment gemacht, als der Drang, mir das Leben zu nehmen, weiter weg lag? Was würde mir helfen bzw. was könnte ich tun, damit ich den Drang (die schwarze Scheibe) noch weiter von mir distanzieren kann?"
+                    "valueString": "Was hält den Suizid-Drang (schwarze Scheibe) gerade von dir weg?"
                   }
                 ]
               }

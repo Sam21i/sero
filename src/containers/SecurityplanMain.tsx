@@ -126,7 +126,7 @@ class SecurityplanMain extends Component<PropsType, State> {
                   opacity: this.props.userProfile.getSecurityPlanHistory().length === 0 ? 0 : 1 // hide archive button if nothing in archive
                 }}>
                 <AppButton
-                  label={this.props.t('common.archive')}
+                  label={this.props.t('securityplan.archive')}
                   icon={images.imagesSVG.common.archive}
                   position='right'
                   color={colors.grey}
