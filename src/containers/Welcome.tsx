@@ -43,7 +43,7 @@ class Welcome extends Component<PropsType> {
                 bottom: verticalScale(50)
               }}>
               <AppButton
-                label={this.props.t('common.next')}
+                label={this.props.t('common.start')}
                 icon={images.imagesSVG.common.start}
                 position={'left'}
                 color={colors.grey}
@@ -125,11 +125,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: AppFonts.regular,
-    fontSize: scale(TextSize.big),
-    color: colors.primary
+    fontSize: scale(TextSize.small),
+    color: colors.primary,
+    paddingTop: scale(TextSize.verySmall / 2.5)
   }
 });
-
-// Link store data to component
 
 export default withTranslation()(Welcome);

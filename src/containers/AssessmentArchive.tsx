@@ -1,3 +1,4 @@
+import {IQuestion} from '@i4mi/fhir_questionnaire';
 import {Resource} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
@@ -54,13 +55,8 @@ class AssessmentArchive extends Component<PropsType, State> {
         <View style={appStyles.listItem}>
           <View style={appStyles.listItemContent}>
             <Text
-              numberOfLines={2}
-              style={appStyles.listItemTitleText}>
-              {this.props.t('assessment.former')}
-            </Text>
-            <Text
               numberOfLines={1}
-              style={appStyles.listItemSubtitleText}>
+              style={appStyles.listItemTitleText}>
               {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
           </View>
@@ -91,7 +87,29 @@ class AssessmentArchive extends Component<PropsType, State> {
     return <View style={{height: scale(50)}}></View>;
   }
 
+  isQuestionnaireEmpty() {
+    let count = 0;
+    this.state.selectedPrismSession
+      ?.getQuestionnaireData()
+      .getQuestions()
+      .forEach((question) => {
+        if (question.selectedAnswers.length > 0) {
+          count = count + 1;
+        }
+      });
+    return count === 0;
+  }
+
+  renderEmptyHint() {
+    return (
+      <View style={styles.hintContainer}>
+        <Text style={styles.hintText}>Für diese Einschätzung wurden keine Folgefragen beantwortet.</Text>
+      </View>
+    );
+  }
+
   renderPrismSession() {
+    console.log(this.isQuestionnaireEmpty());
     return (
       <FlatList
         data={this.state.selectedPrismSession?.getQuestionnaireData().getQuestions()}
@@ -99,6 +117,7 @@ class AssessmentArchive extends Component<PropsType, State> {
         alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
         keyExtractor={(item) => item.id}
+        ListFooterComponent={this.isQuestionnaireEmpty() ? this.renderEmptyHint : <></>}
       />
     );
   }
@@ -198,7 +217,7 @@ class AssessmentArchive extends Component<PropsType, State> {
                 }}
               />
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.t('common.archive')}</Text>
+                <Text style={styles.topViewTextTitle}>{this.props.t('assessment.archive')}</Text>
               </View>
             </View>
           )}
@@ -259,6 +278,13 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     height: '100%'
+  },
+  hintContainer: {
+    paddingLeft: scale(40),
+    paddingRight: scale(20)
+  },
+  hintText: {
+    fontSize: scale(TextSize.small)
   }
 });
 

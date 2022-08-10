@@ -1,158 +1,691 @@
 {
-  "assessment": {
-    "addEntry": "Aggiungi una nuova entrata",
-    "assessmentFollowUpHint": "Ora osservate la distanza tra il punto giallo (voi stessi) e il disco nero (l'impulso a togliervi la vita).",
-    "bubbleTitle": "Cosa vuoi fare?",
-    "cancelQuestion": "Vuoi davvero abortire?",
-    "defaultHint": "Come ti senti in questo momento?",
-    "followUpTitle": "Domande di follow-up",
-    "former": "Valutazione precedente",
-    "goToEmergencyContact": "Chiamare qualcuno",
-    "goToMainPage": "Andare alla pagina di sintesi",
-    "goTosecurityplan": "Consulta il piano di sicurezza",
-    "image": "Foto",
-    "newImage": "Scattare una nuova foto",
-    "permissionAndroid": {
-      "message": "L'accesso alla camera consente di scattare una foto di una valutazione e di salvarla nell'app.",
-      "title": "\"SERO\" vuole accedere alla camera"
-    },
-    "resources": {
-      "intro": {
-        "description": "Con il PRISM-S è possibile valutare quanto sia forte l'impulso a togliersi la vita.",
-        "explanation": {
-          "item1": "L'area bianca rappresenta la tua vita o il tuo spazio vitale.",
-          "item2": "Il punto giallo rappresenta lei nella tua vita.",
-          "item3": "Il disco nero rappresenta il tuo attuale desiderio di toglierti la vita."
-        },
-        "title": "Che cos'è il PRISM-S?"
-      },
-      "tutorial": {
-        "description": "Posiziona il disco nero nel tuo spazio vitale (area bianca).",
-        "distance": "Maggiore è la distanza, minore è l'impulso a togliersi la vita. Minore è la distanza, maggiore è l'impulso.",
-        "questions": {
-          "hint": "Ponetevi queste domande:",
-          "questionList": {
-            "item1": "Quale posto nella mia vita è attualmente occupato dal desiderio di togliermi la vita?",
-            "item2": "Quanto è vicino o lontano da me (punto giallo) questo impulso in questo momento?"
-          }
-        },
-        "title": "Istruzioni"
-      }
-    },
-    "selectImage": "Selezionare una foto dalla biblioteca",
-    "title": "La mia valutazione",
-    "tutorial": "Istruzioni"
-  },
-  "common": {
-    "archive": "Archivio",
-    "back": "Indietro",
-    "cancel": "Annullare",
-    "delete": "Eliminare",
-    "family": "Cognome",
-    "given": "Nome",
-    "loading": "Caricamento dei dati",
-    "next": "Avanti",
-    "no": "No",
-    "ok": "OK",
-    "options": "Opzioni",
-    "phone": "Telefono",
-    "save": "Salva",
-    "search": "Cercare",
-    "start": "Cominciare",
-    "yes": "Si"
-  },
-  "contacts": {
-    "addContact": "Aggiunga un contatto",
-    "bubbleTitle": "Cosa vuoi fare?",
-    "deleteContact": "Cancella un contatto",
-    "editContact": "Modifica di un contatto",
-    "err": {
-      "family": {
-        "invalid": "Il cognome deve essere composto da lettere.",
-        "required": "Si prega di inserire un cognome."
-      },
-      "given": {
-        "invalid": "Il nome deve essere composto da lettere.",
-        "required": "Si prega di inserire un nome."
-      },
-      "phone": {
-        "invalid": "Nessun numero di telefono fisso o mobile svizzero valido.",
-        "required": "Si prega di inserire un numero di telefono fisso o mobile."
-      }
-    },
-    "importContact": "Importare un contatto",
-    "permissionAndroid": {
-      "message": "L'accesso ai contatti consente di importare i numeri di telefono delle persone importanti nell'app SERO e di chiamarle direttamente.",
-      "title": "\"SERO\" vuole accedere ai tuoi contatti"
-    },
-    "selectContact": "Seleziona contatto",
-    "title": "I miei contatti"
-  },
-  "info": {
-    "later": "Nota: le informazioni sull'app SERO saranno incluse in una versione successiva."
-  },
-  "main": {
-    "callEmergencyBottom": "emergenza",
-    "callEmergencyTop": "Chiamare",
-    "default": "Scoprite l'applicazione SERO! Ecco qui...",
-    "greeting": "Ciao {{name}}",
-    "myEnvironmentTitle": "Chiama i miei contatti",
-    "securityplanUpdated": "Il tuo piano di sicurezza è ancora aggiornato?"
-  },
-  "onboarding": {
-    "assessment": {
-      "text": "Impari a usare uno strumento che ti aiuta a capire come stai andando al momento.",
-      "title": "La mia valutazione"
-    },
-    "contacts": {
-      "text": "Qui si chiama i contatti della tua cerchia che sono lì per te.",
-      "title": "Chiama i miei contatti"
-    },
-    "emergency": {
-      "text": "Qui si chiama direttamente il numero di emergenza 144.",
-      "title": "Chiama il contatto d'emergenza"
-    },
-    "midata": {
-      "text": "Registrati o accedi per salvare i tuoi dati. Questo vi permetterà di utilizzare tutte le funzioni dell'app SERO.\n\nI tuoi dati sono memorizzati in modo sicuro sulla piattaforma dati MIDATA e solo tu hai accesso ad essi.",
-      "title": "Registrazione con MIDATA"
-    },
-    "securityplan": {
-      "text": "Crea un piano di sicurezza personale in modo da poterlo consultare in qualsiasi momento in caso di crisi.",
-      "title": "Il mio piano di sicurezza"
-    }
-  },
-  "securityplan": {
-    "addEntry": "Aggiungi voce",
-    "alertLups": {
-      "description": "Costi: tariffa regolare fino al 10° minuto, poi CHF 3.23/minuto.",
-      "title": "Linea di consulenza LUPS"
-    },
-    "bubbleTitle": "Cosa vuoi fare?",
-    "current": "Piano di sicurezza attuale",
-    "defaultHint": "Qui puoi accedere e modificare il tuo attuale piano di sicurezza e visualizzare quelli precedenti.",
-    "editHint": "Puoi riorganizzare le sezioni trascinandole in un altro posto della lista.\nSe clicchi sulla matita, puoi modificare il loro contenuto.",
-    "editSecurityplan": "Modifica il piano di sicurezza",
-    "examples": {
-      "copingStrategies": "p. es. disegnare, fare esercizi di rilassamento, cucinare, ascoltare musica, ecc.",
-      "distractionStrategies": "p. es. incontrare gli amici, passeggiare nel bosco, andare al cinema, andare in bicicletta, ecc."
-    },
-    "former": "Piano di sicurezza precedente",
-    "newSecurityplan": "Creare un nuovo piano di sicurezza",
-    "notification": {
-      "copingStrategies": "Una strategia di risposta che ti aiuta:",
-      "distractionStrategies": "Qualcosa che possa distrarti:",
-      "motivation": "Qualcosa che ti motiva:",
-      "personalBeliefs": "Una convinzione che ti aiuta:"
-    },
-    "title": "Il mio piano di\nsicurezza"
-  },
-  "settings": {
-    "later": "Nota: le impostazioni saranno incorporate in una versione successiva.",
-    "logout": "Disconnetti",
-    "title": "Configurazioni"
-  },
-  "welcome": {
-    "greetingText": "Per fortuna sei qui!",
-    "title": "Benvenuto."
-  }
+	"assessment": {
+		"addEntry": "",
+		"archive": "",
+		"bubbleTitle": "",
+		"cancelQuestion": "",
+		"defaultHint": "",
+		"followUpTitle": "",
+		"former": "",
+		"goToEmergencyContact": "",
+		"goToMainPage": "",
+		"goTosecurityplan": "",
+		"image": "",
+		"intro": {
+			"description": "",
+			"explanation": {
+				"item1": "",
+				"item2": "",
+				"item3": ""
+			},
+			"title": ""
+		},
+		"newImage": "",
+		"permissionAndroid": {
+			"message": "",
+			"title": ""
+		},
+		"selectImage": "",
+		"title": "",
+		"tutorial": {
+			"description": "",
+			"distance": "",
+			"imageHint": "",
+			"questions": {
+				"item1": "",
+				"item2": ""
+			}
+		}
+	},
+	"common": {
+		"archive": "",
+		"back": "",
+		"cancel": "",
+		"delete": "",
+		"family": "",
+		"given": "",
+		"loading": "",
+		"next": "",
+		"no": "",
+		"ok": "",
+		"options": "",
+		"phone": "",
+		"save": "",
+		"search": "",
+		"start": "",
+		"tutorial": "",
+		"yes": ""
+	},
+	"contacts": {
+		"addContact": "",
+		"bubbleTitle": "",
+		"defaultContacts": {
+			"helpingHand": {
+				"family": "",
+				"given": ""
+			},
+			"proJuventute": {
+				"family": "",
+				"given": ""
+			}
+		},
+		"deleteContact": "",
+		"editContact": "",
+		"err": {
+			"family": {
+				"invalid": "",
+				"required": ""
+			},
+			"given": {
+				"invalid": "",
+				"required": ""
+			},
+			"phone": {
+				"invalid": "",
+				"required": ""
+			}
+		},
+		"importContact": "",
+		"permissionAndroid": {
+			"message": "",
+			"title": ""
+		},
+		"selectContact": "",
+		"title": ""
+	},
+	"information": {
+		"about": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"links": [
+												{
+													"address": "",
+													"name": ""
+												}
+											],
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "text"
+										}
+									],
+									"label": "",
+									"type": "title"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "",
+									"links": [
+										{
+											"address": "",
+											"name": ""
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"links": [
+										{
+											"address": "",
+											"name": ""
+										},
+										{
+											"address": "",
+											"name": ""
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"links": [
+										{
+											"address": "tbd",
+											"name": ""
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"links": [
+										{
+											"address": "tbd",
+											"name": ""
+										},
+										{
+											"address": "tbd",
+											"name": ""
+										},
+										{
+											"address": "tbd",
+											"name": ""
+										},
+										{
+											"address": "",
+											"name": ""
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "",
+									"links": [
+										{
+											"address": "",
+											"name": ""
+										},
+										{
+											"address": "",
+											"name": ""
+										},
+										{
+											"address": "",
+											"name": ""
+										},
+										{
+											"address": "",
+											"name": ""
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "subgroup"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "",
+					"type": "group"
+				}
+			],
+			"title": ""
+		},
+		"imprint": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "",
+									"name": ""
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "",
+							"type": "text"
+						}
+					],
+					"label": "",
+					"type": "group"
+				}
+			],
+			"title": ""
+		},
+		"legal": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "",
+											"type": "listitem"
+										},
+										{
+											"label": "",
+											"type": "listitem"
+										},
+										{
+											"label": "",
+											"type": "listitem"
+										},
+										{
+											"label": "",
+											"type": "listitem"
+										},
+										{
+											"label": "",
+											"type": "listitem"
+										}
+									],
+									"label": "",
+									"type": "text"
+								}
+							],
+							"label": "",
+							"type": "title"
+						}
+					],
+					"label": "",
+					"type": "group"
+				},
+				{
+					"label": "",
+					"type": "group"
+				},
+				{
+					"label": "",
+					"type": "group"
+				}
+			],
+			"title": ""
+		},
+		"title": ""
+	},
+	"main": {
+		"callEmergencyBottom": "",
+		"callEmergencyTop": "",
+		"default": "",
+		"greeting": "",
+		"securityplanUpdated": "",
+		"titleContacts": ""
+	},
+	"onboarding": {
+		"assessment": {
+			"text": "",
+			"title": ""
+		},
+		"contacts": {
+			"text": "",
+			"title": ""
+		},
+		"emergency": {
+			"text": "",
+			"title": ""
+		},
+		"midata": {
+			"text": "",
+			"title": ""
+		},
+		"securityplan": {
+			"text": "",
+			"title": ""
+		}
+	},
+	"securityplan": {
+		"addEntry": "",
+		"alertLups": {
+			"description": "",
+			"title": ""
+		},
+		"archive": "",
+		"bubbleTitle": "",
+		"current": "",
+		"defaultHint": "",
+		"editHint": "",
+		"editSecurityplan": "",
+		"examples": {
+			"copingStrategies": "",
+			"distractionStrategies": ""
+		},
+		"former": "",
+		"intro": {
+			"content": "",
+			"title": ""
+		},
+		"newSecurityplan": "",
+		"notification": {
+			"copingStrategies": "",
+			"distractionStrategies": "",
+			"motivation": "",
+			"personalBeliefs": ""
+		},
+		"title": "",
+		"tutorial": {
+			"content": "",
+			"title": ""
+		}
+	},
+	"settings": {
+		"later": "",
+		"logout": "",
+		"title": ""
+	},
+	"welcome": {
+		"greetingText": "",
+		"title": ""
+	}
 }
