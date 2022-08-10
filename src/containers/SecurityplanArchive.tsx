@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {Alert, ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -66,14 +66,35 @@ class SecurityplanArchive extends Component<PropsType, State> {
         position='right'
         color={colors.tumbleweed}
         onPress={() => {
-          if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
-          this.setState({
-            selectedSecurityplan: undefined,
-            securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
-          });
+          if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
         }}
         style={styles.deleteButton}
       />
+    );
+  }
+
+  deleteSelectedSecurityPlan(planToDelete: SecurityPlanModel): void {
+    Alert.alert(
+      this.props.t('securityplan.alertDelete.title'),
+      this.props.t('securityplan.alertDelete.description', {
+        date: planToDelete.getLocaleDate(this.props.i18n.language)
+      }),
+      [
+        {
+          text: this.props.t('common.cancel'),
+          style: 'cancel'
+        },
+        {
+          text: this.props.t('common.ok'),
+          onPress: () => {
+            this.props.deletePlan(planToDelete);
+            this.setState({
+              selectedSecurityplan: undefined,
+              securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
+            });
+          }
+        }
+      ]
     );
   }
 
