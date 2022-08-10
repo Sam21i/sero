@@ -10,8 +10,12 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "prettier:write": "npx prettier --write \"**/*.{js,jsx,ts,tsx,json}\" && npx prettier --write \"*.{js,jsx,ts,tsx,json}\"",
-    "clean-ios": "rm package-lock.json && rm ios/Podfile.lock && rm -rf node_modules/ && npm i --force && cd ios && pod install && cd .. && npm run ios",
+    "clean-ios": "rm package-lock.json || true && rm ios/Podfile.lock  || true && rm -rf node_modules/  || true && npm i && cd ios && pod install && cd .. && npm run ios",
     "prepare": "husky install"
+  },
+  "engines": {
+    "npm": ">=8.14.0",
+    "node": ">=16.16.0"
   },
   "dependencies": {
     "@i4mi/fhir_questionnaire": "^0.0.11",
@@ -28,8 +32,10 @@
     "intl": "^1.2.5",
     "intl-pluralrules": "^1.3.1",
     "lodash.memoize": "^4.1.2",
-    "native-base": "^3.4.8",
+    "native-base": "^3.4.11",
     "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-native-windows": "0.67.14",
     "react-i18next": "^11.18.0",
     "react-native": "^0.67.2",
     "react-native-app-auth": "^6.4.3",
