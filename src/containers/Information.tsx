@@ -3,6 +3,7 @@ import React, {Component, Fragment} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {v4 as uuidv4} from 'uuid';
@@ -14,7 +15,6 @@ import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import InformationItem, {Iitem} from '../components/InformationItem';
 import images from '../resources/images/images';
 import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
-import Orientation from "react-native-orientation-locker";
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -147,7 +147,6 @@ class Info extends Component<PropsType, State> {
       Orientation.lockToPortrait();
     });
   }
-
 
   render() {
     let pageTitle = '';

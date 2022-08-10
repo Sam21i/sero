@@ -3,6 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ActivityIndicator, ImageBackground, Platform, StatusBar, StyleSheet, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -19,7 +20,6 @@ import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {colors, scale, verticalScale} from '../styles/App.style';
-import Orientation from "react-native-orientation-locker";
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;

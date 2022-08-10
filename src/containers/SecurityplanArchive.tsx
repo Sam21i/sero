@@ -60,7 +60,8 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderListFooterComponent() {
     if (!this.state.selectedSecurityplan) return <></>;
     return (
-      <TouchableOpacity onPress={() => {
+      <TouchableOpacity
+        onPress={() => {
           if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
           this.setState({
             selectedSecurityplan: undefined,
