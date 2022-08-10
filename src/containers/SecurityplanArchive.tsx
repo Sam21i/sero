@@ -1,12 +1,13 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
+import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import SecurityPlanModuleComponent from '../components/SecurityPlanModuleComponent';
@@ -60,16 +61,19 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderListFooterComponent() {
     if (!this.state.selectedSecurityplan) return <></>;
     return (
-      <TouchableOpacity
-        onPress={() => {
-          if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
-          this.setState({
-            selectedSecurityplan: undefined,
-            securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
-          });
-        }}>
-        <Text>löschen</Text>
-      </TouchableOpacity>
+      <AppButton
+          label={this.props.t('common.delete')}
+          position='right'
+          color={colors.tumbleweed}
+          onPress={() => {
+            if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
+            this.setState({
+              selectedSecurityplan: undefined,
+              securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
+            });
+          }}
+          style={styles.deleteButton}
+        />
     );
   }
 
@@ -223,7 +227,14 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     height: '100%'
-  }
+  },
+  deleteButton: {
+    height: scale(50),
+    width: scale(225),
+    paddingVertical: scale(10),
+    marginVertical: 0,
+    marginBottom: 20
+  },
 });
 
 function mapStateToProps(state: AppStore) {
