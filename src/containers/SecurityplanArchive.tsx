@@ -1,7 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {ImageBackground, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -15,11 +15,12 @@ import SecurityPlanModel from '../model/SecurityPlan';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
 import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
-
+  deletePlan: (plan: SecurityPlanModel) => void;
   midataService: MidataService;
   userProfile: UserProfile;
 }
@@ -54,6 +55,21 @@ class SecurityplanArchive extends Component<PropsType, State> {
 
   renderListHeaderComponent() {
     return <View style={{height: scale(50)}}></View>;
+  }
+
+  renderListFooterComponent() {
+    if (!this.state.selectedSecurityplan) return <></>;
+    return (
+      <TouchableOpacity onPress={() => {
+          if (this.state.selectedSecurityplan) this.props.deletePlan(this.state.selectedSecurityplan);
+          this.setState({
+            selectedSecurityplan: undefined,
+            securityplanHistory: this.props.userProfile.getSecurityPlanHistory()
+          });
+        }}>
+        <Text>löschen</Text>
+      </TouchableOpacity>
+    );
   }
 
   renderListItem({item}) {
@@ -108,6 +124,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
         renderItem={this.renderSecurityplanItem.bind(this)}
         alwaysBounceVertical={false}
         ListHeaderComponent={this.renderListHeaderComponent}
+        ListFooterComponent={this.renderListFooterComponent.bind(this)}
       />
     );
   }
@@ -215,4 +232,10 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(withTranslation()(SecurityplanArchive));
+function mapDispatchToProps(dispatch: Function) {
+  return {
+    deletePlan: (plan: SecurityPlanModel) => userProfileActions.deleteArchivedSecurityPlan(dispatch, plan)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SecurityplanArchive));
