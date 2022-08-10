@@ -5,7 +5,6 @@ import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
 import AppButton from '../components/AppButton';
@@ -19,20 +18,22 @@ import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.st
 import {STORAGE} from './App';
 
 interface PropsType extends WithTranslation {
-  route: {params: {canGoBack: boolean}};
   navigation: StackNavigationProp<any>;
-
   userProfile: UserProfile;
   prismSession: PrismSession;
+  route: {params: {canGoBack: boolean}};
 }
 
 interface State {
   canGoBack: boolean;
 }
 
-class AssessmentIntroTutorial extends Component<PropsType, State> {
+class SecurityplanIntroTutorial extends Component<PropsType, State> {
+  scrollViewRef: any;
+  handleScroll: any;
   constructor(props: PropsType) {
     super(props);
+    this.scrollViewRef = React.createRef();
     this.state = {canGoBack: props.route.params.canGoBack};
   }
 
@@ -42,7 +43,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
         style={styles.container}
         edges={['top']}>
         <ImageBackground
-          source={images.imagesPNG.backgrounds.moodYellow}
+          source={images.imagesPNG.backgrounds.moodLightOrange}
           resizeMode='cover'
           style={styles.backgroundImage}>
           <View style={styles.topView}>
@@ -51,53 +52,38 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
               onPress={() => {
                 this.state.canGoBack
                   ? this.props.navigation.pop()
-                  : this.props.navigation.navigate('AssessmentSessionStackScreen');
+                  : this.props.navigation.navigate('SecurityplanCurrent', {isEditMode: true});
               }}
             />
             <View style={styles.pageTitleView}>
-              <Text style={styles.pageTitleText}>{this.props.t('assessment.title')}</Text>
+              <Text style={styles.pageTitleText}>{this.props.t('securityplan.title')}</Text>
             </View>
           </View>
           {
             <View style={styles.bottomView}>
-              <ScrollView>
+              <ScrollView ref={(ref) => (this.scrollViewRef = ref)}>
                 <View style={{height: verticalScale(55)}}></View>
-                <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.t('assessment.tutorial.title')}</Text>
-                  <Text style={styles.description}>{this.props.t('assessment.tutorial.description')}</Text>
-                  <Text style={styles.description}>{this.props.t('assessment.tutorial.questions.hint')}</Text>
-                  <View style={styles.listContainer}>
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item1'))}
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item2'))}
-                  </View>
-                  <SvgCss
-                    xml={images.imagesSVG.prism.distanceCenter}
-                    style={[
-                      styles.image,
-                      {
-                        shadowColor: colors.black,
-                        shadowOffset: {
-                          width: scale(5),
-                          height: scale(5)
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: scale(5)
-                      }
-                    ]}
-                  />
-                  <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
+                <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                  <Text style={styles.title}>{this.props.t('securityplan.tutorial.title')}</Text>
+                  <Text style={styles.bulletText}>{this.props.t('securityplan.tutorial.content')}</Text>
+                  <View style={{height: scale(40)}}></View>
                 </View>
                 {this.state.canGoBack && (
                   <AppButton
                     label={this.props.t('common.start')}
                     icon={images.imagesSVG.common.start}
                     position='right'
-                    color={colors.gold}
+                    color={colors.primary}
                     onPress={() => {
-                      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'false').then(() => {
+                      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_SECURITYPLAN_INTRO, 'false').then(() => {
                         this.props.navigation.reset({
                           index: 0,
-                          routes: [{name: 'AssessmentSessionStackScreen'}]
+                          routes: [
+                            {
+                              name: 'SecurityplanSessionStackScreen',
+                              params: {isEditMode: true}
+                            }
+                          ]
                         });
                       });
                     }}
@@ -144,7 +130,7 @@ const styles = StyleSheet.create({
     top: verticalScale(45)
   },
   topView: {
-    backgroundColor: colors.gold50opac,
+    backgroundColor: colors.primary50opac,
     flex: 1,
     flexDirection: 'row'
   },
@@ -226,4 +212,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentIntroTutorial));
+export default connect(mapStateToProps, undefined)(withTranslation()(SecurityplanIntroTutorial));

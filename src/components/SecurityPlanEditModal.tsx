@@ -22,11 +22,18 @@ interface SecurityPlanEditModalState {
 }
 
 class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, SecurityPlanEditModalState> {
+  flatListRef: any;
+  formikRef: React.RefObject<unknown>;
+
   constructor(props: SecurityPlanEditModalProps) {
     super(props);
+    this.formikRef = React.createRef();
+
+    const entries = this.props.module.entries.slice();
+    entries.push('');
 
     this.state = {
-      entries: this.props.module.entries.slice()
+      entries: entries
     };
   }
 
@@ -35,11 +42,15 @@ class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, Securi
     this.props.onSave(this.props.module);
   }
 
+  triggerFormSubmit = () => {
+    if (this.formikRef.current) this.formikRef.current.handleSubmit();
+  };
+
   render() {
     return (
       <Modal
         animationType='slide'
-        presentationStyle='fullScreen'>
+        presentationStyle='pageSheet'>
         <SafeAreaView
           style={styles.container}
           edges={['top']}>
@@ -48,18 +59,48 @@ class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, Securi
             resizeMode='cover'
             style={styles.backgroundImage}>
             <View style={styles.topView}>
-              <Text style={styles.topViewText}>{this.props.module.title}</Text>
+              <Text
+                style={{
+                  fontFamily: AppFonts.regular,
+                  fontSize: scale(TextSize.verySmall),
+                  color: colors.white
+                }}
+                onPress={() => {
+                  this.props.onSave(this.props.module);
+                }}>
+                Abbrechen
+              </Text>
+              <Text
+                style={{
+                  fontFamily: AppFonts.medium,
+                  fontSize: scale(TextSize.verySmall),
+                  color: colors.white
+                }}
+                onPress={() => {
+                  this.triggerFormSubmit();
+                }}>
+                Fertig
+              </Text>
             </View>
             <View style={styles.bottomView}>
               <Formik
+                innerRef={this.formikRef}
                 initialValues={{entries: this.state.entries}}
                 onSubmit={(values) => this.handleSubmit(values.entries.filter((v) => v !== ''))}>
                 {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
                   <NativeBaseProvider>
                     <View style={{flex: 7}}>
-                      <ScrollView>
+                      <ScrollView
+                        ref={(ref) => {
+                          this.flatListRef = ref;
+                        }}
+                        onContentSizeChange={() => {
+                          this.flatListRef.scrollToEnd();
+                        }}>
                         <View style={styles.descriptionView}>
-                          <Text style={styles.descriptionViewText}>{this.props.module.description}</Text>
+                          <Text style={styles.descriptionViewTitleText}>{this.props.module.title}</Text>
+
+                          <Text style={styles.descriptionViewDescr}>{this.props.module.description}</Text>
                         </View>
                         {this.props.module.type === SECURITY_PLAN_MODULE_TYPE.COPING_STRATEGIES && (
                           <View style={styles.exampleView}>
@@ -90,7 +131,10 @@ class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, Securi
                               size={'lg'}
                               width={'80%'}
                               onBlur={handleBlur(`entries[${index}]`)}
-                              _focus={{borderColor: colors.primary, backgroundColor: colors.white}}
+                              _focus={{
+                                borderColor: colors.primary,
+                                backgroundColor: colors.white
+                              }}
                               style={{backgroundColor: colors.white}}
                             />
                             <TouchableOpacity
@@ -118,35 +162,37 @@ class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, Securi
                             </TouchableOpacity>
                           </View>
                         ))}
-                        <AppButton
-                          icon={images.imagesSVG.common.plus}
-                          onPress={() => setFieldValue('entries', [...values.entries, ''])}
-                          label={this.props.t('securityplan.addEntry')}
-                          position='left'
-                          color={colors.grey}
-                          style={styles.addButton}
-                        />
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              padding: 10,
+                              justifyContent: 'flex-end',
+                              alignItems: 'flex-end'
+                            }}>
+                            <TouchableOpacity
+                              activeOpacity={activeOpacity}
+                              style={{
+                                borderWidth: 1,
+                                borderColor: colors.veryLightGrey,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                width: scale(40),
+                                height: scale(40),
+                                backgroundColor: colors.white,
+                                borderRadius: scale(5)
+                              }}
+                              onPress={() => setFieldValue('entries', [...values.entries, ''])}>
+                              <SvgCss
+                                xml={images.imagesSVG.securityplan.add}
+                                style={styles.icon}
+                                width={scale(20)}
+                                height={scale(20)}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
                       </ScrollView>
-                    </View>
-                    <View style={{flex: 3, borderTopColor: colors.linen, borderTopWidth: 10}}>
-                      <AppButton
-                        label={this.props.t('common.ok')}
-                        icon={images.imagesSVG.common.ok}
-                        position='right'
-                        color={colors.tumbleweed}
-                        onPress={handleSubmit}
-                        style={styles.backButton}
-                      />
-                      <AppButton
-                        label={this.props.t('common.cancel')}
-                        icon={images.imagesSVG.common.cancel}
-                        position='right'
-                        color={colors.tumbleweed}
-                        onPress={() => {
-                          this.props.onSave(this.props.module);
-                        }}
-                        style={styles.backButton}
-                      />
                     </View>
                   </NativeBaseProvider>
                 )}
@@ -162,39 +208,48 @@ class SecurityPlanEditModal extends Component<SecurityPlanEditModalProps, Securi
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.primary50opac,
-    flex: 1.5,
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingHorizontal: scale(10)
   },
   topViewText: {
     color: colors.white,
     fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.big)
+    fontSize: scale(TextSize.small)
   },
   descriptionView: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingHorizontal: scale(20),
-    paddingVertical: scale(10)
+    paddingHorizontal: scale(20)
+  },
+  descriptionViewTitleText: {
+    color: colors.black,
+    fontFamily: AppFonts.bold,
+    fontSize: scale(TextSize.big),
+    paddingVertical: scale(20)
+  },
+  descriptionViewDescr: {
+    color: colors.black,
+    fontFamily: AppFonts.medium,
+    fontSize: scale(TextSize.small),
+    paddingBottom: scale(20)
   },
   exampleView: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: scale(20),
-    paddingVertical: scale(10)
-  },
-  descriptionViewText: {
-    color: colors.black,
-    fontFamily: AppFonts.medium,
-    fontSize: scale(TextSize.small)
+    paddingBottom: scale(20)
   },
   exampleViewText: {
     color: colors.black,
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.verySmall)
   },
+
   bottomView: {
-    flex: 10,
+    flex: 12,
     backgroundColor: colors.linen
   },
   container: {

@@ -192,7 +192,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     return (
       <View style={styles.listHeader}>
         {this.state.isEditMode ? (
-          <Text style={styles.editHint}>{this.props.t('securityplan.editHint')}</Text>
+          <View style={{height: scale(55)}}></View>
         ) : (
           <AppButton
             label={this.props.t('common.options')}
@@ -210,39 +210,26 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   renderListFooter() {
-    const buttons = new Array<{label: string; icon: string; onPress: () => void}>();
-    const saveButton = {
-      label: 'common.save',
-      icon: images.imagesSVG.common.save,
-      onPress: this.save.bind(this)
-    };
-    const cancelButton = {
-      label: 'common.cancel',
-      icon: images.imagesSVG.common.cancel,
-      onPress: this.reset.bind(this)
-    };
-
-    if (this.state.isEditMode) {
-      buttons.push(saveButton);
-      if (!this.state.isFirstPlan) {
-        buttons.push(cancelButton);
-      }
-    }
-
     return (
-      <View style={{flexDirection: 'column'}}>
-        {buttons.map((button, index) => (
-          <View key={index}>
-            <AppButton
-              label={this.props.t(button.label)}
-              position='right'
-              icon={button.icon}
-              color={colors.tumbleweed}
-              onPress={button.onPress}
-              style={styles.backButton}
-            />
-          </View>
-        ))}
+      <View>
+        <AppButton
+          label={this.props.t('common.tutorial')}
+          position='right'
+          icon={images.imagesSVG.securityplan.info}
+          color={colors.tumbleweed}
+          onPress={() => {
+            this.props.navigation.navigate('SecurityplanStackScreen', {
+              screen: 'SecurityplanIntroStackScreen',
+              params: {
+                screen: 'SecurityplanIntroTutorial',
+                params: {
+                  canGoBack: false
+                }
+              }
+            });
+          }}
+          style={styles.tutorialButton}
+        />
       </View>
     );
   }
@@ -262,10 +249,16 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               onPress={() => {
                 if (this.state.bubbleVisible) {
                   this.setState({bubbleVisible: false});
-                } else if (this.state.isEditMode || this.state.isReplaceMode) {
-                  this.reset();
+                } else if (this.state.isFirstPlan || this.state.isReplaceMode) {
+                  const currPlan = JSON.stringify(this.state.currentSecurityplan.getSecurityPlanModules());
+                  const newPlan = JSON.stringify(this.state.modules);
+                  currPlan !== newPlan ? this.save() : this.reset();
+                } else if (this.state.isEditMode) {
+                  this.save();
                 } else {
-                  this.props.navigation.pop();
+                  this.props.navigation.navigate('SecurityplanStackScreen', {
+                    screen: 'SecurityplanMain'
+                  });
                 }
               }}
             />
@@ -350,18 +343,13 @@ const styles = StyleSheet.create({
   listHeader: {
     marginTop: scale(20)
   },
-  editHint: {
-    marginHorizontal: scale(20),
-    marginTop: scale(50),
-    marginBottom: scale(30)
-  },
   optionsButton: {
     height: scale(50),
     width: scale(200),
     paddingVertical: scale(10),
     marginBottom: scale(40)
   },
-  backButton: {
+  tutorialButton: {
     height: scale(50),
     width: scale(225),
     paddingVertical: scale(10),

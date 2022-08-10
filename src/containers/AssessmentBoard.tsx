@@ -223,7 +223,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                         params: {
                           screen: 'AssessmentIntroTutorial',
                           params: {
-                            test: false
+                            canGoBack: false
                           }
                         }
                       });

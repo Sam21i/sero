@@ -101,9 +101,6 @@ class Banner extends Component<PropsType> {
     if (this.props.type === BANNER_TYPE.securityplan) {
       return (
         <View style={styles.view}>
-          <Text style={[styles.title, {color: this.props.titleColor}]}>
-            {userName ? this.props.t('main.greeting', {name: userName}) : ' '}
-          </Text>
           <Text style={styles.text}>{this.props.t('securityplan.defaultHint')}</Text>
         </View>
       );
