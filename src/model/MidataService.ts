@@ -183,7 +183,8 @@ export default class MidataService {
             '&code=' +
             PRISM_OBSERVATION_CODE.system +
             '|' +
-            PRISM_OBSERVATION_CODE.code
+            PRISM_OBSERVATION_CODE.code +
+            '&status:not=entered-in-error'
         )
           .then((res) => {
             const bundle = res as Bundle;

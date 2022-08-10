@@ -4,6 +4,7 @@ import {CheckIcon, NativeBaseProvider, Select, Switch} from 'native-base';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {Button, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -16,7 +17,6 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
-import Orientation from "react-native-orientation-locker";
 
 interface State {
   currentLang: string;

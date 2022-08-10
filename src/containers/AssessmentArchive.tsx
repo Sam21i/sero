@@ -1,13 +1,14 @@
-import {Resource} from '@i4mi/fhir_r4';
+import {Reference} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
-import {FlatList, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {Alert, FlatList, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
 
+import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import Question from '../components/Question';
@@ -16,14 +17,14 @@ import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
+import * as userProfileActions from '../store/userProfile/actions';
 import {activeOpacity, AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   midataService: MidataService;
   userProfile: UserProfile;
-  addResource: (r: Resource) => void;
-  synchronizeResource: (r: Resource) => void;
+  deleteSession: (session: PrismSession, reference: Reference) => void;
 }
 
 interface State {
@@ -96,6 +97,7 @@ class AssessmentArchive extends Component<PropsType, State> {
       <FlatList
         data={this.state.selectedPrismSession?.getQuestionnaireData().getQuestions()}
         ListHeaderComponent={this.renderPrismSessionHeader.bind(this)}
+        ListFooterComponent={this.renderPrismSessionFooter.bind(this)}
         alwaysBounceVertical={false}
         renderItem={this.renderPrismSessionItem.bind(this)}
         keyExtractor={(item) => item.id}
@@ -160,6 +162,47 @@ class AssessmentArchive extends Component<PropsType, State> {
           />
         )}
       </View>
+    );
+  }
+
+  renderPrismSessionFooter() {
+    return (
+      <AppButton
+        label={this.props.t('common.delete')}
+        position='right'
+        color={colors.tumbleweed}
+        onPress={() => {
+          if (this.state.selectedPrismSession) this.deletePrismSession(this.state.selectedPrismSession);
+        }}
+        style={styles.deleteButton}
+      />
+    );
+  }
+
+  deletePrismSession(sessionToDelete: PrismSession): void {
+    Alert.alert(
+      this.props.t('assessment.alertDelete.title'),
+      this.props.t('assessment.alertDelete.description', {
+        date: sessionToDelete.getLocaleDate(this.props.i18n.language)
+      }),
+      [
+        {
+          text: this.props.t('common.cancel'),
+          style: 'cancel'
+        },
+        {
+          text: this.props.t('common.ok'),
+          onPress: () => {
+            const userReference = this.props.userProfile.getFhirReference();
+            if (!userReference) return;
+            this.props.deleteSession(sessionToDelete, userReference);
+            this.setState({
+              selectedPrismSession: undefined,
+              prismSessionHistory: this.props.userProfile.getPrismSessions()
+            });
+          }
+        }
+      ]
     );
   }
 
@@ -259,6 +302,12 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     height: '100%'
+  },
+  deleteButton: {
+    height: scale(50),
+    width: scale(225),
+    paddingVertical: scale(10),
+    marginVertical: 20
   }
 });
 
@@ -269,4 +318,11 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentArchive));
+function mapDispatchToProps(dispatch: Function) {
+  return {
+    deleteSession: (session: PrismSession, reference: Reference) =>
+      userProfileActions.deletePrismSession(dispatch, session, reference)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AssessmentArchive));

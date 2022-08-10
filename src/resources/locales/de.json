@@ -1,6 +1,10 @@
 {
   "assessment": {
     "addEntry": "Neuen Eintrag hinzufügen",
+    "alertDelete": {
+      "description": "Möchtest du die Einschätzung vom {{date}} wirklich löschen?",
+      "title": "Löschen"
+    },
     "assessmentFollowUpHint": "Sieh dir nun die Distanz zwischen dem gelben Punkt (Dir selbst) und der schwarzen Scheibe (dem Drang sich das Leben zu nehmen) an.",
     "bubbleTitle": "Was möchtest du tun?",
     "cancelQuestion": "Willst du wirklich abbrechen?",

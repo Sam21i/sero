@@ -249,6 +249,16 @@ export default class UserProfile {
   }
 
   /**
+   * Deletes a prism session from the archive.
+   * DO NOT USE OUTSIDE THE REDUCER
+   */
+  removePrismSession(session: PrismSession): void {
+    const index = this.prismSessions.findIndex((historySession) => historySession.isEqual(session));
+    if (index === -1) return;
+    this.prismSessions.splice(index, 1);
+  }
+
+  /**
    * Gets the previous prism sessions the user has done.
    * @returns An array of PrismSession objects.
    */

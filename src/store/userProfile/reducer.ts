@@ -9,6 +9,7 @@ import {
   ADD_PRISM_SESSION,
   ADD_SECURITY_PLAN,
   ADD_TO_USER_PROFILE,
+  DELETE_PRISM_SESSION,
   LOGOUT_AUTHENTICATE_USER,
   REPLACE_SECURITY_PLAN,
   RESOURCE_SENT,
@@ -114,6 +115,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
     } else {
       return state;
     }
+  },
+  [DELETE_PRISM_SESSION](state: UserProfile, action: {data: PrismSession}) {
+    const newState = new UserProfile(state);
+    newState.removePrismSession(action.data);
+    return newState;
   }
 });
 
