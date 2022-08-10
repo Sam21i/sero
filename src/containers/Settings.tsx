@@ -16,6 +16,7 @@ import * as miDataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
+import Orientation from "react-native-orientation-locker";
 
 interface State {
   currentLang: string;
@@ -48,6 +49,12 @@ class Settings extends Component<PropsType, State> {
     this.setState({currentLang: lang}, () => {
       AsyncStorage.setItem(STORAGE.LANGUAGE, lang);
       this.props.i18n.changeLanguage(lang);
+    });
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
     });
   }
 
