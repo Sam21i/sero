@@ -93,7 +93,7 @@ class AssessmentMain extends Component<PropsType, State> {
                   opacity: this.props.userProfile.getPrismSessions().length === 0 ? 0 : 1 // hide archive button if nothing in archive
                 }}>
                 <AppButton
-                  label={this.props.t('common.archive')}
+                  label={this.props.t('assessment.archive')}
                   icon={images.imagesSVG.common.archive}
                   position='right'
                   color={colors.grey}

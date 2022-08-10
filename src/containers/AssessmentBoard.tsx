@@ -213,7 +213,11 @@ class AssessmentBoard extends Component<PropsType, State> {
                       this.props.navigation.navigate('AssessmentImage');
                     }}
                     style={styles.button}>
-                    <Text style={styles.buttonText}>{this.props.t('assessment.image')}</Text>
+                    <Text
+                      numberOfLines={1}
+                      style={styles.buttonText}>
+                      {this.props.t('assessment.image')}
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={activeOpacity}
@@ -229,7 +233,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       });
                     }}
                     style={styles.button}>
-                    <Text style={styles.buttonText}>{this.props.t('assessment.tutorial.title')}</Text>
+                    <Text style={styles.buttonText}>{this.props.t('common.tutorial')}</Text>
                   </TouchableOpacity>
                   <View style={[{opacity: this.state.isValid ? 1 : 0.5}]}>
                     <TouchableOpacity

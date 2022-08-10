@@ -107,9 +107,6 @@ class Banner extends Component<PropsType> {
     } else if (this.props.type === BANNER_TYPE.assessment) {
       return (
         <View style={styles.view}>
-          <Text style={[styles.title, {color: this.props.titleColor}]}>
-            {userName ? this.props.t('main.greeting', {name: userName}) : ' '}
-          </Text>
           <Text style={styles.text}>{this.props.t('assessment.defaultHint')}</Text>
         </View>
       );

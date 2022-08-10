@@ -108,13 +108,8 @@ class SecurityplanArchive extends Component<PropsType, State> {
         <View style={appStyles.listItem}>
           <View style={appStyles.listItemContent}>
             <Text
-              numberOfLines={2}
-              style={appStyles.listItemTitleText}>
-              {this.props.t('securityplan.former')}
-            </Text>
-            <Text
               numberOfLines={1}
-              style={appStyles.listItemSubtitleText}>
+              style={appStyles.listItemTitleText}>
               {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
           </View>
@@ -192,7 +187,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
                 }}
               />
               <View style={styles.topTextView}>
-                <Text style={styles.topViewTextTitle}>{this.props.t('common.archive')}</Text>
+                <Text style={styles.topViewTextTitle}>{this.props.t('securityplan.archive')}</Text>
               </View>
             </View>
           )}

@@ -63,12 +63,11 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.t('assessment.tutorial.title')}</Text>
+                  <Text style={styles.title}>{this.props.t('common.tutorial')}</Text>
                   <Text style={styles.description}>{this.props.t('assessment.tutorial.description')}</Text>
-                  <Text style={styles.description}>{this.props.t('assessment.tutorial.questions.hint')}</Text>
                   <View style={styles.listContainer}>
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item1'))}
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.questionList.item2'))}
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item1'))}
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item2'))}
                   </View>
                   <SvgCss
                     xml={images.imagesSVG.prism.distanceCenter}
@@ -86,6 +85,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
                     ]}
                   />
                   <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
+                  <Text style={styles.imageHint}>{this.props.t('assessment.tutorial.imageHint')}</Text>
                 </View>
                 {this.state.canGoBack && (
                   <AppButton
@@ -181,6 +181,11 @@ const styles = StyleSheet.create({
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.small),
     paddingTop: scale(20),
+    paddingBottom: scale(20)
+  },
+  imageHint: {
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.small),
     paddingBottom: scale(40)
   },
   image: {
