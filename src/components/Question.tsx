@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import i18n from '../../i18n';
 
 interface PropsType {
   onChangeText?: (text: string, question: IQuestion) => void;
@@ -39,7 +40,7 @@ export default class Question extends Component<PropsType, State> {
     return (
       <View key={this.props.question.id}>
         <View style={styles.viewGroup}>
-          <Text style={styles.questionGroupText}>{this.props.question.label.de}</Text>
+          <Text style={styles.questionGroupText}>{this.props.question.label[i18n.language]}</Text>
         </View>
         {this.props.question.subItems &&
           this.props.question.subItems.map((si: IQuestion, i: number) => (
@@ -73,7 +74,7 @@ export default class Question extends Component<PropsType, State> {
           return (
             <NativeBaseProvider key={this.props.question.id}>
               <View style={{paddingVertical: scale(5)}}>
-                <Text style={styles.questionText}>{this.props.question.label.de}</Text>
+                <Text style={styles.questionText}>{this.props.question.label[i18n.language]}</Text>
                 <TextArea
                   marginTop={1}
                   isReadOnly={this.props.isArchiveMode}
