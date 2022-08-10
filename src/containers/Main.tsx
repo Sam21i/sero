@@ -5,6 +5,7 @@ import {WithTranslation, withTranslation} from 'react-i18next';
 import {ActivityIndicator, ImageBackground, Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
+
 import AppButton from '../components/AppButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
 import EmergencyContactContainer from '../components/EmergencyContactContainer';
@@ -14,11 +15,11 @@ import MidataService from '../model/MidataService';
 import {PrismResources} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import DEFAULT_CONTACTS from '../resources/static/defaultContacts';
 import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
 import {colors, scale, verticalScale} from '../styles/App.style';
-import DEFAULT_CONTACTS from '../resources/static/defaultContacts';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
