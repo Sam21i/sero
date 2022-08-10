@@ -64,7 +64,7 @@ class SecurityplanIntroTutorial extends Component<PropsType, State> {
               <ScrollView ref={(ref) => (this.scrollViewRef = ref)}>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-                  <Text style={styles.title}>{this.props.t('securityplan.tutorial.title')}</Text>
+                  <Text style={styles.title}>{this.props.t('common.tutorial')}</Text>
                   <Text style={styles.bulletText}>{this.props.t('securityplan.tutorial.content')}</Text>
                   <View style={{height: scale(40)}}></View>
                 </View>

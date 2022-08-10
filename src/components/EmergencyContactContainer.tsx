@@ -42,7 +42,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
     return (
       <View style={styles.container}>
         <View style={styles.titleView}>
-          <Text style={styles.title}>{this.props.t('main.myEnvironmentTitle')}</Text>
+          <Text style={styles.title}>{this.props.t('main.titleContacts')}</Text>
           <View style={[styles.optionsButton, {height: this.avatarSize}]}>
             <TouchableOpacity
               activeOpacity={activeOpacity}
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 5,
-    textAlign: 'center',
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    color: colors.white
+    color: colors.white,
+    paddingLeft: scale(10)
   },
   optionsButton: {
     flex: 1,

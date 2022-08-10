@@ -193,16 +193,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
             source={{uri: 'data:' + base64Image.contentType + ';base64,' + base64Image.data}}
           />
         )}
-
-        <Text
-          style={{
-            paddingBottom: scale(10),
-            color: colors.black,
-            fontFamily: AppFonts.medium,
-            fontSize: scale(TextSize.small)
-          }}>
-          {this.props.t('assessment.assessmentFollowUpHint')}
-        </Text>
       </View>
     );
   }
@@ -270,6 +260,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
                     <Question
                       question={listElement.item}
                       onChangeText={this.onChangeText.bind(this)}
+                      isArchiveMode={false}
                     />
                   </View>
                 )}
