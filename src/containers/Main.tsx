@@ -61,7 +61,10 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-    if (this.props.userProfile.getEmergencyContacts().length <= DEFAULT_CONTACTS.length) {
+    if (
+      this.props.userProfile.getEmergencyContacts().length <= DEFAULT_CONTACTS.length &&
+      !this.props.userProfile.hasOnlyDeletedContacts()
+    ) {
       try {
         if (this.props.midataService.isAuthenticated()) {
           this.props.midataService
