@@ -88,6 +88,15 @@ export default class UserProfile {
     return allContacts;
   }
 
+  hasOnlyDeletedContacts(): boolean {
+    if (this.emergencyContacts.length === 0) return false;
+    let hasActiveContact = false;
+    this.emergencyContacts.forEach((contact) => {
+      if (contact.fhirResource.active) hasActiveContact = true;
+    });
+    return !hasActiveContact;
+  }
+
   getGender(): PatientAdministrativeGender | undefined {
     if (this.patientResource.id === '') return undefined;
     return this.patientResource.gender;
@@ -198,6 +207,16 @@ export default class UserProfile {
   }
 
   /**
+   * Deletes a security plan from the archive.
+   * DO NOT USE OUTSIDE THE REDUCER
+   */
+  removeSecurityPlanFromArchive(plan: SecurityPlanModel): void {
+    const index = this.securityPlanHistory.findIndex((historyPlan) => historyPlan.hasEqualFhirId(plan.fhirResource));
+    if (index === -1) return;
+    this.securityPlanHistory.splice(index, 1);
+  }
+
+  /**
    * Gets the current Security Plan
    * @returns A representation of the current security plan,
    *          that is thought for read access only.
@@ -218,13 +237,15 @@ export default class UserProfile {
   }
 
   /**
-   * Returns the history of security plans.
+   * Returns the history of security plans, without plans with status "entered in error"
    * @returns The history of SecurityPlans as an array.
    */
   getSecurityPlanHistory(): SecurityPlanModel[] {
-    return this.securityPlanHistory.sort(
-      (a, b) => new Date(b.fhirResource.created || 0).valueOf() - new Date(a.fhirResource.created || 0).valueOf()
-    );
+    return this.securityPlanHistory
+      .filter((plan) => plan.fhirResource.status !== CarePlanStatus.ENTERED_IN_ERROR)
+      .sort(
+        (a, b) => new Date(b.fhirResource.created || 0).valueOf() - new Date(a.fhirResource.created || 0).valueOf()
+      );
   }
 
   /**

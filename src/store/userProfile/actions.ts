@@ -1,5 +1,6 @@
 import {
   CarePlan,
+  CarePlanStatus,
   Media,
   MediaStatus,
   Observation,
@@ -8,7 +9,6 @@ import {
   QuestionnaireResponseStatus,
   Reference
 } from '@i4mi/fhir_r4';
-import {$CombinedState} from 'redux';
 
 import EmergencyContact from '../../model/EmergencyContact';
 import PrismSession, {PrismResources} from '../../model/PrismSession';
@@ -16,6 +16,7 @@ import SecurityPlanModel from '../../model/SecurityPlan';
 import {
   ADD_PRISM_SESSION,
   ADD_SECURITY_PLAN,
+  DELETE_ARCHIVED_SECURITY_PLAN,
   DELETE_PRISM_SESSION,
   REMOVE_EMERGENCY_CONTACT,
   REPLACE_SECURITY_PLAN,
@@ -47,6 +48,12 @@ export function setSecurityPlan(dispatch, plan: CarePlan) {
 export function deleteSecurityPlan(dispatch, plan: SecurityPlanModel, userReference: Reference) {
   plan.setStatusToArchived();
   synchronizeResource(dispatch, plan.getFhirResource(userReference));
+}
+
+export function deleteArchivedSecurityPlan(dispatch, planToDelete: SecurityPlanModel) {
+  planToDelete.fhirResource.status = CarePlanStatus.ENTERED_IN_ERROR;
+  dispatch(new Action(DELETE_ARCHIVED_SECURITY_PLAN, planToDelete).getObjectAction());
+  synchronizeResource(dispatch, planToDelete.fhirResource);
 }
 
 export function replaceSecurityPlan(
