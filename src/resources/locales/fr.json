@@ -607,10 +607,436 @@
           "type": "group"
         },
         {
-          "label": "Déclaration de confidentialité",
+          "item": [
+            {
+              "label": "À propos de l'éditeur",
+              "type": "title"
+            },
+            {
+              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide. L'application \"SERO\" vous aide à documenter votre tendance suicidaire actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.",
+              "type": "text"
+            },
+            {
+              "label": "La protection des données revêt une importance particulière pour la psychiatrie lucernoise et est également assurée dans le cadre de l'application \"SERO\".",
+              "type": "text"
+            },
+            {
+              "label": "La loi sur la protection des données personnelles (Datenschutzgesetz, KDSG) du canton de Lucerne s'applique au traitement de vos données personnelles dans le cadre de l'application \"SERO\".",
+              "type": "text"
+            },
+            {
+              "label": "En acceptant les conditions d'utilisation de l'application \"SERO\", vous acceptez également la présente déclaration de confidentialité.",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
+                  "type": "text"
+                }
+              ],
+              "label": "Contact",
+              "type": "title"
+            },
+            {
+              "item": [
+                {
+                  "label": "Pour le stockage et la gestion sécurisés des données des utilisateurs, LUPS a fait appel à la coopérative <goTo0>{{address0}}</goTo0>, dont le siège est à Zurich. Toutes les données sont stockées en Suisse dans des comptes de données personnels cryptés. Pour l'utilisation des comptes de données, les <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> de la plate-forme MIDATA sont applicables.",
+                  "links": [
+                    {
+                      "address": "https://www.midata.coop/fr/accueil/",
+                      "name": "MIDATA"
+                    },
+                    {
+                      "address": "",
+                      "name": "Conditions générales"
+                    },
+                    {
+                      "address": "https://ch.midata.coop/#/public/terms?which=midata-privacy-policy",
+                      "name": "Déclaration de protection des données"
+                    }
+                  ],
+                  "type": "text"
+                },
+                {
+                  "label": "En vous inscrivant à MIDATA, vous devenez propriétaire ou détenteur d'un compte de données chez MIDATA. Toutes les données sont cryptées et restent sous votre contrôle, ce qui signifie que vous pouvez disposer individuellement de vos données personnelles enregistrées sur la plate-forme MIDATA dans votre compte et les partager en tout ou en partie avec d'autres utilisateurs, avec MIDATA ou des tiers.",
+                  "type": "text"
+                }
+              ],
+              "label": "Stockage des données",
+              "type": "title"
+            },
+            {
+              "item": [
+                {
+                  "item": [
+                    {
+                      "label": "Nom",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Prénom",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Adresse e-mail",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Sexe",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Date de naissance",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Pays de résidence",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "Lors de l'inscription à MIDATA, les informations suivantes doivent être fournies dans le cadre de la procédure d'enregistrement :",
+                  "type": "text"
+                },
+                {
+                  "label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+                  "type": "text"
+                },
+                {
+                  "label": "Lors de l'utilisation des fonctions de l'application, des données à caractère personnel sont enregistrées. Ces données sont stockées dans des comptes de données personnelles cryptées, voir ci-dessous.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Saisie de vos propres numéros d'urgence ou importation de vos propres numéros d'urgence et ajout de photos de profil personnalisées aux numéros d'urgence.",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Saisie des réponses aux questions de la fonction PRISM-S, création et enregistrement d'enregistrements PRISM-S",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Saisie et traitement des données pour le plan de sécurité",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "L'application permet de saisir et d'enregistrer les données suivantes :",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Vous seul(e) avez accès aux données en tant que propriétaire des données. Les autorisations accordées à des tiers (y compris MIDATA) doivent être transparentes et explicitement approuvées par vous. Les autorisations correspondantes sont consignées dans un protocole.",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Accès aux données en général",
+                  "type": "title"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "En utilisant l'application, vous acceptez que les données que vous avez saisies soient évaluées scientifiquement sous forme anonyme dans le cadre du projet, dans le but de mieux comprendre la situation des personnes suicidaires, d'améliorer l'offre dans le cadre du projet \"SERO\", ainsi que d'améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Les données anonymes analysées ne permettent pas de tirer des conclusions sur votre personne.",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Consentement à la transmission de données sous forme anonymisée",
+                  "type": "title"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Si vous avez choisi de partager des données saisies, telles que l'auto-évaluation PRISM-S ou le plan de sécurité, avec des tiers, ces informations seront mises à la disposition des personnes que vous avez choisies.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "St. Urban, avril 2022",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Partage de données avec des tiers",
+                  "type": "title"
+                }
+              ],
+              "label": "Saisie des données",
+              "type": "title"
+            }
+          ],
+          "label": "Déclaration de protection des données",
           "type": "group"
         },
         {
+          "item": [
+            {
+              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Fonction \"Mon évaluation\".\nVous pouvez réfléchir à votre tendance suicidaire à l'aide de la méthodologie PRISM-S. Par ailleurs, l'auto-évaluation peut servir de base à un éventuel accompagnement par des professionnels.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Fonction \"Mon plan de sécurité\".\nVous pouvez créer un plan de sécurité avec des informations pertinentes pour mieux gérer les situations de crise.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Fonction \"Informations\".\nL'application fournit des informations sur le thème de la prévention du suicide et des liens complémentaires.",
+                  "type": "listitem"
+                }
+              ],
+              "label": "L'application \"SERO\" vous aide à documenter votre suicidalité actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.\n\nElle possède les fonctions suivantes :",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "Pour l'utilisation de l'application, après une inscription sur la plateforme MIDATA, les données personnelles sont stockées dans des comptes de données personnelles cryptées sur la plateforme MIDATA, voir ci-dessous.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Nom",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Prénom",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Adresse électronique",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Sexe",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Date de naissance",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Pays de résidence",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "Lors de l'inscription sur la plateforme MIDATA pour l'utilisation de l'application, les informations nécessaires suivantes doivent être fournies dans le cadre du processus d'enregistrement :",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "item": [
+                        {
+                          "label": "Saisie de vos propres numéros d'urgence ou importation de vos propres numéros d'urgence et ajout de photos de profil personnalisées aux numéros d'urgence.",
+                          "type": "listitem"
+                        },
+                        {
+                          "label": "Saisie des réponses aux questions de la fonction PRISM-S, création et enregistrement d'enregistrements PRISM-S",
+                          "type": "listitem"
+                        },
+                        {
+                          "label": "Saisie et traitement des données pour le plan de sécurité",
+                          "type": "listitem"
+                        }
+                      ],
+                      "label": "L'application permet de saisir et d'enregistrer les données suivantes :",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Vous pouvez également connecter votre compte de données MIDATA existant.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Des données anonymes sur le comportement des utilisateurs sont utilisées pour analyser et optimiser l'application. L'analyse est effectuée à l'aide du logiciel Matomo en masquant partiellement les adresses IP, de sorte qu'il n'est pas possible de tirer des conclusions sur des personnes individuelles.",
+                      "type": "text"
+                    },
+                    {
+                      "item": [
+                        {
+                          "label": "En utilisant l'application, vous acceptez que les données que vous avez saisies soient évaluées scientifiquement sous forme anonyme dans le cadre du projet, dans le but de mieux comprendre la situation des personnes suicidaires, d'améliorer l'offre dans le cadre du projet \"SERO\", ainsi que d'améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+                          "type": "text"
+                        },
+                        {
+                          "label": "Les données anonymes analysées ne permettent pas de tirer des conclusions sur votre personne.",
+                          "type": "text"
+                        },
+                        {
+                          "item": [
+                            {
+                              "label": "L'application \"SERO\" a pour but de soutenir l'autogestion pendant et entre les crises suicidaires. Elle ne remplace en aucun cas un diagnostic médical ou une thérapie. Si vous avez besoin d'aide, nous vous prions d'appeler immédiatement la main tendue 143 ou l'un des numéros d'urgence prédéfinis dans l'application.",
+                              "type": "text"
+                            },
+                            {
+                              "label": "La transmission des données sous forme anonymisée n'entraîne aucun avantage personnel direct. Les données anonymisées transmises contribuent à mieux comprendre la situation des personnes suicidaires, à améliorer l'offre dans le cadre du projet \"SERO\", ainsi qu'à améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+                              "type": "text"
+                            },
+                            {
+                              "item": [
+                                {
+                                  "label": "Vous avez à tout moment la possibilité de mettre fin au partage anonymisé des données collectées avec l'application sur le <goTo0>{{address0}}</goTo0>. Vous pouvez à tout moment exporter vos données et supprimer votre compte MIDATA et donc toutes les données qui y sont enregistrées.",
+                                  "links": [
+                                    {
+                                      "address": "https://www.midata.coop/",
+                                      "name": "Portail MIDATA"
+                                    }
+                                  ],
+                                  "type": "text"
+                                }
+                              ],
+                              "label": "Processus de retrait et effacement des données",
+                              "type": "title"
+                            },
+                            {
+                              "item": [
+                                {
+                                  "label": "Les données que vous fournissez pour le processus d'enregistrement sont vos \"données personnelles\". Vous êtes conscient du fait que l'ensemble des fonctions ne peut être garanti que si les données personnelles sont correctes et actualisées. Il est de votre responsabilité de les mettre à jour en permanence afin de garantir leur exactitude et leur précision.",
+                                  "type": "text"
+                                },
+                                {
+                                  "label": "Pour votre accès et votre utilisation de l'App, vous vous engagez à agir en conformité avec toutes les lois et réglementations en vigueur. Toutes les activités (y compris l'utilisation abusive) de l'application \"SERO\" et des services qui y sont liés, qui ont lieu via votre accès à l'application, relèvent de votre seule responsabilité. Vous acceptez de nous informer immédiatement si vous découvrez une utilisation non autorisée via votre application.",
+                                  "type": "text"
+                                },
+                                {
+                                  "item": [
+                                    {
+                                      "label": "Sous réserve des présentes conditions d'utilisation, nous vous accordons une autorisation mondiale limitée, non exclusive et non transférable d'accéder à l'application et de l'utiliser. Cette autorisation est révocable conformément aux présentes conditions d'utilisation.",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "Tant que vous ne disposez pas d'une autorisation écrite de notre part, vous ne pouvez pas",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(i) ne pas copier, modifier, adapter, traduire ou créer de toute autre manière des œuvres dérivées de l'Appli et de sa documentation",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(ii) ne pas faire de rétro-ingénierie, de décompilation, de désassemblage ou toute autre tentative pour connaître le code source ou les secrets commerciaux de l'Application, sauf dans la mesure où les lois applicables interdisent expressément une telle restriction ;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(iii) ne pas louer, prêter, redistribuer, vendre ou transférer les droits sur l'application et sa documentation (ou tout contenu de celle-ci) en dehors du cadre de l'autorisation accordée par la présente ;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(iv) ne pas utiliser les marques commerciales, les noms commerciaux et les noms d'entreprise, les marques de service, les logos, les noms de domaine et autres caractéristiques distinctives de la marque ou d'autres droits de propriété en relation avec les Services à quelque fin que ce soit sans notre consentement écrit exprès",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(v) n'enregistrera pas, ne tentera pas d'enregistrer ou n'aidera pas quelqu'un d'autre à enregistrer une marque commerciale, un nom commercial ou un nom d'entreprise, une marque de service, un logo, un nom de domaine ou toute autre caractéristique distinctive de la marque, ou tout autre matériel protégé par des droits d'auteur ou tout autre droit de propriété en rapport avec l'Application et les Services connexes",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(vi) n'utilisera pas, ne publiera pas, ne transmettra pas et n'introduira pas d'appareils, de logiciels ou de procédures qui interfèrent ou tentent d'interférer avec le fonctionnement des Services ou de l'application \"SERO\" ;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(vii) vous ne devez pas non plus permettre à un tiers d'accomplir les actes énumérés aux points (i) à (vi) ci-dessus.",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "item": [
+                                        {
+                                          "label": "Le présent accord prend effet à la date à laquelle vous acceptez les conditions d'utilisation et reste valable pour une durée indéterminée.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "(i) vous désinstallez cette application de votre appareil, ou",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "(ii) nous pouvons, à notre entière discrétion, mettre fin à votre accès et à votre utilisation de l'Application, à condition toutefois que nous vous en informions par e-mail au moins cinq jours ouvrables à l'avance.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "En cas de résiliation du présent accord, tous les droits et autorisations qui vous ont été accordés en vertu du présent accord prendront fin et chaque partie sera libérée de ses obligations et engagements envers l'autre partie qui surviennent après la date de résiliation, mais toutes les obligations et engagements qui ont pris naissance avant la résiliation continueront à être exécutés. Aucune des parties n'est responsable envers l'autre des éventuels dommages résultant uniquement de la résiliation du présent accord conformément aux conditions d'utilisation.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "Les conditions relatives à la propriété intellectuelle continuent de s'appliquer après la résiliation du présent accord.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "item": [
+                                            {
+                                              "label": "Le droit suisse s'applique aux litiges découlant du présent contrat, de l'accès à l'application ou de son utilisation, à l'exclusion de la Convention des Nations Unies sur les contrats de vente internationale de marchandises et des règles de conflit de lois.",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "Le lieu de juridiction exclusif est Lucerne.",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "Point de contact pour les questions",
+                                              "type": "title"
+                                            },
+                                            {
+                                              "label": "Service de psychiatrie de Lucerne (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSuisse\nT +41 (0)58 856 55 55\nE-mail sero(at)lups.ch",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "St. Urban, avril 2022",
+                                              "type": "text"
+                                            }
+                                          ],
+                                          "label": "Droit applicable et juridiction compétente",
+                                          "type": "title"
+                                        }
+                                      ],
+                                      "label": "Durée et fin",
+                                      "type": "title"
+                                    }
+                                  ],
+                                  "label": "Droits d'utilisation et propriété intellectuelle",
+                                  "type": "title"
+                                }
+                              ],
+                              "label": "Responsabilité",
+                              "type": "title"
+                            }
+                          ],
+                          "label": "Risques et avantages pour les participants",
+                          "type": "title"
+                        }
+                      ],
+                      "label": "Consentement à la transmission de données sous forme anonymisée",
+                      "type": "title"
+                    }
+                  ],
+                  "label": "Informations sur la confidentialité et le traitement des données",
+                  "type": "title"
+                }
+              ],
+              "label": "Stockage des données avec l'application",
+              "type": "title"
+            }
+          ],
           "label": "Conditions d'utilisation",
           "type": "group"
         }

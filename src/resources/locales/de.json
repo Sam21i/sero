@@ -298,7 +298,7 @@
                   "label": "<goTo0>{{address0}}</goTo0> ist eine Schweizer Genossenschaft, die ihre Server in der Schweiz betreibt. MIDATA hält alle Schweizerischen Gesetze ein und macht noch viel mehr, um deine Daten zu schützen. Deine Daten bleiben in der Schweiz und werden nicht an Dritte weitergegeben.\n\nDamit die App verbessert werden kann, werden die Daten in anonymer Form (!) im <goTo1>{{address1}}</goTo1> weiterverarbeitet.",
                   "links": [
                     {
-                      "address": "https://www.MIDATA.coop/",
+                      "address": "https://www.midata.coop/",
                       "name": "MIDATA"
                     },
                     {
@@ -607,10 +607,436 @@
           "type": "group"
         },
         {
+          "item": [
+            {
+              "label": "Über die Herausgeberin",
+              "type": "title"
+            },
+            {
+              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (LUPS) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an. Die App \"SERO\" unterstützt Sie während und zwischen suizidalen Krisen bei der Dokumentation Ihrer aktuellen Suizidalität. Sie soll damit dem Selbstmanagement dienen.",
+              "type": "text"
+            },
+            {
+              "label": "Datenschutz hat einen besonders hohen Stellenwert für die Luzerner Psychiatrie und wird auch im Rahmen der App \"SERO\" sichergestellt.",
+              "type": "text"
+            },
+            {
+              "label": "Auf die Bearbeitung Ihrer Personendaten im Rahmen der App \"SERO\" findet das Gesetz über den Schutz von Personendaten (Datenschutzgesetz, KDSG) des Kantons Luzern Anwendung.",
+              "type": "text"
+            },
+            {
+              "label": "Mit Zustimmung zu den Nutzungsbedingungen der App \"SERO\" erklären Sie sich auch mit der vorliegenden Datenschutzerklärung einverstanden.",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
+                  "type": "text"
+                }
+              ],
+              "label": "Kontakt",
+              "type": "title"
+            },
+            {
+              "item": [
+                {
+                  "label": "Für das sichere Speichern und Verwalten der Benutzerdaten hat die LUPS die Genossenschaft <goTo0>{{address0}}</goTo0> mit Sitz in Zürich, beauftragt. Alle Daten werden innerhalb der Schweiz in persönlichen verschlüsselten Datenkonten gespeichert. Für die Nutzung der Datenkonten gelten die <goTo1>{{address1}}</goTo1> und die <goTo2>{{address2}}</goTo2> der MIDATA-Plattform.",
+                  "links": [
+                    {
+                      "address": "https://www.midata.coop",
+                      "name": "MIDATA"
+                    },
+                    {
+                      "address": "https://ch.midata.coop/#/public/terms?which=midata-terms-of-use",
+                      "name": "Allgemeinen Geschäftsbedingungen"
+                    },
+                    {
+                      "address": "https://ch.midata.coop/#/public/terms?which=midata-privacy-policy",
+                      "name": "Datenschutzerklärung"
+                    }
+                  ],
+                  "type": "text"
+                },
+                {
+                  "label": "Sie werden mit Ihrer Anmeldung bei MIDATA Inhaber bzw. Inhaberin eines Datenkontos bei MIDATA. Alle Daten sind verschlüsselt und bleiben in Ihrer Datenherrschaft, das heisst Sie können individuell über Ihre auf der MIDATA-Plattform in Ihrem Konto gespeicherten Personendaten und diese ganz oder teilweise mit anderen Nutzern teilen, mit MIDATA oder Dritten.",
+                  "type": "text"
+                }
+              ],
+              "label": "Datenspeicherung",
+              "type": "title"
+            },
+            {
+              "item": [
+                {
+                  "item": [
+                    {
+                      "label": "Name",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Vorname",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "E-Mail-Adresse",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Geschlecht",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Geburtsdatum",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Wohnsitzland",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "Mit einer Anmeldung bei MIDATA sind im Rahmen des Registrierungsprozesses folgende erforderliche Angaben zu machen:",
+                  "type": "text"
+                },
+                {
+                  "label": "Diese Informationen werden zur Registrierung und Identifizierung sowie allenfalls zur Erledigung von Anfragen durch MIDATA verwendet.",
+                  "type": "text"
+                },
+                {
+                  "label": "Bei der Nutzung der Funktionen der App werden personenbezogene Daten gespeichert. Die Daten werden in persönlichen verschlüsselten Datenkonten gespeichert, siehe unten.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Eingabe eigener Notfallnummern oder den Import eigener Notfallnummern sowie Ergänzung von Notfallnummern mit personalisierten Profilbildern",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Eingabe von Antworten auf die Fragen der PRISM-S-Funktion sowie Erstellung und Speicherung von PRISM-S-Aufnahmen",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Eingabe und Bearbeitung von Daten für den Sicherheitsplan",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "Die App erlaubt die Eingabe und Speicherung folgender Daten:",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Zugriff auf die Daten haben primär nur Sie als Inhaber bzw. Inhaberin der Datenherrschaft. Freigaben an Dritte (inkl. MIDATA) müssen transparent und explizit durch Sie bewilligt werden. Entsprechende Freigaben werden protokolliert.",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Datenzugriff im Allgemeinen",
+                  "type": "title"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Mit der Nutzung der App willigen Sie ein, dass von Ihnen eingegebene Daten in anonymisierter Form im Rahmen des Projekts wissenschaftlich ausgewertet werden mit dem Ziel, die Situation von suizidgefährdeten Personen besser zu verstehen, das Angebot im Rahmen des Projekts \"SERO\" zu verbessern, sowie das generelle Angebot und die Hilfestellungen für suizidgefährdete Personen zu verbessern.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Aus den ausgewerteten anonymisierten Daten kann kein Rückschluss auf Ihre Person gezogen werden.",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Zustimmung zur Datenweitergabe in anonymisierter Form",
+                  "type": "title"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Falls Sie sich dazu entschieden haben eingegebene Daten wie die PRISM-S Selbsteinschätzung oder den Sicherheitsplan mit Drittpersonen zu teilen, werden diese Informationen den von Ihnen ausgewählten Personen zugänglich gemacht.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "St. Urban, April 2022",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Teilen von Daten mit Drittpersonen",
+                  "type": "title"
+                }
+              ],
+              "label": "Datenerfassung",
+              "type": "title"
+            }
+          ],
           "label": "Datenschutzerklärung",
           "type": "group"
         },
         {
+          "item": [
+            {
+              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (LUPS) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an.",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "Funktion \"Notfallkontakte anrufen\"\nEigene Notfallkontakte können eingegeben werden und stehen in Notfall- und Krisensituationen zur Verfügung. Die App verlinkt auch zu Beratungs- und Notfallangeboten.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Funktion \"Meine Einschätzung\"\nSie können mit der PRISM-S-Methodik über Ihre Suizidalität reflektieren. Daneben kann die Selbsteinschätzung als Grundlage für eine allfällige Begleitung durch Fachpersonen dienen.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Funktion \"Mein Sicherheitsplan\"\nSie können einen Sicherheitsplan erstellen mit relevanten Informationen, um Krisensituationen besser zu bewältigen.",
+                  "type": "listitem"
+                },
+                {
+                  "label": "Funktion \"Informationen\"\nDie App liefert Informationen zum Thema Suizidprävention und weiterführende Links.",
+                  "type": "listitem"
+                }
+              ],
+              "label": "Die App \"SERO\" unterstützt Sie während und zwischen suizidalen Krisen bei der Dokumentation Ihrer aktuellen Suizidalität. Sie soll damit dem Selbstmanagement dienen.\n\nSie besitzt folgende Funktionen:",
+              "type": "text"
+            },
+            {
+              "item": [
+                {
+                  "label": "Für die Nutzung der App werden nach einer Anmeldung bei der MIDATA-Plattform personenbezogene Daten in persönlichen verschlüsselten Datenkonten auf der MIDATA-Plattform gespeichert, siehe unten.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Name",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Vorname",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "E-Mail-Adresse",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Geschlecht",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Geburtsdatum",
+                      "type": "listitem"
+                    },
+                    {
+                      "label": "Wohnsitzland",
+                      "type": "listitem"
+                    }
+                  ],
+                  "label": "Mit der Anmeldung auf der MIDATA-Plattform für die Nutzung der App sind im Rahmen des Registrierungsprozesses folgende erforderliche Angaben zu machen:",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "item": [
+                        {
+                          "label": "Eingabe eigener Notfallnummern oder den Import eigener Notfallnummern sowie Ergänzung von Notfallnummern mit personalisierten Profilbildern",
+                          "type": "listitem"
+                        },
+                        {
+                          "label": "Eingabe von Antworten auf die Fragen der PRISM-S-Funktion sowie Erstellung und Speicherung von PRISM-S-Aufnahmen",
+                          "type": "listitem"
+                        },
+                        {
+                          "label": "Eingabe und Bearbeitung von Daten für den Sicherheitsplan",
+                          "type": "listitem"
+                        }
+                      ],
+                      "label": "Die App erlaubt die Eingabe und Speicherung folgender Daten:",
+                      "type": "text"
+                    }
+                  ],
+                  "label": "Diese Informationen werden zur Registrierung und Identifizierung sowie allenfalls zur Erledigung von Anfragen durch MIDATA verwendet.",
+                  "type": "text"
+                },
+                {
+                  "item": [
+                    {
+                      "label": "Die von Ihnen eingegebenen personenbezogenen Daten werden verschlüsselt und in Ihrem persönlichen Konto auf der MIDATA-Plattform gespeichert. Nur Sie haben Zugang zu diesen Daten und haben die Kontrolle darüber.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Sie können auch Ihr bereits existierendes MIDATA-Datenkonto verbinden.",
+                      "type": "text"
+                    },
+                    {
+                      "label": "Zur Analyse und Optimierung der App werden anonymisierte Daten über das Nutzerverhalten verwendet. Die Analyse erfolgt mittels der Software Matomo unter Teilmaskierung der IP-Adressen, so dass keine Rückschlüsse auf individuelle Personen möglich sind.",
+                      "type": "text"
+                    },
+                    {
+                      "item": [
+                        {
+                          "label": "Mit der Nutzung der App willigen Sie ein, dass von Ihnen eingegebene Daten in anonymisierter Form im Rahmen des Projekts wissenschaftlich ausgewertet werden mit dem Ziel, die Situation von suizidgefährdeten Personen besser zu verstehen, das Angebot im Rahmen des Projekts \"SERO\" zu verbessern, sowie das generelle Angebot und die Hilfestellungen für suizidgefährdete Personen zu verbessern.",
+                          "type": "text"
+                        },
+                        {
+                          "label": "Aus den ausgewerteten anonymisierten Daten kann kein Rückschluss auf Ihre Person gezogen werden.",
+                          "type": "text"
+                        },
+                        {
+                          "item": [
+                            {
+                              "label": "Die App \"SERO\" soll im Sinne eines Selbstmanagements während und zwischen suizidalen Krisen unterstützen. Sie ersetzt in keiner Weise eine medizinische Diagnose oder Therapie. Wenn Sie Hilfe benötigen, bitten wir Sie, unverzüglich die dargebotene Hand 143 oder eine der in der App vordefinierten Notfallnummern anzurufen.",
+                              "type": "text"
+                            },
+                            {
+                              "label": "Die Weitergabe der Daten in anonymisierter Form führt zu keinem unmittelbaren persönlichen Nutzen. Die weitergegebenen anonymisierten Daten leisten einen Beitrag dazu, die Situation von suizidgefährdeten Personen besser zu verstehen, das Angebot im Rahmen des Projekts \"SERO\" zu verbessern, sowie das generelle Angebot und die Hilfestellungen für suizidgefährdete Personen zu verbessern.",
+                              "type": "text"
+                            },
+                            {
+                              "item": [
+                                {
+                                  "label": "Sie haben jederzeit die Möglichkeit, die anonymisierte Freigabe der mit der App gesammelten Daten auf dem <goTo0>{{address0}}</goTo0> zu beenden. Sie können Ihre Daten jederzeit exportieren und Ihr MIDATA-Konto und damit alle dort gespeicherten Daten löschen.",
+                                  "links": [
+                                    {
+                                      "address": "https://www.midata.coop/",
+                                      "name": "MIDATA-Portal"
+                                    }
+                                  ],
+                                  "type": "text"
+                                }
+                              ],
+                              "label": "Rückzugsprozess und Datenlöschung",
+                              "type": "title"
+                            },
+                            {
+                              "item": [
+                                {
+                                  "label": "Die Daten, die Sie für den Registrierungsprozess zur Verfügung stellen, sind Ihre \"persönlichen Daten\". Ihnen ist dabei bewusst, dass der volle Funktionsumfang nur gewährleistet werden kann, wenn die persönlichen Daten richtig sind und aktuell gehalten werden. Es gehört zu Ihrer Aufgabe, diese laufend zu aktualisieren, um die Richtigkeit und Genauigkeit zu gewährleisten.",
+                                  "type": "text"
+                                },
+                                {
+                                  "label": "Für Ihren Zugriff auf und die Nutzung der App verpflichten Sie sich, in Übereinstimmung mit allen geltenden Gesetzen und Vorschriften zu handeln. Alle Aktivitäten (einschliesslich des Missbrauchs) der App \"SERO\" und den damit in Zusammenhang stehenden Services, welche über Ihren App-Zugriff erfolgen, liegen allein in Ihrer Verantwortung. Sie erklären sich damit einverstanden, uns unmittelbar in Kenntnis zu setzen, wenn Sie eine unbefugte Nutzung über Ihre App entdecken.",
+                                  "type": "text"
+                                },
+                                {
+                                  "item": [
+                                    {
+                                      "label": "Diesen Nutzungsbedingungen unterliegend gewähren wir Ihnen eine beschränkte, nicht-exklusive, nicht-übertragbare weltweite Genehmigung, auf die App zuzugreifen und sie zu nutzen. Diese Genehmigung ist in Übereinstimmung mit diesen Nutzungsbedingungen widerruflich.",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "Solange Ihnen keine dementsprechende schriftliche Erlaubnis von uns vorliegt, dürfen Sie",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(i) die App und ihre Dokumentation nicht kopieren, verändern, anpassen, übersetzen oder anderweitig abgeleitete Werke erstellen;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(ii) kein Reverse Engineering, keine Dekompilation, kein Disassembling und keine anderen Versuche unternehmen, um den Quellcode oder die Betriebsgeheimnisse der App zu erfahren, ausgenommen in dem Ausmass, indem die geltenden Gesetze eine solche Beschränkung ausdrücklich verbieten;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(iii) die Rechte an bzw. auf der App und ihrer Dokumentation (oder Inhalte derselben) nicht vermieten, verleihen, weitergeben, verkaufen oder übertragen, außerhalb des Rahmens der hiermit gewährten Genehmigung;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(iv) die Handelszeichen, Geschäfts- und Unternehmensnamen, Servicezeichen, Logos, Domainnamen und andere unverwechselbare Eigenschaften der Marke oder andere Eigentumsrechte in Zusammenhang mit den Services zu keinem Zweck ohne unsere ausdrückliche schriftliche Zustimmung verwenden;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(v) kein Handelszeichen, keinen Geschäfts- oder Unternehmensnamen, kein Servicezeichen, keine Logos, keine Domainnamen und keine anderen unverwechselbaren Eigenschaften der Marke oder anderes durch das Urheberrecht geschütztes Material oder andere Eigentumsrechte in Zusammenhang mit der App und damit in Zusammenhang stehender Services registrieren, versuchen zu registrieren oder jemand anderem dabei behilflich sein, sie zu registrieren;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(vi) keine Geräte, Software oder Abläufe verwenden, veröffentlichen, übermitteln oder einführen, die sich störend auf den Betrieb der Services oder der App \"SERO\" auswirkt oder dies versucht;",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "label": "(vii) die unter (i) bis (vi) aufgeführten Handlungen dürfen Sie auch keinem Dritten ermöglichen.",
+                                      "type": "text"
+                                    },
+                                    {
+                                      "item": [
+                                        {
+                                          "label": "Diese Vereinbarung gilt ab dem Tag, an dem Sie die Nutzungsbedingungen akzeptieren und bleibt für eine unbegrenzte Zeit gültig.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment en",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "(i) Sie Ihrerseits diese App von Ihrem Gerät deinstallieren bzw.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "(ii) wir unsererseits nach unserem Ermessen Ihren Zugriff auf und die Nutzung der App unterbinden; vorausgesetzt jedoch, dass wir Sie von einer solchen Beendigung spätestens fünf Arbeitstage im Voraus per E-Mail informieren werden.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "Im Fall einer Beendigung dieser Vereinbarung enden alle Ihnen im Rahmen dieser Vereinbarung gewährten Rechte und Genehmigungen und beide Parteien sind aus ihren Verpflichtungen und Verbindlichkeiten der anderen gegenüber entlassen, die nach dem Datum der Beendigung auftreten; alle Verpflichtungen und Verbindlichkeiten, die vor der Beendigung entstanden sind, sind jedoch weiterhin zu erfüllen. Keine Partei haftet der anderen gegenüber für eventuelle Schäden, die nur aus der Beendigung dieser Vereinbarung entsprechend der Nutzungsbedingungen entstehen.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "label": "Die Bedingungen zum Geistigen Eigentum gelten auch nach der Beendigung dieser Vereinbarung.",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "item": [
+                                            {
+                                              "label": "Für Rechtsstreitigkeiten aus dieser Vereinbarung, dem Zugriff auf oder der Nutzung der App ist Schweizer Recht anwendbar, unter Ausschluss des UN-Kaufrechts sowie des Kollisionsrechts.",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "Ausschliesslicher Gerichtsstand ist Luzern.",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "Anlaufstelle für Fragen",
+                                              "type": "title"
+                                            },
+                                            {
+                                              "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "label": "St. Urban, April 2022",
+                                              "type": "text"
+                                            }
+                                          ],
+                                          "label": "Anwendbares Recht und Gerichtsstand",
+                                          "type": "title"
+                                        }
+                                      ],
+                                      "label": "Dauer und Beendigung",
+                                      "type": "title"
+                                    }
+                                  ],
+                                  "label": "Nutzungsrechte und Geistiges Eigentum",
+                                  "type": "title"
+                                }
+                              ],
+                              "label": "Haftung",
+                              "type": "title"
+                            }
+                          ],
+                          "label": "Risiken und Nutzen für die Teilnehmer",
+                          "type": "title"
+                        }
+                      ],
+                      "label": "Zustimmung zur Datenweitergabe in anonymisierter Form",
+                      "type": "title"
+                    }
+                  ],
+                  "label": "Informationen über Vertraulichkeit und Umgang mit Daten",
+                  "type": "title"
+                }
+              ],
+              "label": "Datenspeicherung mit der App",
+              "type": "title"
+            }
+          ],
           "label": "Nutzungsbedingungen",
           "type": "group"
         }
