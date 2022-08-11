@@ -16,6 +16,7 @@ import MidataService from '../model/MidataService';
 import {PrismResources} from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
+import DEFAULT_CONTACTS from '../resources/static/defaultContacts';
 import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
@@ -64,23 +65,31 @@ class Main extends Component<PropsType, State> {
   }
 
   loadEmergencyContacts(): void {
-    this.setState({
-      emergencyContactsLoaded: this.props.userProfile.getEmergencyContacts().length > 1
-    });
-    try {
-      this.props.midataService
-        .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
-        .then((contacts) => {
-          this.props.setEmergencyContacts(contacts);
-          this.setState({
-            emergencyContactsLoaded: true
-          });
-        })
-        .catch((e) => {
-          console.log('could not load related persons', e);
-        });
-    } catch (e) {
-      console.log(e);
+    if (
+      this.props.userProfile.getEmergencyContacts().length <= DEFAULT_CONTACTS.length &&
+      !this.props.userProfile.hasOnlyDeletedContacts()
+    ) {
+      try {
+        if (this.props.midataService.isAuthenticated()) {
+          this.props.midataService
+            .fetchEmergencyContactsForUser(this.props.userProfile.getFhirId())
+            .then((contacts) => {
+              this.props.setEmergencyContacts(contacts);
+              this.setState({
+                emergencyContactsLoaded: true
+              });
+            })
+            .catch((e) => {
+              console.log('could not load related persons', e);
+            });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      this.setState({
+        emergencyContactsLoaded: true
+      });
     }
   }
 

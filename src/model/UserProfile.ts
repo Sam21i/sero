@@ -88,6 +88,15 @@ export default class UserProfile {
     return allContacts;
   }
 
+  hasOnlyDeletedContacts(): boolean {
+    if (this.emergencyContacts.length === 0) return false;
+    let hasActiveContact = false;
+    this.emergencyContacts.forEach((contact) => {
+      if (contact.fhirResource.active) hasActiveContact = true;
+    });
+    return !hasActiveContact;
+  }
+
   getGender(): PatientAdministrativeGender | undefined {
     if (this.patientResource.id === '') return undefined;
     return this.patientResource.gender;
