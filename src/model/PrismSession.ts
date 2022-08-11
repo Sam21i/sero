@@ -233,6 +233,29 @@ export default class PrismSession {
   }
 
   /**
+   * Returns a boolean value representing whether any questions for the particular Questionnaire have been answered or not.
+   * Caution does not work for Questionnaires that have nested subitems exceeding 1 level.
+   * @returns   true if any questions have been answered and false if none have been answered.
+   */
+  anyQuestionsAnswered(): boolean {
+    let counter = 0;
+    this.questionnaireData?.getQuestions().forEach((question) => {
+      if (question.subItems) {
+        question.subItems.forEach((question) => {
+          if (question.selectedAnswers.length > 0) {
+            counter++;
+          }
+        });
+      } else {
+        if (question.selectedAnswers.length > 0) {
+          counter++;
+        }
+      }
+    });
+    return counter > 0;
+  }
+
+  /**
    * Returns a bundle representing the prism session, ready to upload to MIDATA
    * @returns a valid FHIR bundle of type transaction
    */
