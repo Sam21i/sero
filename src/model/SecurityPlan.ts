@@ -2,7 +2,7 @@ import {CarePlan, CarePlanIntent, CarePlanStatus, Reference} from '@i4mi/fhir_r4
 import fhirpath from 'fhirpath';
 import {v4 as uuid} from 'uuid';
 
-import {EMPTY_SECURITY_PLAN} from '../resources/static/emptySecurityplan';
+import EMPTY_SECURITY_PLAN from '../resources/static/emptySecurityPlan.json';
 
 const CODE_SYSTEM = 'http://midata.coop/sero/securityplan';
 
@@ -38,7 +38,7 @@ export default class SecurityPlanModel {
       this.setFhirResource(JSON.parse(JSON.stringify(_data)) as CarePlan);
     } else if (Object.getOwnPropertyNames(_data).length === 0) {
       // create new security plan
-      this.fhirResource = JSON.parse(EMPTY_SECURITY_PLAN) as CarePlan;
+      this.fhirResource = EMPTY_SECURITY_PLAN as CarePlan;
       this.fhirResource.created = new Date().toISOString();
       this.fhirResource.id = 'emptyPlan';
     } else {

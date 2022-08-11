@@ -1,0 +1,868 @@
+{
+  "resourceType": "CarePlan",
+  "status": "active",
+  "id": "sicherheitsplan",
+  "category": [
+    {
+      "coding": [
+        {
+          "system": "http://midata.coop/sero/securityplan",
+          "code": "master"
+        }
+      ]
+    }
+  ],
+  "contained": [
+    {
+      "resourceType": "CarePlan",
+      "id": "motivation",
+      "status": "active",
+      "intent": "plan",
+      "title": "Meine Motivation zu leben",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Meine Motivation zu leben"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Ma motivation de vivre"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "La mia motivazione a vivere"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "motivation"
+            }
+          ]
+        }
+      ],
+      "description": "Was gibt mir Kraft? Was hält mich am Leben? Was möchte ich noch erleben?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Was gibt mir Kraft? Was hält mich am Leben? Was möchte ich noch erleben?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Qu'est-ce qui me donne de la force? Qu'est-ce qui me maintient en vie? Qu'est-ce que j'aimerais encore vivre?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Cosa mi dà forza? Cosa mi tiene in vita? Cosa voglio ancora sperimentare?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": []
+    },
+    {
+      "resourceType": "CarePlan",
+      "id": "warningSigns",
+      "status": "active",
+      "intent": "plan",
+      "title": "Meine Frühwarnzeichen",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Meine Frühwarnzeichen"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Mes signes précurseurs"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "I miei segnali di allarme"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "warningSigns"
+            }
+          ]
+        }
+      ],
+      "description": "Welche Gedanken, Gefühle oder Verhaltensweisen treten bei mir vor einer suizidalen Krise auf?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Welche Gedanken, Gefühle oder Verhaltensweisen treten bei mir vor einer suizidalen Krise auf?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Quelles sont les pensées, les sentiments ou les comportements qui se manifestent chez moi avant une crise suicidaire?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Quali pensieri, sentimenti o comportamenti si manifestano in me prima di una crisi suicida?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": []
+    },
+    {
+      "resourceType": "CarePlan",
+      "id": "copingStrategies",
+      "status": "active",
+      "intent": "plan",
+      "title": "Meine Bewältigungsstrategien",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Meine Bewältigungsstrategien"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Mes stratégies d'adaptation"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Le mie strategie di coping"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "copingStrategies"
+            }
+          ]
+        }
+      ],
+      "description": "Was tue ich selbst, wenn Suizidgedanken stärker werden? Was hilft mir in solchen Augenblicken?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Was tue ich selbst, wenn Suizidgedanken stärker werden? Was hilft mir in solchen Augenblicken?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Qu'est-ce qu je fairs lorsque les pensées suicidaires s'intensifient? Qu'est-ce qui m'aide dans de tels moments?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Cosa devo fare io stesso quando i pensieri suicidi si fanno più forti? Cosa mi aiuta in questi momenti?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": []
+    },
+    {
+      "resourceType": "CarePlan",
+      "id": "distractionStrategies",
+      "status": "active",
+      "intent": "plan",
+      "title": "Meine Ablenkungsstrategien",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Meine Ablenkungsstrategien"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Mes stratégies de diversion"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Le mie strategie di diversione"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "distractionStrategies"
+            }
+          ]
+        }
+      ],
+      "description": "Welche Aktivität tut mir gut? An welchen Orten und Plätzen oder mit welchen Menschen komme ich auf andere Gedanken?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Welche Aktivität tut mir gut? An welchen Orten und Plätzen oder mit welchen Menschen komme ich auf andere Gedanken?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Quelle activité me fait du bien? Quels sont les lieux et les personnes qui me permettent de me changer les idées?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Quale attività mi fa bene? In quali luoghi o con quali persone mi vengono altri pensieri?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": []
+    },
+    {
+      "resourceType": "CarePlan",
+      "id": "personalBeliefs",
+      "status": "active",
+      "intent": "plan",
+      "title": "Meine Glaubenssätze",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Meine Glaubenssätze"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Mes croyances"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Le mie credenze"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "personalBeliefs"
+            }
+          ]
+        }
+      ],
+      "description": "Was sind meine Glaubenssätze?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Was sind meine Glaubenssätze?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Quelles sont mes croyances?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Quali sono le mie credenze?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": []
+    },
+    {
+      "resourceType": "CarePlan",
+      "id": "professionalContacts",
+      "status": "active",
+      "intent": "plan",
+      "title": "Wichtige Hilfe- und Notfallnummern",
+      "_title": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Wichtige Hilfe- und Notfallnummern"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Numéros d'aide et d'urgence importants"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Numeri importanti di aiuto e di emergenza"
+              }
+            ]
+          }
+        ]
+      },
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://midata.coop/sero/securityplan",
+              "code": "professionalContacts"
+            }
+          ]
+        }
+      ],
+      "description": "Welche Fachpersonen oder Organisationen unterstützen mich im Notfall?",
+      "_description": {
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "de"
+              },
+              {
+                "url": "content",
+                "valueString": "Welche Fachpersonen oder Organisationen unterstützen mich im Notfall?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Quels sont les professionnels ou les organisations qui me soutiennent en cas d'urgence?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Quali professionisti o organizzazioni mi supporteranno in caso di emergenza?"
+              }
+            ]
+          }
+        ]
+      },
+      "activity": [
+        {
+          "detail": {
+            "status": "unknown",
+            "description": "Beratung LUPS (0900 85 65 65)",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "de"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Beratung LUPS (0900 85 65 65)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "fr"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Conseils LUPS (0900 85 65 65)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "it"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Consulenza LUPS (0900 85 65 65)"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "detail": {
+            "status": "unknown",
+            "description": "Die Dargebotene Hand (143)",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "de"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Die Dargebotene Hand (143)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "fr"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "La Main Tendue (143)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "it"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Telefono Amico (143)"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "detail": {
+            "status": "unknown",
+            "description": "Polizei (117)",
+            "_description": {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "de"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Polizei (117)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "fr"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Police (117)"
+                    }
+                  ]
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                  "extension": [
+                    {
+                      "url": "lang",
+                      "valueCode": "it"
+                    },
+                    {
+                      "url": "content",
+                      "valueString": "Polizia (117)"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "intent": "plan",
+  "title": "Mein Sicherheitsplan",
+  "_title": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "de"
+          },
+          {
+            "url": "content",
+            "valueString": "Mein Sicherheitsplan"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "fr"
+          },
+          {
+            "url": "content",
+            "valueString": "Mon plan de sécurité"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "it"
+          },
+          {
+            "url": "content",
+            "valueString": "Il mio piano di sicurezza"
+          }
+        ]
+      }
+    ]
+  },
+  "subject": {},
+  "author": {},
+  "basedOn": [
+    {
+      "reference": "#motivation",
+      "type": "CarePlan"
+    },
+    {
+      "reference": "#warningSigns",
+      "type": "CarePlan"
+    },
+    {
+      "reference": "#copingStrategies",
+      "type": "CarePlan"
+    },
+    {
+      "reference": "#distractionStrategies",
+      "type": "CarePlan"
+    },
+    {
+      "reference": "#personalBeliefs",
+      "type": "CarePlan"
+    },
+    {
+      "reference": "#professionalContacts",
+      "type": "CarePlan"
+    }
+  ]
+}
