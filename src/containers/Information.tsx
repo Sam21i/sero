@@ -3,6 +3,7 @@ import React, {Component, Fragment} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {v4 as uuidv4} from 'uuid';
@@ -138,6 +139,13 @@ class Info extends Component<PropsType, State> {
       default:
         return this.renderMenu();
     }
+  }
+
+  componentDidMount() {
+    Orientation.lockToPortrait();
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
+    });
   }
 
   render() {

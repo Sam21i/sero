@@ -4,8 +4,8 @@ import {Dimensions, StyleSheet} from 'react-native';
 //   iPhone 5: w320/h568/r1.78
 //   iPhone 6-7-8: w375/h667/r1.78
 //   iPhone 11: w414/h896/r2.16 incl. safe area, w414/h844/r2.04 excl. safe area
-export const windowWidth = Dimensions.get('window').width;
-export const windowHeight = Dimensions.get('window').height;
+export const windowWidth = Math.min(Dimensions.get('window').width, Dimensions.get('window').height);
+export const windowHeight = Math.max(Dimensions.get('window').width, Dimensions.get('window').height);
 
 // Scaling method used by Soluto Engineering (see method 3)
 //   https://medium.com/soluto-engineering/size-matters-5aeeb462900a

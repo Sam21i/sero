@@ -3,6 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ActivityIndicator, ImageBackground, Platform, StatusBar, StyleSheet, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -46,6 +47,9 @@ class Main extends Component<PropsType, State> {
   }
 
   componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
+    });
     this.props.navigation.addListener('focus', () => {
       if (this.props.midataService.isAuthenticated()) {
         this.loadEmergencyContacts();

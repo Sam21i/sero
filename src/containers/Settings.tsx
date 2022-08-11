@@ -4,6 +4,7 @@ import {CheckIcon, NativeBaseProvider, Select, Switch} from 'native-base';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {Button, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
 
@@ -48,6 +49,12 @@ class Settings extends Component<PropsType, State> {
     this.setState({currentLang: lang}, () => {
       AsyncStorage.setItem(STORAGE.LANGUAGE, lang);
       this.props.i18n.changeLanguage(lang);
+    });
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
     });
   }
 
