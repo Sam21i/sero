@@ -88,6 +88,15 @@ export default class UserProfile {
     return allContacts;
   }
 
+  hasOnlyDeletedContacts(): boolean {
+    if (this.emergencyContacts.length === 0) return false;
+    let hasActiveContact = false;
+    this.emergencyContacts.forEach((contact) => {
+      if (contact.fhirResource.active) hasActiveContact = true;
+    });
+    return !hasActiveContact;
+  }
+
   getGender(): PatientAdministrativeGender | undefined {
     if (this.patientResource.id === '') return undefined;
     return this.patientResource.gender;
@@ -270,6 +279,16 @@ export default class UserProfile {
    */
   addPrismSession(_session: PrismSession) {
     this.prismSessions.push(_session);
+  }
+
+  /**
+   * Deletes a prism session from the archive.
+   * DO NOT USE OUTSIDE THE REDUCER
+   */
+  removePrismSession(session: PrismSession): void {
+    const index = this.prismSessions.findIndex((historySession) => historySession.isEqual(session));
+    if (index === -1) return;
+    this.prismSessions.splice(index, 1);
   }
 
   /**

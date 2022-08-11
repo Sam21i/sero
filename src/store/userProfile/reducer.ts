@@ -10,6 +10,7 @@ import {
   ADD_SECURITY_PLAN,
   ADD_TO_USER_PROFILE,
   DELETE_ARCHIVED_SECURITY_PLAN,
+  DELETE_PRISM_SESSION,
   LOGOUT_AUTHENTICATE_USER,
   REACTIVATE_SECURITY_PLAN,
   REPLACE_SECURITY_PLAN,
@@ -126,6 +127,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
     } else {
       return state;
     }
+  },
+  [DELETE_PRISM_SESSION](state: UserProfile, action: {data: PrismSession}) {
+    const newState = new UserProfile(state);
+    newState.removePrismSession(action.data);
+    return newState;
   }
 });
 

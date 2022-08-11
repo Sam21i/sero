@@ -1,11 +1,20 @@
-import {CarePlan, CarePlanStatus, Reference} from '@i4mi/fhir_r4';
+import {
+  CarePlan,
+  CarePlanStatus,
+  Media,
+  MediaStatus,
+  Observation,
+  ObservationStatus,
+  QuestionnaireResponse,
+  QuestionnaireResponseStatus,
+  Reference
+} from '@i4mi/fhir_r4';
 
 import EmergencyContact from '../../model/EmergencyContact';
 import PrismSession, {PrismResources} from '../../model/PrismSession';
 import SecurityPlanModel from '../../model/SecurityPlan';
 import {
   ADD_PRISM_SESSION,
-  ADD_RESOURCE_TO_SYNCHRONIZE,
   ADD_SECURITY_PLAN,
   DELETE_ARCHIVED_SECURITY_PLAN,
   REACTIVATE_SECURITY_PLAN,
@@ -82,4 +91,26 @@ export function addNewPrismSession(dispatch, session: PrismSession) {
 
 export function setSecurityPlanHistory(dispatch, plans: CarePlan[]) {
   dispatch(new Action(SET_SECURITY_PLAN_HISTORY, plans).getObjectAction());
+}
+
+export function deletePrismSession(dispatch, session: PrismSession, userReference: Reference) {
+  const bundle = session.getUploadBundle(userReference);
+  const observation = bundle.entry?.find((e) => e.resource?.resourceType === 'Observation')?.resource as Observation;
+  const questionnaireResponse = bundle.entry?.find((e) => e.resource?.resourceType === 'QuestionnaireResponse')
+    ?.resource as QuestionnaireResponse;
+  const media = bundle.entry?.find((e) => e.resource?.resourceType === 'media')?.resource as Media;
+
+  dispatch(new Action(DELETE_PRISM_SESSION, session).getObjectAction());
+  if (observation && !observation.id?.includes('temp')) {
+    observation.status = ObservationStatus.ENTERED_IN_ERROR;
+    synchronizeResource(dispatch, observation);
+  }
+  if (media && !media.id?.includes('temp')) {
+    media.status = MediaStatus.ENTERED_IN_ERROR;
+    synchronizeResource(dispatch, media);
+  }
+  if (questionnaireResponse && !questionnaireResponse.id?.includes('temp')) {
+    questionnaireResponse.status = QuestionnaireResponseStatus.ENTERED_IN_ERROR;
+    synchronizeResource(dispatch, questionnaireResponse);
+  }
 }

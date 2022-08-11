@@ -1,6 +1,10 @@
 {
   "assessment": {
     "addEntry": "",
+    "alertDelete": {
+      "description": "",
+      "title": ""
+    },
     "archive": "",
     "bubbleTitle": "",
     "cancelQuestion": "",
@@ -647,6 +651,10 @@
   },
   "securityplan": {
     "addEntry": "",
+    "alertDelete": {
+      "description": "",
+      "title": ""
+    },
     "alertLups": {
       "description": "",
       "title": ""

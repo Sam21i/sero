@@ -1,6 +1,10 @@
 {
   "assessment": {
     "addEntry": "Nouvelle évaluation",
+    "alertDelete": {
+      "description": "Veux-tu vraiment effacer l'évaluation de {{date}} ?",
+      "title": "Effacer l'estimation"
+    },
     "archive": "Evaluations précédentes",
     "bubbleTitle": "Que veux-tu faire?",
     "cancelQuestion": "Tu veux vraiment annuler?",
@@ -647,6 +651,10 @@
   },
   "securityplan": {
     "addEntry": "Ajouter une entrée",
+    "alertDelete": {
+      "description": "Veux-tu vraiment supprimer le plan de sécurité de {{date}} ?",
+      "title": "Supprimer le plan de sécurité"
+    },
     "alertLups": {
       "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
       "title": "Ligne de conseil LUPS"
