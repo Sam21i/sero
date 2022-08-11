@@ -200,11 +200,11 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
             {
               given: yup.string().when('family', {
                 is: (family) => !family || family.length === 0,
-                then: yup.string().required(this.props.t('contacts.err.given.required')),
+                then: yup.string().required(this.props.t('contacts.err.given.required'))
               }),
               family: yup.string().when('given', {
                 is: (given) => !given || given.length === 0,
-                then: yup.string().required(this.props.t('contacts.err.family.required')),
+                then: yup.string().required(this.props.t('contacts.err.family.required'))
               }),
               phone: yup
                 .string()
