@@ -69,6 +69,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
         }}
         style={styles.deleteButton}
+        icon={images.imagesSVG.common.cancel}
       />
     );
   }

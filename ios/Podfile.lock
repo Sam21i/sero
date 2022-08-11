@@ -290,7 +290,7 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.8.0):
     - React-Core
-  - react-native-image-picker (4.8.4):
+  - react-native-image-picker (4.8.5):
     - React-Core
   - react-native-orientation-locker (1.5.0):
     - React-Core
@@ -367,9 +367,9 @@ PODS:
     - React-perflogger (= 0.67.4)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNBootSplash (4.2.3):
+  - RNBootSplash (4.3.0):
     - React-Core
-  - RNCAsyncStorage (1.17.7):
+  - RNCAsyncStorage (1.17.8):
     - React-Core
   - RNFS (2.20.0):
     - React-Core
@@ -382,7 +382,7 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
-  - RNSVG (12.4.0):
+  - RNSVG (12.4.4):
     - React-Core
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -618,7 +618,7 @@ SPEC CHECKSUMS:
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
   react-native-contacts: 1bff4c47816d611f26b06fa8b3eaf2db4d1b2c86
   react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
-  react-native-image-picker: cffb727cf2f59bd5c0408e30b3dbe0b935f88835
+  react-native-image-picker: cd420f97f6ed6ff74fc4686d27dbcfdbd051db91
   react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba
   react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   react-native-sensitive-info: 400c6e3d27945e15c8cddb5b4b92233c85ee06f8
@@ -636,14 +636,14 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9d3c82ddf7ffdad9fbe6a81c6d6f8c06385464d
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNBootSplash: e8a36a88f8c868769ec998c5afe3082032e82fc2
-  RNCAsyncStorage: d81ee5c3db1060afd49ea7045ad460eff82d2b7d
+  RNBootSplash: 5e9f4de41371f3fdbcca556672b7f4714a12fd40
+  RNCAsyncStorage: 7cbd0d823dbb0e415d40a7e77fea2292483c8bdb
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNLocalize: 95a43f85e41a966be7bc9cff2437128911c52da0
   RNPermissions: de7b7c3fe1680d974ac7a85e3e97aa539c0e68ea
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
-  RNSVG: 3dd44d99d1c18e1342aee4bfa53ab3f6a8c4865f
+  RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
