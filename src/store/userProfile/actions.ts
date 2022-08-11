@@ -54,7 +54,7 @@ export function replaceSecurityPlan(
   userReference: Reference
 ) {
   oldPlan.setStatusToArchived();
-  synchronizeResource(dispatch, oldPlan.getFhirResource(userReference));
+  synchronizeResource(dispatch, oldPlan.getFhirResource(userReference, true));
   addResource(dispatch, newPlan.getFhirResource(userReference));
   dispatch(new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction());
 }
@@ -67,8 +67,8 @@ export function reactiveSecurityPlan(
 ) {
   planToReactivate.setStatusToActive();
   currentPlan.setStatusToArchived();
-  synchronizeResource(dispatch, planToReactivate.getFhirResource(userReference));
-  synchronizeResource(dispatch, currentPlan.getFhirResource(userReference));
+  synchronizeResource(dispatch, planToReactivate.getFhirResource(userReference, false));
+  synchronizeResource(dispatch, currentPlan.getFhirResource(userReference, true));
   dispatch(new Action(REACTIVATE_SECURITY_PLAN, planToReactivate).getObjectAction());
 }
 

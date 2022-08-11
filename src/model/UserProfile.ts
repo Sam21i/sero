@@ -181,7 +181,7 @@ export default class UserProfile {
    */
   replaceCurrentSecurityPlan(_plan: SecurityPlanModel): void {
     const oldSecurityPlan = new SecurityPlanModel(
-      this.currentSecurityPlan.getFhirResource(this.getFhirReference() || {})
+      this.currentSecurityPlan.getFhirResource(this.getFhirReference() || {}, true)
     );
     oldSecurityPlan.setStatusToArchived();
     this.securityPlanHistory.push(oldSecurityPlan);
