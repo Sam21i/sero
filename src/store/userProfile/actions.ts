@@ -59,7 +59,7 @@ export function replaceSecurityPlan(
   dispatch(new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction());
 }
 
-export function reactiveSecurityPlan (
+export function reactiveSecurityPlan(
   dispatch,
   planToReactivate: SecurityPlanModel,
   currentPlan: SecurityPlanModel,

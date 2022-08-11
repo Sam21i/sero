@@ -1,4 +1,4 @@
-import { Reference } from '@i4mi/fhir_r4';
+import {Reference} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
