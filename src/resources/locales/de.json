@@ -647,6 +647,10 @@
   },
   "securityplan": {
     "addEntry": "Eintrag hinzufügen",
+    "alertDelete": {
+      "description": "Möchtest du den Sicherheitsplan vom {{date}} wirklich löschen?",
+      "title": "Sicherheitsplan löschen"
+    },
     "alertLups": {
       "description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
       "title": "Beratungstelefon LUPS"
