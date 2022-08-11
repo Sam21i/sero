@@ -72,6 +72,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
             if (this.state.selectedSecurityplan) this.reactivateSelectedSecurityPlan(this.state.selectedSecurityplan);
           }}
           style={styles.reactivateButton}
+          icon={images.imagesSVG.common.start}
         />
         <AppButton
           label={this.props.t('common.delete')}
@@ -81,6 +82,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
             if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
           }}
           style={styles.deleteButton}
+          icon={images.imagesSVG.common.cancel}
         />
       </>
     );

@@ -652,8 +652,8 @@
   "securityplan": {
     "addEntry": "Ajouter une entrée",
     "alertDelete": {
-      "description": "Veux-tu vraiment supprimer le plan de sécurité de {{date}} ?",
-      "title": "Supprimer le plan de sécurité"
+      "description": "Veux-tu vraiment effacer le plan de sécurité de {{date}} ?",
+      "title": "Effacer le plan de sécurité"
     },
     "alertLups": {
       "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
@@ -661,7 +661,7 @@
     },
     "alertReactivate": {
       "description": "Veux-tu remplacer le plan de sécurité actuel par le plan de sécurité du {{date}} ? \n\nTon plan de sécurité actuel est archivé dans \"Plans de sécurité précédents\".",
-      "title": "Réactiver le plan de sécurité précédent"
+      "title": "Réactiver le plan de sécurité"
     },
     "archive": "Plans de sécurité antérieurs",
     "bubbleTitle": "Que veux-tu faire?",

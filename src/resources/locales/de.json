@@ -660,8 +660,8 @@
       "title": "Beratungstelefon LUPS"
     },
     "alertReactivate": {
-      "description": "Möchtest du den aktuellen Sicherheitsplan durch den Sicherheitsplan vom {{date}} ersetzen? \n\nDein aktueller Sicherheitsplan wird bei \"frühere Sicherheitspläne\" archiviert.",
-      "title": "Früheren Sicherheitsplan reaktivieren"
+      "description": "Möchtest du den aktuellen Sicherheitsplan durch den Sicherheitsplan vom {{date}} ersetzen? \n\nDein aktueller Sicherheitsplan wird bei \"Frühere Sicherheitspläne\" archiviert.",
+      "title": "Sicherheitsplan reaktivieren"
     },
     "archive": "Frühere Sicherheitspläne",
     "bubbleTitle": "Was möchtest du tun?",
