@@ -166,11 +166,12 @@ class AssessmentArchive extends Component<PropsType, State> {
       <AppButton
         label={this.props.t('common.delete')}
         position='right'
-        color={colors.tumbleweed}
+        color={colors.gold}
         onPress={() => {
           if (this.state.selectedPrismSession) this.deletePrismSession(this.state.selectedPrismSession);
         }}
         style={styles.deleteButton}
+        icon={images.imagesSVG.common.cancel}
       />
     );
   }
