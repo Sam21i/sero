@@ -23,12 +23,7 @@ export enum CONTACT_SPEECH_BUBBLE_MODE {
 const MAX_IMAGE_SIZE = 500;
 
 const REGEX = {
-  given:
-    /^[^ ][a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
-  phone:
-    /(\b(0041|0)|\B\+41)(\s?\(0\))?(\s)?[1-9]{2}(\s)?[0-9]{3}(\s)?[0-9]{2}(\s)?[0-9]{2}\b|\b(143|144|117|118|1414|145|112)\b/, // temporarily added 143|144|117|118|1414|145|112 emergency numbers to phone regex
-  family:
-    /^[^ ][a-zA-ZàáâäãåąæāčćęèéêëėīįìíîïlłńōoòóôöõøùúûūüųūÿýżźñçčśšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+  phone: /\d{3,}/
 };
 
 const MENU_ACTIONS = [
@@ -205,19 +200,11 @@ class ContactSpeechBubble extends Component<ContactSpeechBubbleProps, ContactSpe
             {
               given: yup.string().when('family', {
                 is: (family) => !family || family.length === 0,
-                then: yup
-                  .string()
-                  .matches(REGEX.given, this.props.t('contacts.err.given.invalid'))
-                  .required(this.props.t('contacts.err.given.required')),
-                otherwise: yup.string().matches(REGEX.given, this.props.t('contacts.err.given.invalid'))
+                then: yup.string().required(this.props.t('contacts.err.given.required')),
               }),
               family: yup.string().when('given', {
                 is: (given) => !given || given.length === 0,
-                then: yup
-                  .string()
-                  .matches(REGEX.given, this.props.t('contacts.err.family.invalid'))
-                  .required(this.props.t('contacts.err.family.required')),
-                otherwise: yup.string().matches(REGEX.given, this.props.t('contacts.err.family.invalid'))
+                then: yup.string().required(this.props.t('contacts.err.family.required')),
               }),
               phone: yup
                 .string()
