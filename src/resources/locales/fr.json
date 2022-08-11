@@ -1,6 +1,10 @@
 {
   "assessment": {
     "addEntry": "Nouvelle évaluation",
+    "alertDelete": {
+      "description": "Veux-tu vraiment effacer l'évaluation de {{date}} ?",
+      "title": "Effacer l'estimation"
+    },
     "archive": "Evaluations précédentes",
     "bubbleTitle": "Que veux-tu faire?",
     "cancelQuestion": "Tu veux vraiment annuler?",

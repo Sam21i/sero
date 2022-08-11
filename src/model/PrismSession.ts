@@ -1,5 +1,6 @@
 import {QuestionnaireData} from '@i4mi/fhir_questionnaire';
 import {
+  Bundle,
   BundleHTTPVerb,
   BundleType,
   I4MIBundle,
@@ -201,6 +202,22 @@ export default class PrismSession {
           this.getPixelFromA4Cm(verticalComp.valueQuantity.value, this.canvasWidth)
         );
       }
+    }
+  }
+
+  /**
+   * Compares two PrismSession for equality.
+   * @param other the PrismSession instance to compare.
+   */
+  isEqual(other: PrismSession): boolean {
+    if (this.observation && other.observation) {
+      if (this.observation.id && other.observation.id) {
+        return this.observation.id === other.observation.id;
+      } else {
+        return false;
+      }
+    } else {
+      return this === other;
     }
   }
 

@@ -1,6 +1,10 @@
 {
   "assessment": {
     "addEntry": "Neue Einschätzung",
+    "alertDelete": {
+      "description": "Möchtest du die Einschätzung vom {{date}} wirklich löschen?",
+      "title": "Einschätzung löschen"
+    },
     "archive": "Frühere Einschätzungen",
     "bubbleTitle": "Was möchtest du tun?",
     "cancelQuestion": "Willst du wirklich abbrechen?",
