@@ -1,9 +1,9 @@
 {
   "resourceType": "Questionnaire",
-  "url": "http://to.be.defined",
+  "url": "http://midata.coop/sero/PRISM-S-additional-questions",
   "version": "1.0",
   "name": "PRISM-S-additional-questions",
-  "title": "PRISM-S Folgefragen",
+  "title": "PRISM™-S Folgefragen",
   "_title": {
     "extension": [
       {
@@ -15,7 +15,33 @@
           },
           {
             "url": "content",
-            "valueString": "PRISM-S Folgefragen"
+            "valueString": "PRISM™-S Folgefragen"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "fr"
+          },
+          {
+            "url": "content",
+            "valueString": "Questions de suivi PRISM™-S"
+          }
+        ]
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/translation",
+        "extension": [
+          {
+            "url": "lang",
+            "valueCode": "it"
+          },
+          {
+            "url": "content",
+            "valueString": "Domande di seguito di PRISM™-S"
           }
         ]
       }
@@ -29,6 +55,22 @@
       "system": "http://snomed.info/sct",
       "code": "363870007",
       "display": "Mental state, behavior / psychosocial function observable"
+    }
+  ],
+  "useContext": [
+    {
+      "code": {
+        "system": "http://midata.coop/codesystems/usecontext-type",
+        "code": "prom"
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://midata.coop/sero",
+            "code": "PRISM-S-additional-questions"
+          }
+        ]
+      }
     }
   ],
   "item": [
@@ -50,6 +92,32 @@
               {
                 "url": "content",
                 "valueString": "Was bedeutet es für dich, dass du die schwarze Scheibe gerade dort platziert hast? Was hat damit zu tun?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Que signifie pour toi le fait d'avoir placé le disque noir à cet endroit précis ? Quel est le rapport?"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Che cosa significa per voi il fatto che abbiate appena messo lì il disco nero? Cosa c'entra?"
               }
             ]
           }
@@ -76,6 +144,32 @@
                 "valueString": "Gedanken"
               }
             ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Pensées"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Pensieri"
+              }
+            ]
           }
         ]
       },
@@ -98,6 +192,32 @@
                   {
                     "url": "content",
                     "valueString": "Was ist mir gerade durch den Kopf gegangen, bevor ich die Scheibe dort platziert habe?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "fr"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Qu'est-ce qui m'a traversé l'esprit avant que je place le disque à cet endroit?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "it"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Cosa mi è passato per la testa prima di mettere il disco lì?"
                   }
                 ]
               }
@@ -126,6 +246,32 @@
                 "valueString": "Körperwahrnehmung"
               }
             ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Perception corporelle"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Consapevolezza del corpo"
+              }
+            ]
           }
         ]
       },
@@ -148,6 +294,32 @@
                   {
                     "url": "content",
                     "valueString": "Was nimmst du gerade im Körper wahr?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "fr"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Que perçois-tu actuellement dans ton corps?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "it"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Cosa percepite nel corpo in questo momento?"
                   }
                 ]
               }
@@ -176,6 +348,32 @@
                 "valueString": "Gefühle"
               }
             ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Sentiments"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Sentimenti"
+              }
+            ]
           }
         ]
       },
@@ -198,6 +396,32 @@
                   {
                     "url": "content",
                     "valueString": "Welche Gefühle spürst du, wenn du den Drang, dir das Leben zu nehmen, dort siehst?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "fr"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Quels sentiments ressens-tu lorsque tu vois l'envie de mettre fin à tes jours à la position choisie?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "it"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Quali sentimenti prova quando vede l'impulso a togliersi la vita?"
                   }
                 ]
               }
@@ -226,6 +450,32 @@
                 "valueString": "Widerstandsvermögen"
               }
             ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "fr"
+              },
+              {
+                "url": "content",
+                "valueString": "Capacité de résistance"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/translation",
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "it"
+              },
+              {
+                "url": "content",
+                "valueString": "Resistenza"
+              }
+            ]
           }
         ]
       },
@@ -248,6 +498,32 @@
                   {
                     "url": "content",
                     "valueString": "Was hält den Suizid-Drang (schwarze Scheibe) gerade von dir weg?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "fr"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Qu'est-ce qui éloigne ta pulsion suicidaire (disque noir) en ce moment?"
+                  }
+                ]
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/translation",
+                "extension": [
+                  {
+                    "url": "lang",
+                    "valueCode": "it"
+                  },
+                  {
+                    "url": "content",
+                    "valueString": "Che cosa tiene lontano il tuo impulso al suicidio (disco nero) in questo momento?"
                   }
                 ]
               }
