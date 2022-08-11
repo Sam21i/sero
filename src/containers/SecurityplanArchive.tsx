@@ -6,8 +6,8 @@ import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
 import {connect} from 'react-redux';
-import i18n from '../../i18n';
 
+import i18n from '../../i18n';
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
@@ -138,9 +138,13 @@ class SecurityplanArchive extends Component<PropsType, State> {
   }
 
   renderSecurityplan() {
-    let filteredModules = this.state.selectedSecurityplan.getSecurityPlanModules(i18n.language).filter((m) => m.entries.length > 0);
+    let filteredModules = this.state.selectedSecurityplan
+      .getSecurityPlanModules(i18n.language)
+      .filter((m) => m.entries.length > 0);
     filteredModules =
-      filteredModules.length > 1 ? filteredModules : this.state.selectedSecurityplan.getSecurityPlanModules(i18n.language);
+      filteredModules.length > 1
+        ? filteredModules
+        : this.state.selectedSecurityplan.getSecurityPlanModules(i18n.language);
     return (
       <FlatList
         data={filteredModules}

@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import i18n from '../../i18n';
 
+import i18n from '../../i18n';
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize} from '../styles/App.style';

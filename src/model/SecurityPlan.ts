@@ -262,33 +262,39 @@ export default class SecurityPlanModel {
 
   private mapCarePlanToSecurityPlanModule(_sp: CarePlan, index: number, _language: string): SecurityPlanModule {
     const translatedTitle = _sp._title?.extension ? this.getTranslation(_sp._title?.extension, _language) : _sp.title;
-    const translatedDescription = _sp._description?.extension ? this.getTranslation(_sp._description?.extension, _language) : _sp.description;
+    const translatedDescription = _sp._description?.extension
+      ? this.getTranslation(_sp._description?.extension, _language)
+      : _sp.description;
     return {
       type: fhirpath.evaluate(_sp, 'CarePlan.category.coding.code')[0],
       order: index,
       title: translatedTitle || '',
       description: translatedDescription || '',
-      entries: _sp.activity?.map((activity) => {
-        const translatedActivity = activity.detail?._description?.extension ? this.getTranslation(activity.detail?._description?.extension, _language) : activity.detail?.description;
-        return translatedActivity || ''
-      }) || []
+      entries:
+        _sp.activity?.map((activity) => {
+          const translatedActivity = activity.detail?._description?.extension
+            ? this.getTranslation(activity.detail?._description?.extension, _language)
+            : activity.detail?.description;
+          return translatedActivity || '';
+        }) || []
     };
   }
 
   private getTranslation(extensions: Extension[], _language: string): string | undefined {
-    const translationExtension = extensions.find((extension)=>{
-      if (extension.url === "http://hl7.org/fhir/StructureDefinition/translation" ) {
-        return extension.extension && extension.extension?.findIndex((extension)=>{
-          return (extension.url === "lang" && extension.valueCode === _language);
-        }) > -1
-      }
-      else {
+    const translationExtension = extensions.find((extension) => {
+      if (extension.url === 'http://hl7.org/fhir/StructureDefinition/translation') {
+        return (
+          extension.extension &&
+          extension.extension?.findIndex((extension) => {
+            return extension.url === 'lang' && extension.valueCode === _language;
+          }) > -1
+        );
+      } else {
         return false;
       }
     });
-    return translationExtension?.extension?.find((extension)=>{
-      return (extension.url === "content");
+    return translationExtension?.extension?.find((extension) => {
+      return extension.url === 'content';
     })?.valueString;
   }
-
 }

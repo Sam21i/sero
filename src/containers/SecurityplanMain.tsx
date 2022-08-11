@@ -6,8 +6,8 @@ import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
-import i18n from '../../i18n';
 
+import i18n from '../../i18n';
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
 import Banner, {BANNER_TYPE} from '../components/Banner';
