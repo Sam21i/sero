@@ -1,691 +1,1117 @@
 {
-  "assessment": {
-    "addEntry": "Nouvelle évaluation",
-    "archive": "Evaluations précédentes",
-    "bubbleTitle": "Que veux-tu faire?",
-    "cancelQuestion": "Tu veux vraiment annuler?",
-    "defaultHint": "Comment vas-tu ?",
-    "followUpTitle": "Questions de suivi",
-    "former": "Évaluation précédente",
-    "goToEmergencyContact": "Appeler quelqu'un",
-    "goToMainPage": "Aller à la page d'aperçu",
-    "goTosecurityplan": "Consulter le plan de sécurité",
-    "image": "Photo de la plaque",
-    "intro": {
-      "description": "Quelle est l'intensité de ton envie de te suicider maintenant ?",
-      "explanation": {
-        "item1": "La surface blanche représente ta vie.",
-        "item2": "Le point jaune, c'est toi dans ta vie.",
-        "item3": "Le disque noir représente ton envie de te suicider."
-      },
-      "title": "PRISM™-S"
-    },
-    "newImage": "Photographier la plaque PRISM-S",
-    "permissionAndroid": {
-      "message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
-      "title": "\"SERO\" désire accéder à la caméra"
-    },
-    "selectImage": "Sélectionner une photo de la plaque PRISM-S dans l'album",
-    "title": "Mon évaluation",
-    "tutorial": {
-      "description": "Place le disque noir dans ta vie.",
-      "distance": "Plus la distance est grande, moins l'envie de se suicider est forte.",
-      "imageHint": "Si tu as fait l'évaluation sur un disque physique, tu peux aussi importer une photo du disque.",
-      "questions": {
-        "item1": "Quelle place occupe dans ta vie ton envie de te suicider maintenant ?",
-        "item2": "À quel point cette pulsion est-elle proche ou éloignée de toi (point jaune) en ce moment ?"
-      }
-    }
-  },
-  "common": {
-    "archive": "Archives",
-    "back": "Retour",
-    "cancel": "Annuler",
-    "delete": "Effacer",
-    "family": "Nom de famille",
-    "given": "Prénom",
-    "loading": "Chargement des données",
-    "next": "Suivant",
-    "no": "Non",
-    "ok": "OK",
-    "options": "Options",
-    "phone": "Téléphone",
-    "save": "Enregistrer",
-    "search": "Rechercher",
-    "start": "Commencer",
-    "tutorial": "Instructions",
-    "yes": "Oui"
-  },
-  "contacts": {
-    "addContact": "Ajouter un contact",
-    "bubbleTitle": "Que veux-tu faire?",
-    "defaultContacts": {
-      "helpingHand": {
-        "family": "Tendue",
-        "given": "La Main"
-      },
-      "proJuventute": {
-        "family": "Juventute",
-        "given": "Pro"
-      }
-    },
-    "deleteContact": "Effacer un contact",
-    "editContact": "Modifier un contact",
-    "err": {
-      "family": {
-        "invalid": "Le nom de famille doit être composé de lettres.",
-        "required": "Ajoute un nom de famille, s'il te plaît."
-      },
-      "given": {
-        "invalid": "Le prénom doit être composé de lettres.",
-        "required": "Ajoute un prénom de famille, s'il te plaît."
-      },
-      "phone": {
-        "invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
-        "required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
-      }
-    },
-    "importContact": "Importer un contact",
-    "permissionAndroid": {
-      "message": "L'accès aux contacts te permet d'importer les numéros de téléphone des personnes importantes dans l'application SERO et de pouvoir les appeler directement.",
-      "title": "\"SERO\" désire accéder à tes contacts"
-    },
-    "selectContact": "Choisir un contact",
-    "title": "Mes contacts"
-  },
-  "information": {
-    "about": {
-      "content": [
-        {
-          "item": [
-            {
-              "item": [
-                {
-                  "label": "Ici, tu appelles directement le numéro d'urgence 144. Le numéro d'urgence est accessible 24h/24 et 7j/7. \n\nSi nécessaire, les services de secours se rendent également sur place. (Attention : coûts élevés qui peuvent être à ta charge).",
-                  "type": "text"
-                }
-              ],
-              "label": "Appel d'urgence",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Ici, tu peux ajouter des contacts de ton entourage qui peuvent te soutenir en cas de crise suicidaire. \n\nIls apparaissent sur la page d'accueil afin que tu puisses les contacter rapidement en cas d'urgence. \n\nLa Main Tendue \"Tel 143\" est joignable 24 heures sur 24 et est toujours à ton écoute.",
-                  "type": "text"
-                }
-              ],
-              "label": "Appeler le contact d'urgence",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "item": [
-                    {
-                      "label": "Avec PRISM™-S, tu peux facilement évaluer rapidement le niveau de risque de suicide auquel tu es actuellement confronté et la distance qui te sépare d'un acte suicidaire.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Qu'est-ce que PRISM™-S ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Pour que les évaluations des risques puissent être comparées avec PRISM™-S, la méthode est standardisée. Utilise donc les termes suivants : \n\nLa surface blanche représente ta vie ou ton espace de vie. Le point jaune, c'est toi dans ta vie. Le disque noir représente ton envie actuelle de prendre ta vie en main.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Comment appelle-t-on les différents composants de PRISM™-S ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "La méthode a été évaluée scientifiquement et est utilisée depuis des décennies. Les évaluations du risque suicidaire peuvent être réalisées rapidement et facilement en 2 à 5 minutes environ avec PRISM™-S.\n\nTu obtiens ainsi une image de ton risque de suicide actuel, tu peux l'enregistrer, la consulter ultérieurement et la communiquer à des personnes de confiance. \n\nLes questions suivantes peuvent t'aider à comprendre comment tu te sens en ce moment et ce qui est lié au risque de suicide (par ex. pensées, sentiments).",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Quelles sont les principales caractéristiques de PRISM™-S ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Lors de l'évaluation et de la réponse aux questions suivantes, il ne s'agit pas d'avoir <raison> / <tort>, <bon> / <mauvais>, mais simplement de noter graphiquement ta tendance suicidaire du moment. \n\nTu places le disque noir (ton envie de te suicider) avec le doigt dans ta vie (surface blanche). Et ce, aussi près ou aussi loin de toi (point jaune) que tu le perçois à ce moment-là.\n\nEnsuite, pose-toi la question de savoir ce que cela signifie concrètement pour toi si tu places cette pulsion à cet endroit précis. Quelles sont les pensées et les sentiments présents ? Et qu'est-ce qui éloigne la pulsion de toi (capacité de résistance/résilience) ? Tu peux saisir et enregistrer ces impressions importantes dans les questions.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Comment se déroule ton évaluation avec PRISM™-S ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Sous <goTo0>{{address0}}</goTo0>, tu trouveras des informations détaillées, le contexte scientifique et des références bibliographiques.",
-                      "links": [
-                        {
-                          "address": "https://prismium.ch",
-                          "name": "https://prismium.ch"
-                        }
-                      ],
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Où puis-je trouver plus d'informations sur PRISM™-S ?",
-                  "type": "title"
-                }
-              ],
-              "label": "Mon évaluation",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "item": [
-                    {
-                      "label": "Les situations de crise peuvent limiter la pensée et l'action.\n\nLe plan de sécurité te permet de te préparer au mieux aux crises suicidaires et de l'utiliser comme soutien en cas de crise suicidaire.\n\nDans le plan de sécurité, tu peux noter les signes avant-coureurs, les stratégies et ta motivation à vivre. Cela devrait te servir d'orientation pendant la crise.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Qu'est-ce que le plan de sécurité ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Tu peux créer un nouveau plan de sécurité en appuyant sur le crayon dans les sections et en ajoutant tes propres entrées. En bas, tu peux enregistrer ton plan de sécurité actuel.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Comment établir un plan de sécurité ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Tu as la possibilité de définir toi-même l'ordre des sections du plan de sécurité. Pour ce faire, déplace le symbole de la section à l'endroit souhaité.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Puis-je choisir l'ordre des sections du plan de sécurité ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Si tu as des difficultés à rédiger ton plan de sécurité personnel ou à comprendre le contenu des différentes sections, contacte tes personnes de confiance et demande-leur de l'aide.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Qui peut m'aider ou où puis-je obtenir de l'aide pour l'élaboration du plan de sécurité ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Pour passer un appel, il te suffit de cliquer sur le numéro de téléphone souhaité dans le plan de sécurité, qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\".\n\nPour la ligne de conseil de la lups, un pop-up t'informe que l'appel peut être payant.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Comment puis-je appeler quelqu'un qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\" ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Tu as la possibilité de continuer à modifier le plan de sécurité actuel. Pour ce faire, appuie sur \"Options\" et sélectionne \"Modifier le plan de sécurité\".\n\nSi tu souhaites créer un nouveau plan de sécurité, tu peux également le sélectionner sous \"Options\". Le plan de sécurité actuel sera alors archivé et un nouveau plan de sécurité vide apparaîtra.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Puis-je modifier le plan de sécurité actuel ou dois-je en créer un nouveau ?",
-                  "type": "title"
-                },
-                {
-                  "item": [
-                    {
-                      "label": "Dès que tu crées un nouveau plan de sécurité, le plan de sécurité existant est automatiquement archivé.\n\nTu peux toutefois continuer à consulter et à utiliser son contenu dans les archives. Pour cela, il suffit d'aller dans l'archive et d'afficher le plan de sécurité archivé via l'application SERO.",
-                      "type": "text"
-                    }
-                  ],
-                  "label": "Pourquoi mon plan de sécurité passé a-t-il été archivé et puis-je encore y accéder ?",
-                  "type": "title"
-                }
-              ],
-              "label": "Mon plan de sécurité",
-              "type": "subgroup"
-            }
-          ],
-          "label": "Fonctions",
-          "type": "group"
-        },
-        {
-          "item": [
-            {
-              "item": [
-                {
-                  "label": "L'éditeur de l'application est le service de psychiatrie de Lucerne.\n\nL'application a été développée en collaboration avec Promotion Santé Suisse et d'autres <goTo0>{{address0}}</goTo0>.\n\nDes personnes ayant une expérience personnelle (pensées suicidaires) et des proches ont également participé au développement. Grâce aux réactions obtenues lors des phases de test, l'application a pu être améliorée en permanence.",
-                  "links": [
-                    {
-                      "address": "https://sero-suizidpraevention.ch/",
-                      "name": "Partenaires du projet SERO"
-                    }
-                  ],
-                  "type": "text"
-                }
-              ],
-              "label": "Qui a développé l'application SERO et qui en est l'éditeur ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "L'application peut être téléchargée gratuitement dans l'App-Store/Google Play et utilisée avec un smartphone. L'utilisation de l'application est gratuite.",
-                  "type": "text"
-                }
-              ],
-              "label": "Où puis-je obtenir l'application SERO et combien me coûte l'utilisation de l'application ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "<goTo0>{{address0}}</goTo0> est une coopérative suisse qui exploite ses serveurs en Suisse. MIDATA respecte toutes les lois suisses et fait beaucoup plus pour protéger tes données. Tes données restent en Suisse et ne sont pas transmises à des tiers.\n\nPour que l'application puisse être améliorée, les données sont traitées de manière anonyme (!) dans le <goTo1>{{address1}}</goTo1>.",
-                  "links": [
-                    {
-                      "address": "https://www.midata.coop/fr/accueil/",
-                      "name": "MIDATA"
-                    },
-                    {
-                      "address": "https://sero-suizidpraevention.ch/",
-                      "name": "Projet SERO"
-                    }
-                  ],
-                  "type": "text"
-                }
-              ],
-              "label": "Qui est MIDATA et mes données sont-elles en sécurité ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Lorsque tu utilises l'application, tu ouvres un compte chez MIDATA. Tu es le seul à avoir accès à ce \"compte de données de santé\". Personne d'autre (pas même MIDATA) ne voit les données que tu introduis dans l'application. Et tu es le seul à décider à qui tu veux transmettre tes données.\n\nNous te recommandons de discuter avec tes personnes de confiance de l'utilisation de l'application.",
-                  "type": "text"
-                }
-              ],
-              "label": "Qu'advient-il des données que j'ai saisies et qui peut les consulter ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Pour le moment, tu as la possibilité de faire tes propres écrans d'impression et de les envoyer.\n\nDans la deuxième version de l'application SERO, cela sera automatiquement possible au sein de l'application. La deuxième version sera disponible au téléchargement à l'automne 2023.",
-                  "type": "text"
-                }
-              ],
-              "label": "Puis-je exporter le plan de sécurité et mes évaluations ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Ton \"compte de données de santé\" chez MIDATA reste actif malgré la suppression de l'app SERO. Tu peux aussi utiliser ton compte pour d'autres apps, si elles collaborent avec MIDATA.\n\nSi tu veux aussi supprimer ton compte, tu peux le faire <goTo0>{{address0}}</goTo0>.",
-                  "links": [
-                    {
-                      "address": "tbd",
-                      "name": "ici"
-                    }
-                  ],
-                  "type": "text"
-                }
-              ],
-              "label": "Qu'advient-il de mes données si je supprime l'application ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Merci d'écrire un commentaire dans l'App Store. Si tu utilises Android <goTo0>{{address0}}</goTo0>. Si tu utilises un iPhone, merci d'utiliser <goTo1>{{address1}}</goTo1>.\n\nTu peux volontiers envoyer tes critiques, propositions d'amélioration, idées et souhaits concernant l'application via le formulaire de contact au projet SERO <goTo2>{{address2}}</goTo2> ou à <goTo3>{{address3}}</goTo3>.",
-                  "links": [
-                    {
-                      "address": "tbd",
-                      "name": "ici"
-                    },
-                    {
-                      "address": "tbd",
-                      "name": "ici"
-                    },
-                    {
-                      "address": "tbd",
-                      "name": "ici"
-                    },
-                    {
-                      "address": "mailto:info@lups.ch",
-                      "name": "info@lups.ch"
-                    }
-                  ],
-                  "type": "text"
-                }
-              ],
-              "label": "Comment recommander l'application ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Nous te recommandons d'en parler avec tes personnes de confiance.\n\nIl peut s'agir de personnes de ton entourage privé ou/et de professionnels de l'aide.",
-                  "type": "text"
-                }
-              ],
-              "label": "Avec qui vais-je discuter de l'utilisation de l'application ?",
-              "type": "subgroup"
-            },
-            {
-              "item": [
-                {
-                  "label": "Parle à tes proches, à ta famille, à tes amis et/ou à des professionnels comme le médecin de famille, les soins à domicile, l'hôpital, le psychologue, le psychiatre, etc.\n\nPour cela, tu peux enregistrer tes personnes/contacts les plus importants dans l'application.\n\n<goTo0>{{address0}}</goTo0> est à ton écoute 24h/24 et 7j/7. <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> proposent également des consultations.\n\nTu trouveras des offres d'aide dans toute la Suisse <goTo3>{{address3}}</goTo3>.",
-                  "links": [
-                    {
-                      "address": "tel:143",
-                      "name": "La main tendue Tél. 143"
-                    },
-                    {
-                      "address": "https://promentesana.ch/angebote/beratung/beratung-fuer-betroffene-nahestehende",
-                      "name": "Pro Mente Sana"
-                    },
-                    {
-                      "address": "https://www.lups.ch/notfall/",
-                      "name": "Psychiatrie de Lucerne"
-                    },
-                    {
-                      "address": "https://www.parler-peut-sauver.ch/",
-                      "name": "ici"
-                    }
-                  ],
-                  "type": "text"
-                }
-              ],
-              "label": "À qui s'adresser en cas de crise et où trouver de l'aide ?",
-              "type": "subgroup"
-            }
-          ],
-          "label": "FAQ",
-          "type": "group"
-        },
-        {
-          "item": [
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.parler-peut-sauver.ch/",
-                  "name": "Parler peut sauver"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://sero-suizidpraevention.ch/",
-                  "name": "Projet SERO"
-                }
-              ],
-              "type": "text"
-            }
-          ],
-          "label": "Liens importants",
-          "type": "group"
-        }
-      ],
-      "title": "À propos de l'application"
-    },
-    "imprint": {
-      "content": [
-        {
-          "item": [
-            {
-              "item": [
-                {
-                  "label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch",
-                  "type": "text"
-                }
-              ],
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.lups.ch/",
-                  "name": "Psychiatrie de Lucerne"
-                }
-              ],
-              "type": "text"
-            }
-          ],
-          "label": "Éditeur",
-          "type": "group"
-        },
-        {
-          "item": [
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.hohenegg.ch/",
-                  "name": "Hohenegg"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://prismium.ch/de/die-prism-methode.html",
-                  "name": "Prismium"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.bfh.ch/fr/",
-                  "name": "Haute école spécialisée bernoise"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://promentesana.ch/",
-                  "name": "Pro Mente Sana"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "",
-              "links": [
-                {
-                  "address": "https://promotionsante.ch/",
-                  "name": "Promotion Santé Suisse"
-                }
-              ],
-              "type": "text"
-            }
-          ],
-          "label": "Organisations responsables",
-          "type": "group"
-        },
-        {
-          "item": [
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.midata.coop/fr/accueil/",
-                  "name": "MIDATA"
-                }
-              ],
-              "type": "text"
-            }
-          ],
-          "label": "Plateforme de données",
-          "type": "group"
-        },
-        {
-          "item": [
-            {
-              "label": "<goTo0>{{address0}}</goTo0>",
-              "links": [
-                {
-                  "address": "https://www.bfh.ch/fr/recherche/domaines-de-recherche/institute-medical-informatics-i4mi/",
-                  "name": "Haute école spécialisée bernoise BFH\nInstitut d’informatique médicale I4MI"
-                }
-              ],
-              "type": "text"
-            },
-            {
-              "label": "Version 0.7.0 (Build 007000)",
-              "type": "text"
-            }
-          ],
-          "label": "Développement App",
-          "type": "group"
-        }
-      ],
-      "title": "Impressum"
-    },
-    "legal": {
-      "content": [
-        {
-          "item": [
-            {
-              "item": [
-                {
-                  "item": [
-                    {
-                      "label": "Contacts personnels (privés/professionnels)",
-                      "type": "listitem"
-                    },
-                    {
-                      "label": "Contact d'urgence",
-                      "type": "listitem"
-                    },
-                    {
-                      "label": "Auto-évaluation du risque de suicide avec PRISM-S",
-                      "type": "listitem"
-                    },
-                    {
-                      "label": "Plan de sécurité",
-                      "type": "listitem"
-                    },
-                    {
-                      "label": "Informations",
-                      "type": "listitem"
-                    }
-                  ],
-                  "label": "L'application SERO t'aide à documenter ta suicidalité actuelle pendant et entre les crises suicidaires.\n\nL'application doit servir à ton autogestion. L'application n'est pas une mesure thérapeutique. Nous te recommandons d'en parler avec tes personnes de confiance si tu l'utilises. Il peut s'agir de personnes de ton entourage privé ou de spécialistes.\n\nIl faut du courage pour parler de ses pensées suicidaires ou pour demander de l'aide. L'application peut éventuellement te soutenir dans cette démarche.\n\nLes fonctions de l'application SERO sont",
-                  "type": "text"
-                }
-              ],
-              "label": "À quoi me sert l'application SERO ?",
-              "type": "title"
-            }
-          ],
-          "label": "Destination",
-          "type": "group"
-        },
-        {
-          "label": "Déclaration de confidentialité",
-          "type": "group"
-        },
-        {
-          "label": "Conditions d'utilisation",
-          "type": "group"
-        }
-      ],
-      "title": "Mentions légales"
-    },
-    "title": "Informations"
-  },
-  "main": {
-    "callEmergencyBottom": "urgences",
-    "callEmergencyTop": "Appeler",
-    "default": "Découvre l'application SERO! C'est parti...",
-    "greeting": "Salut {{name}}",
-    "securityplanUpdated": "Ton plan de sécurité est-il toujours d'actualité?",
-    "titleContacts": "Mes contacts"
-  },
-  "onboarding": {
-    "assessment": {
-      "text": "Comment te sens-tu en ce moment ? Tu découvres ici un outil qui te permet de montrer comment tu te sens.",
-      "title": "Mon évaluation"
-    },
-    "contacts": {
-      "text": "Ici, tu peux enregistrer les contacts de tes personnes importantes et les appeler directement.",
-      "title": "Gérer mes contacts"
-    },
-    "emergency": {
-      "text": "Ici, tu peux appeler directement le numéro d'urgence des services de secours 144.",
-      "title": "Appeler le contact d'urgence"
-    },
-    "midata": {
-      "text": "Enregistre-toi auprès de MIDATA lors de la première utilisation de l'application SERO afin de sauvegarder tes entrées.\n\nCelles-ci seront stockées en toute sécurité sur la plateforme de données MIDATA et tu seras le seul à y avoir accès.\n\nTu pourras ensuite utiliser toutes les fonctions de l'application SERO.",
-      "title": "Inscription à MIDATA"
-    },
-    "securityplan": {
-      "text": "Ton plan de sécurité t'aide à prendre les bonnes décisions avant et pendant la crise.",
-      "title": "Mon plan de sécurité"
-    }
-  },
-  "securityplan": {
-    "addEntry": "Ajouter une entrée",
-    "alertLups": {
-      "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
-      "title": "Ligne de conseil LUPS"
-    },
-    "archive": "Plans de sécurité antérieurs",
-    "bubbleTitle": "Que veux-tu faire?",
-    "current": "Plan de sécurité actuel",
-    "defaultHint": "Ici, tu peux accéder à ton plan de sécurité actuel, le modifier et consulter les versions précédentes.",
-    "editHint": "Tu peux réorganiser les sections en les faisant glisser vers un autre endroit de la liste.\nEn cliquant sur le crayon, tu peux modifier leur contenu.",
-    "editSecurityplan": "Modifier le plan de sécurité",
-    "examples": {
-      "copingStrategies": "p. ex. dessiner, faire des exercices de relaxation, cuisiner, écouter de la musique, etc.",
-      "distractionStrategies": "p. ex. rencontrer des amis, se promener en forêt, aller au cinéma, faire du vélo, etc."
-    },
-    "former": "Plan de sécurité précédent",
-    "intro": {
-      "content": "Les situations de crise peuvent limiter tes pensées, tes sentiments et tes actions.\n\nTon plan de sécurité a pour objectif de te préparer au mieux aux crises suicidaires et d'éviter ainsi les comportements suicidaires.\n\nDans le plan de sécurité, tu définis des procédures d'action individuelles pour faire face à une crise suicidaire, de sorte qu'elles te servent d'orientation pendant la crise.\n\nElabore le plan de sécurité dans une phase stable. Les professionnels peuvent apporter leur soutien lorsqu'il s'agit de vérifier si le plan de sécurité élaboré est réaliste et réalisable en situation de crise.",
-      "title": "Plan de sécurité"
-    },
-    "newSecurityplan": "Créer un nouveau plan de sécurité",
-    "notification": {
-      "copingStrategies": "Ce qui t'aide :",
-      "distractionStrategies": "Ce qui te distrait :",
-      "motivation": "Ce qui te motive :",
-      "personalBeliefs": "La croyance suivante t'aidera :"
-    },
-    "title": "Mon plan de\nsécurité",
-    "tutorial": {
-      "content": "Ton plan de sécurité se compose des sections \"Ma motivation à vivre\", \"Mes signes avant-coureurs\", \"Mes stratégies d'adaptation\", \"Mes stratégies de distraction\", \"Mes croyances\" et \"Les numéros d'aide et d'urgence\".\n\nTu peux créer un nouveau plan de sécurité en appuyant sur le crayon dans les sections et en y ajoutant tes propres entrées. En bas, tu peux enregistrer ton plan de sécurité actuel.\n\nTu as la possibilité de définir toi-même l'ordre des sections du plan de sécurité. Pour ce faire, déplace le symbole de la section à l'endroit souhaité.\n\nPour passer un appel, tu cliques sur le numéro de téléphone souhaité dans le plan de sécurité, qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\".\n\nSi tu as des difficultés à créer ton plan de sécurité personnel ou à comprendre le contenu des différentes sections, contacte tes personnes de confiance et demande-leur de l'aide.",
-      "title": "Instructions"
-    }
-  },
-  "settings": {
-    "later": "Remarque: les préférences seront intégrées dans une version ultérieure.",
-    "logout": "Se déconnecter",
-    "title": "Préférences"
-  },
-  "welcome": {
-    "greetingText": "Les pages suivantes t'expliquent les principales fonctions de l'application SERO. Ensuite, tu pourras t'enregistrer.",
-    "title": "Soyez les bienvenus.\nJe suis content que tu sois là."
-  }
+	"assessment": {
+		"addEntry": "Nouvelle évaluation",
+		"archive": "Evaluations précédentes",
+		"bubbleTitle": "Que veux-tu faire?",
+		"cancelQuestion": "Tu veux vraiment annuler?",
+		"defaultHint": "Comment vas-tu ?",
+		"followUpTitle": "Questions de suivi",
+		"former": "Évaluation précédente",
+		"goToEmergencyContact": "Appeler quelqu'un",
+		"goToMainPage": "Aller à la page d'aperçu",
+		"goTosecurityplan": "Consulter le plan de sécurité",
+		"image": "Photo de la plaque",
+		"intro": {
+			"description": "Quelle est l'intensité de ton envie de te suicider maintenant ?",
+			"explanation": {
+				"item1": "La surface blanche représente ta vie.",
+				"item2": "Le point jaune, c'est toi dans ta vie.",
+				"item3": "Le disque noir représente ton envie de te suicider."
+			},
+			"title": "PRISM™-S"
+		},
+		"newImage": "Photographier la plaque PRISM-S",
+		"permissionAndroid": {
+			"message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
+			"title": "\"SERO\" désire accéder à la caméra"
+		},
+		"selectImage": "Sélectionner une photo de la plaque PRISM-S dans l'album",
+		"title": "Mon évaluation",
+		"tutorial": {
+			"description": "Place le disque noir dans ta vie.",
+			"distance": "Plus la distance est grande, moins l'envie de se suicider est forte.",
+			"imageHint": "Si tu as fait l'évaluation sur un disque physique, tu peux aussi importer une photo du disque.",
+			"questions": {
+				"item1": "Quelle place occupe dans ta vie ton envie de te suicider maintenant ?",
+				"item2": "À quel point cette pulsion est-elle proche ou éloignée de toi (point jaune) en ce moment ?"
+			}
+		}
+	},
+	"common": {
+		"archive": "Archives",
+		"back": "Retour",
+		"cancel": "Annuler",
+		"delete": "Effacer",
+		"family": "Nom de famille",
+		"given": "Prénom",
+		"loading": "Chargement des données",
+		"next": "Suivant",
+		"no": "Non",
+		"ok": "OK",
+		"options": "Options",
+		"phone": "Téléphone",
+		"save": "Enregistrer",
+		"search": "Rechercher",
+		"start": "Commencer",
+		"tutorial": "Instructions",
+		"yes": "Oui"
+	},
+	"contacts": {
+		"addContact": "Ajouter un contact",
+		"bubbleTitle": "Que veux-tu faire?",
+		"defaultContacts": {
+			"helpingHand": {
+				"family": "Tendue",
+				"given": "La Main"
+			},
+			"proJuventute": {
+				"family": "Juventute",
+				"given": "Pro"
+			}
+		},
+		"deleteContact": "Effacer un contact",
+		"editContact": "Modifier un contact",
+		"err": {
+			"family": {
+				"invalid": "Le nom de famille doit être composé de lettres.",
+				"required": "Ajoute un nom de famille, s'il te plaît."
+			},
+			"given": {
+				"invalid": "Le prénom doit être composé de lettres.",
+				"required": "Ajoute un prénom de famille, s'il te plaît."
+			},
+			"phone": {
+				"invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
+				"required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
+			}
+		},
+		"importContact": "Importer un contact",
+		"permissionAndroid": {
+			"message": "L'accès aux contacts te permet d'importer les numéros de téléphone des personnes importantes dans l'application SERO et de pouvoir les appeler directement.",
+			"title": "\"SERO\" désire accéder à tes contacts"
+		},
+		"selectContact": "Choisir un contact",
+		"title": "Mes contacts"
+	},
+	"information": {
+		"about": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "Ici, tu appelles directement le numéro d'urgence 144. Le numéro d'urgence est accessible 24h/24 et 7j/7. \n\nSi nécessaire, les services de secours se rendent également sur place. (Attention : coûts élevés qui peuvent être à ta charge).",
+									"type": "text"
+								}
+							],
+							"label": "Appel d'urgence",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Ici, tu peux ajouter des contacts de ton entourage qui peuvent te soutenir en cas de crise suicidaire. \n\nIls apparaissent sur la page d'accueil afin que tu puisses les contacter rapidement en cas d'urgence. \n\nLa Main Tendue \"Tel 143\" est joignable 24 heures sur 24 et est toujours à ton écoute.",
+									"type": "text"
+								}
+							],
+							"label": "Appeler le contact d'urgence",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "Avec PRISM™-S, tu peux facilement évaluer rapidement le niveau de risque de suicide auquel tu es actuellement confronté et la distance qui te sépare d'un acte suicidaire.",
+											"type": "text"
+										}
+									],
+									"label": "Qu'est-ce que PRISM™-S ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Pour que les évaluations des risques puissent être comparées avec PRISM™-S, la méthode est standardisée. Utilise donc les termes suivants : \n\nLa surface blanche représente ta vie ou ton espace de vie. Le point jaune, c'est toi dans ta vie. Le disque noir représente ton envie actuelle de prendre ta vie en main.",
+											"type": "text"
+										}
+									],
+									"label": "Comment appelle-t-on les différents composants de PRISM™-S ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "La méthode a été évaluée scientifiquement et est utilisée depuis des décennies. Les évaluations du risque suicidaire peuvent être réalisées rapidement et facilement en 2 à 5 minutes environ avec PRISM™-S.\n\nTu obtiens ainsi une image de ton risque de suicide actuel, tu peux l'enregistrer, la consulter ultérieurement et la communiquer à des personnes de confiance. \n\nLes questions suivantes peuvent t'aider à comprendre comment tu te sens en ce moment et ce qui est lié au risque de suicide (par ex. pensées, sentiments).",
+											"type": "text"
+										}
+									],
+									"label": "Quelles sont les principales caractéristiques de PRISM™-S ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Lors de l'évaluation et de la réponse aux questions suivantes, il ne s'agit pas d'avoir <raison> / <tort>, <bon> / <mauvais>, mais simplement de noter graphiquement ta tendance suicidaire du moment. \n\nTu places le disque noir (ton envie de te suicider) avec le doigt dans ta vie (surface blanche). Et ce, aussi près ou aussi loin de toi (point jaune) que tu le perçois à ce moment-là.\n\nEnsuite, pose-toi la question de savoir ce que cela signifie concrètement pour toi si tu places cette pulsion à cet endroit précis. Quelles sont les pensées et les sentiments présents ? Et qu'est-ce qui éloigne la pulsion de toi (capacité de résistance/résilience) ? Tu peux saisir et enregistrer ces impressions importantes dans les questions.",
+											"type": "text"
+										}
+									],
+									"label": "Comment se déroule ton évaluation avec PRISM™-S ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Sous <goTo0>{{address0}}</goTo0>, tu trouveras des informations détaillées, le contexte scientifique et des références bibliographiques.",
+											"links": [
+												{
+													"address": "https://prismium.ch",
+													"name": "https://prismium.ch"
+												}
+											],
+											"type": "text"
+										}
+									],
+									"label": "Où puis-je trouver plus d'informations sur PRISM™-S ?",
+									"type": "title"
+								}
+							],
+							"label": "Mon évaluation",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "Les situations de crise peuvent limiter la pensée et l'action.\n\nLe plan de sécurité te permet de te préparer au mieux aux crises suicidaires et de l'utiliser comme soutien en cas de crise suicidaire.\n\nDans le plan de sécurité, tu peux noter les signes avant-coureurs, les stratégies et ta motivation à vivre. Cela devrait te servir d'orientation pendant la crise.",
+											"type": "text"
+										}
+									],
+									"label": "Qu'est-ce que le plan de sécurité ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Tu peux créer un nouveau plan de sécurité en appuyant sur le crayon dans les sections et en ajoutant tes propres entrées. En bas, tu peux enregistrer ton plan de sécurité actuel.",
+											"type": "text"
+										}
+									],
+									"label": "Comment établir un plan de sécurité ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Tu as la possibilité de définir toi-même l'ordre des sections du plan de sécurité. Pour ce faire, déplace le symbole de la section à l'endroit souhaité.",
+											"type": "text"
+										}
+									],
+									"label": "Puis-je choisir l'ordre des sections du plan de sécurité ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Si tu as des difficultés à rédiger ton plan de sécurité personnel ou à comprendre le contenu des différentes sections, contacte tes personnes de confiance et demande-leur de l'aide.",
+											"type": "text"
+										}
+									],
+									"label": "Qui peut m'aider ou où puis-je obtenir de l'aide pour l'élaboration du plan de sécurité ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Pour passer un appel, il te suffit de cliquer sur le numéro de téléphone souhaité dans le plan de sécurité, qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\".\n\nPour la ligne de conseil de la lups, un pop-up t'informe que l'appel peut être payant.",
+											"type": "text"
+										}
+									],
+									"label": "Comment puis-je appeler quelqu'un qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\" ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Tu as la possibilité de continuer à modifier le plan de sécurité actuel. Pour ce faire, appuie sur \"Options\" et sélectionne \"Modifier le plan de sécurité\".\n\nSi tu souhaites créer un nouveau plan de sécurité, tu peux également le sélectionner sous \"Options\". Le plan de sécurité actuel sera alors archivé et un nouveau plan de sécurité vide apparaîtra.",
+											"type": "text"
+										}
+									],
+									"label": "Puis-je modifier le plan de sécurité actuel ou dois-je en créer un nouveau ?",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Dès que tu crées un nouveau plan de sécurité, le plan de sécurité existant est automatiquement archivé.\n\nTu peux toutefois continuer à consulter et à utiliser son contenu dans les archives. Pour cela, il suffit d'aller dans l'archive et d'afficher le plan de sécurité archivé via l'application SERO.",
+											"type": "text"
+										}
+									],
+									"label": "Pourquoi mon plan de sécurité passé a-t-il été archivé et puis-je encore y accéder ?",
+									"type": "title"
+								}
+							],
+							"label": "Mon plan de sécurité",
+							"type": "subgroup"
+						}
+					],
+					"label": "Fonctions",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "L'éditeur de l'application est le service de psychiatrie de Lucerne.\n\nL'application a été développée en collaboration avec Promotion Santé Suisse et d'autres <goTo0>{{address0}}</goTo0>.\n\nDes personnes ayant une expérience personnelle (pensées suicidaires) et des proches ont également participé au développement. Grâce aux réactions obtenues lors des phases de test, l'application a pu être améliorée en permanence.",
+									"links": [
+										{
+											"address": "https://sero-suizidpraevention.ch/",
+											"name": "Partenaires du projet SERO"
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "Qui a développé l'application SERO et qui en est l'éditeur ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "L'application peut être téléchargée gratuitement dans l'App-Store/Google Play et utilisée avec un smartphone. L'utilisation de l'application est gratuite.",
+									"type": "text"
+								}
+							],
+							"label": "Où puis-je obtenir l'application SERO et combien me coûte l'utilisation de l'application ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "<goTo0>{{address0}}</goTo0> est une coopérative suisse qui exploite ses serveurs en Suisse. MIDATA respecte toutes les lois suisses et fait beaucoup plus pour protéger tes données. Tes données restent en Suisse et ne sont pas transmises à des tiers.\n\nPour que l'application puisse être améliorée, les données sont traitées de manière anonyme (!) dans le <goTo1>{{address1}}</goTo1>.",
+									"links": [
+										{
+											"address": "https://www.midata.coop/fr/accueil/",
+											"name": "MIDATA"
+										},
+										{
+											"address": "https://sero-suizidpraevention.ch/",
+											"name": "Projet SERO"
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "Qui est MIDATA et mes données sont-elles en sécurité ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Lorsque tu utilises l'application, tu ouvres un compte chez MIDATA. Tu es le seul à avoir accès à ce \"compte de données de santé\". Personne d'autre (pas même MIDATA) ne voit les données que tu introduis dans l'application. Et tu es le seul à décider à qui tu veux transmettre tes données.\n\nNous te recommandons de discuter avec tes personnes de confiance de l'utilisation de l'application.",
+									"type": "text"
+								}
+							],
+							"label": "Qu'advient-il des données que j'ai saisies et qui peut les consulter ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Pour le moment, tu as la possibilité de faire tes propres écrans d'impression et de les envoyer.\n\nDans la deuxième version de l'application SERO, cela sera automatiquement possible au sein de l'application. La deuxième version sera disponible au téléchargement à l'automne 2023.",
+									"type": "text"
+								}
+							],
+							"label": "Puis-je exporter le plan de sécurité et mes évaluations ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Ton \"compte de données de santé\" chez MIDATA reste actif malgré la suppression de l'app SERO. Tu peux aussi utiliser ton compte pour d'autres apps, si elles collaborent avec MIDATA.\n\nSi tu veux aussi supprimer ton compte, tu peux le faire <goTo0>{{address0}}</goTo0>.",
+									"links": [
+										{
+											"address": "tbd",
+											"name": "ici"
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "Qu'advient-il de mes données si je supprime l'application ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Merci d'écrire un commentaire dans l'App Store. Si tu utilises Android <goTo0>{{address0}}</goTo0>. Si tu utilises un iPhone, merci d'utiliser <goTo1>{{address1}}</goTo1>.\n\nTu peux volontiers envoyer tes critiques, propositions d'amélioration, idées et souhaits concernant l'application via le formulaire de contact au projet SERO <goTo2>{{address2}}</goTo2> ou à <goTo3>{{address3}}</goTo3>.",
+									"links": [
+										{
+											"address": "tbd",
+											"name": "ici"
+										},
+										{
+											"address": "tbd",
+											"name": "ici"
+										},
+										{
+											"address": "tbd",
+											"name": "ici"
+										},
+										{
+											"address": "mailto:info@lups.ch",
+											"name": "info@lups.ch"
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "Comment recommander l'application ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Nous te recommandons d'en parler avec tes personnes de confiance.\n\nIl peut s'agir de personnes de ton entourage privé ou/et de professionnels de l'aide.",
+									"type": "text"
+								}
+							],
+							"label": "Avec qui vais-je discuter de l'utilisation de l'application ?",
+							"type": "subgroup"
+						},
+						{
+							"item": [
+								{
+									"label": "Parle à tes proches, à ta famille, à tes amis et/ou à des professionnels comme le médecin de famille, les soins à domicile, l'hôpital, le psychologue, le psychiatre, etc.\n\nPour cela, tu peux enregistrer tes personnes/contacts les plus importants dans l'application.\n\n<goTo0>{{address0}}</goTo0> est à ton écoute 24h/24 et 7j/7. <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> proposent également des consultations.\n\nTu trouveras des offres d'aide dans toute la Suisse <goTo3>{{address3}}</goTo3>.",
+									"links": [
+										{
+											"address": "tel:143",
+											"name": "La main tendue Tél. 143"
+										},
+										{
+											"address": "https://promentesana.ch/angebote/beratung/beratung-fuer-betroffene-nahestehende",
+											"name": "Pro Mente Sana"
+										},
+										{
+											"address": "https://www.lups.ch/notfall/",
+											"name": "Psychiatrie de Lucerne"
+										},
+										{
+											"address": "https://www.parler-peut-sauver.ch/",
+											"name": "ici"
+										}
+									],
+									"type": "text"
+								}
+							],
+							"label": "À qui s'adresser en cas de crise et où trouver de l'aide ?",
+							"type": "subgroup"
+						}
+					],
+					"label": "FAQ",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.parler-peut-sauver.ch/",
+									"name": "Parler peut sauver"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://sero-suizidpraevention.ch/",
+									"name": "Projet SERO"
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "Liens importants",
+					"type": "group"
+				}
+			],
+			"title": "À propos de l'application"
+		},
+		"imprint": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch",
+									"type": "text"
+								}
+							],
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.lups.ch/",
+									"name": "Psychiatrie de Lucerne"
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "Éditeur",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.hohenegg.ch/",
+									"name": "Hohenegg"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://prismium.ch/de/die-prism-methode.html",
+									"name": "Prismium"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.bfh.ch/fr/",
+									"name": "Haute école spécialisée bernoise"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://promentesana.ch/",
+									"name": "Pro Mente Sana"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "",
+							"links": [
+								{
+									"address": "https://promotionsante.ch/",
+									"name": "Promotion Santé Suisse"
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "Organisations responsables",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.midata.coop/fr/accueil/",
+									"name": "MIDATA"
+								}
+							],
+							"type": "text"
+						}
+					],
+					"label": "Plateforme de données",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "<goTo0>{{address0}}</goTo0>",
+							"links": [
+								{
+									"address": "https://www.bfh.ch/fr/recherche/domaines-de-recherche/institute-medical-informatics-i4mi/",
+									"name": "Haute école spécialisée bernoise BFH\nInstitut d’informatique médicale I4MI"
+								}
+							],
+							"type": "text"
+						},
+						{
+							"label": "Version 0.7.0 (Build 007000)",
+							"type": "text"
+						}
+					],
+					"label": "Développement App",
+					"type": "group"
+				}
+			],
+			"title": "Impressum"
+		},
+		"legal": {
+			"content": [
+				{
+					"item": [
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "Contacts personnels (privés/professionnels)",
+											"type": "listitem"
+										},
+										{
+											"label": "Contact d'urgence",
+											"type": "listitem"
+										},
+										{
+											"label": "Auto-évaluation du risque de suicide avec PRISM-S",
+											"type": "listitem"
+										},
+										{
+											"label": "Plan de sécurité",
+											"type": "listitem"
+										},
+										{
+											"label": "Informations",
+											"type": "listitem"
+										}
+									],
+									"label": "L'application SERO t'aide à documenter ta suicidalité actuelle pendant et entre les crises suicidaires.\n\nL'application doit servir à ton autogestion. L'application n'est pas une mesure thérapeutique. Nous te recommandons d'en parler avec tes personnes de confiance si tu l'utilises. Il peut s'agir de personnes de ton entourage privé ou de spécialistes.\n\nIl faut du courage pour parler de ses pensées suicidaires ou pour demander de l'aide. L'application peut éventuellement te soutenir dans cette démarche.\n\nLes fonctions de l'application SERO sont",
+									"type": "text"
+								}
+							],
+							"label": "À quoi me sert l'application SERO ?",
+							"type": "title"
+						}
+					],
+					"label": "Destination",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "À propos de l'éditeur",
+							"type": "title"
+						},
+						{
+							"label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide. L'application \"SERO\" vous aide à documenter votre tendance suicidaire actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.",
+							"type": "text"
+						},
+						{
+							"label": "La protection des données revêt une importance particulière pour la psychiatrie lucernoise et est également assurée dans le cadre de l'application \"SERO\".",
+							"type": "text"
+						},
+						{
+							"label": "La loi sur la protection des données personnelles (Datenschutzgesetz, KDSG) du canton de Lucerne s'applique au traitement de vos données personnelles dans le cadre de l'application \"SERO\".",
+							"type": "text"
+						},
+						{
+							"label": "En acceptant les conditions d'utilisation de l'application \"SERO\", vous acceptez également la présente déclaration de confidentialité.",
+							"type": "text"
+						},
+						{
+							"item": [
+								{
+									"label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
+									"type": "text"
+								}
+							],
+							"label": "Contact",
+							"type": "title"
+						},
+						{
+							"item": [
+								{
+									"label": "Pour le stockage et la gestion sécurisés des données des utilisateurs, LUPS a fait appel à la coopérative <goTo0>{{address0}}</goTo0>, dont le siège est à Zurich. Toutes les données sont stockées en Suisse dans des comptes de données personnels cryptés. Pour l'utilisation des comptes de données, les <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> de la plate-forme MIDATA sont applicables.",
+									"links": [
+										{
+											"address": "https://www.midata.coop/fr/accueil/",
+											"name": "MIDATA"
+										},
+										{
+											"address": "",
+											"name": "Conditions générales"
+										},
+										{
+											"address": "https://ch.midata.coop/#/public/terms?which=midata-privacy-policy",
+											"name": "Déclaration de protection des données"
+										}
+									],
+									"type": "text"
+								},
+								{
+									"label": "En vous inscrivant à MIDATA, vous devenez propriétaire ou détenteur d'un compte de données chez MIDATA. Toutes les données sont cryptées et restent sous votre contrôle, ce qui signifie que vous pouvez disposer individuellement de vos données personnelles enregistrées sur la plate-forme MIDATA dans votre compte et les partager en tout ou en partie avec d'autres utilisateurs, avec MIDATA ou des tiers.",
+									"type": "text"
+								}
+							],
+							"label": "Stockage des données",
+							"type": "title"
+						},
+						{
+							"item": [
+								{
+									"item": [
+										{
+											"label": "Nom",
+											"type": "listitem"
+										},
+										{
+											"label": "Prénom",
+											"type": "listitem"
+										},
+										{
+											"label": "Adresse e-mail",
+											"type": "listitem"
+										},
+										{
+											"label": "Sexe",
+											"type": "listitem"
+										},
+										{
+											"label": "Date de naissance",
+											"type": "listitem"
+										},
+										{
+											"label": "Pays de résidence",
+											"type": "listitem"
+										}
+									],
+									"label": "Lors de l'inscription à MIDATA, les informations suivantes doivent être fournies dans le cadre de la procédure d'enregistrement :",
+									"type": "text"
+								},
+								{
+									"label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+									"type": "text"
+								},
+								{
+									"label": "Lors de l'utilisation des fonctions de l'application, des données à caractère personnel sont enregistrées. Ces données sont stockées dans des comptes de données personnelles cryptées, voir ci-dessous.",
+									"type": "text"
+								},
+								{
+									"item": [
+										{
+											"label": "Saisie de vos propres numéros d'urgence ou importation de vos propres numéros d'urgence et ajout de photos de profil personnalisées aux numéros d'urgence.",
+											"type": "listitem"
+										},
+										{
+											"label": "Saisie des réponses aux questions de la fonction PRISM-S, création et enregistrement d'enregistrements PRISM-S",
+											"type": "listitem"
+										},
+										{
+											"label": "Saisie et traitement des données pour le plan de sécurité",
+											"type": "listitem"
+										}
+									],
+									"label": "L'application permet de saisir et d'enregistrer les données suivantes :",
+									"type": "text"
+								},
+								{
+									"item": [
+										{
+											"label": "Vous seul(e) avez accès aux données en tant que propriétaire des données. Les autorisations accordées à des tiers (y compris MIDATA) doivent être transparentes et explicitement approuvées par vous. Les autorisations correspondantes sont consignées dans un protocole.",
+											"type": "text"
+										}
+									],
+									"label": "Accès aux données en général",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "En utilisant l'application, vous acceptez que les données que vous avez saisies soient évaluées scientifiquement sous forme anonyme dans le cadre du projet, dans le but de mieux comprendre la situation des personnes suicidaires, d'améliorer l'offre dans le cadre du projet \"SERO\", ainsi que d'améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+											"type": "text"
+										},
+										{
+											"label": "Les données anonymes analysées ne permettent pas de tirer des conclusions sur votre personne.",
+											"type": "text"
+										}
+									],
+									"label": "Consentement à la transmission de données sous forme anonymisée",
+									"type": "title"
+								},
+								{
+									"item": [
+										{
+											"label": "Si vous avez choisi de partager des données saisies, telles que l'auto-évaluation PRISM-S ou le plan de sécurité, avec des tiers, ces informations seront mises à la disposition des personnes que vous avez choisies.",
+											"type": "text"
+										},
+										{
+											"label": "St. Urban, avril 2022",
+											"type": "text"
+										}
+									],
+									"label": "Partage de données avec des tiers",
+									"type": "title"
+								}
+							],
+							"label": "Saisie des données",
+							"type": "title"
+						}
+					],
+					"label": "Déclaration de protection des données",
+					"type": "group"
+				},
+				{
+					"item": [
+						{
+							"label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+							"type": "text"
+						},
+						{
+							"item": [
+								{
+									"label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+									"type": "listitem"
+								},
+								{
+									"label": "Fonction \"Mon évaluation\".\nVous pouvez réfléchir à votre tendance suicidaire à l'aide de la méthodologie PRISM-S. Par ailleurs, l'auto-évaluation peut servir de base à un éventuel accompagnement par des professionnels.",
+									"type": "listitem"
+								},
+								{
+									"label": "Fonction \"Mon plan de sécurité\".\nVous pouvez créer un plan de sécurité avec des informations pertinentes pour mieux gérer les situations de crise.",
+									"type": "listitem"
+								},
+								{
+									"label": "Fonction \"Informations\".\nL'application fournit des informations sur le thème de la prévention du suicide et des liens complémentaires.",
+									"type": "listitem"
+								}
+							],
+							"label": "L'application \"SERO\" vous aide à documenter votre suicidalité actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.\n\nElle possède les fonctions suivantes :",
+							"type": "text"
+						},
+						{
+							"item": [
+								{
+									"label": "Pour l'utilisation de l'application, après une inscription sur la plateforme MIDATA, les données personnelles sont stockées dans des comptes de données personnelles cryptées sur la plateforme MIDATA, voir ci-dessous.",
+									"type": "text"
+								},
+								{
+									"item": [
+										{
+											"label": "Nom",
+											"type": "listitem"
+										},
+										{
+											"label": "Prénom",
+											"type": "listitem"
+										},
+										{
+											"label": "Adresse électronique",
+											"type": "listitem"
+										},
+										{
+											"label": "Sexe",
+											"type": "listitem"
+										},
+										{
+											"label": "Date de naissance",
+											"type": "listitem"
+										},
+										{
+											"label": "Pays de résidence",
+											"type": "listitem"
+										}
+									],
+									"label": "Lors de l'inscription sur la plateforme MIDATA pour l'utilisation de l'application, les informations nécessaires suivantes doivent être fournies dans le cadre du processus d'enregistrement :",
+									"type": "text"
+								},
+								{
+									"item": [
+										{
+											"item": [
+												{
+													"label": "Saisie de vos propres numéros d'urgence ou importation de vos propres numéros d'urgence et ajout de photos de profil personnalisées aux numéros d'urgence.",
+													"type": "listitem"
+												},
+												{
+													"label": "Saisie des réponses aux questions de la fonction PRISM-S, création et enregistrement d'enregistrements PRISM-S",
+													"type": "listitem"
+												},
+												{
+													"label": "Saisie et traitement des données pour le plan de sécurité",
+													"type": "listitem"
+												}
+											],
+											"label": "L'application permet de saisir et d'enregistrer les données suivantes :",
+											"type": "text"
+										}
+									],
+									"label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+									"type": "text"
+								},
+								{
+									"item": [
+										{
+											"label": "Ces informations sont utilisées pour l'enregistrement et l'identification ainsi que, le cas échéant, pour le traitement des demandes par MIDATA.",
+											"type": "text"
+										},
+										{
+											"label": "Vous pouvez également connecter votre compte de données MIDATA existant.",
+											"type": "text"
+										},
+										{
+											"label": "Des données anonymes sur le comportement des utilisateurs sont utilisées pour analyser et optimiser l'application. L'analyse est effectuée à l'aide du logiciel Matomo en masquant partiellement les adresses IP, de sorte qu'il n'est pas possible de tirer des conclusions sur des personnes individuelles.",
+											"type": "text"
+										},
+										{
+											"item": [
+												{
+													"label": "En utilisant l'application, vous acceptez que les données que vous avez saisies soient évaluées scientifiquement sous forme anonyme dans le cadre du projet, dans le but de mieux comprendre la situation des personnes suicidaires, d'améliorer l'offre dans le cadre du projet \"SERO\", ainsi que d'améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+													"type": "text"
+												},
+												{
+													"label": "Les données anonymes analysées ne permettent pas de tirer des conclusions sur votre personne.",
+													"type": "text"
+												},
+												{
+													"item": [
+														{
+															"label": "L'application \"SERO\" a pour but de soutenir l'autogestion pendant et entre les crises suicidaires. Elle ne remplace en aucun cas un diagnostic médical ou une thérapie. Si vous avez besoin d'aide, nous vous prions d'appeler immédiatement la main tendue 143 ou l'un des numéros d'urgence prédéfinis dans l'application.",
+															"type": "text"
+														},
+														{
+															"label": "La transmission des données sous forme anonymisée n'entraîne aucun avantage personnel direct. Les données anonymisées transmises contribuent à mieux comprendre la situation des personnes suicidaires, à améliorer l'offre dans le cadre du projet \"SERO\", ainsi qu'à améliorer l'offre générale et les services d'aide aux personnes suicidaires.",
+															"type": "text"
+														},
+														{
+															"item": [
+																{
+																	"label": "Vous avez à tout moment la possibilité de mettre fin au partage anonymisé des données collectées avec l'application sur le <goTo0>{{address0}}</goTo0>. Vous pouvez à tout moment exporter vos données et supprimer votre compte MIDATA et donc toutes les données qui y sont enregistrées.",
+																	"links": [
+																		{
+																			"address": "https://www.midata.coop/",
+																			"name": "Portail MIDATA"
+																		}
+																	],
+																	"type": "text"
+																}
+															],
+															"label": "Processus de retrait et effacement des données",
+															"type": "title"
+														},
+														{
+															"item": [
+																{
+																	"label": "Les données que vous fournissez pour le processus d'enregistrement sont vos \"données personnelles\". Vous êtes conscient du fait que l'ensemble des fonctions ne peut être garanti que si les données personnelles sont correctes et actualisées. Il est de votre responsabilité de les mettre à jour en permanence afin de garantir leur exactitude et leur précision.",
+																	"type": "text"
+																},
+																{
+																	"label": "Pour votre accès et votre utilisation de l'App, vous vous engagez à agir en conformité avec toutes les lois et réglementations en vigueur. Toutes les activités (y compris l'utilisation abusive) de l'application \"SERO\" et des services qui y sont liés, qui ont lieu via votre accès à l'application, relèvent de votre seule responsabilité. Vous acceptez de nous informer immédiatement si vous découvrez une utilisation non autorisée via votre application.",
+																	"type": "text"
+																},
+																{
+																	"item": [
+																		{
+																			"label": "Sous réserve des présentes conditions d'utilisation, nous vous accordons une autorisation mondiale limitée, non exclusive et non transférable d'accéder à l'application et de l'utiliser. Cette autorisation est révocable conformément aux présentes conditions d'utilisation.",
+																			"type": "text"
+																		},
+																		{
+																			"label": "Tant que vous ne disposez pas d'une autorisation écrite de notre part, vous ne pouvez pas",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(i) ne pas copier, modifier, adapter, traduire ou créer de toute autre manière des œuvres dérivées de l'Appli et de sa documentation",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(ii) ne pas faire de rétro-ingénierie, de décompilation, de désassemblage ou toute autre tentative pour connaître le code source ou les secrets commerciaux de l'Application, sauf dans la mesure où les lois applicables interdisent expressément une telle restriction ;",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(iii) ne pas louer, prêter, redistribuer, vendre ou transférer les droits sur l'application et sa documentation (ou tout contenu de celle-ci) en dehors du cadre de l'autorisation accordée par la présente ;",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(iv) ne pas utiliser les marques commerciales, les noms commerciaux et les noms d'entreprise, les marques de service, les logos, les noms de domaine et autres caractéristiques distinctives de la marque ou d'autres droits de propriété en relation avec les Services à quelque fin que ce soit sans notre consentement écrit exprès",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(v) n'enregistrera pas, ne tentera pas d'enregistrer ou n'aidera pas quelqu'un d'autre à enregistrer une marque commerciale, un nom commercial ou un nom d'entreprise, une marque de service, un logo, un nom de domaine ou toute autre caractéristique distinctive de la marque, ou tout autre matériel protégé par des droits d'auteur ou tout autre droit de propriété en rapport avec l'Application et les Services connexes",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(vi) n'utilisera pas, ne publiera pas, ne transmettra pas et n'introduira pas d'appareils, de logiciels ou de procédures qui interfèrent ou tentent d'interférer avec le fonctionnement des Services ou de l'application \"SERO\" ;",
+																			"type": "text"
+																		},
+																		{
+																			"label": "(vii) vous ne devez pas non plus permettre à un tiers d'accomplir les actes énumérés aux points (i) à (vi) ci-dessus.",
+																			"type": "text"
+																		},
+																		{
+																			"item": [
+																				{
+																					"label": "Le présent accord prend effet à la date à laquelle vous acceptez les conditions d'utilisation et reste valable pour une durée indéterminée.",
+																					"type": "text"
+																				},
+																				{
+																					"label": "",
+																					"type": "text"
+																				},
+																				{
+																					"label": "(i) vous désinstallez cette application de votre appareil, ou",
+																					"type": "text"
+																				},
+																				{
+																					"label": "(ii) nous pouvons, à notre entière discrétion, mettre fin à votre accès et à votre utilisation de l'Application, à condition toutefois que nous vous en informions par e-mail au moins cinq jours ouvrables à l'avance.",
+																					"type": "text"
+																				},
+																				{
+																					"label": "En cas de résiliation du présent accord, tous les droits et autorisations qui vous ont été accordés en vertu du présent accord prendront fin et chaque partie sera libérée de ses obligations et engagements envers l'autre partie qui surviennent après la date de résiliation, mais toutes les obligations et engagements qui ont pris naissance avant la résiliation continueront à être exécutés. Aucune des parties n'est responsable envers l'autre des éventuels dommages résultant uniquement de la résiliation du présent accord conformément aux conditions d'utilisation.",
+																					"type": "text"
+																				},
+																				{
+																					"label": "Les conditions relatives à la propriété intellectuelle continuent de s'appliquer après la résiliation du présent accord.",
+																					"type": "text"
+																				},
+																				{
+																					"item": [
+																						{
+																							"label": "Le droit suisse s'applique aux litiges découlant du présent contrat, de l'accès à l'application ou de son utilisation, à l'exclusion de la Convention des Nations Unies sur les contrats de vente internationale de marchandises et des règles de conflit de lois.",
+																							"type": "text"
+																						},
+																						{
+																							"label": "Le lieu de juridiction exclusif est Lucerne.",
+																							"type": "text"
+																						},
+																						{
+																							"label": "Point de contact pour les questions",
+																							"type": "title"
+																						},
+																						{
+																							"label": "Service de psychiatrie de Lucerne (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSuisse\nT +41 (0)58 856 55 55\nE-mail sero(at)lups.ch",
+																							"type": "text"
+																						},
+																						{
+																							"label": "St. Urban, avril 2022",
+																							"type": "text"
+																						}
+																					],
+																					"label": "Droit applicable et juridiction compétente",
+																					"type": "title"
+																				}
+																			],
+																			"label": "Durée et fin",
+																			"type": "title"
+																		}
+																	],
+																	"label": "Droits d'utilisation et propriété intellectuelle",
+																	"type": "title"
+																}
+															],
+															"label": "Responsabilité",
+															"type": "title"
+														}
+													],
+													"label": "Risques et avantages pour les participants",
+													"type": "title"
+												}
+											],
+											"label": "Consentement à la transmission de données sous forme anonymisée",
+											"type": "title"
+										}
+									],
+									"label": "Informations sur la confidentialité et le traitement des données",
+									"type": "title"
+								}
+							],
+							"label": "Stockage des données avec l'application",
+							"type": "title"
+						}
+					],
+					"label": "Conditions d'utilisation",
+					"type": "group"
+				}
+			],
+			"title": "Mentions légales"
+		},
+		"title": "Informations"
+	},
+	"main": {
+		"callEmergencyBottom": "urgences",
+		"callEmergencyTop": "Appeler",
+		"default": "Découvre l'application SERO! C'est parti...",
+		"greeting": "Salut {{name}}",
+		"securityplanUpdated": "Ton plan de sécurité est-il toujours d'actualité?",
+		"titleContacts": "Mes contacts"
+	},
+	"onboarding": {
+		"assessment": {
+			"text": "Comment te sens-tu en ce moment ? Tu découvres ici un outil qui te permet de montrer comment tu te sens.",
+			"title": "Mon évaluation"
+		},
+		"contacts": {
+			"text": "Ici, tu peux enregistrer les contacts de tes personnes importantes et les appeler directement.",
+			"title": "Gérer mes contacts"
+		},
+		"emergency": {
+			"text": "Ici, tu peux appeler directement le numéro d'urgence des services de secours 144.",
+			"title": "Appeler le contact d'urgence"
+		},
+		"midata": {
+			"text": "Enregistre-toi auprès de MIDATA lors de la première utilisation de l'application SERO afin de sauvegarder tes entrées.\n\nCelles-ci seront stockées en toute sécurité sur la plateforme de données MIDATA et tu seras le seul à y avoir accès.\n\nTu pourras ensuite utiliser toutes les fonctions de l'application SERO.",
+			"title": "Inscription à MIDATA"
+		},
+		"securityplan": {
+			"text": "Ton plan de sécurité t'aide à prendre les bonnes décisions avant et pendant la crise.",
+			"title": "Mon plan de sécurité"
+		}
+	},
+	"securityplan": {
+		"addEntry": "Ajouter une entrée",
+		"alertLups": {
+			"description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
+			"title": "Ligne de conseil LUPS"
+		},
+		"archive": "Plans de sécurité antérieurs",
+		"bubbleTitle": "Que veux-tu faire?",
+		"current": "Plan de sécurité actuel",
+		"defaultHint": "Ici, tu peux accéder à ton plan de sécurité actuel, le modifier et consulter les versions précédentes.",
+		"editHint": "Tu peux réorganiser les sections en les faisant glisser vers un autre endroit de la liste.\nEn cliquant sur le crayon, tu peux modifier leur contenu.",
+		"editSecurityplan": "Modifier le plan de sécurité",
+		"examples": {
+			"copingStrategies": "p. ex. dessiner, faire des exercices de relaxation, cuisiner, écouter de la musique, etc.",
+			"distractionStrategies": "p. ex. rencontrer des amis, se promener en forêt, aller au cinéma, faire du vélo, etc."
+		},
+		"former": "Plan de sécurité précédent",
+		"intro": {
+			"content": "Les situations de crise peuvent limiter tes pensées, tes sentiments et tes actions.\n\nTon plan de sécurité a pour objectif de te préparer au mieux aux crises suicidaires et d'éviter ainsi les comportements suicidaires.\n\nDans le plan de sécurité, tu définis des procédures d'action individuelles pour faire face à une crise suicidaire, de sorte qu'elles te servent d'orientation pendant la crise.\n\nElabore le plan de sécurité dans une phase stable. Les professionnels peuvent apporter leur soutien lorsqu'il s'agit de vérifier si le plan de sécurité élaboré est réaliste et réalisable en situation de crise.",
+			"title": "Plan de sécurité"
+		},
+		"newSecurityplan": "Créer un nouveau plan de sécurité",
+		"notification": {
+			"copingStrategies": "Ce qui t'aide :",
+			"distractionStrategies": "Ce qui te distrait :",
+			"motivation": "Ce qui te motive :",
+			"personalBeliefs": "La croyance suivante t'aidera :"
+		},
+		"title": "Mon plan de\nsécurité",
+		"tutorial": {
+			"content": "Ton plan de sécurité se compose des sections \"Ma motivation à vivre\", \"Mes signes avant-coureurs\", \"Mes stratégies d'adaptation\", \"Mes stratégies de distraction\", \"Mes croyances\" et \"Les numéros d'aide et d'urgence\".\n\nTu peux créer un nouveau plan de sécurité en appuyant sur le crayon dans les sections et en y ajoutant tes propres entrées. En bas, tu peux enregistrer ton plan de sécurité actuel.\n\nTu as la possibilité de définir toi-même l'ordre des sections du plan de sécurité. Pour ce faire, déplace le symbole de la section à l'endroit souhaité.\n\nPour passer un appel, tu cliques sur le numéro de téléphone souhaité dans le plan de sécurité, qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\".\n\nSi tu as des difficultés à créer ton plan de sécurité personnel ou à comprendre le contenu des différentes sections, contacte tes personnes de confiance et demande-leur de l'aide.",
+			"title": "Instructions"
+		}
+	},
+	"settings": {
+		"later": "Remarque: les préférences seront intégrées dans une version ultérieure.",
+		"logout": "Se déconnecter",
+		"title": "Préférences"
+	},
+	"welcome": {
+		"greetingText": "Les pages suivantes t'expliquent les principales fonctions de l'application SERO. Ensuite, tu pourras t'enregistrer.",
+		"title": "Soyez les bienvenus.\nJe suis content que tu sois là."
+	}
 }
