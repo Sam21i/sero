@@ -200,11 +200,23 @@ export default class UserProfile {
   /**
    * Deletes a security plan from the archive.
    * DO NOT USE OUTSIDE THE REDUCER
+   * @param _plan  The SecurityPlan to remove from the archive.
    */
-  removeSecurityPlanFromArchive(plan: SecurityPlanModel): void {
-    const index = this.securityPlanHistory.findIndex((historyPlan) => historyPlan.hasEqualFhirId(plan.fhirResource));
+  removeSecurityPlanFromArchive(_plan: SecurityPlanModel): void {
+    const index = this.securityPlanHistory.findIndex((historyPlan) => historyPlan.hasEqualFhirId(_plan.fhirResource));
     if (index === -1) return;
     this.securityPlanHistory.splice(index, 1);
+  }
+
+  /**
+   * Sets a given SecurityPlan from the archive as the active one and archives the currently active SecurityPlan
+   * DO NOT USE OUTSIDE THE REDUCER
+   * @param _plan  The SecurityPlan to replace the current SecurityPlan
+   */
+  reactivateSecurityPlanFromArchive(_plan: SecurityPlanModel): void {
+    _plan.setStatusToActive();
+    this.removeSecurityPlanFromArchive(_plan);
+    this.replaceCurrentSecurityPlan(_plan);
   }
 
   /**

@@ -15,6 +15,7 @@ export const SET_SECURITY_PLAN_HISTORY = 'userProfile/SET_SECURITY_PLAN_HISTORY'
 export const SET_PRISM_SESSIONS = 'userProfile/SET_PRISM_SESSIONS';
 export const ADD_PRISM_SESSION = 'userProfile/ADD_PRISM_SESSION';
 export const DELETE_ARCHIVED_SECURITY_PLAN = 'userProfile/DELETE_ARCHIVED_SECURITY_PLAN';
+export const REACTIVATE_SECURITY_PLAN = 'userProfile/REACTIVATE_SECURITY_PLAN';
 
 export type UserAuthenticationData = {
   accessToken: string;

@@ -11,6 +11,7 @@ import {
   ADD_TO_USER_PROFILE,
   DELETE_ARCHIVED_SECURITY_PLAN,
   LOGOUT_AUTHENTICATE_USER,
+  REACTIVATE_SECURITY_PLAN,
   REPLACE_SECURITY_PLAN,
   RESOURCE_SENT,
   SET_EMERGENCY_CONTACTS,
@@ -73,6 +74,11 @@ const UserProfileStore = createReducer(new UserProfile(), {
   [DELETE_ARCHIVED_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlanModel}) {
     const newState = new UserProfile(state);
     newState.removeSecurityPlanFromArchive(action.data);
+    return newState;
+  },
+  [REACTIVATE_SECURITY_PLAN](state: UserProfile, action: {data: SecurityPlanModel}) {
+    const newState = new UserProfile(state);
+    newState.reactivateSecurityPlanFromArchive(action.data);
     return newState;
   },
   [SET_PRISM_SESSIONS](state: UserProfile, action: {data: PrismResources[]}) {

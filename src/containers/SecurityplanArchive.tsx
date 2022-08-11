@@ -1,3 +1,4 @@
+import { Reference } from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
@@ -22,6 +23,7 @@ import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../st
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   deletePlan: (plan: SecurityPlanModel) => void;
+  reactivatePlan: (planToReactivate: SecurityPlanModel, currentPlan: SecurityPlanModel, user: Reference) => void;
   midataService: MidataService;
   userProfile: UserProfile;
 }
@@ -98,11 +100,13 @@ class SecurityplanArchive extends Component<PropsType, State> {
         {
           text: this.props.t('common.ok'),
           onPress: () => {
-            // this.props.reactivatePlan(planToReactivate);
+            const userReference = this.props.userProfile.getFhirReference();
+            if (!userReference) return;
+            this.props.reactivatePlan(planToReactivate, this.props.userProfile.getCurrentSecurityPlan(), userReference);
             this.setState({
               selectedSecurityplan: undefined
             });
-            this.props.navigation.navigate('');
+            this.props.navigation.pop();
           }
         }
       ]
@@ -303,7 +307,9 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    deletePlan: (plan: SecurityPlanModel) => userProfileActions.deleteArchivedSecurityPlan(dispatch, plan)
+    deletePlan: (plan: SecurityPlanModel) => userProfileActions.deleteArchivedSecurityPlan(dispatch, plan),
+    reactivatePlan: (planToReactivate: SecurityPlanModel, currentPlan: SecurityPlanModel, user: Reference) =>
+      userProfileActions.reactiveSecurityPlan(dispatch, planToReactivate, currentPlan, user)
   };
 }
 
