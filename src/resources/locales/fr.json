@@ -659,6 +659,10 @@
       "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
       "title": "Ligne de conseil LUPS"
     },
+    "alertReactivate": {
+      "description": "Veux-tu remplacer le plan de sécurité actuel par le plan de sécurité du {{date}} ? \n\nTon plan de sécurité actuel est archivé dans \"Plans de sécurité précédents\".",
+      "title": "Réactiver le plan de sécurité précédent"
+    },
     "archive": "Plans de sécurité antérieurs",
     "bubbleTitle": "Que veux-tu faire?",
     "current": "Plan de sécurité actuel",
@@ -681,6 +685,7 @@
       "motivation": "Ce qui te motive :",
       "personalBeliefs": "La croyance suivante t'aidera :"
     },
+    "reactivate": "Réactiver",
     "title": "Mon plan de\nsécurité",
     "tutorial": {
       "content": "Ton plan de sécurité se compose des sections \"Ma motivation à vivre\", \"Mes signes avant-coureurs\", \"Mes stratégies d'adaptation\", \"Mes stratégies de distraction\", \"Mes croyances\" et \"Les numéros d'aide et d'urgence\".\n\nTu peux créer un nouveau plan de sécurité en appuyant sur le crayon dans les sections et en y ajoutant tes propres entrées. En bas, tu peux enregistrer ton plan de sécurité actuel.\n\nTu as la possibilité de définir toi-même l'ordre des sections du plan de sécurité. Pour ce faire, déplace le symbole de la section à l'endroit souhaité.\n\nPour passer un appel, tu cliques sur le numéro de téléphone souhaité dans le plan de sécurité, qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\".\n\nSi tu as des difficultés à créer ton plan de sécurité personnel ou à comprendre le contenu des différentes sections, contacte tes personnes de confiance et demande-leur de l'aide.",

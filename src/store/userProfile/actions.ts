@@ -17,7 +17,7 @@ import {
   ADD_PRISM_SESSION,
   ADD_SECURITY_PLAN,
   DELETE_ARCHIVED_SECURITY_PLAN,
-  DELETE_PRISM_SESSION,
+  REACTIVATE_SECURITY_PLAN,
   REMOVE_EMERGENCY_CONTACT,
   REPLACE_SECURITY_PLAN,
   SET_EMERGENCY_CONTACTS,
@@ -63,9 +63,22 @@ export function replaceSecurityPlan(
   userReference: Reference
 ) {
   oldPlan.setStatusToArchived();
-  synchronizeResource(dispatch, oldPlan.getFhirResource(userReference));
+  synchronizeResource(dispatch, oldPlan.getFhirResource(userReference, true));
   addResource(dispatch, newPlan.getFhirResource(userReference));
   dispatch(new Action(REPLACE_SECURITY_PLAN, newPlan).getObjectAction());
+}
+
+export function reactiveSecurityPlan(
+  dispatch,
+  planToReactivate: SecurityPlanModel,
+  currentPlan: SecurityPlanModel,
+  userReference: Reference
+) {
+  planToReactivate.setStatusToActive();
+  currentPlan.setStatusToArchived();
+  synchronizeResource(dispatch, planToReactivate.getFhirResource(userReference, false));
+  synchronizeResource(dispatch, currentPlan.getFhirResource(userReference, true));
+  dispatch(new Action(REACTIVATE_SECURITY_PLAN, planToReactivate).getObjectAction());
 }
 
 export function setPrismSessionsFromMIDATA(dispatch, sessions: PrismResources[]) {

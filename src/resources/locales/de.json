@@ -659,6 +659,10 @@
       "description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
       "title": "Beratungstelefon LUPS"
     },
+    "alertReactivate": {
+      "description": "Möchtest du den aktuellen Sicherheitsplan durch den Sicherheitsplan vom {{date}} ersetzen? \n\nDein aktueller Sicherheitsplan wird bei \"frühere Sicherheitspläne\" archiviert.",
+      "title": "Früheren Sicherheitsplan reaktivieren"
+    },
     "archive": "Frühere Sicherheitspläne",
     "bubbleTitle": "Was möchtest du tun?",
     "current": "Aktueller Sicherheitsplan",
@@ -681,6 +685,7 @@
       "motivation": "Was dich motiviert:",
       "personalBeliefs": "Folgender Glaubenssatz hilft dir:"
     },
+    "reactivate": "Reaktivieren",
     "title": "Mein Sicherheitsplan",
     "tutorial": {
       "content": "Dein Sicherheitsplan besteht aus den Abschnitten \"Meine Motivation zu leben\", \"Meine Frühwarnzeichen\", \"Meine Bewältigungsstrategien\", \"Meine Ablenkungsstrategien\", \"Meine Glaubenssätze\" sowie den \"Helfer- und Notfallnummern\".\n\nDu kannst einen neuen Sicherheitsplan erstellen, indem du bei den Abschnitten auf den Stift tippst und dann eigene Einträge hinzufügst. Unten kannst du deinen aktuellen Sicherheitsplan speichern.\n\nDu hast die Möglichkeit die Reihenfolge der Abschnitte des Sicherheitsplans selbst zu definieren. Verschiebe dazu das Symbol des Abschnitts an die gewünschte Stelle.\n\nUm einen Anruf zu tätigen, klickst du auf die gewünschte Telefonnummer im Sicherheitsplan, welche unter «Meine professionellen Helfer- und Notfallnummern» hinterlegt ist.\n\nSolltest du Schwierigkeiten haben beim Erstellen deines persönlichen Sicherheitsplanes oder bei den Inhalten zu den einzelnen Abschnitten, gehe auf deine Vertrauenspersonen zu und frage sie nach Unterstützung.",

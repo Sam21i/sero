@@ -659,6 +659,10 @@
       "description": "",
       "title": ""
     },
+    "alertReactivate": {
+      "description": "",
+      "title": ""
+    },
     "archive": "",
     "bubbleTitle": "",
     "current": "",
@@ -681,6 +685,7 @@
       "motivation": "",
       "personalBeliefs": ""
     },
+    "reactivate": "",
     "title": "",
     "tutorial": {
       "content": "",

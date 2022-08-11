@@ -83,10 +83,17 @@ export default class SecurityPlanModel {
   }
 
   /**
-   * Sets the CarePlan FHIR resource status to SUSPENDED
+   * Sets the CarePlan FHIR resource status to REVOKED
    */
   setStatusToArchived(): void {
     this.fhirResource.status = CarePlanStatus.REVOKED;
+  }
+
+  /**
+   * Sets the CarePlan FHIR resource status to ACTIVE
+   */
+  setStatusToActive(): void {
+    this.fhirResource.status = CarePlanStatus.ACTIVE;
   }
 
   /**
@@ -203,11 +210,14 @@ export default class SecurityPlanModel {
    * Returns the full CarePlan FHIR resource as specified, ready for uploading to MIDATA.
    * Date created is set to current date.
    * @param _patientReference   a FHIR reference to the patient (on MIDATA, or relative in a possible bundle)
+   * @param _keepDate?          indicates whether the date should be put to the current date (default), or be left
+   *                            on the initial date (when available).
    * @returns                   a CarePlan resource depicting the users CarePlan
    */
-  getFhirResource(_patientReference: Reference): CarePlan {
+  getFhirResource(_patientReference: Reference, _keepDate?: boolean): CarePlan {
     this.fhirResource.id = this.fhirResource.id || 'securityPlan1';
-    this.fhirResource.created = new Date().toISOString();
+    this.fhirResource.created =
+      _keepDate && this.fhirResource.created ? this.fhirResource.created : new Date().toISOString();
     this.fhirResource.basedOn = [];
     this.fhirResource.subject = _patientReference;
     this.fhirResource.author = _patientReference;

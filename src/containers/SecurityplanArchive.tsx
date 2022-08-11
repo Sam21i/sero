@@ -1,3 +1,4 @@
+import {Reference} from '@i4mi/fhir_r4';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
@@ -22,6 +23,7 @@ import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../st
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
   deletePlan: (plan: SecurityPlanModel) => void;
+  reactivatePlan: (planToReactivate: SecurityPlanModel, currentPlan: SecurityPlanModel, user: Reference) => void;
   midataService: MidataService;
   userProfile: UserProfile;
 }
@@ -61,16 +63,53 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderListFooterComponent() {
     if (!this.state.selectedSecurityplan) return <></>;
     return (
-      <AppButton
-        label={this.props.t('common.delete')}
-        position='right'
-        color={colors.tumbleweed}
-        onPress={() => {
-          if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
-        }}
-        style={styles.deleteButton}
-        icon={images.imagesSVG.common.cancel}
-      />
+      <>
+        <AppButton
+          label={this.props.t('securityplan.reactivate')}
+          position='right'
+          color={colors.tumbleweed}
+          onPress={() => {
+            if (this.state.selectedSecurityplan) this.reactivateSelectedSecurityPlan(this.state.selectedSecurityplan);
+          }}
+          style={styles.reactivateButton}
+        />
+        <AppButton
+          label={this.props.t('common.delete')}
+          position='right'
+          color={colors.tumbleweed}
+          onPress={() => {
+            if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
+          }}
+          style={styles.deleteButton}
+        />
+      </>
+    );
+  }
+
+  reactivateSelectedSecurityPlan(planToReactivate: SecurityPlanModel): void {
+    Alert.alert(
+      this.props.t('securityplan.alertReactivate.title'),
+      this.props.t('securityplan.alertReactivate.description', {
+        date: planToReactivate.getLocaleDate(this.props.i18n.language)
+      }),
+      [
+        {
+          text: this.props.t('common.cancel'),
+          style: 'cancel'
+        },
+        {
+          text: this.props.t('common.ok'),
+          onPress: () => {
+            const userReference = this.props.userProfile.getFhirReference();
+            if (!userReference) return;
+            this.props.reactivatePlan(planToReactivate, this.props.userProfile.getCurrentSecurityPlan(), userReference);
+            this.setState({
+              selectedSecurityplan: undefined
+            });
+            this.props.navigation.pop();
+          }
+        }
+      ]
     );
   }
 
@@ -245,6 +284,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%'
   },
+  reactivateButton: {
+    height: scale(50),
+    width: scale(225),
+    paddingVertical: scale(10),
+    marginTop: 20
+  },
   deleteButton: {
     height: scale(50),
     width: scale(225),
@@ -262,7 +307,9 @@ function mapStateToProps(state: AppStore) {
 
 function mapDispatchToProps(dispatch: Function) {
   return {
-    deletePlan: (plan: SecurityPlanModel) => userProfileActions.deleteArchivedSecurityPlan(dispatch, plan)
+    deletePlan: (plan: SecurityPlanModel) => userProfileActions.deleteArchivedSecurityPlan(dispatch, plan),
+    reactivatePlan: (planToReactivate: SecurityPlanModel, currentPlan: SecurityPlanModel, user: Reference) =>
+      userProfileActions.reactiveSecurityPlan(dispatch, planToReactivate, currentPlan, user)
   };
 }
 
