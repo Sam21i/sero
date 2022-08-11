@@ -61,15 +61,51 @@ class SecurityplanArchive extends Component<PropsType, State> {
   renderListFooterComponent() {
     if (!this.state.selectedSecurityplan) return <></>;
     return (
-      <AppButton
-        label={this.props.t('common.delete')}
-        position='right'
-        color={colors.tumbleweed}
-        onPress={() => {
-          if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
-        }}
-        style={styles.deleteButton}
-      />
+      <>
+        <AppButton
+          label={this.props.t('securityplan.reactivate')}
+          position='right'
+          color={colors.tumbleweed}
+          onPress={() => {
+            if (this.state.selectedSecurityplan) this.reactivateSelectedSecurityPlan(this.state.selectedSecurityplan);
+          }}
+          style={styles.reactivateButton}
+        />
+        <AppButton
+          label={this.props.t('common.delete')}
+          position='right'
+          color={colors.tumbleweed}
+          onPress={() => {
+            if (this.state.selectedSecurityplan) this.deleteSelectedSecurityPlan(this.state.selectedSecurityplan);
+          }}
+          style={styles.deleteButton}
+        />
+      </>
+    );
+  }
+
+  reactivateSelectedSecurityPlan(planToReactivate: SecurityPlanModel): void {
+    Alert.alert(
+      this.props.t('securityplan.alertReactivate.title'),
+      this.props.t('securityplan.alertReactivate.description', {
+        date: planToReactivate.getLocaleDate(this.props.i18n.language)
+      }),
+      [
+        {
+          text: this.props.t('common.cancel'),
+          style: 'cancel'
+        },
+        {
+          text: this.props.t('common.ok'),
+          onPress: () => {
+            // this.props.reactivatePlan(planToReactivate);
+            this.setState({
+              selectedSecurityplan: undefined
+            });
+            this.props.navigation.navigate('');
+          }
+        }
+      ]
     );
   }
 
@@ -243,6 +279,12 @@ const styles = StyleSheet.create({
   icon: {
     flex: 1,
     height: '100%'
+  },
+  reactivateButton: {
+    height: scale(50),
+    width: scale(225),
+    paddingVertical: scale(10),
+    marginTop: 20
   },
   deleteButton: {
     height: scale(50),
