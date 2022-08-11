@@ -651,6 +651,10 @@
   },
   "securityplan": {
     "addEntry": "",
+    "alertDelete": {
+      "description": "",
+      "title": ""
+    },
     "alertLups": {
       "description": "",
       "title": ""
