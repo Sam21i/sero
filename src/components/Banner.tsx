@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
+import i18n from '../../i18n';
 
 import UserProfile from '../model/UserProfile';
 import {AppStore} from '../store/reducers';
@@ -65,7 +66,7 @@ class Banner extends Component<PropsType> {
   renderPositive() {
     const currentSecurityplan = this.props.userProfile.getCurrentSecurityPlan();
     const filteredModules = currentSecurityplan
-      .getSecurityPlanModules()
+      .getSecurityPlanModules(i18n.language)
       .filter((m) => m.entries.length > 0 && m.type !== 'professionalContacts' && m.type !== 'warningSigns');
     if (filteredModules.length !== 0) {
       const selectedModule = filteredModules[this.getRandomInt(filteredModules.length)];

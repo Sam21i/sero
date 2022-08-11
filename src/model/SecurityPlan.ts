@@ -1,4 +1,4 @@
-import {CarePlan, CarePlanIntent, CarePlanStatus, Reference} from '@i4mi/fhir_r4';
+import {CarePlan, CarePlanIntent, CarePlanStatus, Extension, Reference} from '@i4mi/fhir_r4';
 import fhirpath from 'fhirpath';
 import {v4 as uuid} from 'uuid';
 
@@ -162,12 +162,12 @@ export default class SecurityPlanModel {
    * Get the security plans modules as SecurityPlanModule array.
    * @returns   an Array of SecurityPlanModule in sorted order
    */
-  getSecurityPlanModules(): SecurityPlanModule[] {
+  getSecurityPlanModules(_language: string): SecurityPlanModule[] {
     if (this.fhirResource.contained) {
       const modules = new Array<SecurityPlanModule>();
       this.fhirResource.contained.forEach((containedResource, index) => {
         if (containedResource.resourceType === 'CarePlan') {
-          modules.push(this.mapCarePlanToSecurityPlanModule(containedResource as CarePlan, index));
+          modules.push(this.mapCarePlanToSecurityPlanModule(containedResource as CarePlan, index, _language));
         }
       });
       return modules;
@@ -183,13 +183,13 @@ export default class SecurityPlanModel {
    * @throws            an Error if no security plan has been loaded from midata before or
    *                    the loaded plan does not contain the module requested.
    */
-  getSecurityPlanModule(_moduleType: SECURITY_PLAN_MODULE_TYPE): SecurityPlanModule {
+  getSecurityPlanModule(_moduleType: SECURITY_PLAN_MODULE_TYPE, _language: string): SecurityPlanModule {
     const index = this.fhirResource.contained?.findIndex((containedResource) => {
       fhirpath.evaluate(containedResource, 'CarePlan.category.coding.code')[0] === _moduleType;
     });
     if (index && index > -1 && this.fhirResource.contained) {
       const module = this.fhirResource.contained[index] as CarePlan;
-      return this.mapCarePlanToSecurityPlanModule(module, index);
+      return this.mapCarePlanToSecurityPlanModule(module, index, _language);
     } else {
       throw new Error(
         'No securityplan module of type ' +
@@ -260,13 +260,35 @@ export default class SecurityPlanModel {
     });
   }
 
-  private mapCarePlanToSecurityPlanModule(_sp: CarePlan, index: number): SecurityPlanModule {
+  private mapCarePlanToSecurityPlanModule(_sp: CarePlan, index: number, _language: string): SecurityPlanModule {
+    const translatedTitle = _sp._title?.extension ? this.getTranslation(_sp._title?.extension, _language) : _sp.title;
+    const translatedDescription = _sp._description?.extension ? this.getTranslation(_sp._description?.extension, _language) : _sp.description;
     return {
       type: fhirpath.evaluate(_sp, 'CarePlan.category.coding.code')[0],
       order: index,
-      title: _sp.title || '',
-      description: _sp.description || '',
-      entries: _sp.activity?.map((activity) => activity.detail?.description || '') || []
+      title: translatedTitle || '',
+      description: translatedDescription || '',
+      entries: _sp.activity?.map((activity) => {
+        const translatedActivity = activity.detail?._description?.extension ? this.getTranslation(activity.detail?._description?.extension, _language) : activity.detail?.description;
+        return translatedActivity || ''
+      }) || []
     };
   }
+
+  private getTranslation(extensions: Extension[], _language: string): string | undefined {
+    const translationExtension = extensions.find((extension)=>{
+      if (extension.url === "http://hl7.org/fhir/StructureDefinition/translation" ) {
+        return extension.extension && extension.extension?.findIndex((extension)=>{
+          return (extension.url === "lang" && extension.valueCode === _language);
+        }) > -1
+      }
+      else {
+        return false;
+      }
+    });
+    return translationExtension?.extension?.find((extension)=>{
+      return (extension.url === "content");
+    })?.valueString;
+  }
+
 }

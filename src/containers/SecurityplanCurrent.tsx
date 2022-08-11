@@ -6,6 +6,7 @@ import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SortableList from 'react-native-sortable-list';
 import {connect} from 'react-redux';
+import i18n from '../../i18n';
 
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
@@ -50,7 +51,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     let startWithEmptyPlan = false;
 
     let plan = this.props.userProfile.getCurrentSecurityPlan();
-    if (plan.getSecurityPlanModules().length === 0) {
+    if (plan.getSecurityPlanModules(i18n.language).length === 0) {
       // create a new, empty security plan
       plan = new SecurityPlanModel({});
       startWithEmptyPlan = true;
@@ -58,7 +59,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     if (plan.fhirResource.id === 'emptyPlan') {
       startWithEmptyPlan = true;
     }
-    const modules = plan.getSecurityPlanModules();
+    const modules = plan.getSecurityPlanModules(i18n.language);
 
     this.state = {
       currentSecurityplan: plan,
@@ -102,7 +103,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     this.setState({
       currentSecurityplan: newPlan,
       replacedSecurityplan: previousPlan,
-      modules: newPlan.getSecurityPlanModules()
+      modules: newPlan.getSecurityPlanModules(i18n.language)
     });
   }
 
@@ -168,7 +169,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       isEditMode: false,
       isReplaceMode: false,
       isFirstPlan: false,
-      modules: this.state.currentSecurityplan.getSecurityPlanModules()
+      modules: this.state.currentSecurityplan.getSecurityPlanModules(i18n.language)
     });
   }
 
@@ -178,11 +179,11 @@ class SecurityplanCurrent extends Component<PropsType, State> {
       isReplaceMode: false,
       currentSecurityplan: this.state.currentSecurityplan,
       replacedSecurityplan: this.state.replacedSecurityplan,
-      modules: this.state.currentSecurityplan.getSecurityPlanModules()
+      modules: this.state.currentSecurityplan.getSecurityPlanModules(i18n.language)
     };
     if (this.state.isReplaceMode && this.state.replacedSecurityplan) {
       newState.currentSecurityplan = this.state.replacedSecurityplan;
-      newState.modules = this.state.replacedSecurityplan.getSecurityPlanModules();
+      newState.modules = this.state.replacedSecurityplan.getSecurityPlanModules(i18n.language);
       newState.replacedSecurityplan = undefined;
     }
     this.setState(newState);
@@ -250,7 +251,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                 if (this.state.bubbleVisible) {
                   this.setState({bubbleVisible: false});
                 } else if (this.state.isFirstPlan || this.state.isReplaceMode) {
-                  const currPlan = JSON.stringify(this.state.currentSecurityplan.getSecurityPlanModules());
+                  const currPlan = JSON.stringify(this.state.currentSecurityplan.getSecurityPlanModules(i18n.language));
                   const newPlan = JSON.stringify(this.state.modules);
                   currPlan !== newPlan ? this.save() : this.reset();
                 } else if (this.state.isEditMode) {

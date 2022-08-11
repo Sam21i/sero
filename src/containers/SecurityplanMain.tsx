@@ -6,6 +6,7 @@ import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
+import i18n from '../../i18n';
 
 import AppButton from '../components/AppButton';
 import BackButton from '../components/BackButton';
@@ -44,7 +45,7 @@ class SecurityplanMain extends Component<PropsType, State> {
     this.state = {
       bubbleVisible: true,
       listVisible: false,
-      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules(),
+      modules: this.props.userProfile.getCurrentSecurityPlan().getSecurityPlanModules(i18n.language),
       shouldShowSecurityplanIntro: true
     };
 
