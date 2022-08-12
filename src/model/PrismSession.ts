@@ -238,21 +238,22 @@ export default class PrismSession {
    * @returns   true if any questions have been answered and false if none have been answered.
    */
   anyQuestionsAnswered(): boolean {
-    let counter = 0;
+    // TODO: use recursion in case of nested items
+    // TODO: move in FHIR library
     this.questionnaireData?.getQuestions().forEach((question) => {
       if (question.subItems) {
         question.subItems.forEach((question) => {
           if (question.selectedAnswers.length > 0) {
-            counter++;
+            return true;
           }
         });
       } else {
         if (question.selectedAnswers.length > 0) {
-          counter++;
+          return true;
         }
       }
     });
-    return counter > 0;
+    return false;
   }
 
   /**
