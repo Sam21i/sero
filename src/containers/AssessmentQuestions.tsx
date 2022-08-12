@@ -168,8 +168,8 @@ class AssessmentQuestions extends Component<PropsType, State> {
                 this.props.navigation.pop();
               }}>
               <SvgCss
-                xml={images.imagesSVG.common.pencil}
-                style={styles.editIcon}
+                xml={images.imagesSVG.common.retry}
+                style={styles.retryIcon}
                 width={scale(30)}
                 height={scale(50)}
               />
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     width: scale(225),
     marginBottom: scale(20)
   },
-  editIcon: {
+  retryIcon: {
     alignSelf: 'center'
   }
 });
