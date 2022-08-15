@@ -43,40 +43,36 @@ class SecurityplanIntroDescription extends Component<PropsType> {
             <BackButton
               color={colors.white}
               onPress={() => {
-                this.props.navigation.pop();
+                this.props.navigation.navigate('SecurityplanStackScreen', {screen: 'SecurityplanMain'});
               }}
             />
             <View style={styles.pageTitleView}>
               <Text style={styles.pageTitleText}>{this.props.t('securityplan.title')}</Text>
             </View>
           </View>
-          {
-            <View style={styles.bottomView}>
-              <ScrollView ref={(ref) => (this.scrollViewRef = ref)}>
-                <View style={{height: verticalScale(55)}}></View>
-                <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
-                  <Text style={styles.title}>{this.props.t('securityplan.intro.title')}</Text>
-                  <Text style={styles.bulletText}>{this.props.t('securityplan.intro.content')}</Text>
-                  <View style={{height: scale(40)}}></View>
-                </View>
-                {true && (
-                  <AppButton
-                    label={this.props.t('common.start')}
-                    icon={images.imagesSVG.common.start}
-                    position='right'
-                    color={colors.primary}
-                    onPress={() => {
-                      this.props.navigation.navigate('SecurityplanIntroTutorial', {
-                        canGoBack: true
-                      });
-                    }}
-                    isLargeButton
-                  />
-                )}
-                <View style={{height: verticalScale(55)}}></View>
-              </ScrollView>
-            </View>
-          }
+
+          <View style={styles.bottomView}>
+            <ScrollView ref={(ref) => (this.scrollViewRef = ref)}>
+              <View style={{height: verticalScale(55)}}></View>
+              <View style={{paddingLeft: scale(40), paddingRight: scale(20)}}>
+                <Text style={styles.title}>{this.props.t('securityplan.intro.title')}</Text>
+                <Text style={styles.bulletText}>{this.props.t('securityplan.intro.content')}</Text>
+                <View style={{height: scale(40)}}></View>
+              </View>
+              <AppButton
+                label={this.props.t('common.next')}
+                icon={images.imagesSVG.common.continue}
+                position='right'
+                color={colors.primary}
+                onPress={() => {
+                  this.props.navigation.navigate('SecurityplanIntroTutorial', {canGoBack: true});
+                }}
+                isLargeButton
+              />
+              <View style={{height: verticalScale(55)}}></View>
+            </ScrollView>
+          </View>
+
           <View style={styles.emergencyButton}>
             <EmergencyNumberButton />
           </View>
