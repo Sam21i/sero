@@ -78,15 +78,13 @@
     "editContact": "Modifier un contact",
     "err": {
       "family": {
-        "invalid": "Le nom de famille doit être composé de lettres.",
         "required": "Ajoute un nom de famille, s'il te plaît."
       },
       "given": {
-        "invalid": "Le prénom doit être composé de lettres.",
         "required": "Ajoute un prénom de famille, s'il te plaît."
       },
       "phone": {
-        "invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
+        "invalid": "Pas de numéro de téléphone valide.",
         "required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
       }
     },

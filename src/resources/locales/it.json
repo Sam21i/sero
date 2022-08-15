@@ -78,11 +78,9 @@
     "editContact": "",
     "err": {
       "family": {
-        "invalid": "",
         "required": ""
       },
       "given": {
-        "invalid": "",
         "required": ""
       },
       "phone": {

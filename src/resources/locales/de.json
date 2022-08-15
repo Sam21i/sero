@@ -78,15 +78,13 @@
     "editContact": "Kontakt bearbeiten",
     "err": {
       "family": {
-        "invalid": "Der Nachname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Nachnamen ein."
       },
       "given": {
-        "invalid": "Der Vorname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Vornamen ein."
       },
       "phone": {
-        "invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
+        "invalid": "Keine gültige Telefonnummer.",
         "required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
       }
     },
