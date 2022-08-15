@@ -163,16 +163,23 @@ class AssessmentArchive extends Component<PropsType, State> {
 
   renderPrismSessionFooter() {
     return (
-      <AppButton
-        label={this.props.t('common.delete')}
-        position='right'
-        color={colors.gold}
-        onPress={() => {
-          if (this.state.selectedPrismSession) this.deletePrismSession(this.state.selectedPrismSession);
-        }}
-        style={styles.deleteButton}
-        icon={images.imagesSVG.common.cancel}
-      />
+      <>
+        {!this.state.selectedPrismSession?.anyQuestionsAnswered() && (
+          <View style={styles.hintContainer}>
+            <Text style={styles.hintText}>{this.props.i18n.t('assessment.noFollowUpQuestionsHint')}</Text>
+          </View>
+        )}
+        <AppButton
+          label={this.props.t('common.delete')}
+          position='right'
+          color={colors.gold}
+          onPress={() => {
+            if (this.state.selectedPrismSession) this.deletePrismSession(this.state.selectedPrismSession);
+          }}
+          style={styles.deleteButton}
+          icon={images.imagesSVG.common.cancel}
+        />
+      </>
     );
   }
 
@@ -305,6 +312,15 @@ const styles = StyleSheet.create({
     width: scale(225),
     paddingVertical: scale(10),
     marginVertical: 20
+  },
+  hintContainer: {
+    paddingLeft: scale(40),
+    paddingRight: scale(20)
+  },
+  hintText: {
+    color: colors.black,
+    fontSize: scale(TextSize.small),
+    fontFamily: AppFonts.regular
   }
 });
 
