@@ -40,7 +40,7 @@ class AssessmentIntroDescription extends Component<PropsType> {
             <BackButton
               color={colors.white}
               onPress={() => {
-                this.props.navigation.pop();
+                this.props.navigation.navigate('AssessmentStackScreen', {screen: 'AssessmentMain'});
               }}
             />
             <View style={styles.pageTitleView}>
