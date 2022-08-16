@@ -126,31 +126,31 @@
                 {
                   "item": [
                     {
-                      "label": "Mit PRISM™-S kannst du einfach schnell einschätzen, wie hoch deine Suizidgefährdung gerade ist und wie weit du von einer Suizidhandlung entfernt bist.",
+                      "label": "Mit PRISM-S kannst du einfach schnell einschätzen, wie hoch deine Suizidgefährdung gerade ist und wie weit du von einer Suizidhandlung entfernt bist.",
                       "type": "text"
                     }
                   ],
-                  "label": "Was ist PRISM™-S?",
+                  "label": "Was ist PRISM-S?",
                   "type": "title"
                 },
                 {
                   "item": [
                     {
-                      "label": "Damit Risikoeinschätzungen mit PRISM™-S vergleichbar werden, ist die Methode standardisiert. Verwende deshalb folgende Begriffe: \n\nDie weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar. Der gelbe Punkt bist Du in deinem Leben drin. Die schwarze Scheibe ist dein jetziger Drang, dir das Leben zu nehmen.",
+                      "label": "Damit Risikoeinschätzungen mit PRISM-S vergleichbar werden, ist die Methode standardisiert. Verwende deshalb folgende Begriffe: \n\nDie weisse Fläche stellt dein Leben bzw. deinen Lebensraum dar. Der gelbe Punkt bist Du in deinem Leben drin. Die schwarze Scheibe ist dein jetziger Drang, dir das Leben zu nehmen.",
                       "type": "text"
                     }
                   ],
-                  "label": "Wie nennt man die einzelnen Komponenten von PRISM™-S?",
+                  "label": "Wie nennt man die einzelnen Komponenten von PRISM-S?",
                   "type": "title"
                 },
                 {
                   "item": [
                     {
-                      "label": "Die Methode ist wissenschaftlich evaluiert und wird seit Jahrzehnten eingesetzt. Suizid-Risikoeinschätzungen sind mit PRISM™-S rasch und einfach in rund 2 – 5 Minuten durchführbar.\n\nSo erhältst du ein Bild deiner aktuellen Suizidgefährdung, kannst dieses speichern, später wieder aufrufen und Vertrauenspersonen mitteilen. \n\nDie folgenden Fragen können dir helfen zu verstehen wie es dir gerade geht und was mit der Suizidgefährdung (z.B. Gedanken, Gefühle) zusammenhängt.",
+                      "label": "Die Methode ist wissenschaftlich evaluiert und wird seit Jahrzehnten eingesetzt. Suizid-Risikoeinschätzungen sind mit PRISM-S rasch und einfach in rund 2 – 5 Minuten durchführbar.\n\nSo erhältst du ein Bild deiner aktuellen Suizidgefährdung, kannst dieses speichern, später wieder aufrufen und Vertrauenspersonen mitteilen. \n\nDie folgenden Fragen können dir helfen zu verstehen wie es dir gerade geht und was mit der Suizidgefährdung (z.B. Gedanken, Gefühle) zusammenhängt.",
                       "type": "text"
                     }
                   ],
-                  "label": "Was sind die wichtigsten Merkmale von PRISM™-S?",
+                  "label": "Was sind die wichtigsten Merkmale von PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -160,7 +160,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Wie läuft deine Einschätzung mit PRISM™-S ab?",
+                  "label": "Wie läuft deine Einschätzung mit PRISM-S ab?",
                   "type": "title"
                 },
                 {
@@ -176,7 +176,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Wo finde ich mehr Informationen über PRISM™-S?",
+                  "label": "Wo finde ich mehr Informationen über PRISM-S?",
                   "type": "title"
                 }
               ],
@@ -582,7 +582,7 @@
                       "type": "listitem"
                     },
                     {
-                      "label": "Suizidrisiko-Selbsteinschätzung mit PRISM-S",
+                      "label": "Suizidrisiko-Selbsteinschätzung mit PRISM™-S",
                       "type": "listitem"
                     },
                     {
@@ -612,7 +612,7 @@
               "type": "title"
             },
             {
-              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (LUPS) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an. Die App \"SERO\" unterstützt Sie während und zwischen suizidalen Krisen bei der Dokumentation Ihrer aktuellen Suizidalität. Sie soll damit dem Selbstmanagement dienen.",
+              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (lups) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an. Die App \"SERO\" unterstützt Sie während und zwischen suizidalen Krisen bei der Dokumentation Ihrer aktuellen Suizidalität. Sie soll damit dem Selbstmanagement dienen.",
               "type": "text"
             },
             {
@@ -630,7 +630,7 @@
             {
               "item": [
                 {
-                  "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
+                  "label": "Luzerner Psychiatrie (lups)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
                   "type": "text"
                 }
               ],
@@ -640,7 +640,7 @@
             {
               "item": [
                 {
-                  "label": "Für das sichere Speichern und Verwalten der Benutzerdaten hat die LUPS die Genossenschaft <goTo0>{{address0}}</goTo0> mit Sitz in Zürich, beauftragt. Alle Daten werden innerhalb der Schweiz in persönlichen verschlüsselten Datenkonten gespeichert. Für die Nutzung der Datenkonten gelten die <goTo1>{{address1}}</goTo1> und die <goTo2>{{address2}}</goTo2> der MIDATA-Plattform.",
+                  "label": "Für das sichere Speichern und Verwalten der Benutzerdaten hat die lups die Genossenschaft <goTo0>{{address0}}</goTo0> mit Sitz in Zürich, beauftragt. Alle Daten werden innerhalb der Schweiz in persönlichen verschlüsselten Datenkonten gespeichert. Für die Nutzung der Datenkonten gelten die <goTo1>{{address1}}</goTo1> und die <goTo2>{{address2}}</goTo2> der MIDATA-Plattform.",
                   "links": [
                     {
                       "address": "https://www.midata.coop",
@@ -772,7 +772,7 @@
         {
           "item": [
             {
-              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (LUPS) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an.",
+              "label": "Die App \"SERO\" wird herausgegeben von der Luzerner Psychiatrie (lups) im Rahmen des Projekts \"SERO – Suizidprävention: Einheitlich Regional Organisiert\". Das Projekt \"SERO\" ist Teil der Projektförderung \"Prävention in der Gesundheitsversorgung\" von Gesundheitsförderung Schweiz. Es strebt die Reduzierung von Suizidversuchen und Suiziden und von Hospitalisationen aufgrund von Suizidgefährdung an.",
               "type": "text"
             },
             {
@@ -996,7 +996,7 @@
                                               "type": "title"
                                             },
                                             {
-                                              "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch",
+                                              "label": "Luzerner Psychiatrie (lups)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch",
                                               "type": "text"
                                             },
                                             {
@@ -1082,7 +1082,7 @@
     },
     "alertLups": {
       "description": "Kosten: regulärer Gesprächstarif bis zur 10. Minute, danach 3.23 CHF/Minute.",
-      "title": "Beratungstelefon LUPS"
+      "title": "Beratungstelefon lups"
     },
     "alertReactivate": {
       "description": "Möchtest du den aktuellen Sicherheitsplan durch den Sicherheitsplan vom {{date}} ersetzen? \n\nDein aktueller Sicherheitsplan wird bei \"Frühere Sicherheitspläne\" archiviert.",
