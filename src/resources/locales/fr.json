@@ -26,6 +26,7 @@
     },
     "newImage": "Photographier la plaque PRISM-S",
     "noFollowUpQuestionsHint": "Il n'a été répondu à aucune question de suivi lors cette évaluation.",
+    "noFollowUpQuestionsHint": "Il n'a été répondu à aucune question de suivi lors cette évaluation.",
     "permissionAndroid": {
       "message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
       "title": "\"SERO\" désire accéder à la caméra"
@@ -43,7 +44,6 @@
     }
   },
   "common": {
-    "archive": "Archives",
     "back": "Retour",
     "cancel": "Annuler",
     "delete": "Supprimer",
@@ -126,31 +126,31 @@
                 {
                   "item": [
                     {
-                      "label": "Avec PRISM™-S, tu peux facilement évaluer rapidement le niveau de risque de suicide auquel tu es actuellement confronté et la distance qui te sépare d'un acte suicidaire.",
+                      "label": "Avec PRISM-S, tu peux facilement évaluer rapidement le niveau de risque de suicide auquel tu es actuellement confronté et la distance qui te sépare d'un acte suicidaire.",
                       "type": "text"
                     }
                   ],
-                  "label": "Qu'est-ce que PRISM™-S?",
+                  "label": "Qu'est-ce que PRISM™-S ?",
                   "type": "title"
                 },
                 {
                   "item": [
                     {
-                      "label": "Pour que les évaluations des risques puissent être comparées avec PRISM™-S, la méthode est standardisée. Utilise donc les termes suivants : \n\nLa surface blanche représente ta vie ou ton espace de vie. Le point jaune, c'est toi dans ta vie. Le disque noir représente ton envie actuelle de prendre ta vie en main.",
+                      "label": "Pour que les évaluations des risques puissent être comparées avec PRISM-S, la méthode est standardisée. Utilise donc les termes suivants : \n\nLa surface blanche représente ta vie ou ton espace de vie. Le point jaune, c'est toi dans ta vie. Le disque noir représente ton envie actuelle de prendre ta vie en main.",
                       "type": "text"
                     }
                   ],
-                  "label": "Comment appelle-t-on les différents composants de PRISM™-S?",
+                  "label": "Comment appelle-t-on les différents composants de PRISM-S?",
                   "type": "title"
                 },
                 {
                   "item": [
                     {
-                      "label": "La méthode a été évaluée scientifiquement et est utilisée depuis des décennies. Les évaluations du risque suicidaire peuvent être réalisées rapidement et facilement en 2 à 5 minutes environ avec PRISM™-S.\n\nTu obtiens ainsi une image de ton risque de suicide actuel, tu peux l'enregistrer, la consulter ultérieurement et la communiquer à des personnes de confiance. \n\nLes questions suivantes peuvent t'aider à comprendre comment tu te sens en ce moment et ce qui est lié au risque de suicide (par ex. pensées, sentiments).",
+                      "label": "La méthode a été évaluée scientifiquement et est utilisée depuis des décennies. Les évaluations du risque suicidaire peuvent être réalisées rapidement et facilement en 2 à 5 minutes environ avec PRISM-S.\n\nTu obtiens ainsi une image de ton risque de suicide actuel, tu peux l'enregistrer, la consulter ultérieurement et la communiquer à des personnes de confiance. \n\nLes questions suivantes peuvent t'aider à comprendre comment tu te sens en ce moment et ce qui est lié au risque de suicide (par ex. pensées, sentiments).",
                       "type": "text"
                     }
                   ],
-                  "label": "Quelles sont les principales caractéristiques de PRISM™-S?",
+                  "label": "Quelles sont les principales caractéristiques de PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -160,7 +160,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Comment se déroule ton évaluation avec PRISM™-S?",
+                  "label": "Comment se déroule ton évaluation avec PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -176,7 +176,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Où puis-je trouver plus d'informations sur PRISM™-S?",
+                  "label": "Où puis-je trouver plus d'informations sur PRISM-S?",
                   "type": "title"
                 }
               ],
@@ -453,7 +453,7 @@
             {
               "item": [
                 {
-                  "label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch",
+                  "label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch\nsero-suizidprävention.ch",
                   "type": "text"
                 }
               ],
@@ -477,7 +477,7 @@
               "links": [
                 {
                   "address": "https://www.hohenegg.ch/",
-                  "name": "Hohenegg"
+                  "name": "Clinique privée Hohenegg SA"
                 }
               ],
               "type": "text"
@@ -497,7 +497,7 @@
               "links": [
                 {
                   "address": "https://www.bfh.ch/fr/",
-                  "name": "Haute école spécialisée bernoise"
+                  "name": "Haute école spécialisée bernoise BFH"
                 }
               ],
               "type": "text"
@@ -559,7 +559,7 @@
               "type": "text"
             }
           ],
-          "label": "Développement App",
+          "label": "Développement de l'app",
           "type": "group"
         }
       ],
@@ -582,7 +582,7 @@
                       "type": "listitem"
                     },
                     {
-                      "label": "Auto-évaluation du risque de suicide avec PRISM-S",
+                      "label": "Auto-évaluation du risque de suicide avec PRISM™-S",
                       "type": "listitem"
                     },
                     {
@@ -612,7 +612,7 @@
               "type": "title"
             },
             {
-              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide. L'application \"SERO\" vous aide à documenter votre tendance suicidaire actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.",
+              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (lups) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide. L'application \"SERO\" vous aide à documenter votre tendance suicidaire actuelle pendant et entre les crises suicidaires. Elle doit ainsi servir à l'autogestion.",
               "type": "text"
             },
             {
@@ -630,7 +630,7 @@
             {
               "item": [
                 {
-                  "label": "Luzerner Psychiatrie (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
+                  "label": "Luzerner Psychiatrie (lups)\nSchafmattstrasse 1\n4915 St. Urban\nSchweiz\nT +41 (0)58 856 55 55\nE-Mail sero(at)lups.ch \n",
                   "type": "text"
                 }
               ],
@@ -640,7 +640,7 @@
             {
               "item": [
                 {
-                  "label": "Pour le stockage et la gestion sécurisés des données des utilisateurs, LUPS a fait appel à la coopérative <goTo0>{{address0}}</goTo0>, dont le siège est à Zurich. Toutes les données sont stockées en Suisse dans des comptes de données personnels cryptés. Pour l'utilisation des comptes de données, les <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> de la plate-forme MIDATA sont applicables.",
+                  "label": "Pour le stockage et la gestion sécurisées des données des utilisateurs, lups a fait appel à la coopérative <goTo0>{{address0}}</goTo0>, dont le siège est à Zurich. Toutes les données sont stockées en Suisse dans des comptes de données personnels cryptés. Pour l'utilisation des comptes de données, les <goTo1>{{address1}}</goTo1> et <goTo2>{{address2}}</goTo2> de la plate-forme MIDATA sont applicables.",
                   "links": [
                     {
                       "address": "https://www.midata.coop/fr/accueil/",
@@ -772,13 +772,13 @@
         {
           "item": [
             {
-              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+              "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (lups) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
               "type": "text"
             },
             {
               "item": [
                 {
-                  "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (LUPS) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
+                  "label": "L'application \"SERO\" est publiée par le service de psychiatrie de Lucerne (lups) dans le cadre du projet \"SERO - Prévention du suicide : unité régionale organisée\". Le projet \"SERO\" fait partie de la promotion de projet \"Prévention dans les soins de santé\" de Promotion Santé Suisse. Il vise à réduire les tentatives de suicide et les suicides ainsi que les hospitalisations pour cause de risque de suicide.",
                   "type": "listitem"
                 },
                 {
@@ -962,7 +962,7 @@
                                           "type": "text"
                                         },
                                         {
-                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment en",
+                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment enLes deux parties ont le droit de mettre fin à cet accord à tout moment en",
                                           "type": "text"
                                         },
                                         {
@@ -996,7 +996,7 @@
                                               "type": "title"
                                             },
                                             {
-                                              "label": "Service de psychiatrie de Lucerne (LUPS)\nSchafmattstrasse 1\n4915 St. Urban\nSuisse\nT +41 (0)58 856 55 55\nE-mail sero(at)lups.ch",
+                                              "label": "Service de psychiatrie de Lucerne (lups)\nSchafmattstrasse 1\n4915 St. Urban\nSuisse\nT +41 (0)58 856 55 55\nE-mail sero(at)lups.ch",
                                               "type": "text"
                                             },
                                             {
@@ -1082,7 +1082,7 @@
     },
     "alertLups": {
       "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
-      "title": "Ligne de conseil LUPS"
+      "title": "Ligne de conseil lups"
     },
     "alertReactivate": {
       "description": "Veux-tu remplacer le plan de sécurité actuel par le plan de sécurité du {{date}}? \n\nTon plan de sécurité actuel est archivé dans \"Plans de sécurité précédents\".",
