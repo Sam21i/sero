@@ -26,6 +26,7 @@
     },
     "newImage": "Photographier la plaque PRISM-S",
     "noFollowUpQuestionsHint": "Il n'a été répondu à aucune question de suivi lors cette évaluation.",
+    "noFollowUpQuestionsHint": "Il n'a été répondu à aucune question de suivi lors cette évaluation.",
     "permissionAndroid": {
       "message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
       "title": "\"SERO\" désire accéder à la caméra"
@@ -129,7 +130,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Qu'est-ce que PRISM-S?",
+                  "label": "Qu'est-ce que PRISM™-S ?",
                   "type": "title"
                 },
                 {
@@ -961,7 +962,7 @@
                                           "type": "text"
                                         },
                                         {
-                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment en",
+                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment enLes deux parties ont le droit de mettre fin à cet accord à tout moment en",
                                           "type": "text"
                                         },
                                         {
