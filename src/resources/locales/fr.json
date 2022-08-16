@@ -2,13 +2,13 @@
   "assessment": {
     "addEntry": "Nouvelle évaluation",
     "alertDelete": {
-      "description": "Veux-tu vraiment effacer l'évaluation de {{date}} ?",
-      "title": "Effacer l'estimation"
+      "description": "Veux-tu vraiment supprimer l'évaluation du {{date}}?",
+      "title": "Supprimer l'estimation"
     },
-    "archive": "Evaluations précédentes",
+    "archive": "Évaluations précédentes",
     "bubbleTitle": "Que veux-tu faire?",
     "cancelQuestion": "Tu veux vraiment annuler?",
-    "defaultHint": "Comment vas-tu ?",
+    "defaultHint": "Comment vas-tu?",
     "followUpTitle": "Questions de suivi",
     "former": "Évaluation précédente",
     "goToEmergencyContact": "Appeler quelqu'un",
@@ -16,7 +16,7 @@
     "goTosecurityplan": "Consulter le plan de sécurité",
     "image": "Photo de la plaque",
     "intro": {
-      "description": "Quelle est l'intensité de ton envie de te suicider maintenant ?",
+      "description": "Quelle est l'intensité de ton envie de te suicider maintenant?",
       "explanation": {
         "item1": "La surface blanche représente ta vie.",
         "item2": "Le point jaune, c'est toi dans ta vie.",
@@ -25,6 +25,7 @@
       "title": "PRISM™-S"
     },
     "newImage": "Photographier la plaque PRISM-S",
+    "noFollowUpQuestionsHint": "Il n'a été répondu à aucune question de suivi lors cette évaluation.",
     "permissionAndroid": {
       "message": "L'accès à l'appareil photo te permet de prendre une photo d'une évaluation et de la sauvegarder dans l'application.",
       "title": "\"SERO\" désire accéder à la caméra"
@@ -36,15 +37,15 @@
       "distance": "Plus la distance est grande, moins l'envie de se suicider est forte.",
       "imageHint": "Si tu as fait l'évaluation sur un disque physique, tu peux aussi importer une photo du disque.",
       "questions": {
-        "item1": "Quelle place occupe dans ta vie ton envie de te suicider maintenant ?",
-        "item2": "À quel point cette pulsion est-elle proche ou éloignée de toi (point jaune) en ce moment ?"
+        "item1": "Quelle place occupe dans ta vie ton envie de te suicider maintenant?",
+        "item2": "À quel point cette pulsion est-elle proche ou éloignée de toi (point jaune) en ce moment?"
       }
     }
   },
   "common": {
     "back": "Retour",
     "cancel": "Annuler",
-    "delete": "Effacer",
+    "delete": "Supprimer",
     "family": "Nom de famille",
     "given": "Prénom",
     "loading": "Chargement des données",
@@ -72,19 +73,17 @@
         "given": "Pro"
       }
     },
-    "deleteContact": "Effacer un contact",
+    "deleteContact": "supprimer un contact",
     "editContact": "Modifier un contact",
     "err": {
       "family": {
-        "invalid": "Le nom de famille doit être composé de lettres.",
         "required": "Ajoute un nom de famille, s'il te plaît."
       },
       "given": {
-        "invalid": "Le prénom doit être composé de lettres.",
         "required": "Ajoute un prénom de famille, s'il te plaît."
       },
       "phone": {
-        "invalid": "Pas de numéro de téléphone fixe ou mobile suisse valide.",
+        "invalid": "Pas de numéro de téléphone valide.",
         "required": "Ajoute un numéro de téléphone fixe ou mobile, s'il te plaît."
       }
     },
@@ -130,7 +129,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Qu'est-ce que PRISM-S ?",
+                  "label": "Qu'est-ce que PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -140,7 +139,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Comment appelle-t-on les différents composants de PRISM-S ?",
+                  "label": "Comment appelle-t-on les différents composants de PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -150,17 +149,17 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Quelles sont les principales caractéristiques de PRISM-S ?",
+                  "label": "Quelles sont les principales caractéristiques de PRISM-S?",
                   "type": "title"
                 },
                 {
                   "item": [
                     {
-                      "label": "Lors de l'évaluation et de la réponse aux questions suivantes, il ne s'agit pas d'avoir <raison> / <tort>, <bon> / <mauvais>, mais simplement de noter graphiquement ta tendance suicidaire du moment. \n\nTu places le disque noir (ton envie de te suicider) avec le doigt dans ta vie (surface blanche). Et ce, aussi près ou aussi loin de toi (point jaune) que tu le perçois à ce moment-là.\n\nEnsuite, pose-toi la question de savoir ce que cela signifie concrètement pour toi si tu places cette pulsion à cet endroit précis. Quelles sont les pensées et les sentiments présents ? Et qu'est-ce qui éloigne la pulsion de toi (capacité de résistance/résilience) ? Tu peux saisir et enregistrer ces impressions importantes dans les questions.",
+                      "label": "Lors de l'évaluation et de la réponse aux questions suivantes, il ne s'agit pas d'avoir <raison> / <tort>, <bon> / <mauvais>, mais simplement de noter graphiquement ta tendance suicidaire du moment. \n\nTu places le disque noir (ton envie de te suicider) avec le doigt dans ta vie (surface blanche). Et ce, aussi près ou aussi loin de toi (point jaune) que tu le perçois à ce moment-là.\n\nEnsuite, pose-toi la question de savoir ce que cela signifie concrètement pour toi si tu places cette pulsion à cet endroit précis. Quelles sont les pensées et les sentiments présents? Et qu'est-ce qui éloigne la pulsion de toi (capacité de résistance/résilience)? Tu peux saisir et enregistrer ces impressions importantes dans les questions.",
                       "type": "text"
                     }
                   ],
-                  "label": "Comment se déroule ton évaluation avec PRISM-S ?",
+                  "label": "Comment se déroule ton évaluation avec PRISM-S?",
                   "type": "title"
                 },
                 {
@@ -176,7 +175,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Où puis-je trouver plus d'informations sur PRISM-S ?",
+                  "label": "Où puis-je trouver plus d'informations sur PRISM-S?",
                   "type": "title"
                 }
               ],
@@ -192,7 +191,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Qu'est-ce que le plan de sécurité ?",
+                  "label": "Qu'est-ce que le plan de sécurité?",
                   "type": "title"
                 },
                 {
@@ -202,7 +201,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Comment établir un plan de sécurité ?",
+                  "label": "Comment établir un plan de sécurité?",
                   "type": "title"
                 },
                 {
@@ -212,7 +211,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Puis-je choisir l'ordre des sections du plan de sécurité ?",
+                  "label": "Puis-je choisir l'ordre des sections du plan de sécurité?",
                   "type": "title"
                 },
                 {
@@ -222,7 +221,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Qui peut m'aider ou où puis-je obtenir de l'aide pour l'élaboration du plan de sécurité ?",
+                  "label": "Qui peut m'aider ou où puis-je obtenir de l'aide pour l'élaboration du plan de sécurité?",
                   "type": "title"
                 },
                 {
@@ -232,7 +231,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Comment puis-je appeler quelqu'un qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\" ?",
+                  "label": "Comment puis-je appeler quelqu'un qui est enregistré sous \"Mes numéros d'aide et d'urgence professionnels\"?",
                   "type": "title"
                 },
                 {
@@ -242,7 +241,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Puis-je modifier le plan de sécurité actuel ou dois-je en créer un nouveau ?",
+                  "label": "Puis-je modifier le plan de sécurité actuel ou dois-je en créer un nouveau?",
                   "type": "title"
                 },
                 {
@@ -252,7 +251,7 @@
                       "type": "text"
                     }
                   ],
-                  "label": "Pourquoi mon plan de sécurité passé a-t-il été archivé et puis-je encore y accéder ?",
+                  "label": "Pourquoi mon plan de sécurité passé a-t-il été archivé et puis-je encore y accéder?",
                   "type": "title"
                 }
               ],
@@ -278,7 +277,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Qui a développé l'application SERO et qui en est l'éditeur ?",
+              "label": "Qui a développé l'application SERO et qui en est l'éditeur?",
               "type": "subgroup"
             },
             {
@@ -288,7 +287,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Où puis-je obtenir l'application SERO et combien me coûte l'utilisation de l'application ?",
+              "label": "Où puis-je obtenir l'application SERO et combien me coûte l'utilisation de l'application?",
               "type": "subgroup"
             },
             {
@@ -308,7 +307,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Qui est MIDATA et mes données sont-elles en sécurité ?",
+              "label": "Qui est MIDATA et mes données sont-elles en sécurité?",
               "type": "subgroup"
             },
             {
@@ -318,7 +317,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Qu'advient-il des données que j'ai saisies et qui peut les consulter ?",
+              "label": "Qu'advient-il des données que j'ai saisies et qui peut les consulter?",
               "type": "subgroup"
             },
             {
@@ -328,7 +327,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Puis-je exporter le plan de sécurité et mes évaluations ?",
+              "label": "Puis-je exporter le plan de sécurité et mes évaluations?",
               "type": "subgroup"
             },
             {
@@ -344,7 +343,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Qu'advient-il de mes données si je supprime l'application ?",
+              "label": "Qu'advient-il de mes données si je supprime l'application?",
               "type": "subgroup"
             },
             {
@@ -372,7 +371,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Comment recommander l'application ?",
+              "label": "Comment recommander l'application?",
               "type": "subgroup"
             },
             {
@@ -382,7 +381,7 @@
                   "type": "text"
                 }
               ],
-              "label": "Avec qui vais-je discuter de l'utilisation de l'application ?",
+              "label": "Avec qui vais-je discuter de l'utilisation de l'application?",
               "type": "subgroup"
             },
             {
@@ -410,7 +409,7 @@
                   "type": "text"
                 }
               ],
-              "label": "À qui s'adresser en cas de crise et où trouver de l'aide ?",
+              "label": "À qui s'adresser en cas de crise et où trouver de l'aide?",
               "type": "subgroup"
             }
           ],
@@ -598,7 +597,7 @@
                   "type": "text"
                 }
               ],
-              "label": "À quoi me sert l'application SERO ?",
+              "label": "À quoi me sert l'application SERO?",
               "type": "title"
             }
           ],
@@ -962,7 +961,7 @@
                                           "type": "text"
                                         },
                                         {
-                                          "label": "",
+                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment en",
                                           "type": "text"
                                         },
                                         {
@@ -1054,7 +1053,7 @@
   },
   "onboarding": {
     "assessment": {
-      "text": "Comment te sens-tu en ce moment ? Tu découvres ici un outil qui te permet de montrer comment tu te sens.",
+      "text": "Comment te sens-tu en ce moment? Tu découvres ici un outil qui te permet de montrer comment tu te sens.",
       "title": "Mon évaluation"
     },
     "contacts": {
@@ -1077,15 +1076,15 @@
   "securityplan": {
     "addEntry": "Ajouter une entrée",
     "alertDelete": {
-      "description": "Veux-tu vraiment effacer le plan de sécurité de {{date}} ?",
-      "title": "Effacer le plan de sécurité"
+      "description": "Veux-tu vraiment supprimer le plan de sécurité du {{date}}?",
+      "title": "Supprimer le plan de sécurité"
     },
     "alertLups": {
       "description": "Coût : tarif de communication régulier jusqu'à la 10e minute, puis 3.23 CHF/minute.",
       "title": "Ligne de conseil lups"
     },
     "alertReactivate": {
-      "description": "Veux-tu remplacer le plan de sécurité actuel par le plan de sécurité du {{date}} ? \n\nTon plan de sécurité actuel est archivé dans \"Plans de sécurité précédents\".",
+      "description": "Veux-tu remplacer le plan de sécurité actuel par le plan de sécurité du {{date}}? \n\nTon plan de sécurité actuel est archivé dans \"Plans de sécurité précédents\".",
       "title": "Réactiver le plan de sécurité"
     },
     "archive": "Plans de sécurité antérieurs",

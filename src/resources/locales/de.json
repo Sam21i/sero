@@ -25,6 +25,7 @@
       "title": "PRISM™-S"
     },
     "newImage": "PRISM-S Platte fotografieren",
+    "noFollowUpQuestionsHint": "Zu dieser Einschätzung wurden keine Folgefragen beantwortet.",
     "permissionAndroid": {
       "message": "Der Zugriff auf die Kamera ermöglicht es dir, eine Einschätzung zu Fotografieren und danach in der App abzuspeichern.",
       "title": "\"SERO\" möchte auf die Kamera zugreifen"
@@ -76,15 +77,13 @@
     "editContact": "Kontakt bearbeiten",
     "err": {
       "family": {
-        "invalid": "Der Nachname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Nachnamen ein."
       },
       "given": {
-        "invalid": "Der Vorname muss aus Buchstaben bestehen.",
         "required": "Bitte füge einen Vornamen ein."
       },
       "phone": {
-        "invalid": "Keine gültige Schweizer Festnetz- oder Mobilfunknummer.",
+        "invalid": "Keine gültige Telefonnummer.",
         "required": "Bitte füge eine Festnetz- oder Mobilfunknummer ein."
       }
     },
@@ -962,7 +961,7 @@
                                           "type": "text"
                                         },
                                         {
-                                          "label": "Les deux parties ont le droit de mettre fin à cet accord à tout moment en",
+                                          "label": "Beide Parteien haben das Recht, diese Vereinbarung jederzeit zu beenden, indem",
                                           "type": "text"
                                         },
                                         {

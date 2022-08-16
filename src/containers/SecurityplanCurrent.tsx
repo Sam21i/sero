@@ -219,13 +219,10 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           icon={images.imagesSVG.securityplan.info}
           color={colors.tumbleweed}
           onPress={() => {
-            this.props.navigation.navigate('SecurityplanStackScreen', {
-              screen: 'SecurityplanIntroStackScreen',
+            this.props.navigation.navigate('SecurityplanIntroStackScreen', {
+              screen: 'SecurityplanIntroTutorial',
               params: {
-                screen: 'SecurityplanIntroTutorial',
-                params: {
-                  canGoBack: false
-                }
+                canGoBack: false
               }
             });
           }}

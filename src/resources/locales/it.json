@@ -25,6 +25,7 @@
       "title": ""
     },
     "newImage": "",
+    "noFollowUpQuestionsHint": "",
     "permissionAndroid": {
       "message": "",
       "title": ""
@@ -76,11 +77,9 @@
     "editContact": "",
     "err": {
       "family": {
-        "invalid": "",
         "required": ""
       },
       "given": {
-        "invalid": "",
         "required": ""
       },
       "phone": {
