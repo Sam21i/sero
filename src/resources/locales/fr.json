@@ -454,7 +454,7 @@
             {
               "item": [
                 {
-                  "label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch",
+                  "label": "Contact:\nLuzerner Psychiatrie AG\nSchafmattstrasse 1\n4915 St. Urban\nsero@lups.ch\nsero-suizidprävention.ch",
                   "type": "text"
                 }
               ],
@@ -478,7 +478,7 @@
               "links": [
                 {
                   "address": "https://www.hohenegg.ch/",
-                  "name": "Hohenegg"
+                  "name": "Clinique privée Hohenegg SA"
                 }
               ],
               "type": "text"
@@ -498,7 +498,7 @@
               "links": [
                 {
                   "address": "https://www.bfh.ch/fr/",
-                  "name": "Haute école spécialisée bernoise"
+                  "name": "Haute école spécialisée bernoise BFH"
                 }
               ],
               "type": "text"
@@ -560,7 +560,7 @@
               "type": "text"
             }
           ],
-          "label": "Développement App",
+          "label": "Développement de l'app",
           "type": "group"
         }
       ],
