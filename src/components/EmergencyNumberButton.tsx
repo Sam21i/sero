@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     width: scale(90),
-    height: scale(75),
+    height: scale(78),
     paddingVertical: verticalScale(15),
+    marginBottom: scale(28),
     paddingLeft: scale(10),
     paddingRight: scale(20),
     backgroundColor: colors.petrol,

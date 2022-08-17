@@ -1,22 +1,20 @@
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 
-import {AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {AppFonts, colors, isSmallScreen, scale, TextSize} from '../styles/App.style';
 import EmergencyNumberButton from './EmergencyNumberButton';
 
 class EmergencyContact extends Component<WithTranslation> {
   render() {
     return (
       <View style={styles.view}>
-        <View style={styles.topTextView}>
-          <Text style={styles.topText}>{this.props.t('main.callEmergencyTop')}</Text>
-        </View>
         <View style={styles.iconView}>
           <EmergencyNumberButton />
         </View>
         <View style={styles.bottomTextView}>
-          <Text style={styles.bottomText}>{this.props.t('main.callEmergencyBottom')}</Text>
+          <Text style={styles.bottomText}>{this.props.t('main.callEmergencyTop')}</Text>
         </View>
       </View>
     );
@@ -25,36 +23,23 @@ class EmergencyContact extends Component<WithTranslation> {
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
-    backgroundColor: colors.primary50opac
-  },
-  topTextView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  topText: {
-    textAlign: 'center',
-    fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.small),
-    color: colors.white
+    paddingLeft: scale(16),
+    paddingBottom: scale(16),
+    paddingTop: scale(16),
+    backgroundColor: colors.primary50opac,
+    justifyContent: 'flex-end'
   },
   iconView: {
-    flex: 1.5,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
+    flex: 0
   },
   bottomTextView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 0
   },
   bottomText: {
+    lineHeight: 22,
     textAlign: 'center',
-    fontFamily: AppFonts.bold,
-    fontSize: scale(TextSize.small),
+    fontFamily: AppFonts.medium,
+    fontSize: isSmallScreen() ? TextSize.verySmall : TextSize.small,
     color: colors.white
   }
 });

@@ -110,3 +110,58 @@ export const appStyles = StyleSheet.create({
     marginRight: scale(10)
   }
 });
+
+// Paddings
+export const paddings = {
+  horizontalPaddingLarge: {
+    paddingLeft: scale(40),
+    paddingRight: scale(40)
+  },
+  horizontalPaddingNormal: {
+    paddingLeft: scale(32),
+    paddingRight: scale(32)
+  },
+  horizontalPaddingMedium: {
+    paddingLeft: scale(24),
+    paddingRight: scale(24)
+  },
+  horizontalPaddingSmall: {
+    paddingLeft: scale(16),
+    paddingRight: scale(16)
+  },
+  verticalPaddingLarge: {
+    paddingTop: scale(32),
+    paddingBottom: scale(32)
+  },
+  verticalPaddingNormal: {
+    paddingTop: scale(24),
+    paddingBottom: scale(24)
+  },
+  verticalPaddingMedium: {
+    paddingTop: scale(16),
+    paddingBottom: scale(16)
+  },
+  verticalPaddingSmall: {
+    paddingTop: scale(8),
+    paddingBottom: scale(8)
+  },
+}
+// Margin
+export const margins = {
+  horizontalMarginLarge: {
+    marginLeft: scale(40),
+    marginRight: scale(40)
+  },
+  horizontalMarginNormal: {
+    marginLeft: scale(32),
+    marginRight: scale(32)
+  },
+  horizontalMarginMedium: {
+    marginLeft: scale(24),
+    marginRight: scale(24)
+  },
+  horizontalMarginSmall: {
+    marginLeft: scale(16),
+    marginRight: scale(16)
+  },
+}

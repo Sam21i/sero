@@ -86,6 +86,28 @@ export default class EmergencyContact {
     return name.substring(0, name.length - 1);
   }
 
+  /**
+  * Function which shortens the name of a person if necessary and returns them on two lines
+  * @returns the first- and surname of the person seperated on two lines
+  */
+  getNameOnTwoLinesString(): string {
+    let firstName = this.getGivenNameString();
+    let surname = this.family;
+    return this.getShortenedString(firstName, 14).concat(this.getShortenedString("\n" + surname, 14));
+  }
+
+  /**
+  * Function which shortens the input string if it is longer then the given input number
+  * @returns the input string 
+  */
+  private getShortenedString(inputString : string, maxStringLength : number): string {
+    if (inputString.length > maxStringLength) {
+      return inputString.substring(0, inputString.length - 4).concat("...");
+    } else {
+      return inputString;
+    }
+  }
+
   getPatientReference(): Reference {
     return this.fhirResource.patient;
   }

@@ -1,11 +1,13 @@
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
+import { unstable_enableLogBox } from 'react-native-windows';
 
 import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
-import {activeOpacity, AppFonts, colors, scale, TextSize} from '../styles/App.style';
+import {activeOpacity, AppFonts, colors, paddings, scale, TextSize} from '../styles/App.style';
 import EmergencyContactTile from './EmergencyContactTile';
 
 interface EmergencyContactContainerProps extends WithTranslation {
@@ -30,7 +32,8 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
       <EmergencyContactTile
         contact={item}
         onPress={() => this.callNumber(item.phone)}
-        size={this.avatarSize}></EmergencyContactTile>
+        size={this.avatarSize}>
+      </EmergencyContactTile>
     );
   }
 
@@ -40,10 +43,10 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, paddings.verticalPaddingMedium, paddings.horizontalPaddingSmall]}>
         <View style={styles.titleView}>
           <Text style={styles.title}>{this.props.t('main.titleContacts')}</Text>
-          <View style={[styles.optionsButton, {height: this.avatarSize}]}>
+          <View style={[styles.optionsButton]}>
             <TouchableOpacity
               activeOpacity={activeOpacity}
               onPress={this.props.onPressOptionsButton}>
@@ -88,26 +91,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary25opac
   },
   titleView: {
-    flex: 1,
-    width: '100%',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   emergencyContactsView: {
     flex: 2.5,
-    alignItems: 'center'
   },
   title: {
-    flex: 5,
+    flex: 1,
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
     color: colors.white,
-    paddingLeft: scale(10)
   },
   optionsButton: {
-    flex: 1,
-    justifyContent: 'center',
-    alignSelf: 'center'
+    flex: 0,
   }
 });
 
