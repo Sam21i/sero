@@ -1,9 +1,9 @@
-import { background } from 'native-base/lib/typescript/theme/styled-system';
+import {background} from 'native-base/lib/typescript/theme/styled-system';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {FlatList, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SvgCss} from 'react-native-svg';
-import { unstable_enableLogBox } from 'react-native-windows';
+import {unstable_enableLogBox} from 'react-native-windows';
 
 import EmergencyContact from '../model/EmergencyContact';
 import images from '../resources/images/images';
@@ -32,8 +32,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
       <EmergencyContactTile
         contact={item}
         onPress={() => this.callNumber(item.phone)}
-        size={this.avatarSize}>
-      </EmergencyContactTile>
+        size={this.avatarSize}></EmergencyContactTile>
     );
   }
 
@@ -92,19 +91,19 @@ const styles = StyleSheet.create({
   },
   titleView: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   emergencyContactsView: {
-    flex: 2.5,
+    flex: 2.5
   },
   title: {
     flex: 1,
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    color: colors.white,
+    color: colors.white
   },
   optionsButton: {
-    flex: 0,
+    flex: 0
   }
 });
 

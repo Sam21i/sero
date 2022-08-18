@@ -87,22 +87,22 @@ export default class EmergencyContact {
   }
 
   /**
-  * Function which shortens the name of a person if necessary and returns them on two lines
-  * @returns the first- and surname of the person seperated on two lines
-  */
+   * Function which shortens the name of a person if necessary and returns them on two lines
+   * @returns the first- and surname of the person seperated on two lines
+   */
   getNameOnTwoLinesString(): string {
-    let firstName = this.getGivenNameString();
-    let surname = this.family;
-    return this.getShortenedString(firstName, 14).concat(this.getShortenedString("\n" + surname, 14));
+    const firstName = this.getGivenNameString();
+    const surname = this.family;
+    return this.getShortenedString(firstName, 14).concat(this.getShortenedString('\n' + surname, 14));
   }
 
   /**
-  * Function which shortens the input string if it is longer then the given input number
-  * @returns the input string 
-  */
-  private getShortenedString(inputString : string, maxStringLength : number): string {
+   * Function which shortens the input string if it is longer then the given input number
+   * @returns the input string
+   */
+  private getShortenedString(inputString: string, maxStringLength: number): string {
     if (inputString.length > maxStringLength) {
-      return inputString.substring(0, inputString.length - 4).concat("...");
+      return inputString.substring(0, inputString.length - 4).concat('...');
     } else {
       return inputString;
     }

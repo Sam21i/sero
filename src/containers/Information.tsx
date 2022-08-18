@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
   },
   emergencyButton: {
     position: 'absolute',
-    right: -0.2,
-    top: verticalScale(45)
+    right:-0.2,
+    top: verticalScale(47)
   },
   topView: {
     backgroundColor: colors.white,

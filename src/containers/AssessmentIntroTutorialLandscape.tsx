@@ -1,7 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgCss} from 'react-native-svg';
@@ -15,16 +17,31 @@ import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
 import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {STORAGE} from './App';
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 
 interface PropsType extends WithTranslation {
+  route: {params: {canGoBack: boolean}};
   navigation: StackNavigationProp<any>;
+
   userProfile: UserProfile;
   prismSession: PrismSession;
 }
 
-class AssessmentIntroDescription extends Component<PropsType> {
+interface State {
+  canGoBack: boolean;
+}
+
+class AssessmentIntroTutorial extends Component<PropsType, State> {
   constructor(props: PropsType) {
     super(props);
+    this.state = {canGoBack: props.route.params.canGoBack};
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToLandscape();
+    });
   }
 
   render() {
@@ -40,7 +57,9 @@ class AssessmentIntroDescription extends Component<PropsType> {
             <BackButton
               color={colors.white}
               onPress={() => {
-                this.props.navigation.pop();
+                this.state.canGoBack
+                  ? this.props.navigation.pop()
+                  : this.props.navigation.navigate('AssessmentSessionStackScreen');
               }}
             />
             <View style={styles.pageTitleView}>
@@ -52,10 +71,14 @@ class AssessmentIntroDescription extends Component<PropsType> {
               <ScrollView>
                 <View style={{height: verticalScale(55)}}></View>
                 <View style={styles.content}>
-                  <Text style={styles.title}>{this.props.t('assessment.intro.title')}</Text>
-                  <Text style={styles.description}>{this.props.t('assessment.intro.description')}</Text>
+                  <Text style={styles.title}>{this.props.t('common.tutorial')}</Text>
+                  <Text style={styles.description}>{this.props.t('assessment.tutorial.description')}</Text>
+                  <View style={styles.listContainer}>
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item1'))}
+                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item2'))}
+                  </View>
                   <SvgCss
-                    xml={images.imagesSVG.prism.example}
+                    xml={images.imagesSVG.prism.distanceCenter}
                     style={[
                       styles.image,
                       {
@@ -69,22 +92,26 @@ class AssessmentIntroDescription extends Component<PropsType> {
                       }
                     ]}
                   />
-                  <View style={styles.listContainer}>
-                    {this.renderListItem(this.props.t('assessment.intro.explanation.item1'))}
-                    {this.renderListItem(this.props.t('assessment.intro.explanation.item2'))}
-                    {this.renderListItem(this.props.t('assessment.intro.explanation.item3'))}
-                  </View>
+                  <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
+                  <Text style={styles.imageHint}>{this.props.t('assessment.tutorial.imageHint')}</Text>
                 </View>
-                <AppButton
-                  label={this.props.t('common.next')}
-                  icon={images.imagesSVG.common.continue}
-                  position='right'
-                  color={colors.gold}
-                  onPress={() => {
-                    this.props.navigation.navigate('AssessmentIntroTutorial', {canGoBack: true});
-                  }}
-                  isLargeButton
-                />
+                {this.state.canGoBack && (
+                  <AppButton
+                    label={this.props.t('common.start')}
+                    icon={images.imagesSVG.common.start}
+                    position='right'
+                    color={colors.gold}
+                    onPress={() => {
+                      AsyncStorage.setItem(STORAGE.SHOULD_DISPLAY_ASSESSMENT_INTRO, 'false').then(() => {
+                        this.props.navigation.reset({
+                          index: 0,
+                          routes: [{name: 'AssessmentSessionStackScreen'}]
+                        });
+                      });
+                    }}
+                    isLargeButton
+                  />
+                )}
                 <View style={{height: verticalScale(55)}}></View>
               </ScrollView>
             </View>
@@ -113,7 +140,7 @@ class AssessmentIntroDescription extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   backgroundImage: {
     flex: 1,
@@ -125,6 +152,8 @@ const styles = StyleSheet.create({
     top: verticalScale(47)
   },
   topView: {
+    paddingVertical: scale(10),
+    paddingLeft: scale(15),
     backgroundColor: colors.gold50opac,
     flex: 1,
     flexDirection: 'row'
@@ -144,8 +173,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white65opac
   },
   content: {
-    paddingLeft: scale(40),
-    paddingRight: scale(20)
+    paddingLeft: scale(60),
+    paddingRight: scale(60)
   },
   title: {
     paddingBottom: scale(10),
@@ -158,6 +187,17 @@ const styles = StyleSheet.create({
     fontSize: scale(TextSize.small),
     paddingBottom: scale(10)
   },
+  distance: {
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.small),
+    paddingTop: scale(20),
+    paddingBottom: scale(20)
+  },
+  imageHint: {
+    fontFamily: AppFonts.regular,
+    fontSize: scale(TextSize.small),
+    paddingBottom: scale(40)
+  },
   image: {
     width: scale(297 * 0.75),
     height: scale(210 * 0.75),
@@ -169,7 +209,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingVertical: scale(10),
-    paddingBottom: scale(20)
+    paddingBottom: scale(10)
   },
   row: {
     flex: 1,
@@ -201,4 +241,4 @@ function mapStateToProps(state: AppStore) {
   };
 }
 
-export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentIntroDescription));
+export default connect(mapStateToProps, undefined)(withTranslation()(AssessmentIntroTutorial));

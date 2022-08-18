@@ -35,6 +35,7 @@ import SecurityplanIntroTutorial from './SecurityplanIntroTutorial';
 import SecurityplanMain from './SecurityplanMain';
 import Settings from './Settings';
 import Welcome from './Welcome';
+import AssessmentIntroTutorialLandscape from './AssessmentIntroTutorialLandscape';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface PropsType {}
@@ -218,6 +219,15 @@ function AssessmentIntroStackScreen() {
       <AssessmentIntroStack.Screen
         name='AssessmentIntroTutorial'
         component={AssessmentIntroTutorial}
+        options={{
+          headerShown: false,
+          animationEnabled: false
+        }}
+      />
+
+      <AssessmentIntroStack.Screen
+        name='AssessmentIntroTutorialLandscape'
+        component={AssessmentIntroTutorialLandscape}
         options={{
           headerShown: false,
           animationEnabled: false

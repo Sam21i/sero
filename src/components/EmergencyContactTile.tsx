@@ -1,4 +1,4 @@
-import { color } from 'native-base/lib/typescript/theme/styled-system';
+import {color} from 'native-base/lib/typescript/theme/styled-system';
 import React, {Component} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
@@ -42,7 +42,7 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
       height: scale(this.props.size),
       borderRadius: scale(this.props.size / 2),
       backgroundColor: contact.getUniqueColor(),
-      justifyContent: 'center',
+      justifyContent: 'center'
     };
     if (contact.image) {
       emergencyContactAvatar = (
@@ -69,7 +69,8 @@ export default class EmergencyContactTile extends Component<EmergencyContactProp
         <View style={styles.view}>
           <TouchableOpacity
             activeOpacity={activeOpacity}
-            onPress={this.props.onPress} style={{alignItems: 'center'}}>
+            onPress={this.props.onPress}
+            style={{alignItems: 'center'}}>
             <View style={text_avatar}>
               {!!contact.getNameString() && (
                 <Text
@@ -104,12 +105,12 @@ const styles = StyleSheet.create({
     marginTop: scale(15),
     marginRight: scale(10),
     alignItems: 'center',
-    height: '100%',
+    height: '100%'
   },
   textView: {
     flex: 3,
     marginTop: scale(5),
-    width: '100%',
+    width: '100%'
   },
   text: {
     lineHeight: 24,

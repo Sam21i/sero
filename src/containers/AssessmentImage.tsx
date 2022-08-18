@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {ImageBackground, PermissionsAndroid, Platform, StyleSheet, Text, View} from 'react-native';
 import {ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Orientation from 'react-native-orientation-locker';
 import {check, PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {connect} from 'react-redux';
@@ -78,6 +79,15 @@ class AssessmentImage extends Component<PropsType, State> {
           });
         }
       }
+    });
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      Orientation.lockToPortrait();
+    });
+    this.props.navigation.addListener('blur', () => {
+      Orientation.lockToPortrait();
     });
   }
 
@@ -261,7 +271,7 @@ const styles = StyleSheet.create({
   emergencyButton: {
     position: 'absolute',
     right: -0.2,
-    top: verticalScale(45)
+    top: verticalScale(47)
   },
   topView: {
     backgroundColor: colors.gold50opac,

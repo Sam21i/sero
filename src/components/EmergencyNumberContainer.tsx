@@ -1,4 +1,4 @@
-import { background } from 'native-base/lib/typescript/theme/styled-system';
+import {background} from 'native-base/lib/typescript/theme/styled-system';
 import React, {Component} from 'react';
 import {WithTranslation, withTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';

@@ -144,8 +144,8 @@ export const paddings = {
   verticalPaddingSmall: {
     paddingTop: scale(8),
     paddingBottom: scale(8)
-  },
-}
+  }
+};
 // Margin
 export const margins = {
   horizontalMarginLarge: {
@@ -163,5 +163,5 @@ export const margins = {
   horizontalMarginSmall: {
     marginLeft: scale(16),
     marginRight: scale(16)
-  },
-}
+  }
+};

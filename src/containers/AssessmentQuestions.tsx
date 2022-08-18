@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   emergencyButton: {
     position: 'absolute',
     right: -0.2,
-    top: verticalScale(45)
+    top: verticalScale(47)
   },
   bottomView: {
     flex: 7.9,

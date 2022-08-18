@@ -151,9 +151,6 @@ class AssessmentBoard extends Component<PropsType, State> {
     this.props.navigation.addListener('focus', () => {
       Orientation.lockToLandscape();
     });
-    this.props.navigation.addListener('blur', () => {
-      Orientation.lockToPortrait();
-    });
   }
 
   render() {
@@ -225,7 +222,7 @@ class AssessmentBoard extends Component<PropsType, State> {
                       this.props.navigation.navigate('AssessmentStackScreen', {
                         screen: 'AssessmentIntroStackScreen',
                         params: {
-                          screen: 'AssessmentIntroTutorial',
+                          screen: 'AssessmentIntroTutorialLandscape',
                           params: {
                             canGoBack: false
                           }
