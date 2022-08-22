@@ -54,9 +54,9 @@ class AssessmentArchive extends Component<PropsType, State> {
         }}
         key={item.date.toString()}>
         <View style={appStyles.listItem}>
-          <View style={appStyles.listItemContent}>
+          <View style={[appStyles.listItemContent, styles.listContainer]}>
             <Text
-              numberOfLines={1}
+              numberOfLines={2}
               style={appStyles.listItemTitleText}>
               {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
             </Text>
@@ -321,6 +321,9 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: scale(TextSize.small),
     fontFamily: AppFonts.regular
+  },
+  listContainer: {
+    alignItems: 'center'
   }
 });
 

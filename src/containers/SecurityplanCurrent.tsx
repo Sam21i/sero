@@ -189,11 +189,20 @@ class SecurityplanCurrent extends Component<PropsType, State> {
     this.setState(newState);
   }
 
+  renderListHeader() {
+    return (
+      <View 
+        style={{height: verticalScale(55)}}>  
+      </View>
+    );
+  }
+
   renderListFooter() {
     return (
-      <View style={{position: 'relative', marginVertical: scale(20)}}>
+      <View>
+        <View>
         {this.state.isEditMode ? (
-        <View style={{height: scale(55)}}></View>
+          <View></View>
         ) : (
           <AppButton
             label={this.props.t('common.options')}
@@ -206,6 +215,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
             style={styles.optionsButton}
           />
         )}
+      </View>
         <AppButton
           label={this.props.t('common.tutorial')}
           position='right'
@@ -271,7 +281,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               />
             ) : (
               <View>
-                <View style={{height: verticalScale(50)}}></View>
                 <SortableList
                   style={{height: '100%'}}
                   key={'sortlist' + this.state.modalVisible + this.state.isEditMode}
@@ -279,6 +288,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
                   onReleaseRow={this.onDropModule.bind(this)}
                   sortingEnabled={this.state.isEditMode}
                   data={this.state.isEditMode ? this.state.modules : this.filterVisibleModules()}
+                  renderHeader={this.renderListHeader.bind(this)}
                   renderFooter={this.renderListFooter.bind(this)}
                   renderRow={(row: {data: SecurityPlanModule; key: string}) => {
                     return (
@@ -295,7 +305,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
               </View>
             )}
           </View>
-          
           <View style={styles.emergencyButton}>
             <EmergencyNumberButton />
           </View>
@@ -342,7 +351,7 @@ const styles = StyleSheet.create({
     height: scale(50),
     width: scale(225),
     paddingVertical: scale(10),
-    marginBottom: scale(20)
+    marginBottom: verticalScale(20)
   },
   tutorialButton: {
     height: scale(50),

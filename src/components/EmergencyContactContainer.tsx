@@ -42,7 +42,7 @@ class EmergencyContactContainer extends Component<EmergencyContactContainerProps
 
   render() {
     return (
-      <View style={[styles.container, paddings.verticalPaddingMedium, paddings.horizontalPaddingSmall]}>
+      <View style={[styles.container]}>
         <View style={styles.titleView}>
           <Text style={styles.title}>{this.props.t('main.titleContacts')}</Text>
           <View style={[styles.optionsButton]}>
@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 2.71,
     flexDirection: 'column',
-    backgroundColor: colors.primary25opac
+    backgroundColor: colors.primary25opac,
+    paddingHorizontal: scale(16),
+    paddingVertical: scale(16)
   },
   titleView: {
     flexDirection: 'row',
