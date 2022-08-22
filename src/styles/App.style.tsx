@@ -77,7 +77,7 @@ export const appLayout = {};
 export const appStyles = StyleSheet.create({
   listItem: {
     marginBottom: verticalScale(20),
-    marginRight: scale(80),
+    marginRight: scale(60),
     minHeight: scale(80),
     backgroundColor: colors.grey,
     borderTopRightRadius: scale(80),
@@ -110,4 +110,3 @@ export const appStyles = StyleSheet.create({
     marginRight: scale(10)
   }
 });
-

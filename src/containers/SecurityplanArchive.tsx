@@ -149,8 +149,8 @@ class SecurityplanArchive extends Component<PropsType, State> {
         }}
         key={item.fhirResource.id}>
         <View style={appStyles.listItem}>
-          <View style={[appStyles.listItemContent, styles.listContainer]}>
-            <Text 
+          <View style={appStyles.listItemContent}>
+            <Text
               numberOfLines={2}
               style={appStyles.listItemTitleText}>
               {item.getLocaleDate(this.props.i18n.language || 'de-CH')}
@@ -302,9 +302,6 @@ const styles = StyleSheet.create({
     width: scale(225),
     paddingVertical: scale(10),
     marginVertical: 20
-  },
-  listContainer: {
-    alignItems: 'center'
   }
 });
 

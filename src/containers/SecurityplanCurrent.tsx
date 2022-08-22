@@ -190,32 +190,28 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   renderListHeader() {
-    return (
-      <View 
-        style={{height: verticalScale(55)}}>  
-      </View>
-    );
+    return <View style={{height: verticalScale(55)}}></View>;
   }
 
   renderListFooter() {
     return (
       <View>
         <View>
-        {this.state.isEditMode ? (
-          <View></View>
-        ) : (
-          <AppButton
-            label={this.props.t('common.options')}
-            icon={images.imagesSVG.common.options}
-            position='right'
-            color={colors.tumbleweed}
-            onPress={() => {
-              this.setState({bubbleVisible: true});
-            }}
-            style={styles.optionsButton}
-          />
-        )}
-      </View>
+          {this.state.isEditMode ? (
+            <View></View>
+          ) : (
+            <AppButton
+              label={this.props.t('common.options')}
+              icon={images.imagesSVG.common.options}
+              position='right'
+              color={colors.tumbleweed}
+              onPress={() => {
+                this.setState({bubbleVisible: true});
+              }}
+              style={styles.optionsButton}
+            />
+          )}
+        </View>
         <AppButton
           label={this.props.t('common.tutorial')}
           position='right'

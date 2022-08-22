@@ -54,7 +54,7 @@ class AssessmentArchive extends Component<PropsType, State> {
         }}
         key={item.date.toString()}>
         <View style={appStyles.listItem}>
-          <View style={[appStyles.listItemContent, styles.listContainer]}>
+          <View style={appStyles.listItemContent}>
             <Text
               numberOfLines={2}
               style={appStyles.listItemTitleText}>
@@ -321,9 +321,6 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: scale(TextSize.small),
     fontFamily: AppFonts.regular
-  },
-  listContainer: {
-    alignItems: 'center'
   }
 });
 
