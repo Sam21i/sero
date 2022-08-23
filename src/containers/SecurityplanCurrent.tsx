@@ -20,7 +20,7 @@ import images from '../resources/images/images';
 import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -174,6 +174,7 @@ class SecurityplanCurrent extends Component<PropsType, State> {
   }
 
   reset() {
+    console.log('test')
     const newState: Partial<State> = {
       isEditMode: false,
       isReplaceMode: false,
@@ -240,10 +241,11 @@ class SecurityplanCurrent extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodLightOrange}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewSecurityplan}>
             <BackButton
               color={colors.white}
               onPress={() => {
+                console.log(this.state.isReplaceMode);
                 if (this.state.bubbleVisible) {
                   this.setState({bubbleVisible: false});
                 } else if (this.state.isFirstPlan || this.state.isReplaceMode) {
@@ -315,11 +317,6 @@ class SecurityplanCurrent extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  topView: {
-    backgroundColor: colors.primary50opac,
-    flex: 1,
-    flexDirection: 'row'
-  },
   topTextView: {
     flex: 1,
     alignSelf: 'center'

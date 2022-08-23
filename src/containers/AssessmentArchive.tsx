@@ -220,7 +220,7 @@ class AssessmentArchive extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           {this.state.selectedPrismSession ? (
-            <View style={styles.topView}>
+            <View style={appStyles.topViewAssessment}>
               <BackButton
                 color={colors.white}
                 onPress={() => {
@@ -262,11 +262,6 @@ class AssessmentArchive extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  topView: {
-    backgroundColor: colors.gold50opac,
-    flex: 1,
-    flexDirection: 'row'
-  },
   topTextView: {
     flex: 1,
     justifyContent: 'center'

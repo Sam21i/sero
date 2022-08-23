@@ -69,29 +69,31 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
           {
             <View style={styles.bottomView}>
               <ScrollView>
-                <View style={{height: verticalScale(55)}}></View>
+                <View style={{height: verticalScale(30)}}></View>
                 <View style={styles.content}>
                   <Text style={styles.title}>{this.props.t('common.tutorial')}</Text>
                   <Text style={styles.description}>{this.props.t('assessment.tutorial.description')}</Text>
-                  <View style={styles.listContainer}>
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item1'))}
-                    {this.renderListItem(this.props.t('assessment.tutorial.questions.item2'))}
+                  <View style={styles.ImgListContainer}>
+                    <View style={styles.listContainer}>
+                      {this.renderListItem(this.props.t('assessment.tutorial.questions.item1'))}
+                      {this.renderListItem(this.props.t('assessment.tutorial.questions.item2'))}
+                    </View>
+                    <SvgCss
+                      xml={images.imagesSVG.prism.distanceCenter}
+                      style={[
+                        styles.image,
+                        {
+                          shadowColor: colors.black,
+                          shadowOffset: {
+                            width: scale(5),
+                            height: scale(5)
+                          },
+                          shadowOpacity: 0.25,
+                          shadowRadius: scale(5)
+                        }
+                      ]}
+                    />
                   </View>
-                  <SvgCss
-                    xml={images.imagesSVG.prism.distanceCenter}
-                    style={[
-                      styles.image,
-                      {
-                        shadowColor: colors.black,
-                        shadowOffset: {
-                          width: scale(5),
-                          height: scale(5)
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: scale(5)
-                      }
-                    ]}
-                  />
                   <Text style={styles.distance}>{this.props.t('assessment.tutorial.distance')}</Text>
                   <Text style={styles.imageHint}>{this.props.t('assessment.tutorial.imageHint')}</Text>
                 </View>
@@ -185,23 +187,22 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: AppFonts.bold,
     fontSize: scale(TextSize.small),
-    paddingBottom: scale(10)
   },
   distance: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.small),
-    paddingTop: scale(20),
-    paddingBottom: scale(20)
+    paddingTop: scale(15),
+    paddingBottom: scale(10)
   },
   imageHint: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.small),
-    paddingBottom: scale(40)
+    paddingBottom: scale(20)
   },
   image: {
-    width: scale(297 * 0.75),
-    height: scale(210 * 0.75),
-    marginVertical: scale(15)
+    width: scale(260 * 0.75),
+    height: scale(150 * 0.75),
+    marginVertical: scale(10)
   },
   explanation: {
     fontFamily: AppFonts.regular,
@@ -209,17 +210,18 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingVertical: scale(10),
-    paddingBottom: scale(10)
+    paddingBottom: scale(10),
+    flex: 1
   },
   row: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
-    paddingBottom: scale(10)
+    paddingBottom: scale(5)
   },
   bulletView: {
-    width: scale(10)
+    width: scale(20)
   },
   bulletPoint: {
     color: colors.gold,
@@ -231,6 +233,9 @@ const styles = StyleSheet.create({
   bulletText: {
     fontFamily: AppFonts.regular,
     fontSize: scale(TextSize.small)
+  },
+  ImgListContainer: {
+    flexDirection: 'row'
   }
 });
 

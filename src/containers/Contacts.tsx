@@ -30,7 +30,7 @@ import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appLayout, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
 interface PropsType extends WithTranslation {
@@ -376,7 +376,7 @@ class Contacts extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodLightOrange}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewSecurityplan}>
             <BackButton
               color={colors.white}
               onPress={() => {
@@ -466,11 +466,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -0.2,
     top: verticalScale(47)
-  },
-  topView: {
-    backgroundColor: colors.primary50opac,
-    flex: 1,
-    flexDirection: 'row'
   },
   bottomView: {
     backgroundColor: colors.white65opac,

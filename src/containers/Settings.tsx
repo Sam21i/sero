@@ -15,7 +15,7 @@ import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import * as miDataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
 interface State {
@@ -67,7 +67,7 @@ class Settings extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodGrey}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewMain}>
             <BackButton />
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>{this.props.t('settings.title')}</Text>
@@ -221,11 +221,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -0.2,
     top: verticalScale(47)
-  },
-  topView: {
-    backgroundColor: colors.white,
-    flex: 1,
-    flexDirection: 'row'
   },
   bottomView: {
     flex: 7,

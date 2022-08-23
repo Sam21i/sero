@@ -108,5 +108,23 @@ export const appStyles = StyleSheet.create({
     flex: 1,
     margin: scale(10),
     marginRight: scale(10)
+  },
+  topViewSecurityplan: {
+    backgroundColor: colors.primary50opac,
+    flex: 1,
+    flexDirection: 'row',
+    maxHeight: verticalScale(70)
+  },
+  topViewAssessment: {
+    backgroundColor: colors.gold50opac,
+    flex: 1,
+    flexDirection: 'row',
+    maxHeight: verticalScale(70)
+  },
+  topViewMain: {
+    backgroundColor: colors.white,
+    flex: 1,
+    flexDirection: 'row',
+    maxHeight: verticalScale(70)
   }
 });

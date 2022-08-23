@@ -23,7 +23,7 @@ import images from '../resources/images/images';
 import * as midataServiceActions from '../store/midataService/actions';
 import {AppStore} from '../store/reducers';
 import * as userProfileActions from '../store/userProfile/actions';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import AssessmentEndOptions from './AssessmentEndOptions';
 
 interface PropsType extends WithTranslation {
@@ -237,7 +237,7 @@ class AssessmentQuestions extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewAssessment}>
             <BackButton
               color={colors.white}
               onPress={() => {
@@ -291,11 +291,6 @@ class AssessmentQuestions extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  topView: {
-    backgroundColor: colors.gold50opac,
-    flex: 1,
-    flexDirection: 'row'
-  },
   topTextView: {
     alignItems: 'center',
     justifyContent: 'center'

@@ -9,7 +9,7 @@ import AssessmentEndOptionsSpeechBubble, {
 } from '../components/AssessmentEndOptionsSpeechBubble';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import images from '../resources/images/images';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -57,7 +57,7 @@ class AssessmentEndOptions extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewAssessment}>
             <View style={styles.topTextView}>
               <Text style={styles.topViewText}>{this.props.t('assessment.addEntry')}</Text>
             </View>
@@ -103,11 +103,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -0.2,
     top: verticalScale(47)
-  },
-  topView: {
-    backgroundColor: colors.gold50opac,
-    flex: 1,
-    flexDirection: 'row'
   },
   bottomView: {
     flex: 7.9,

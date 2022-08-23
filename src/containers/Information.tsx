@@ -14,7 +14,7 @@ import BackButton from '../components/BackButton';
 import EmergencyNumberButton from '../components/EmergencyNumberButton';
 import InformationItem, {Iitem} from '../components/InformationItem';
 import images from '../resources/images/images';
-import {AppFonts, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale, windowWidth} from '../styles/App.style';
 
 interface PropsType extends WithTranslation {
   navigation: StackNavigationProp<any>;
@@ -167,7 +167,7 @@ class Info extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodGrey}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewMain}>
             <BackButton
               color={this.state.mode !== INFORMATION_MODE.menu ? colors.primary : undefined}
               onPress={() => {
@@ -213,11 +213,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right:-0.2,
     top: verticalScale(47)
-  },
-  topView: {
-    backgroundColor: colors.white,
-    flex: 1,
-    flexDirection: 'row'
   },
   bottomView: {
     flex: 7,

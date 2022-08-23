@@ -207,7 +207,7 @@ class SecurityplanArchive extends Component<PropsType, State> {
           resizeMode='cover'
           style={styles.backgroundImage}>
           {this.state.selectedSecurityplan ? (
-            <View style={styles.topView}>
+            <View style={appStyles.topViewSecurityplan}>
               <BackButton
                 color={colors.white}
                 onPress={() => {
@@ -251,11 +251,6 @@ class SecurityplanArchive extends Component<PropsType, State> {
 }
 
 const styles = StyleSheet.create({
-  topView: {
-    backgroundColor: colors.primary50opac,
-    flex: 1,
-    flexDirection: 'row'
-  },
   topTextView: {
     flex: 1,
     alignSelf: 'center',

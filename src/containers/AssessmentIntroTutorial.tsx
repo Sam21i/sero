@@ -15,7 +15,7 @@ import PrismSession from '../model/PrismSession';
 import UserProfile from '../model/UserProfile';
 import images from '../resources/images/images';
 import {AppStore} from '../store/reducers';
-import {AppFonts, colors, scale, TextSize, verticalScale} from '../styles/App.style';
+import {AppFonts, appStyles, colors, scale, TextSize, verticalScale} from '../styles/App.style';
 import {STORAGE} from './App';
 
 interface PropsType extends WithTranslation {
@@ -45,7 +45,7 @@ class AssessmentIntroTutorial extends Component<PropsType, State> {
           source={images.imagesPNG.backgrounds.moodYellow}
           resizeMode='cover'
           style={styles.backgroundImage}>
-          <View style={styles.topView}>
+          <View style={appStyles.topViewAssessment}>
             <BackButton
               color={colors.white}
               onPress={() => {
@@ -142,11 +142,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: -0.2,
     top: verticalScale(47)
-  },
-  topView: {
-    backgroundColor: colors.gold50opac,
-    flex: 1,
-    flexDirection: 'row'
   },
   pageTitleView: {
     flex: 1,
