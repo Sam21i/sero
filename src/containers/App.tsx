@@ -165,14 +165,6 @@ function SecurityplanStackScreen() {
           animationEnabled: false
         }}
       />
-      <SecurityplanIntroStack.Screen
-        name='SecurityplanIntroStackScreen'
-        component={SecurityplanIntroStackScreen}
-        options={{
-          headerShown: false,
-          animationEnabled: false
-        }}
-      />
       <SecurityplanStack.Screen
         name='SecurityplanArchive'
         component={SecurityplanArchive}
@@ -245,14 +237,6 @@ function AssessmentStackScreen() {
       <AssessmentStack.Screen
         name='AssessmentMain'
         component={AssessmentMain}
-        options={{
-          headerShown: false,
-          animationEnabled: false
-        }}
-      />
-      <AssessmentIntroStack.Screen
-        name='AssessmentIntroStackScreen'
-        component={AssessmentIntroStackScreen}
         options={{
           headerShown: false,
           animationEnabled: false
@@ -368,7 +352,9 @@ export default class App extends Component<PropsType, State> {
                     'SecurityplanStackScreen',
                     'SecurityplanSessionStackScreen',
                     'AssessmentStackScreen',
-                    'AssessmentSessionStackScreen'
+                    'AssessmentSessionStackScreen',
+                    'AssessmentIntroStackScreen',
+                    'SecurityplanIntroStackScreen'
                   ].includes(route.name)
                     ? () => {
                         return null;
@@ -408,6 +394,13 @@ export default class App extends Component<PropsType, State> {
                   component={SecurityplanStackScreen}
                 />
                 <Tab.Screen
+                  name='SecurityplanIntroStackScreen'
+                  component={SecurityplanIntroStackScreen}
+                  options={{
+                    tabBarStyle: {display: 'none'}
+                  }}
+                />
+                <Tab.Screen
                   name='SecurityplanSessionStackScreen'
                   component={SecurityplanSessionStackScreen}
                   options={{
@@ -417,6 +410,13 @@ export default class App extends Component<PropsType, State> {
                 <Tab.Screen
                   name='AssessmentStackScreen'
                   component={AssessmentStackScreen}
+                />
+                <Tab.Screen
+                  name='AssessmentIntroStackScreen'
+                  component={AssessmentIntroStackScreen}
+                  options={{
+                    tabBarStyle: {display: 'none'}
+                  }}
                 />
                 <Tab.Screen
                   name='AssessmentSessionStackScreen'

@@ -219,16 +219,14 @@ class AssessmentBoard extends Component<PropsType, State> {
                   <TouchableOpacity
                     activeOpacity={activeOpacity}
                     onPress={() => {
-                      this.props.navigation.navigate('AssessmentStackScreen', {
-                        screen: 'AssessmentIntroStackScreen',
-                        params: {
-                          screen: 'AssessmentIntroTutorialLandscape',
+                      this.props.navigation.navigate('AssessmentIntroStackScreen', {
+                        screen: 'AssessmentIntroTutorialLandscape',
                           params: {
                             canGoBack: false
                           }
-                        }
-                      });
-                    }}
+                        });
+                      }
+                    }
                     style={styles.button}>
                     <Text style={styles.buttonText}>{this.props.t('common.tutorial')}</Text>
                   </TouchableOpacity>
